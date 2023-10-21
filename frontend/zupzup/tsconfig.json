@@ -4,6 +4,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "checkJs": true,
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -13,21 +14,25 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "declaration": true, // 컴파일 시 .d.ts 파일도 자동으로 함께 생성 (현재 쓰는 모든 타입이 정의된 파일)
+    "removeComments": true, // 컴파일 시 주석 제거
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
     "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
     "strictNullChecks": true,
 
     "baseUrl": ".",
     "paths": {
-      "*": ["src/*"]
+      "*": ["src/*", "node_modules"]
     }
   },
 
   "include": ["src", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
 import { isSameMonth, isSameDay, addDays } from "date-fns";
 
-import * as components from "components";
+import { CalendarMonth } from "components";
 
 import DoubleDashSvg from "assets/icons/double_dash.svg?react";
 
@@ -111,7 +111,7 @@ const Calendar = (props: CalendarProps) => {
 
   return (
     <S.Wrap>
-      <components.CalendarMonth />
+      <CalendarMonth />
       <S.Calendar className={props.selectedDate === null ? "month" : "week"}>
         <S.DaysOfWeek>
           <S.NameOfDays>일</S.NameOfDays>

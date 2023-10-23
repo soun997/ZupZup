@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-import * as components from "components";
+import { RecordBox } from "components";
 
 const Record = () => {
   return (
     <S.Wrap>
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
-      <components.RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
+      <RecordBox />
     </S.Wrap>
   );
 };

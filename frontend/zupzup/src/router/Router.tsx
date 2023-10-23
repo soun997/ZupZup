@@ -12,8 +12,12 @@ const Router = () => {
 					<Route path="/" element={<pages.OnBoarding />} />
 					<Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
 					<Route
-						path={utils.URL.LOGIN.REGIST_INFO}
-						element={<pages.RegistInfo />}
+						path={utils.URL.LOGIN.REGIST_INFO + '/physical'}
+						element={<pages.RegistInfoPhysical />}
+					/>
+					<Route
+						path={utils.URL.LOGIN.REGIST_INFO + '/profile'}
+						element={<pages.RegistInfoProfile />}
 					/>
 					<Route
 						path={utils.URL.CALENDAR.CALENDAR}

@@ -10,6 +10,7 @@ export const URL = {
 	},
 	FLOGGING: {
 		LOBBY: '/flogging',
+		REPORT: '/flogging/report',
 	},
 	Loading: 'loading',
 	RESULT: {

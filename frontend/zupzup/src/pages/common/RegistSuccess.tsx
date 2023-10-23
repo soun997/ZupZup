@@ -2,6 +2,7 @@ import SuccessAnimation from 'components/animation/SuccessLottie';
 import ConfirmButton from 'components/common/ConfirmButton';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import * as utils from 'utils';
 
 const RegistSuccess = () => {
 	const navigate = useNavigate();
@@ -14,7 +15,7 @@ const RegistSuccess = () => {
 			</S.TitleFrame>
 			<SuccessAnimation />
 			<S.BottomFrame>
-				<span onClick={() => navigate('/flogging')}>
+				<span onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}>
 					<ConfirmButton text="플로깅 시작하기" />
 				</span>
 			</S.BottomFrame>

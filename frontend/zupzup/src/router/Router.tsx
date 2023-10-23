@@ -26,6 +26,7 @@ const Router = () => {
 					/>
 					<Route path={utils.URL.Loading} element={<pages.Loading />} />
 				</Route>
+				<Route path="*" element={<pages.Error />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

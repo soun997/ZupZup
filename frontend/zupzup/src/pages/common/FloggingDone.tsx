@@ -1,28 +1,10 @@
-import SuccessAnimation from 'components/animation/SuccessLottie';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import SuccessAnimation from 'components/animation/SuccessLottie';
+import useCountdownTimer from 'hooks/useCountdownTimer';
+import * as utils from 'utils';
 
 const FloggingDone = () => {
-	const [time, setTime] = useState(5);
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			if (time > 1) {
-				setTime(time - 1);
-			} else {
-				setTime(5);
-				navigate('/floogging-result');
-				clearInterval(timer);
-			}
-		}, 1000);
-
-		return () => {
-			clearInterval(timer);
-		};
-	}, [navigate, time]);
-
+	const time = useCountdownTimer(3, utils.URL.FLOGGING.REPORT);
 	return (
 		<S.Wrap>
 			<S.TitleFrame>

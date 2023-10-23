@@ -4,15 +4,25 @@ import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [react(), svgr(), tsconfigPaths()],
+  plugins: [
+    react(),
+    svgr({
+      include: "**/*.svg?react",
+    }),
+    tsconfigPaths(),
+  ],
   base: process.env.NODE_ENV === "development" ? "/" : "./",
+
+  define: { _global: {} },
   build: {
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
           let extType = assetInfo.name!.split(".").at(1) as string;
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            extType = "img";
+          if (/png|jpe?g|gif|tiff|bmp/i.test(extType)) {
+            extType = "images";
+          } else if (/svg|ico/i.test(extType)) {
+            extType = "icons";
           }
           return `assets/${extType}/[name]-[hash][extname]`;
         },

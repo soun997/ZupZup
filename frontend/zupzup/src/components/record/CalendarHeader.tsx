@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-import Runner from "assets/icons/runner.svg?react";
+import RunnerSvg from "assets/icons/runner.svg?react";
 
 const CalendarHeader = () => {
   return (
     <S.Wrap>
       <S.Title>플로깅 기록</S.Title>
-      <Runner />
+      <RunnerSvg />
     </S.Wrap>
   );
 };

@@ -5,17 +5,24 @@ import * as utils from 'utils';
 import { Layout } from 'components';
 
 const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={utils.URL.MAIN.HOME} element={<Layout />}>
-          <Route path="/" element={<pages.OnBoarding />} />
-          <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
-          <Route path={utils.URL.CALENDAR.CALENDAR} element={<pages.FloggingRecord />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path={utils.URL.MAIN.HOME} element={<Layout />}>
+					<Route path="/" element={<pages.OnBoarding />} />
+					<Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
+					<Route
+						path={utils.URL.LOGIN.REGIST_INFO}
+						element={<pages.RegistInfo />}
+					/>
+					<Route
+						path={utils.URL.CALENDAR.CALENDAR}
+						element={<pages.FloggingRecord />}
+					/>
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default Router;

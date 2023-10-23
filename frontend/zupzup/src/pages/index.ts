@@ -1,7 +1,8 @@
-export { default as OnBoarding } from "./onboard/OnBoarding";
+export { default as OnBoarding } from './onboard/OnBoarding';
 
-export { default as FloggingRecord } from "./record/FloggingRecord";
+export { default as FloggingRecord } from './record/FloggingRecord';
 
-export { default as Flogging } from "./flogging/Flogging";
+export { default as FloggingStart } from './flogging/FloggingStart';
+export { default as OnFlogging } from './flogging/OnFlogging';
 
 export { default as Login } from './login/Login';

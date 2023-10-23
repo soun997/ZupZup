@@ -1,17 +1,22 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import CalendarSvg from "assets/icons/calendar.svg?react";
-import ProfileSvg from "assets/icons/profile.svg?react";
-import ShoesSvg from "assets/icons/shoes.svg?react";
+import CalendarSvg from 'assets/icons/calendar.svg?react';
+import ProfileSvg from 'assets/icons/profile.svg?react';
+import ShoesSvg from 'assets/icons/shoes.svg?react';
+
+import * as utils from 'utils';
 
 const Navigation = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrap>
       <S.Nav>
-        <S.SideButton>
+        <S.SideButton onClick={() => navigate(utils.URL.CALENDAR.CALENDAR)}>
           <CalendarSvg />
         </S.SideButton>
-        <S.MainButton>
+        <S.MainButton onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}>
           <ShoesSvg />
         </S.MainButton>
         <S.SideButton>

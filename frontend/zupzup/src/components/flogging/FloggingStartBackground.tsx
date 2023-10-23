@@ -1,8 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import { RecentRecord } from "components";
+import { RecentRecord } from 'components';
+import * as utils from 'utils';
 
-const FloggingBackground = () => {
+const FloggingStartBackground = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrap>
       <RecentRecord />
@@ -12,12 +16,14 @@ const FloggingBackground = () => {
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
-      <S.StartButton>플로깅 시작하기</S.StartButton>
+      <S.StartButton onClick={() => navigate(utils.URL.FLOGGING.ON)}>
+        플로깅 시작하기
+      </S.StartButton>
     </S.Wrap>
   );
 };
 
-export default FloggingBackground;
+export default FloggingStartBackground;
 
 const S = {
   Wrap: styled.div`
@@ -34,6 +40,7 @@ const S = {
     );
     box-shadow: 0px 20px 20px 0px rgba(112, 112, 112, 0.1);
     z-index: 99;
+    pointer-events: none;
   `,
   Header: styled.div`
     display: flex;
@@ -74,6 +81,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     margin: 42px 28px 0;
     padding: 8px 16px;
+    pointer-events: auto;
 
     &:hover {
       cursor: pointer;

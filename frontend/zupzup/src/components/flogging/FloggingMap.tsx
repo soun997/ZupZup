@@ -1,7 +1,7 @@
-import { useRef, useEffect } from "react";
-import styled from "styled-components";
+import { useRef, useEffect } from 'react';
+import styled from 'styled-components';
 
-import { useGeolocation } from "hooks";
+import { useGeolocation } from 'hooks';
 
 interface Location {
   lat: number;
@@ -15,9 +15,9 @@ const FloggingMap = () => {
   const initMap = (location: Location) => {
     const { Tmapv3 } = window;
     const map = new Tmapv3.Map(mapRef.current!, {
-      center: new Tmapv3.LatLng(location.lat + 0.0008, location.lng), // 지도 초기 좌표
-      width: "100%",
-      height: "100%",
+      center: new Tmapv3.LatLng(location.lat, location.lng),
+      width: '100%',
+      height: '100%',
       zoom: 17,
     });
 
@@ -43,7 +43,9 @@ const FloggingMap = () => {
   };
 
   useEffect(() => {
-    initMap(initPosition());
+    if (!(mapRef.current! as HTMLElement).firstChild) {
+      initMap(initPosition());
+    }
   }, []);
 
   return (

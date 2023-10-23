@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { GENDER } from 'utils';
+import * as utils from 'utils';
 import TopNavigation from 'components/common/TopNavigation';
 import {
 	RegistInfoInput,
@@ -7,7 +9,6 @@ import {
 } from 'components/login/RegistInfoInput';
 import RegistInfoTitle from 'components/login/RegistInfoTitle';
 import RegistInfoFrame from 'components/login/RegistInfoFrame';
-import { GENDER } from 'utils';
 
 const RegistInfo = () => {
 	const { state } = useLocation();
@@ -49,7 +50,7 @@ const RegistInfo = () => {
 				birthYear: inputRefForBirthYear.current?.value,
 			};
 			console.log(postData);
-			navigate('/');
+			navigate(utils.URL.RESULT.REGIST);
 		}
 	};
 	return (

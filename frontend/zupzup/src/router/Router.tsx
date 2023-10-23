@@ -24,6 +24,7 @@ const Router = () => {
 						path={utils.URL.RESULT.REGIST}
 						element={<pages.RegistSuccess />}
 					/>
+					<Route path={utils.URL.Loading} element={<pages.Loading />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

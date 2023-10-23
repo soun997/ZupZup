@@ -8,3 +8,4 @@ export { default as Login } from './login/Login';
 
 export { default as RegistSuccess } from './common/RegistSuccess';
 export { default as FloggingDone } from './common/FloggingDone';
+export { default as Loading } from './common/Loading';

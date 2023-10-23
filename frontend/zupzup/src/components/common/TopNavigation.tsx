@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
 	title?: string | null;
@@ -7,9 +8,10 @@ interface Props {
 }
 
 const TopNavigation = (props: Props) => {
+	const navigate = useNavigate();
 	return (
 		<S.Wrap>
-			<S.LeftSection>
+			<S.LeftSection onClick={() => navigate(-1)}>
 				<AngleLeftSvg />
 			</S.LeftSection>
 			{props.title && <S.MiddleSection>{props.title}</S.MiddleSection>}
@@ -30,15 +32,18 @@ const S = {
 	`,
 
 	LeftSection: styled.div`
-		width: 40px;
+		cursor: pointer;
 		display: flex;
+		width: 40px;
 		justify-content: center;
 		align-items: center;
 		gap: 4px;
 		flex-shrink: 0;
 	`,
 	MiddleSection: styled.div``,
-	RightSection: styled.div``,
+	RightSection: styled.div`
+		cursor: pointer;
+	`,
 };
 
 export default TopNavigation;

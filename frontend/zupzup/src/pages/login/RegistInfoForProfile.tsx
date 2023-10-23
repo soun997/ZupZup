@@ -1,50 +1,54 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TopNavigation from 'components/common/TopNavigation';
-import RegistInfoInput from 'components/login/RegistInfoInput';
+import {
+	RegistInfoInput,
+	RegistInfoSelectBox,
+} from 'components/login/RegistInfoInput';
 import RegistInfoTitle from 'components/login/RegistInfoTitle';
 import RegistInfoFrame from 'components/login/RegistInfoFrame';
+import { GENDER } from 'utils';
 
 const RegistInfo = () => {
 	const { state } = useLocation();
-	useEffect(() => {
-		console.log(state);
-	}, []);
 
 	const navigate = useNavigate();
 	const inputRefForBirthYear = useRef<HTMLInputElement | null>(null);
-	const inputRefForGender = useRef<HTMLInputElement | null>(null);
+	const [gender, setGender] = useState<string>(GENDER.MALE);
 	const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
-	const inputCheck = (
-		birthYearInput: string | undefined,
-		genderInput: string | undefined,
-	) => {
+	const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setGender(event.target.value);
+	};
+
+	const inputCheck = (birthYearInput: string | undefined) => {
 		if (
+			state.height &&
+			state.weight &&
 			birthYearInput &&
 			Number(birthYearInput) > 1900 &&
 			Number(birthYearInput) < 2024
 		) {
-			if (genderInput) {
-				return true;
-			}
+			return true;
 		}
 		return false;
 	};
 
 	const handleInputChange = () => {
 		const birthYearInput = inputRefForBirthYear.current?.value;
-		const genderInput = inputRefForGender.current?.value;
-		setNextButtonDisabled(!inputCheck(birthYearInput, genderInput));
+		setNextButtonDisabled(!inputCheck(birthYearInput));
 	};
 
 	const handleNextPage = () => {
-		if (
-			inputCheck(
-				inputRefForBirthYear.current?.value,
-				inputRefForGender.current?.value,
-			)
-		) {
+		if (inputCheck(inputRefForBirthYear.current?.value)) {
+			//내가 보낼 데이터
+			const postData = {
+				height: state.height,
+				weight: state.weight,
+				gender,
+				birthYear: inputRefForBirthYear.current?.value,
+			};
+			console.log(postData);
 			navigate('/');
 		}
 	};
@@ -62,11 +66,10 @@ const RegistInfo = () => {
 					onChange={handleInputChange}
 					title="출생 연도"
 				/>
-				<RegistInfoInput
-					holderText="예) 70"
-					inputRef={inputRefForGender}
-					onChange={handleInputChange}
+				<RegistInfoSelectBox
 					title="성별"
+					value={gender}
+					onChange={handleSelectChange}
 				/>
 			</RegistInfoFrame.InputSection>
 			<RegistInfoFrame.NextButton

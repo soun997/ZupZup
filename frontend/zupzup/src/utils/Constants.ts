@@ -17,3 +17,7 @@ export const SOCIAL_KEY = {
 	NAVER: 'naver',
 	GOOGLE: 'google',
 };
+export const GENDER = {
+	MALE: '남성',
+	FEMALE: '여성',
+};

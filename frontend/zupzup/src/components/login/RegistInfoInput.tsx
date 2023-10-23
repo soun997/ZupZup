@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 import { ChangeEvent, RefObject } from 'react';
+import { GENDER } from 'utils';
 
 interface RegistInfoInputProps {
 	title: string;
 	holderText: string;
 	inputRef: RefObject<HTMLInputElement>;
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+interface RegistInfoSelectBoxProps {
+	title: string;
+	value: string;
+	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const RegistInfoInput = ({
@@ -22,6 +29,22 @@ const RegistInfoInput = ({
 	);
 };
 
+const RegistInfoSelectBox = ({
+	title,
+	value,
+	onChange,
+}: RegistInfoSelectBoxProps) => {
+	return (
+		<S.InputBox>
+			<S.Title>{title}</S.Title>
+			<S.SelectBox value={value} onChange={onChange}>
+				<option value={GENDER.MALE}>남성</option>
+				<option value={GENDER.FEMALE}>여성</option>
+			</S.SelectBox>
+		</S.InputBox>
+	);
+};
+
 const S = {
 	InputBox: styled.div`
 		width: 100%;
@@ -32,6 +55,18 @@ const S = {
 		font-size: ${({ theme }) => theme.font.size.body2};
 		font-family: ${({ theme }) => theme.font.family.focus2};
 		margin-bottom: 12px;
+	`,
+	SelectBox: styled.select`
+		width: 100%;
+		height: 56px;
+		border: none;
+		background-color: ${({ theme }) => theme.color.gray4};
+		padding: 0 16px;
+		border-radius: 8px;
+
+		&:focus {
+			outline: none;
+		}
 	`,
 };
 
@@ -61,4 +96,4 @@ const Input = styled.input`
 	}
 `;
 
-export default RegistInfoInput;
+export { RegistInfoInput, RegistInfoSelectBox };

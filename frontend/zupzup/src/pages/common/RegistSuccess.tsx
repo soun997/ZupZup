@@ -1,8 +1,11 @@
 import SuccessAnimation from 'components/animation/SuccessLottie';
 import ConfirmButton from 'components/common/ConfirmButton';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const RegistSuccess = () => {
+	const navigate = useNavigate();
+
 	return (
 		<S.Wrap>
 			<S.TitleFrame>
@@ -11,7 +14,9 @@ const RegistSuccess = () => {
 			</S.TitleFrame>
 			<SuccessAnimation />
 			<S.BottomFrame>
-				<ConfirmButton text="플로깅 시작하기" />
+				<span onClick={() => navigate('/flogging')}>
+					<ConfirmButton text="플로깅 시작하기" />
+				</span>
 			</S.BottomFrame>
 		</S.Wrap>
 	);
@@ -53,6 +58,10 @@ const S = {
 		bottom: 0;
 		width: 100%;
 		margin-bottom: 25px;
+
+		span {
+			width: 100%;
+		}
 	`,
 };
 export default RegistSuccess;

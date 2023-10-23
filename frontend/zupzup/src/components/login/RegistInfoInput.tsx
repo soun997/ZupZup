@@ -63,7 +63,9 @@ const S = {
 		background-color: ${({ theme }) => theme.color.gray4};
 		padding: 0 16px;
 		border-radius: 8px;
-
+		font-weight: ${({ theme }) => theme.font.weight.body3};
+		font-size: ${({ theme }) => theme.font.size.body3};
+		font-family: ${({ theme }) => theme.font.family.body3};
 		&:focus {
 			outline: none;
 		}

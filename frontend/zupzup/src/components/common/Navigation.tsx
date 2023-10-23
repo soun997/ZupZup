@@ -29,6 +29,7 @@ const S = {
     margin: auto 0 0;
     bottom: 0;
     width: 100%;
+    z-index: 9999;
   `,
   Nav: styled.div`
     position: relative;
@@ -58,7 +59,7 @@ const S = {
     box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.25) inset;
 
     &:hover {
-      background-color: ${({ theme }) => theme.color.sub2};
+      background-color: ${({ theme }) => theme.color.sub};
       cursor: pointer;
     }
   `,

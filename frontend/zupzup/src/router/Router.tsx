@@ -10,8 +10,12 @@ const Router = () => {
       <Routes>
         <Route path={utils.URL.MAIN.HOME} element={<Layout />}>
           <Route path="/" element={<pages.OnBoarding />} />
+          <Route
+            path={utils.URL.CALENDAR.CALENDAR}
+            element={<pages.FloggingRecord />}
+          />
+          <Route path={utils.URL.FLOGGING.LOBBY} element={<pages.Flogging />} />
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
-          <Route path={utils.URL.CALENDAR.CALENDAR} element={<pages.FloggingRecord />} />
         </Route>
       </Routes>
     </BrowserRouter>

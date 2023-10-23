@@ -11,3 +11,8 @@ export const URL = {
 };
 
 export const MAX_WIDTH = '768px';
+export const SOCIAL_KEY = {
+  KAKAO: 'kakao',
+  NAVER: 'naver',
+  GOOGLE: 'google',
+};

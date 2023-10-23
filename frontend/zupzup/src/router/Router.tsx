@@ -14,6 +14,7 @@ const Router = () => {
             path={utils.URL.CALENDAR.CALENDAR}
             element={<pages.FloggingRecord />}
           />
+          <Route path={utils.URL.FLOGGING.LOBBY} element={<pages.Flogging />} />
         </Route>
       </Routes>
     </BrowserRouter>

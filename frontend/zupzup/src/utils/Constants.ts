@@ -5,6 +5,9 @@ export const URL = {
   CALENDAR: {
     CALENDAR: "/calendar",
   },
+  FLOGGING: {
+    LOBBY: "/flogging",
+  },
 };
 
 export const MAX_WIDTH = "768px";

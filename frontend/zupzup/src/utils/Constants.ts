@@ -1,15 +1,18 @@
 export const URL = {
-	LOGIN: {
-		HOME: '/login',
-		REGIST_INFO: '/registInfo',
-	},
-	MAIN: {
-		HOME: '/',
-	},
-	CALENDAR: {
-		CALENDAR: '/calendar',
-	},
-};
+
+  LOGIN: {
+    HOME: '/login',
+  },
+  MAIN: {
+    HOME: '/',
+  },
+  CALENDAR: {
+    CALENDAR: '/calendar',
+  },
+  FLOGGING: {
+    LOBBY: "/flogging",
+  },
+}
 
 export const MAX_WIDTH = '768px';
 export const SOCIAL_KEY = {

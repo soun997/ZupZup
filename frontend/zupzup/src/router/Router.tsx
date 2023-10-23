@@ -11,6 +11,7 @@ const Router = () => {
 				<Route path={utils.URL.MAIN.HOME} element={<Layout />}>
 					<Route path="/" element={<pages.OnBoarding />} />
 					<Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
+					<Route path={utils.URL.FLOGGING.LOBBY} element={<pages.Flogging />} />
 					<Route
 						path={utils.URL.LOGIN.REGIST_INFO + '/physical'}
 						element={<pages.RegistInfoPhysical />}

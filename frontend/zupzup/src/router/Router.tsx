@@ -51,6 +51,10 @@ const Router = () => {
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 
           <Route path={utils.URL.MYPAGE.HOME} element={<pages.MyPage />} />
+          <Route
+            path={utils.URL.SETTING.HOME}
+            element={<pages.SettingPage />}
+          />
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

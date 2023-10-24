@@ -27,7 +27,7 @@ export const URL = {
   },
   SETTING: {
     HOME: '/setting',
-    PROFILE: '/profile',
+    PROFILE: '/setting/profile',
   },
 };
 

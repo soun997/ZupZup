@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
 
 import {
   TopNavigation,
@@ -43,7 +44,7 @@ const RegistInfo = () => {
         inputRefForWeight.current?.value,
       )
     ) {
-      navigate('/registInfo/profile', {
+      navigate(utils.URL.LOGIN.REGIST_INFO + '/profile', {
         state: {
           height: inputRefForHeight.current?.value,
           weight: inputRefForWeight.current?.value,

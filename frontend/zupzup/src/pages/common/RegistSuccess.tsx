@@ -59,10 +59,6 @@ const S = {
     bottom: 0;
     width: 100%;
     margin: auto 0 25px 0;
-
-    span {
-      width: 100%;
-    }
   `,
 };
 export default RegistSuccess;

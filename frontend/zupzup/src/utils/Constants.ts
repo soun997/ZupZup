@@ -1,6 +1,7 @@
 export const URL = {
   LOGIN: {
     HOME: '/login',
+    REGIST_INFO: '/registInfo',
   },
   MAIN: {
     HOME: '/',
@@ -12,6 +13,12 @@ export const URL = {
     LOBBY: '/flogging/lobby',
     ON: '/flogging/on',
     CAMERA: '/flogging/camera',
+    REPORT: '/flogging/report',
+  },
+  LOADING: 'loading',
+  RESULT: {
+    REGIST: '/success-regist',
+    FLOGGING: '/success-flogging',
   },
 };
 
@@ -20,4 +27,8 @@ export const SOCIAL_KEY = {
   KAKAO: 'kakao',
   NAVER: 'naver',
   GOOGLE: 'google',
+};
+export const GENDER = {
+  MALE: '남성',
+  FEMALE: '여성',
 };

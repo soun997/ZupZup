@@ -21,6 +21,26 @@ const Router = () => {
           <Route path={utils.URL.FLOGGING.CAMERA} element={<pages.Camera />} />
           <Route path={utils.URL.FLOGGING.ON} element={<pages.OnFlogging />} />
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
+
+          <Route
+            path={utils.URL.LOGIN.REGIST_INFO + '/physical'}
+            element={<pages.RegistInfoPhysical />}
+          />
+          <Route
+            path={utils.URL.LOGIN.REGIST_INFO + '/profile'}
+            element={<pages.RegistInfoProfile />}
+          />
+
+          <Route
+            path={utils.URL.RESULT.REGIST}
+            element={<pages.RegistSuccess />}
+          />
+          <Route
+            path={utils.URL.RESULT.FLOGGING}
+            element={<pages.FloggingDone />}
+          />
+          <Route path={utils.URL.LOADING} element={<pages.Loading />} />
+          <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

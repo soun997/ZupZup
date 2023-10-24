@@ -15,7 +15,11 @@ const FloggingMap = () => {
   const initMap = (location: Location) => {
     const { Tmapv3 } = window;
     const map = new Tmapv3.Map(mapRef.current!, {
+<<<<<<< HEAD
       center: new Tmapv3.LatLng(location.lat, location.lng),
+=======
+      center: new Tmapv3.LatLng(location.lat + 0.0008, location.lng), // 지도 초기 좌표
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1
       width: '100%',
       height: '100%',
       zoom: 17,

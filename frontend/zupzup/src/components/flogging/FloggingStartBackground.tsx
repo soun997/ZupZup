@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+<<<<<<< HEAD:frontend/zupzup/src/components/flogging/FloggingStartBackground.tsx
 import { useNavigate } from 'react-router-dom';
 
 import { RecentRecord } from 'components';
@@ -6,6 +7,11 @@ import * as utils from 'utils';
 
 const FloggingStartBackground = () => {
   const navigate = useNavigate();
+=======
+
+import { RecentRecord } from 'components';
+import ConfirmButton from 'components/common/ConfirmButton';
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1:frontend/zupzup/src/components/flogging/FloggingBackground.tsx
 
   return (
     <S.Wrap>
@@ -16,9 +22,13 @@ const FloggingStartBackground = () => {
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
+<<<<<<< HEAD:frontend/zupzup/src/components/flogging/FloggingStartBackground.tsx
       <S.StartButton onClick={() => navigate(utils.URL.FLOGGING.ON)}>
         플로깅 시작하기
       </S.StartButton>
+=======
+      <ConfirmButton text="플로깅 시작하기" />
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1:frontend/zupzup/src/components/flogging/FloggingBackground.tsx
     </S.Wrap>
   );
 };
@@ -67,6 +77,7 @@ const S = {
     line-height: ${({ theme }) => theme.font.lineheight.display1};
     margin: 11px 0 0 0;
   `,
+<<<<<<< HEAD:frontend/zupzup/src/components/flogging/FloggingStartBackground.tsx
   StartButton: styled.div`
     display: flex;
     justify-content: center;
@@ -88,4 +99,6 @@ const S = {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
+=======
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1:frontend/zupzup/src/components/flogging/FloggingBackground.tsx
 };

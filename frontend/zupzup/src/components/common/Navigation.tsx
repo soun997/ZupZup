@@ -1,11 +1,17 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
+=======
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1
 
 import CalendarSvg from 'assets/icons/calendar.svg?react';
 import ProfileSvg from 'assets/icons/profile.svg?react';
 import ShoesSvg from 'assets/icons/shoes.svg?react';
+<<<<<<< HEAD
 
 import * as utils from 'utils';
+=======
+>>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1
 
 const Navigation = () => {
   const navigate = useNavigate();

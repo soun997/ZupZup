@@ -25,6 +25,7 @@ export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 
 export { default as MyPloggingReport } from './mypage/MyPloggingReport';
 export { default as MyPageNav } from './mypage/MyPageNav';
+export { default as SettingComponent } from './mypage/SettingComponent';
 
 export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';

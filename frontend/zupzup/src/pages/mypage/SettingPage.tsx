@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import NextArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Navigation, TopNavigation } from 'components';
+import SettingComponent from 'components/mypage/SettingComponent';
 
 const profileInfo = {
   nickname: '줍줍',
@@ -34,39 +35,20 @@ const Setting = () => {
 
       <S.SettingSection>
         <S.SubTitle>약관</S.SubTitle>
-
-        <S.SectionBody>
-          <div className="title">서비스 이용약관</div>
-          <S.SvgWrapper>
-            <NextArrowSvg />
-          </S.SvgWrapper>
-        </S.SectionBody>
-
-        <S.SectionBody>
-          <div className="title">개인정보 처리방침</div>
-          <S.SvgWrapper>
-            <NextArrowSvg />
-          </S.SvgWrapper>
-        </S.SectionBody>
-
-        <S.SectionBody>
-          <div className="title">앱 버전</div>
-          <S.SvgWrapper className="sub-text">1.0.0</S.SvgWrapper>
-        </S.SectionBody>
-
-        <S.SectionBody>
-          <div className="title">줍줍 새소식</div>
-          <S.SvgWrapper>
-            <NextArrowSvg />
-          </S.SvgWrapper>
-        </S.SectionBody>
-
-        <S.SectionBody>
-          <div className="title">오픈소스 라이선스 보기</div>
-          <S.SvgWrapper>
-            <NextArrowSvg />
-          </S.SvgWrapper>
-        </S.SectionBody>
+        <SettingComponent
+          text="서비스 이용약관"
+          onClick={() => navigate('/')}
+        />
+        <SettingComponent
+          text="개인정보 처리방침"
+          onClick={() => navigate('/')}
+        />
+        <SettingComponent text="앱 버전" svg={<>1.0.0</>} />
+        <SettingComponent text="줍줍 새소식" onClick={() => navigate('/')} />
+        <SettingComponent
+          text="오픈소스 라이선스 보기"
+          onClick={() => navigate('/')}
+        />
       </S.SettingSection>
       <Navigation />
     </S.Wrap>

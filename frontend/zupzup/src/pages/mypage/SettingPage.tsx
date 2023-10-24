@@ -30,7 +30,7 @@ const Setting = () => {
 
       <S.SettingSection>
         <S.SubTitle>계정</S.SubTitle>
-        <S.SectionBody>로그아웃</S.SectionBody>
+        <SettingComponent text="로그아웃" svg={<></>} />
       </S.SettingSection>
 
       <S.SettingSection>
@@ -68,26 +68,6 @@ const S = {
     margin-left: 24px;
   `,
 
-  SectionBody: styled.div`
-    display: flex;
-    height: 52px;
-    padding: 4px 8px 4px 0px;
-    align-items: center;
-    gap: 10px;
-    align-self: stretch;
-    font-size: ${({ theme }) => theme.font.size.focus2};
-    font-weight: ${({ theme }) => theme.font.weight.body2};
-    line-height: 130%;
-    letter-spacing: -0.014px;
-    .title {
-      width: 100%;
-    }
-    .sub-text {
-      font-weight: ${({ theme }) => theme.font.weight.focus2};
-      color: ${({ theme }) => theme.color.gray3};
-    }
-  `,
-
   SubTitle: styled.div`
     display: flex;
     width: 100%;
@@ -109,22 +89,23 @@ const S = {
   `,
 
   MyInfo: styled.div`
+    cursor: pointer;
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
 
-    .textInfo {
+    & .textInfo {
       display: flex;
       flex-direction: column;
       gap: 4px;
 
-      .nickname {
+      & .nickname {
         font-size: ${({ theme }) => theme.font.size.focus2};
         font-weight: ${({ theme }) => theme.font.weight.focus2};
       }
 
-      .modify {
+      & .modify {
         font-size: ${({ theme }) => theme.font.size.caption};
         font-weight: ${({ theme }) => theme.font.weight.caption};
         color: ${({ theme }) => theme.color.gray2};

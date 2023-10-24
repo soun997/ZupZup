@@ -19,6 +19,7 @@ const SettingComponent = (props: Props) => {
 
 const S = {
   SectionBody: styled.div`
+    cursor: pointer;
     display: flex;
     height: 52px;
     padding: 4px 8px 4px 0px;
@@ -29,10 +30,10 @@ const S = {
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: 130%;
     letter-spacing: -0.014px;
-    .title {
+    & .title {
       width: 100%;
     }
-    .sub-text {
+    & .sub-text {
       font-weight: ${({ theme }) => theme.font.weight.focus2};
       color: ${({ theme }) => theme.color.gray3};
     }

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Theme } from 'styles';
 
 interface ButtonProps {
   disabled: boolean;
@@ -23,13 +22,12 @@ const RegistInfoFrame = {
     font-weight: ${({ theme }) => theme.font.weight.body2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     font-size: ${({ theme }) => theme.font.size.focus2};
-    color: ${({ disabled }: ButtonProps) =>
-      disabled ? Theme.color.gray3 : Theme.color.white};
-    background-color: ${({ disabled }: ButtonProps) =>
-      disabled ? Theme.color.gray4 : Theme.color.main};
+    color: ${({ disabled, theme }) =>
+      disabled ? theme.color.gray3 : theme.color.white};
+    background-color: ${({ disabled, theme }) =>
+      disabled ? theme.color.gray4 : theme.color.main};
     margin-bottom: 20px;
-    cursor: ${({ disabled }: ButtonProps) =>
-      disabled ? 'not-allowed' : 'pointer'};
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   `,
 
   InputSection: styled.div`

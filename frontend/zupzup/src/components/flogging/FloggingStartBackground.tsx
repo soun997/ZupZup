@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { RecentRecord } from 'components';
+import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
 
 const FloggingStartBackground = () => {
@@ -16,9 +16,10 @@ const FloggingStartBackground = () => {
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
-      <S.StartButton onClick={() => navigate(utils.URL.FLOGGING.ON)}>
-        플로깅 시작하기
-      </S.StartButton>
+      <ConfirmButton
+        text="플로깅 시작하기"
+        onClick={() => navigate(utils.URL.FLOGGING.ON)}
+      />
     </S.Wrap>
   );
 };

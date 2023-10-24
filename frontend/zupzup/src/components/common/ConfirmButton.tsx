@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-const ConfirmButton = ({ text }: { text: string }) => {
-  return <S.Button>{text}</S.Button>;
+interface ButtonAttributes {
+  text: string;
+  onClick: () => void;
+}
+
+const ConfirmButton = ({ text, onClick }: ButtonAttributes) => {
+  return <S.Button onClick={onClick}>{text}</S.Button>;
 };
 
 const S = {
@@ -19,6 +24,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     margin: 42px 28px 0;
     padding: 8px 16px;
+    pointer-events: auto;
 
     &:hover {
       cursor: pointer;

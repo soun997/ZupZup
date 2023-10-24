@@ -1,7 +1,7 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
-import { CalendarHeader, Calendar, Record, Navigation } from "components";
+import { CalendarHeader, Calendar, Record, Navigation } from 'components';
 
 const FloggingRecord = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

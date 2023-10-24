@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { FloggingBackground, FloggingMap, Navigation } from "components";
+import { FloggingBackground, FloggingMap, Navigation } from 'components';
 
 const Flogging = () => {
   return (

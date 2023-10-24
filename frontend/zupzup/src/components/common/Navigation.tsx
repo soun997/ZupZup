@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import CalendarSvg from "assets/icons/calendar.svg?react";
-import ProfileSvg from "assets/icons/profile.svg?react";
-import ShoesSvg from "assets/icons/shoes.svg?react";
+import CalendarSvg from 'assets/icons/calendar.svg?react';
+import ProfileSvg from 'assets/icons/profile.svg?react';
+import ShoesSvg from 'assets/icons/shoes.svg?react';
 
 const Navigation = () => {
   return (

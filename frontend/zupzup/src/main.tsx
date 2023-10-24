@@ -2,11 +2,10 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './styles/font.css';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-<<<<<<< HEAD
-=======
-import { Loading } from 'pages/index.ts';
->>>>>>> c27f15b74edb21b3656a9e0143f8e100066e19d1
+
+import { Loading } from 'pages';
 
 const queryClient = new QueryClient({
   defaultOptions: {

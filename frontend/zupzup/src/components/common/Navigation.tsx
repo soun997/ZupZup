@@ -20,7 +20,7 @@ const Navigation = () => {
           <ShoesSvg />
         </S.MainButton>
         <S.SideButton>
-          <ProfileSvg />
+          <ProfileSvg onClick={() => navigate(utils.URL.MYPAGE.HOME)} />
         </S.SideButton>
       </S.Nav>
     </S.Wrap>

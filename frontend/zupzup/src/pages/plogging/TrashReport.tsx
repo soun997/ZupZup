@@ -35,7 +35,7 @@ const TrashReport = () => {
       <S.BottomFrame>
         <ConfirmButton
           text="플로깅으로 돌아가기"
-          onClick={() => navigate(utils.URL.FLOGGING.ON)}
+          onClick={() => navigate(utils.URL.PLOGGING.ON)}
         />
       </S.BottomFrame>
     </S.Wrap>

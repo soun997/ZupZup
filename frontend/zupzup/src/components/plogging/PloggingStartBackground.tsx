@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
 
-const FloggingStartBackground = () => {
+const PloggingStartBackground = () => {
   const navigate = useNavigate();
 
   return (
@@ -18,13 +18,13 @@ const FloggingStartBackground = () => {
       </S.Header>
       <ConfirmButton
         text="플로깅 시작하기"
-        onClick={() => navigate(utils.URL.FLOGGING.ON)}
+        onClick={() => navigate(utils.URL.PLOGGING.ON)}
       />
     </S.Wrap>
   );
 };
 
-export default FloggingStartBackground;
+export default PloggingStartBackground;
 
 const S = {
   Wrap: styled.div`

@@ -12,17 +12,18 @@ export { default as ConfirmButton } from './common/ConfirmButton';
 export { default as ProgressBar } from './common/ProgressBar';
 export { default as SocialLoginButton } from './common/SocialLoginButton';
 
-export { default as RecentRecord } from './flogging/RecentRecord';
-export { default as FloggingStartBackground } from './flogging/FloggingStartBackground';
-export { default as OnFloggingBackground } from './flogging/OnFloggingBackground';
-export { default as FloggingMap } from './flogging/FloggingMap';
-export { default as CoinReport } from './flogging/CoinReport';
+export { default as RecentRecord } from './plogging/RecentRecord';
+export { default as PloggingStartBackground } from './plogging/PloggingStartBackground';
+export { default as OnPloggingBackground } from './plogging/OnPloggingBackground';
+export { default as PloggingMap } from './plogging/PloggingMap';
+export { default as CoinReport } from './plogging/CoinReport';
+export { default as RecordReport } from './plogging/RecordReport';
 
 export { RegistInfoInput, RegistInfoSelectBox } from './login/RegistInfoInput';
 export { default as RegistInfoTitle } from './login/RegistInfoTitle';
 export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 
-export { default as MyFloggingReport } from './mypage/MyFloggingReport';
+export { default as MyPloggingReport } from './mypage/MyPloggingReport';
 export { default as MyPageNav } from './mypage/MyPageNav';
 
 export { default as ErrorAnimation } from './animation/ErrorLottie';

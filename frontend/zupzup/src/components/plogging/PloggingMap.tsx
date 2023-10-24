@@ -8,7 +8,7 @@ interface Location {
   lng: number;
 }
 
-const FloggingMap = () => {
+const PloggingMap = () => {
   const location = useGeolocation();
   const mapRef = useRef(null);
 
@@ -55,7 +55,7 @@ const FloggingMap = () => {
   );
 };
 
-export default FloggingMap;
+export default PloggingMap;
 
 const S = {
   Wrap: styled.div`

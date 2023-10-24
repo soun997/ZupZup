@@ -4,10 +4,10 @@ export interface ProfileInfo {
   day: number;
   level: number;
   exp: number;
-  lastFlogging: LastFloggingInfo;
+  lastPlogging: LastPloggingInfo;
 }
 
-export interface LastFloggingInfo {
+export interface LastPloggingInfo {
   count: number;
   hour: number;
   calories: number;

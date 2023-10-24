@@ -3,8 +3,8 @@ import { SuccessAnimation } from 'components';
 import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
 
-const FloggingDone = () => {
-  const time = useCountdownTimer(3, utils.URL.FLOGGING.REPORT);
+const PloggingDone = () => {
+  const time = useCountdownTimer(3, utils.URL.PLOGGING.REPORT);
   return (
     <S.Wrap>
       <S.TitleFrame>
@@ -71,4 +71,4 @@ const S = {
     line-height: ${({ theme }) => theme.font.lineheight.body3};
   `,
 };
-export default FloggingDone;
+export default PloggingDone;

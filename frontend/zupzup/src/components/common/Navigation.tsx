@@ -16,11 +16,11 @@ const Navigation = () => {
         <S.SideButton onClick={() => navigate(utils.URL.CALENDAR.CALENDAR)}>
           <CalendarSvg />
         </S.SideButton>
-        <S.MainButton onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}>
+        <S.MainButton onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}>
           <ShoesSvg />
         </S.MainButton>
         <S.SideButton>
-          <ProfileSvg />
+          <ProfileSvg onClick={() => navigate(utils.URL.MYPAGE.HOME)} />
         </S.SideButton>
       </S.Nav>
     </S.Wrap>

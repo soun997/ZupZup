@@ -55,6 +55,10 @@ const Router = () => {
             path={utils.URL.SETTING.HOME}
             element={<pages.SettingPage />}
           />
+          <Route
+            path={utils.URL.SETTING.PROFILE}
+            element={<pages.ProfileSettingPage />}
+          />
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

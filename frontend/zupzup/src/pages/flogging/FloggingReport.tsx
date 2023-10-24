@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
 import { FloggingReport } from 'types/FloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
+import { useCapture } from 'hooks';
 
 const floggingReport: FloggingReport = {
   image: '../../../assets/images/route.png',
@@ -18,10 +18,11 @@ const floggingReport: FloggingReport = {
 
 const FloggingReport = () => {
   const navigate = useNavigate();
+  const { handleCaptureClick, captureRef } = useCapture();
 
   return (
     <S.Wrap>
-      <S.Content>
+      <S.Content ref={captureRef}>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
           <S.CloseButton onClick={() => navigate(utils.URL.MYPAGE.HOME)}>
@@ -36,7 +37,7 @@ const FloggingReport = () => {
         <S.SubTitle>기록</S.SubTitle>
         <RecordReport record={floggingReport.record}></RecordReport>
 
-        <S.SaveImage>
+        <S.SaveImage onClick={handleCaptureClick}>
           <SaveSvg />
           이미지로 저장하기
         </S.SaveImage>

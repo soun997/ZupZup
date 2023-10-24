@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const profileInfo = {
   nickname: '줍줍',
+  characterImage: 'assets/images/character.png',
   day: 12,
   level: 1,
   exp: 160,
@@ -22,6 +23,7 @@ const MyPage = () => {
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
         </S.Title>
       </S.Content>
+      <S.Image src={profileInfo.characterImage}></S.Image>
       <Navigation />
     </S.Wrap>
   );
@@ -46,6 +48,13 @@ const S = {
 
   Content: styled.div`
     padding: 0 20px;
+  `,
+
+  Image: styled.img`
+    position: absolute;
+    bottom: 110px;
+    margin-left: 30px;
+    width: 200px;
   `,
 };
 

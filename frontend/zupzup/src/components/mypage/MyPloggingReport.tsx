@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { LastFloggingInfo } from 'types/ProfileInfo';
+import { LastPloggingInfo } from 'types/ProfileInfo';
 import NoteSvg from 'assets/icons/note.svg?react';
 
 interface Props {
-  lastFlogging: LastFloggingInfo;
+  lastPlogging: LastPloggingInfo;
 }
-const MyFloggingReport = ({ lastFlogging }: Props) => {
+const MyPloggingReport = ({ lastPlogging }: Props) => {
   return (
     <S.Wrap>
       <S.IndexTitle>
@@ -15,9 +15,9 @@ const MyFloggingReport = ({ lastFlogging }: Props) => {
       <S.BoxFrame>
         <div className="title">지난주에는 이만큼 플로깅 했어요</div>
         <div className="eachInfo">
-          <div>{lastFlogging.count} 회</div>
-          <div>{lastFlogging.hour} 시간</div>
-          <div>{lastFlogging.calories} kcal</div>
+          <div>{lastPlogging.count} 회</div>
+          <div>{lastPlogging.hour} 시간</div>
+          <div>{lastPlogging.calories} kcal</div>
         </div>
       </S.BoxFrame>
     </S.Wrap>
@@ -81,4 +81,4 @@ const S = {
   `,
 };
 
-export default MyFloggingReport;
+export default MyPloggingReport;

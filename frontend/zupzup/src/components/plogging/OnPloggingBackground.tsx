@@ -15,7 +15,7 @@ interface trashButtonProps {
   trashOn: boolean;
 }
 
-const OnFloggingBackground = () => {
+const OnPloggingBackground = () => {
   const navigate = useNavigate();
 
   const [trashOn, setTrashOn] = useState<boolean>(false);
@@ -51,7 +51,7 @@ const OnFloggingBackground = () => {
   );
 };
 
-export default OnFloggingBackground;
+export default OnPloggingBackground;
 
 const S = {
   Wrap: styled.div`

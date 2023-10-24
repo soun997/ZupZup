@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
   Navigation,
   ProgressBar,
-  MyFloggingReport,
+  MyPloggingReport,
   MyPageNav,
 } from 'components';
 import { ProfileInfo } from 'types/ProfileInfo';
@@ -13,7 +13,7 @@ const profileInfo: ProfileInfo = {
   day: 12,
   level: 1,
   exp: 160,
-  lastFlogging: {
+  lastPlogging: {
     count: 2,
     hour: 2,
     calories: 200,
@@ -32,7 +32,7 @@ const MyPage = () => {
           <ProgressBar score={profileInfo.exp} total={200} />
         </S.Level>
         <S.Report>
-          <MyFloggingReport lastFlogging={profileInfo.lastFlogging} />
+          <MyPloggingReport lastPlogging={profileInfo.lastPlogging} />
         </S.Report>
       </S.Content>
 

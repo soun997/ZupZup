@@ -12,14 +12,14 @@ const Router = () => {
           <Route path="/" element={<pages.OnBoarding />} />
           <Route
             path={utils.URL.CALENDAR.CALENDAR}
-            element={<pages.FloggingRecord />}
+            element={<pages.PloggingRecord />}
           />
           <Route
             path={utils.URL.PLOGGING.LOBBY}
-            element={<pages.FloggingStart />}
+            element={<pages.PloggingStart />}
           />
           <Route path={utils.URL.PLOGGING.CAMERA} element={<pages.Camera />} />
-          <Route path={utils.URL.PLOGGING.ON} element={<pages.OnFlogging />} />
+          <Route path={utils.URL.PLOGGING.ON} element={<pages.OnPlogging />} />
           <Route
             path={utils.URL.PLOGGING.TRASH}
             element={<pages.TrashReport />}
@@ -28,7 +28,7 @@ const Router = () => {
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
           <Route
             path={utils.URL.PLOGGING.REPORT}
-            element={<pages.FloggingReport />}
+            element={<pages.PloggingReport />}
           />
 
           <Route
@@ -46,7 +46,7 @@ const Router = () => {
           />
           <Route
             path={utils.URL.RESULT.FLOGGING}
-            element={<pages.FloggingDone />}
+            element={<pages.PloggingDone />}
           />
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 

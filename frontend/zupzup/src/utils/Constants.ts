@@ -10,16 +10,16 @@ export const URL = {
     CALENDAR: '/calendar',
   },
   PLOGGING: {
-    LOBBY: '/flogging/lobby',
-    ON: '/flogging/on',
-    CAMERA: '/flogging/camera',
-    REPORT: '/flogging/report',
-    TRASH: '/flogging/trash-report',
+    LOBBY: '/plogging/lobby',
+    ON: '/plogging/on',
+    CAMERA: '/plogging/camera',
+    REPORT: '/plogging/report',
+    TRASH: '/plogging/trash-report',
   },
   LOADING: 'loading',
   RESULT: {
     REGIST: '/success-regist',
-    FLOGGING: '/success-flogging',
+    FLOGGING: '/success-plogging',
   },
   MYPAGE: {
     HOME: '/mypage',

@@ -1,4 +1,4 @@
-export interface FloggingReport {
+export interface PloggingReport {
   image: string;
   record: RecordInfo;
 }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
 
-const FloggingStartBackground = () => {
+const PloggingStartBackground = () => {
   const navigate = useNavigate();
 
   return (
@@ -24,7 +24,7 @@ const FloggingStartBackground = () => {
   );
 };
 
-export default FloggingStartBackground;
+export default PloggingStartBackground;
 
 const S = {
   Wrap: styled.div`

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
-import { FloggingReport } from 'types/PloggingReport';
+import { PloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
 import { useCapture } from 'hooks';
 
-const floggingReport: FloggingReport = {
+const ploggingReport: PloggingReport = {
   image: '../../../assets/images/route.png',
   record: {
     time: 7814,
@@ -16,7 +16,7 @@ const floggingReport: FloggingReport = {
   },
 };
 
-const FloggingReport = () => {
+const PloggingReport = () => {
   const navigate = useNavigate();
   const { handleCaptureClick, captureRef } = useCapture();
 
@@ -32,10 +32,10 @@ const FloggingReport = () => {
         <S.SubText>플로깅 기록을 확인해주세요</S.SubText>
 
         <S.SubTitle>나의 이동 경로</S.SubTitle>
-        <S.Image src={floggingReport.image} />
+        <S.Image src={ploggingReport.image} />
 
         <S.SubTitle>기록</S.SubTitle>
-        <RecordReport record={floggingReport.record}></RecordReport>
+        <RecordReport record={ploggingReport.record}></RecordReport>
 
         <S.SaveImage onClick={handleCaptureClick}>
           <SaveSvg />
@@ -135,4 +135,4 @@ const S = {
     color: ${({ theme }) => theme.color.gray2};
   `,
 };
-export default FloggingReport;
+export default PloggingReport;

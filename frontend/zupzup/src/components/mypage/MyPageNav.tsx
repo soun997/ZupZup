@@ -34,7 +34,6 @@ const S = {
     align-items: center;
     height: 44px;
     justify-content: space-between;
-    padding: 0 10px;
     overflow: hidden;
   `,
 

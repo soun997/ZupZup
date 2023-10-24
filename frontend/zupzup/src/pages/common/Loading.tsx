@@ -1,5 +1,5 @@
-import LoadingAnimation from 'components/animation/LoadingLottie';
 import styled from 'styled-components';
+import { LoadingAnimation } from 'components';
 
 const Loading = () => {
   return (

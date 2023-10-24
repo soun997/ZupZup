@@ -1,8 +1,8 @@
-import SuccessAnimation from 'components/animation/SuccessLottie';
-import ConfirmButton from 'components/common/ConfirmButton';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
+
+import { SuccessAnimation, ConfirmButton } from 'components';
 
 const RegistSuccess = () => {
   const navigate = useNavigate();

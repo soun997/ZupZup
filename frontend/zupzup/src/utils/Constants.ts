@@ -20,6 +20,14 @@ export const URL = {
     REGIST: '/success-regist',
     FLOGGING: '/success-flogging',
   },
+  MYPAGE: {
+    HOME: '/mypage',
+    SHOP: '/shop',
+  },
+  SETTING: {
+    HOME: '/setting',
+    PROFILE: '/profile',
+  },
 };
 
 export const MAX_WIDTH = '768px';

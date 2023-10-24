@@ -19,8 +19,6 @@ export { default as FloggingMap } from './flogging/FloggingMap';
 export { default as CoinReport } from './flogging/CoinReport';
 export { default as RecordReport } from './flogging/RecordReport';
 
-export { default as ConfirmButton } from './common/ConfirmButton';
-
 export { RegistInfoInput, RegistInfoSelectBox } from './login/RegistInfoInput';
 export { default as RegistInfoTitle } from './login/RegistInfoTitle';
 export { default as RegistInfoFrame } from './login/RegistInfoFrame';

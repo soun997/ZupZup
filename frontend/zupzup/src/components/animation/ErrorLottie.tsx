@@ -1,6 +1,7 @@
 import Lottie from 'lottie-react';
 import errorLottie from 'assets/lottie/404-lottie.json';
-import styled from 'styled-components';
+
+import { LottieFrame } from './LottieStyle';
 
 const ErrorAnimation = () => {
   return (
@@ -15,17 +16,4 @@ const ErrorAnimation = () => {
   );
 };
 
-const LottieFrame = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .lottie {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    height: 90%;
-  }
-`;
 export default ErrorAnimation;

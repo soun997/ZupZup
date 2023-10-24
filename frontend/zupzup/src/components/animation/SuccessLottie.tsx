@@ -1,6 +1,7 @@
 import Lottie from 'lottie-react';
 import successLottie from 'assets/lottie/success-lottie.json';
-import styled from 'styled-components';
+
+import { LottieFrame } from './LottieStyle';
 
 const SuccessAnimation = () => {
   return (
@@ -16,17 +17,4 @@ const SuccessAnimation = () => {
   );
 };
 
-const LottieFrame = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .lottie {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70%;
-    height: 70%;
-  }
-`;
 export default SuccessAnimation;

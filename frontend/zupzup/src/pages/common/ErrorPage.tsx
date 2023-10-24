@@ -4,7 +4,7 @@ import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
 
 const ErrorPage = () => {
-  const time = useCountdownTimer(3, utils.URL.FLOGGING.LOBBY);
+  const time = useCountdownTimer(3, utils.URL.PLOGGING.LOBBY);
 
   return (
     <S.Wrap>

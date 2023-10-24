@@ -9,7 +9,7 @@ export const URL = {
   CALENDAR: {
     CALENDAR: '/calendar',
   },
-  FLOGGING: {
+  PLOGGING: {
     LOBBY: '/flogging/lobby',
     ON: '/flogging/on',
     CAMERA: '/flogging/camera',

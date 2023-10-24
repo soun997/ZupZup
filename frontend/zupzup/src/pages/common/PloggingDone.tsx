@@ -4,7 +4,7 @@ import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
 
 const FloggingDone = () => {
-  const time = useCountdownTimer(3, utils.URL.FLOGGING.REPORT);
+  const time = useCountdownTimer(3, utils.URL.PLOGGING.REPORT);
   return (
     <S.Wrap>
       <S.TitleFrame>

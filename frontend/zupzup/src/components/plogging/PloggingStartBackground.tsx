@@ -18,7 +18,7 @@ const FloggingStartBackground = () => {
       </S.Header>
       <ConfirmButton
         text="플로깅 시작하기"
-        onClick={() => navigate(utils.URL.FLOGGING.ON)}
+        onClick={() => navigate(utils.URL.PLOGGING.ON)}
       />
     </S.Wrap>
   );

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
-import { FloggingReport } from 'types/FloggingReport';
+import { FloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
 import { useCapture } from 'hooks';
 

@@ -16,7 +16,7 @@ const Navigation = () => {
         <S.SideButton onClick={() => navigate(utils.URL.CALENDAR.CALENDAR)}>
           <CalendarSvg />
         </S.SideButton>
-        <S.MainButton onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}>
+        <S.MainButton onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}>
           <ShoesSvg />
         </S.MainButton>
         <S.SideButton>

@@ -1,6 +1,6 @@
 import { useFormatTime } from 'hooks';
 import styled from 'styled-components';
-import { RecordInfo } from 'types/FloggingReport';
+import { RecordInfo } from 'types/PloggingReport';
 
 interface Props {
   record: RecordInfo;

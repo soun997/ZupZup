@@ -37,12 +37,12 @@ const OnFloggingBackground = () => {
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
-        <S.CameraButton onClick={() => navigate(utils.URL.FLOGGING.CAMERA)}>
+        <S.CameraButton onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}>
           <CameraSvg />
         </S.CameraButton>
-        <S.FloggingInfoButton>
+        <S.PloggingInfoButton>
           <SmallRunnerSvg /> 플로깅 정보 확인
-        </S.FloggingInfoButton>
+        </S.PloggingInfoButton>
         <S.TrashButton onClick={() => setTrashOn(!trashOn)} trashOn={trashOn}>
           {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>
@@ -136,7 +136,7 @@ const S = {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
-  FloggingInfoButton: styled.button`
+  PloggingInfoButton: styled.button`
     display: flex;
     align-items: center;
     justify-content: center;

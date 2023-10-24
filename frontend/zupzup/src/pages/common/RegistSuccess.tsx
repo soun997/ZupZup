@@ -17,7 +17,7 @@ const RegistSuccess = () => {
       <S.BottomFrame>
         <ConfirmButton
           text="플로깅 시작하기"
-          onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}
+          onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}
         />
       </S.BottomFrame>
     </S.Wrap>

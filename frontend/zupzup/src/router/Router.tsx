@@ -15,19 +15,19 @@ const Router = () => {
             element={<pages.FloggingRecord />}
           />
           <Route
-            path={utils.URL.FLOGGING.LOBBY}
+            path={utils.URL.PLOGGING.LOBBY}
             element={<pages.FloggingStart />}
           />
-          <Route path={utils.URL.FLOGGING.CAMERA} element={<pages.Camera />} />
-          <Route path={utils.URL.FLOGGING.ON} element={<pages.OnFlogging />} />
+          <Route path={utils.URL.PLOGGING.CAMERA} element={<pages.Camera />} />
+          <Route path={utils.URL.PLOGGING.ON} element={<pages.OnFlogging />} />
           <Route
-            path={utils.URL.FLOGGING.TRASH}
+            path={utils.URL.PLOGGING.TRASH}
             element={<pages.TrashReport />}
           />
 
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
           <Route
-            path={utils.URL.FLOGGING.REPORT}
+            path={utils.URL.PLOGGING.REPORT}
             element={<pages.FloggingReport />}
           />
 

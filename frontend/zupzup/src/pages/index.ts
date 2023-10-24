@@ -4,6 +4,7 @@ export { default as FloggingRecord } from './record/FloggingRecord';
 
 export { default as FloggingStart } from './flogging/FloggingStart';
 export { default as OnFlogging } from './flogging/OnFlogging';
+export { default as TrashReport } from './flogging/TrashReport';
 
 export { default as Camera } from './camera/Camera';
 

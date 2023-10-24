@@ -1,7 +1,7 @@
 export const URL = {
   LOGIN: {
     HOME: '/login',
-    REGIST_INFO: '/registInfo',
+    REGIST_INFO: '/regist-info',
   },
   MAIN: {
     HOME: '/',
@@ -14,6 +14,7 @@ export const URL = {
     ON: '/flogging/on',
     CAMERA: '/flogging/camera',
     REPORT: '/flogging/report',
+    TRASH: '/flogging/trash-report',
   },
   LOADING: 'loading',
   RESULT: {

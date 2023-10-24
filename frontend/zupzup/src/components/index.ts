@@ -18,6 +18,7 @@ export { default as OnPloggingBackground } from './plogging/OnPloggingBackground
 export { default as PloggingMap } from './plogging/PloggingMap';
 export { default as CoinReport } from './plogging/CoinReport';
 export { default as RecordReport } from './plogging/RecordReport';
+export { default as ExitModal } from './plogging/ExitModal';
 
 export { RegistInfoInput, RegistInfoSelectBox } from './login/RegistInfoInput';
 export { default as RegistInfoTitle } from './login/RegistInfoTitle';

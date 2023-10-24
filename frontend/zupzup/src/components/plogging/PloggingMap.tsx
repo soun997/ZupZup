@@ -8,7 +8,15 @@ interface Location {
   lng: number;
 }
 
-const PloggingMap = () => {
+interface MapProps {
+  exitOn: boolean;
+}
+
+interface Props {
+  exitOn: boolean;
+}
+
+const PloggingMap = ({ exitOn }: Props) => {
   const location = useGeolocation();
   const mapRef = useRef(null);
 
@@ -50,7 +58,7 @@ const PloggingMap = () => {
 
   return (
     <S.Wrap>
-      <S.Map ref={mapRef}></S.Map>
+      <S.Map ref={mapRef} exitOn={exitOn}></S.Map>
     </S.Wrap>
   );
 };
@@ -62,8 +70,9 @@ const S = {
     width: 100%;
     height: 100%;
   `,
-  Map: styled.div`
+  Map: styled.div<MapProps>`
     width: 100%;
     height: 100%;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
   `,
 };

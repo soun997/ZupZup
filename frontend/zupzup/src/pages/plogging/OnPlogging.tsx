@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { PloggingMap, OnPloggingBackground } from 'components';
 
 const OnPlogging = () => {
+  const [exitOn, setExitOn] = useState<boolean>(false);
+
   return (
     <S.Wrap>
-      <OnPloggingBackground />
-      <PloggingMap />
+      <OnPloggingBackground exitOn={exitOn} setExitOn={setExitOn} />
+      <PloggingMap exitOn={exitOn} />
     </S.Wrap>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ExitModal } from 'components';
 import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
@@ -11,39 +12,58 @@ import CancelTrashCanSvg from 'assets/icons/cancel_trash_can.svg?react';
 import CameraSvg from 'assets/icons/camera.svg?react';
 import RefreshSvg from 'assets/icons/refresh.svg?react';
 
-interface trashButtonProps {
+interface TrashButtonProps {
   trashOn: boolean;
 }
 
-const OnPloggingBackground = () => {
+interface ExitButtonProps {
+  exitOn: boolean;
+}
+
+interface ButtonProps extends TrashButtonProps, ExitButtonProps {}
+
+interface Props {
+  exitOn: boolean;
+  setExitOn: (exitOn: boolean) => void;
+}
+
+const OnPloggingBackground = ({ exitOn, setExitOn }: Props) => {
   const navigate = useNavigate();
 
   const [trashOn, setTrashOn] = useState<boolean>(false);
 
   return (
     <S.Wrap>
+      {exitOn && <ExitModal />}
       <S.CurrentState>
         <S.CurrentCoin>
           <CoinSvg />
           15
         </S.CurrentCoin>
-        <S.ExitButton>
+        <S.ExitButton onClick={() => setExitOn(true)} exitOn={exitOn}>
           <SmallRunnerSvg /> 종료하기
         </S.ExitButton>
       </S.CurrentState>
       <S.TrashToggleBox>
-        <S.RefreshButton trashOn={trashOn}>
+        <S.RefreshButton trashOn={trashOn} exitOn={exitOn}>
           <RefreshSvg />
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
-        <S.CameraButton onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}>
+        <S.CameraButton
+          onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}
+          exitOn={exitOn}
+        >
           <CameraSvg />
         </S.CameraButton>
-        <S.PloggingInfoButton>
+        <S.PloggingInfoButton exitOn={exitOn}>
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
-        <S.TrashButton onClick={() => setTrashOn(!trashOn)} trashOn={trashOn}>
+        <S.TrashButton
+          onClick={() => setTrashOn(!trashOn)}
+          trashOn={trashOn}
+          exitOn={exitOn}
+        >
           {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>
       </S.UserAccess>
@@ -95,7 +115,7 @@ const S = {
       margin: 2px;
     }
   `,
-  ExitButton: styled.button`
+  ExitButton: styled.button<ExitButtonProps>`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,7 +128,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
     padding: 6px 10px;
-    pointer-events: auto;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
@@ -121,7 +141,7 @@ const S = {
     margin: 20px 0 56px;
     padding: 0 28px;
   `,
-  CameraButton: styled.button`
+  CameraButton: styled.button<ExitButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,13 +150,13 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: auto;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
-  PloggingInfoButton: styled.button`
+  PloggingInfoButton: styled.button<ExitButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,7 +168,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
-    pointer-events: auto;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
 
     & > svg {
       margin: 0 6px 0 0;
@@ -166,7 +186,7 @@ const S = {
     margin: auto 0 0 0;
     padding: 0 30px;
   `,
-  RefreshButton: styled.button<trashButtonProps>`
+  RefreshButton: styled.button<ButtonProps>`
     display: ${({ trashOn }) => (trashOn ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
@@ -175,13 +195,13 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.sub2};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: auto;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
-  TrashButton: styled.button<trashButtonProps>`
+  TrashButton: styled.button<ButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,7 +211,7 @@ const S = {
     background-color: ${({ trashOn, theme }) =>
       trashOn ? theme.color.main : theme.color.gray3};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: auto;
+    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ trashOn, theme }) =>

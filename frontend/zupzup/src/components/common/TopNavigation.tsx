@@ -3,8 +3,8 @@ import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  title?: string | null;
-  rightComponent?: React.ReactElement | null;
+  title?: string;
+  rightComponent?: React.ReactElement;
 }
 
 const TopNavigation = (props: Props) => {

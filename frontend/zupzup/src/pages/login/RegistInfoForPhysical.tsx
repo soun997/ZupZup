@@ -7,8 +7,8 @@ import RegistInfoFrame from 'components/login/RegistInfoFrame';
 
 const RegistInfo = () => {
   const navigate = useNavigate();
-  const inputRefForHeight = useRef<HTMLInputElement | null>(null);
-  const inputRefForWeight = useRef<HTMLInputElement | null>(null);
+  const inputRefForHeight = useRef<HTMLInputElement>(null);
+  const inputRefForWeight = useRef<HTMLInputElement>(null);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   const inputCheck = (

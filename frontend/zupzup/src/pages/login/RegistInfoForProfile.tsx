@@ -14,7 +14,7 @@ const RegistInfo = () => {
   const { state } = useLocation();
 
   const navigate = useNavigate();
-  const inputRefForBirthYear = useRef<HTMLInputElement | null>(null);
+  const inputRefForBirthYear = useRef<HTMLInputElement>(null);
   const [gender, setGender] = useState<string>(GENDER.MALE);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 

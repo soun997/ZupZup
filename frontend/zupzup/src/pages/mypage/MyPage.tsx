@@ -1,8 +1,10 @@
-import { Navigation } from 'components';
-import ProgressBarFrame from 'components/common/ProgressBar';
-import MyFloggingReport from 'components/mypage/MyFloggingReport';
-import MyPageNav from 'components/mypage/MyPageNav';
 import styled from 'styled-components';
+import {
+  Navigation,
+  ProgressBar,
+  MyFloggingReport,
+  MyPageNav,
+} from 'components';
 import { ProfileInfo } from 'types/ProfileInfo';
 
 const profileInfo: ProfileInfo = {
@@ -27,7 +29,7 @@ const MyPage = () => {
         </S.Title>
         <S.Level>
           <S.SubInfo>레벨 {profileInfo.level + 1} 까지 </S.SubInfo>
-          <ProgressBarFrame score={profileInfo.exp} total={200} />
+          <ProgressBar score={profileInfo.exp} total={200} />
         </S.Level>
         <S.Report>
           <MyFloggingReport lastFlogging={profileInfo.lastFlogging} />

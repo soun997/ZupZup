@@ -1,8 +1,11 @@
 import { Navigation } from 'components';
+import ProgressBarFrame from 'components/common/ProgressBar';
+import MyFloggingReport from 'components/mypage/MyFloggingReport';
 import MyPageNav from 'components/mypage/MyPageNav';
 import styled from 'styled-components';
+import { ProfileInfo } from 'types/ProfileInfo';
 
-const profileInfo = {
+const profileInfo: ProfileInfo = {
   nickname: '줍줍',
   characterImage: 'assets/images/character.png',
   day: 12,
@@ -11,7 +14,7 @@ const profileInfo = {
   lastFlogging: {
     count: 2,
     hour: 2,
-    calorie: 200,
+    calories: 200,
   },
 };
 const MyPage = () => {
@@ -22,7 +25,15 @@ const MyPage = () => {
         <S.Title>
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
         </S.Title>
+        <S.Level>
+          <S.SubInfo>레벨 {profileInfo.level + 1} 까지 </S.SubInfo>
+          <ProgressBarFrame score={profileInfo.exp} total={200} />
+        </S.Level>
+        <S.Report>
+          <MyFloggingReport lastFlogging={profileInfo.lastFlogging} />
+        </S.Report>
       </S.Content>
+
       <S.Image src={profileInfo.characterImage}></S.Image>
       <Navigation />
     </S.Wrap>
@@ -52,9 +63,27 @@ const S = {
 
   Image: styled.img`
     position: absolute;
-    bottom: 110px;
+    bottom: 90px;
     margin-left: 30px;
     width: 200px;
+  `,
+
+  Level: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+  `,
+  SubInfo: styled.div`
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.body3};
+  `,
+
+  Report: styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center;
   `,
 };
 

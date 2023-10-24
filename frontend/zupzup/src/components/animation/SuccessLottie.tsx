@@ -5,7 +5,7 @@ import { LottieFrame } from './LottieStyle';
 
 const SuccessAnimation = () => {
   return (
-    <LottieFrame>
+    <LottieFrame width={70} height={70}>
       <Lottie
         className="lottie"
         loop={false}

@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 
-import { FloggingBackground, FloggingMap, Navigation } from 'components';
+import { FloggingMap, OnFloggingBackground } from 'components';
 
-const Flogging = () => {
+const OnFlogging = () => {
   return (
     <S.Wrap>
-      <FloggingBackground />
+      <OnFloggingBackground />
       <FloggingMap />
-      <Navigation />
     </S.Wrap>
   );
 };
 
-export default Flogging;
+export default OnFlogging;
 
 const S = {
   Wrap: styled.div`

@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TopNavigation from 'components/common/TopNavigation';
-import { RegistInfoInput } from 'components/login/RegistInfoInput';
-import RegistInfoTitle from 'components/login/RegistInfoTitle';
-import RegistInfoFrame from 'components/login/RegistInfoFrame';
+
+import {
+  TopNavigation,
+  RegistInfoInput,
+  RegistInfoTitle,
+  RegistInfoFrame,
+} from 'components';
 
 const RegistInfo = () => {
   const navigate = useNavigate();

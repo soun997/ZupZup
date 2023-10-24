@@ -10,7 +10,9 @@ export const URL = {
     CALENDAR: '/calendar',
   },
   FLOGGING: {
-    LOBBY: '/flogging',
+    LOBBY: '/flogging/lobby',
+    ON: '/flogging/on',
+    CAMERA: '/flogging/camera',
     REPORT: '/flogging/report',
   },
   LOADING: 'loading',

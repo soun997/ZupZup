@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import { RecentRecord } from 'components';
-import ConfirmButton from 'components/common/ConfirmButton';
+import { RecentRecord, ConfirmButton } from 'components';
+import * as utils from 'utils';
 
-const FloggingBackground = () => {
+const FloggingStartBackground = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrap>
       <RecentRecord />
@@ -13,12 +16,15 @@ const FloggingBackground = () => {
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
-      <ConfirmButton text="플로깅 시작하기" />
+      <ConfirmButton
+        text="플로깅 시작하기"
+        onClick={() => navigate(utils.URL.FLOGGING.ON)}
+      />
     </S.Wrap>
   );
 };
 
-export default FloggingBackground;
+export default FloggingStartBackground;
 
 const S = {
   Wrap: styled.div`
@@ -35,6 +41,7 @@ const S = {
     );
     box-shadow: 0px 20px 20px 0px rgba(112, 112, 112, 0.1);
     z-index: 99;
+    pointer-events: none;
   `,
   Header: styled.div`
     display: flex;
@@ -60,5 +67,26 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.display1};
     line-height: ${({ theme }) => theme.font.lineheight.display1};
     margin: 11px 0 0 0;
+  `,
+  StartButton: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 56px);
+    height: 52px;
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.white};
+    margin: 42px 28px 0;
+    padding: 8px 16px;
+    pointer-events: auto;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${({ theme }) => theme.color.sub};
+    }
   `,
 };

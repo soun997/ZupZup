@@ -1,21 +1,21 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GENDER } from 'utils';
+
 import * as utils from 'utils';
-import TopNavigation from 'components/common/TopNavigation';
 import {
+  TopNavigation,
   RegistInfoInput,
   RegistInfoSelectBox,
-} from 'components/login/RegistInfoInput';
-import RegistInfoTitle from 'components/login/RegistInfoTitle';
-import RegistInfoFrame from 'components/login/RegistInfoFrame';
+  RegistInfoTitle,
+  RegistInfoFrame,
+} from 'components';
 
 const RegistInfo = () => {
   const { state } = useLocation();
 
   const navigate = useNavigate();
   const inputRefForBirthYear = useRef<HTMLInputElement>(null);
-  const [gender, setGender] = useState<string>(GENDER.MALE);
+  const [gender, setGender] = useState<string>(utils.GENDER.MALE);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

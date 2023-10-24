@@ -12,6 +12,7 @@ export { default as RecentRecord } from './flogging/RecentRecord';
 export { default as FloggingStartBackground } from './flogging/FloggingStartBackground';
 export { default as OnFloggingBackground } from './flogging/OnFloggingBackground';
 export { default as FloggingMap } from './flogging/FloggingMap';
+export { default as RecordReport } from './flogging/RecordReport';
 
 export { default as ConfirmButton } from './common/ConfirmButton';
 

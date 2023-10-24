@@ -21,6 +21,10 @@ const Router = () => {
           <Route path={utils.URL.FLOGGING.CAMERA} element={<pages.Camera />} />
           <Route path={utils.URL.FLOGGING.ON} element={<pages.OnFlogging />} />
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
+          <Route
+            path={utils.URL.FLOGGING.REPORT}
+            element={<pages.FloggingReport />}
+          />
 
           <Route
             path={utils.URL.LOGIN.REGIST_INFO + '/physical'}

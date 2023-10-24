@@ -18,6 +18,7 @@ const Router = () => {
             path={utils.URL.FLOGGING.LOBBY}
             element={<pages.FloggingStart />}
           />
+          <Route path={utils.URL.FLOGGING.CAMERA} element={<pages.Camera />} />
           <Route path={utils.URL.FLOGGING.ON} element={<pages.OnFlogging />} />
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
         </Route>

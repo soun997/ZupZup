@@ -1,9 +1,25 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
 import CoinSvg from 'assets/icons/coin.svg?react';
+import TrashCanSvg from 'assets/icons/trash_can.svg?react';
+import CancelTrashCanSvg from 'assets/icons/cancel_trash_can.svg?react';
+import CameraSvg from 'assets/icons/camera.svg?react';
+import RefreshSvg from 'assets/icons/refresh.svg?react';
+
+interface trashButtonProps {
+  trashOn: boolean;
+}
 
 const OnFloggingBackground = () => {
+  const navigate = useNavigate();
+
+  const [trashOn, setTrashOn] = useState<boolean>(false);
+
   return (
     <S.Wrap>
       <S.CurrentState>
@@ -15,10 +31,21 @@ const OnFloggingBackground = () => {
           <SmallRunnerSvg /> 종료하기
         </S.ExitButton>
       </S.CurrentState>
+      <S.TrashToggleBox>
+        <S.RefreshButton trashOn={trashOn}>
+          <RefreshSvg />
+        </S.RefreshButton>
+      </S.TrashToggleBox>
       <S.UserAccess>
-        <S.CameraButton></S.CameraButton>
-        <S.FloggingInfoButton></S.FloggingInfoButton>
-        <S.TrashButton></S.TrashButton>
+        <S.CameraButton onClick={() => navigate(utils.URL.FLOGGING.CAMERA)}>
+          <CameraSvg />
+        </S.CameraButton>
+        <S.FloggingInfoButton>
+          <SmallRunnerSvg /> 플로깅 정보 확인
+        </S.FloggingInfoButton>
+        <S.TrashButton onClick={() => setTrashOn(!trashOn)} trashOn={trashOn}>
+          {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
+        </S.TrashButton>
       </S.UserAccess>
     </S.Wrap>
   );
@@ -77,6 +104,9 @@ const S = {
     border-radius: 4px;
     color: ${({ theme }) => theme.color.white};
     background-color: ${({ theme }) => theme.color.main};
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
     padding: 6px 10px;
     pointer-events: auto;
 
@@ -88,7 +118,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: auto 0 56px;
+    margin: 20px 0 56px;
     padding: 0 28px;
   `,
   CameraButton: styled.button`
@@ -101,6 +131,10 @@ const S = {
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};
     pointer-events: auto;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.sub};
+    }
   `,
   FloggingInfoButton: styled.button`
     display: flex;
@@ -111,17 +145,57 @@ const S = {
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
     pointer-events: auto;
+
+    & > svg {
+      margin: 0 6px 0 0;
+    }
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.sub};
+    }
   `,
-  TrashButton: styled.button`
+  TrashToggleBox: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 56px;
+    margin: auto 0 0 0;
+    padding: 0 30px;
+  `,
+  RefreshButton: styled.button<trashButtonProps>`
+    display: ${({ trashOn }) => (trashOn ? 'flex' : 'none')};
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+    background-color: ${({ theme }) => theme.color.sub2};
+    color: ${({ theme }) => theme.color.white};
+    pointer-events: auto;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.sub};
+    }
+  `,
+  TrashButton: styled.button<trashButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 58px;
     height: 58px;
     border-radius: 29px;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: ${({ trashOn, theme }) =>
+      trashOn ? theme.color.main : theme.color.gray3};
     color: ${({ theme }) => theme.color.white};
     pointer-events: auto;
+
+    &:hover {
+      background-color: ${({ trashOn, theme }) =>
+        trashOn ? theme.color.sub : ''};
+    }
   `,
 };

@@ -11,6 +11,7 @@ export const URL = {
   FLOGGING: {
     LOBBY: '/flogging/lobby',
     ON: '/flogging/on',
+    CAMERA: '/flogging/camera',
   },
 };
 

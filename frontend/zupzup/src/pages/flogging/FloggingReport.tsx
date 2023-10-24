@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+
+import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
 import { FloggingReport } from 'types/FloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
@@ -22,7 +24,7 @@ const FloggingReport = () => {
       <S.Content>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
-          <S.CloseButton onClick={() => navigate('/mypage')}>
+          <S.CloseButton onClick={() => navigate(utils.URL.MYPAGE.HOME)}>
             닫기
           </S.CloseButton>
         </S.TitleFrame>
@@ -42,7 +44,7 @@ const FloggingReport = () => {
       <S.BottomFrame>
         <ConfirmButton
           text="마이페이지로 이동"
-          onClick={() => navigate('/mypage')}
+          onClick={() => navigate(utils.URL.MYPAGE.HOME)}
         />
       </S.BottomFrame>
     </S.Wrap>

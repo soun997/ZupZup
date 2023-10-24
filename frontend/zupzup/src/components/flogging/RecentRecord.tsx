@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import SmallClockSvg from "assets/icons/smallclock.svg?react";
+import SmallClockSvg from 'assets/icons/smallclock.svg?react';
 
 const RecentRecord = () => {
   return (

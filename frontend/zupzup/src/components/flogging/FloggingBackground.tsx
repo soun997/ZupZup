@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { RecentRecord } from "components";
+import { RecentRecord } from 'components';
 
 const FloggingBackground = () => {
   return (

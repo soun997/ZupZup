@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ErrorAnimation from 'components/animation/ErrorLottie';
+import { ErrorAnimation } from 'components';
 import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
 

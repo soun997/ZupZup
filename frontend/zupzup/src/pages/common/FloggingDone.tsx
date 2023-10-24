@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SuccessAnimation from 'components/animation/SuccessLottie';
+import { SuccessAnimation } from 'components';
 import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
 

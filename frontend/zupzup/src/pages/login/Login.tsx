@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
-import SocialLoginButton from 'components/common/SocialLoginButton';
+import { SocialLoginButton } from 'components';
+import { SOCIAL_KEY, getSocialLoginAuthUrl } from 'utils';
+
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
 import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
-import { SOCIAL_KEY, getSocialLoginAuthUrl } from 'utils';
 
 const Login = () => {
   const handleSocialLogin = async (domain: string) => {

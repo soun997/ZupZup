@@ -20,6 +20,11 @@ const Router = () => {
           />
           <Route path={utils.URL.FLOGGING.CAMERA} element={<pages.Camera />} />
           <Route path={utils.URL.FLOGGING.ON} element={<pages.OnFlogging />} />
+          <Route
+            path={utils.URL.FLOGGING.TRASH}
+            element={<pages.TrashReport />}
+          />
+
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
           <Route
             path={utils.URL.FLOGGING.REPORT}
@@ -44,6 +49,8 @@ const Router = () => {
             element={<pages.FloggingDone />}
           />
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
+
+          <Route path={utils.URL.MYPAGE.HOME} element={<pages.MyPage />} />
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

@@ -34,10 +34,9 @@ const Router = () => {
             path={utils.URL.RESULT.FLOGGING}
             element={<pages.FloggingDone />}
           />
-          <Route path={utils.URL.Loading} element={<pages.Loading />} />
+          <Route path={utils.URL.LOADING} element={<pages.Loading />} />
+          <Route path="*" element={<pages.Error />}></Route>
         </Route>
-
-        <Route path="*" element={<pages.Error />}></Route>
       </Routes>
     </BrowserRouter>
   );

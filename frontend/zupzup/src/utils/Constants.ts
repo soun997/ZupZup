@@ -13,7 +13,7 @@ export const URL = {
     LOBBY: '/flogging',
     REPORT: '/flogging/report',
   },
-  Loading: 'loading',
+  LOADING: 'loading',
   RESULT: {
     REGIST: '/success-regist',
     FLOGGING: '/success-flogging',

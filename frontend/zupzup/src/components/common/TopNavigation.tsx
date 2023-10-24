@@ -40,9 +40,16 @@ const S = {
     gap: 4px;
     flex-shrink: 0;
   `,
-  MiddleSection: styled.div``,
+  MiddleSection: styled.div`
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-basis: 1;
+    font-family: ${({ theme }) => theme.font.family.focus2};
+  `,
   RightSection: styled.div`
     cursor: pointer;
+    width: 40px;
   `,
 };
 

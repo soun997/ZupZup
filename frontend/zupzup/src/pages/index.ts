@@ -14,6 +14,8 @@ export { default as RegistInfoPhysical } from './login/RegistInfoForPhysical';
 export { default as RegistInfoProfile } from './login/RegistInfoForProfile';
 
 export { default as MyPage } from './mypage/MyPage';
+export { default as SettingPage } from './mypage/SettingPage';
+export { default as ProfileSettingPage } from './mypage/ProfileSettingPage';
 
 export { default as RegistSuccess } from './common/RegistSuccess';
 export { default as PloggingDone } from './common/PloggingDone';

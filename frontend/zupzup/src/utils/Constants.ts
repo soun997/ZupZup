@@ -11,6 +11,12 @@ export const URL = {
   },
   FLOGGING: {
     LOBBY: '/flogging',
+    REPORT: '/flogging/report',
+  },
+  LOADING: 'loading',
+  RESULT: {
+    REGIST: '/success-regist',
+    FLOGGING: '/success-flogging',
   },
 };
 

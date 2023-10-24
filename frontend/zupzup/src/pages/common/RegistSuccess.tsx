@@ -15,9 +15,10 @@ const RegistSuccess = () => {
       </S.TitleFrame>
       <SuccessAnimation />
       <S.BottomFrame>
-        <span onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}>
-          <ConfirmButton text="플로깅 시작하기" />
-        </span>
+        <ConfirmButton
+          text="플로깅 시작하기"
+          onClick={() => navigate(utils.URL.FLOGGING.LOBBY)}
+        />
       </S.BottomFrame>
     </S.Wrap>
   );
@@ -55,10 +56,9 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
     bottom: 0;
     width: 100%;
-    margin-bottom: 25px;
+    margin: auto 0 25px 0;
 
     span {
       width: 100%;

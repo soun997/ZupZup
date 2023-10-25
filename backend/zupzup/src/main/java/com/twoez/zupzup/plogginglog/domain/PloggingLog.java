@@ -1,4 +1,4 @@
-package com.twoez.zupzup.history.domain;
+package com.twoez.zupzup.plogginglog.domain;
 
 
 import com.twoez.zupzup.global.audit.BaseTime;

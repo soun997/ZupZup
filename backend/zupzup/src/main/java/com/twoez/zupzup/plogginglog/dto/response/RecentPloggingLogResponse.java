@@ -1,14 +1,16 @@
-package com.twoez.zupzup.history.dto.response;
+package com.twoez.zupzup.plogginglog.dto.response;
 
-import com.twoez.zupzup.history.domain.PloggingLog;
+
+import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record RecentPloggingLogResponse(LocalDateTime startDateTime,
-                                        LocalDateTime endDateTime,
-                                        Integer distance,
-                                        Integer calories) {
+public record RecentPloggingLogResponse(
+        LocalDateTime startDateTime,
+        LocalDateTime endDateTime,
+        Integer distance,
+        Integer calories) {
 
     public static RecentPloggingLogResponse from(PloggingLog ploggingLog) {
         return RecentPloggingLogResponse.builder()

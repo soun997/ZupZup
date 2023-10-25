@@ -1,10 +1,10 @@
-package com.twoez.zupzup.history.controller;
+package com.twoez.zupzup.plogginglog.controller;
 
 
-import com.twoez.zupzup.history.dto.response.PloggingLogListResponse;
-import com.twoez.zupzup.history.dto.response.RecentPloggingLogResponse;
-import com.twoez.zupzup.history.service.PloggingLogQueryService;
 import com.twoez.zupzup.global.response.ApiResponse;
+import com.twoez.zupzup.plogginglog.dto.response.PloggingLogListResponse;
+import com.twoez.zupzup.plogginglog.dto.response.RecentPloggingLogResponse;
+import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/histories")
+@RequestMapping("/v1/histories")
 @RequiredArgsConstructor
 public class PloggingLogController {
 
@@ -23,11 +23,9 @@ public class PloggingLogController {
 
     @GetMapping("/period")
     public ApiResponse<List<PloggingLogListResponse>> floggingListByPeriod(
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate) {
+            @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) {
         return ApiResponse.ok(
-                ploggingLogQueryService.searchInPeriod(startDate, endDate, 1L)
-                        .stream()
+                ploggingLogQueryService.searchInPeriod(startDate, endDate, 1L).stream()
                         .map(PloggingLogListResponse::from)
                         .toList());
     }

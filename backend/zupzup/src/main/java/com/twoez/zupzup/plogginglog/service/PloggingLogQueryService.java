@@ -1,8 +1,8 @@
-package com.twoez.zupzup.history.service;
+package com.twoez.zupzup.plogginglog.service;
 
 
-import com.twoez.zupzup.history.domain.PloggingLog;
-import com.twoez.zupzup.history.repository.PloggingLogQueryRepository;
+import com.twoez.zupzup.plogginglog.domain.PloggingLog;
+import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,10 +18,10 @@ public class PloggingLogQueryService {
 
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
 
-    public List<PloggingLog> searchInPeriod(LocalDateTime startDate, LocalDateTime endDate,
-            Long memberId) {
-        return ploggingLogQueryRepository.findByBetweenStartDateAndEndDate(startDate, endDate,
-                memberId);
+    public List<PloggingLog> searchInPeriod(
+            LocalDateTime startDate, LocalDateTime endDate, Long memberId) {
+        return ploggingLogQueryRepository.findByBetweenStartDateAndEndDate(
+                startDate, endDate, memberId);
     }
 
     public List<PloggingLog> searchByDate(LocalDate date, Long memberId) {
@@ -29,7 +29,8 @@ public class PloggingLogQueryService {
     }
 
     public PloggingLog searchRecentLog(Long memberId) {
-        return ploggingLogQueryRepository.findOneOrderByDateDesc(memberId)
+        return ploggingLogQueryRepository
+                .findOneOrderByDateDesc(memberId)
                 .orElseThrow(EntityNotFoundException::new);
     }
 }

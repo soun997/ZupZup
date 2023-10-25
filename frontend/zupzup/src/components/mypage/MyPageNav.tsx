@@ -29,9 +29,10 @@ const MyPageNav = ({ coin }: Props) => {
 
 const S = {
   Wrap: styled.div`
-    width: 100%;
+    margin-top: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
     height: 44px;
     justify-content: space-between;
     overflow: hidden;

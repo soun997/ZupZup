@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import { useNavigate } from 'react-router-dom';
-import BlankFrame from './BlankFrame';
 
 interface Props {
   title?: string;
@@ -12,7 +11,6 @@ const TopNavigation = (props: Props) => {
   const navigate = useNavigate();
   return (
     <>
-      <BlankFrame margin={15} />
       <S.Wrap>
         <S.LeftSection onClick={() => navigate(-1)}>
           <AngleLeftSvg />
@@ -33,6 +31,7 @@ const S = {
     align-items: center;
     height: 44px;
     justify-content: space-between;
+    margin-top: 10px;
   `,
 
   LeftSection: styled.div`

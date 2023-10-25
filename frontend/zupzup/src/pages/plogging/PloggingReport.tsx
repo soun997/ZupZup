@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
-import { BlankFrame, ConfirmButton, RecordReport } from 'components';
+import { ConfirmButton, RecordReport } from 'components';
 import { PloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
 import { useCapture } from 'hooks';
@@ -22,7 +22,6 @@ const PloggingReport = () => {
 
   return (
     <S.Wrap>
-      <BlankFrame margin={12} />
       <S.Content ref={captureRef}>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
@@ -60,6 +59,7 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    padding-top: 10px;
   `,
 
   Content: styled.div`
@@ -120,7 +120,7 @@ const S = {
     align-items: center;
     bottom: 0;
     width: 100%;
-    margin: auto 0 25px 0;
+    margin: auto 0 50px 0;
   `,
 
   SaveImage: styled.div`

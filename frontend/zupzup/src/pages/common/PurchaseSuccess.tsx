@@ -59,7 +59,7 @@ const S = {
     align-items: center;
     bottom: 0;
     width: 100%;
-    margin: auto 0 25px 0;
+    margin: auto 0 50px 0;
   `,
 };
 export default PurchaseSuccess;

@@ -4,7 +4,6 @@ import {
   ProgressBar,
   MyPloggingReport,
   MyPageNav,
-  BlankFrame,
 } from 'components';
 import { ProfileInfo } from 'types/ProfileInfo';
 
@@ -24,7 +23,6 @@ const MyPage = () => {
   return (
     <S.Wrap>
       <S.Content>
-        <BlankFrame margin={10} />
         <MyPageNav coin={320} />
         <S.Title>
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째

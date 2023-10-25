@@ -17,6 +17,8 @@ export { default as MyPage } from './mypage/MyPage';
 export { default as SettingPage } from './mypage/SettingPage';
 export { default as ProfileSettingPage } from './mypage/ProfileSettingPage';
 
+export { default as ShoppingList } from './shop/ShoppingList';
+
 export { default as RegistSuccess } from './common/RegistSuccess';
 export { default as PloggingDone } from './common/PloggingDone';
 export { default as Loading } from './common/Loading';

@@ -49,7 +49,7 @@ const S = {
   `,
   RightSection: styled.div`
     cursor: pointer;
-    width: 40px;
+    min-width: 40px;
   `,
 };
 

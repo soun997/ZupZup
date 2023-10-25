@@ -9,14 +9,15 @@ interface Location {
 }
 
 interface MapProps {
-  exitOn: boolean;
+  modalOn: boolean;
 }
 
 interface Props {
   exitOn: boolean;
+  ploggingInfoOn: boolean;
 }
 
-const PloggingMap = ({ exitOn }: Props) => {
+const PloggingMap = ({ exitOn, ploggingInfoOn }: Props) => {
   const location = useGeolocation();
   const mapRef = useRef(null);
 
@@ -58,7 +59,7 @@ const PloggingMap = ({ exitOn }: Props) => {
 
   return (
     <S.Wrap>
-      <S.Map ref={mapRef} exitOn={exitOn}></S.Map>
+      <S.Map ref={mapRef} modalOn={exitOn || ploggingInfoOn}></S.Map>
     </S.Wrap>
   );
 };
@@ -73,6 +74,6 @@ const S = {
   Map: styled.div<MapProps>`
     width: 100%;
     height: 100%;
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
   `,
 };

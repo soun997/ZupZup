@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ExitModal } from 'components';
+import { PloggingInfo } from 'components';
 import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
-import CoinSvg from 'assets/icons/coin.svg?react';
 import TrashCanSvg from 'assets/icons/trash_can.svg?react';
 import CancelTrashCanSvg from 'assets/icons/cancel_trash_can.svg?react';
 import CameraSvg from 'assets/icons/camera.svg?react';
@@ -23,46 +22,56 @@ interface ModalState {
 interface ButtonProps extends TrashButtonProps, ModalState {}
 
 interface Props {
+  time: number;
   exitOn: boolean;
   setExitOn: (exitOn: boolean) => void;
+  ploggingInfoOn: boolean;
+  setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
 }
 
-const OnPloggingBackground = ({ exitOn, setExitOn }: Props) => {
+const OnPloggingBackground = ({
+  time,
+  exitOn,
+  setExitOn,
+  ploggingInfoOn,
+  setPloggingInfoOn,
+}: Props) => {
   const navigate = useNavigate();
 
   const [trashOn, setTrashOn] = useState<boolean>(false);
 
   return (
     <S.Wrap>
-      {exitOn && <ExitModal setExitOn={setExitOn} />}
-      <S.CurrentState>
-        <S.CurrentCoin>
-          <CoinSvg />
-          15
-        </S.CurrentCoin>
-        <S.ExitButton onClick={() => setExitOn(true)} modalOn={exitOn}>
-          <SmallRunnerSvg /> 종료하기
-        </S.ExitButton>
-      </S.CurrentState>
+      {ploggingInfoOn && (
+        <PloggingInfo
+          time={time}
+          exitOn={exitOn}
+          setExitOn={setExitOn}
+          setPloggingInfoOn={setPloggingInfoOn}
+        />
+      )}
       <S.TrashToggleBox>
-        <S.RefreshButton trashOn={trashOn} modalOn={exitOn}>
+        <S.RefreshButton trashOn={trashOn} modalOn={exitOn || ploggingInfoOn}>
           <RefreshSvg />
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
         <S.CameraButton
           onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}
-          modalOn={exitOn}
+          modalOn={exitOn || ploggingInfoOn}
         >
           <CameraSvg />
         </S.CameraButton>
-        <S.PloggingInfoButton modalOn={exitOn}>
+        <S.PloggingInfoButton
+          onClick={() => setPloggingInfoOn(true)}
+          modalOn={exitOn || ploggingInfoOn}
+        >
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
         <S.TrashButton
           onClick={() => setTrashOn(!trashOn)}
           trashOn={trashOn}
-          modalOn={exitOn}
+          modalOn={exitOn || ploggingInfoOn}
         >
           {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>

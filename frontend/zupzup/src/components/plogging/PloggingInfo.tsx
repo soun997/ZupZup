@@ -1,36 +1,48 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import CoinSvg from 'assets/icons/coin.svg?react';
-import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
+import * as utils from 'utils';
+import { useFormatTime } from 'hooks';
 
-interface ModalState {
-  modalOn: boolean;
-}
+import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
+import CameraSvg from 'assets/icons/camera.svg?react';
 
 interface Props {
+  time: number;
   exitOn: boolean;
   setExitOn: (exitOn: boolean) => void;
-  ploggingInfoOn: boolean;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
 }
 
-const PloggingInfo = ({
-  exitOn,
-  setExitOn,
-  ploggingInfoOn,
-  setPloggingInfoOn,
-}: Props) => {
+const PloggingInfo = ({ time, setPloggingInfoOn }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrap>
-      <S.CurrentState>
-        <S.CurrentCoin>
-          <CoinSvg />
-          15
-        </S.CurrentCoin>
-        <S.ExitButton onClick={() => setExitOn(true)} modalOn={exitOn}>
-          <SmallRunnerSvg /> 종료하기
-        </S.ExitButton>
-      </S.CurrentState>
+      <S.PloggingInfoBox>
+        <S.PloggingTime>
+          {useFormatTime.formatTimeByColons(time)}
+        </S.PloggingTime>
+        <S.PloggingState>
+          <S.PloggingStateTitle>현재 플로깅 정보</S.PloggingStateTitle>
+          <S.PloggingDistanceBox>
+            <S.PloggingDistance>150 m</S.PloggingDistance>&nbsp;째 플로깅
+            중입니다.
+          </S.PloggingDistanceBox>
+          <S.PloggingCaloriesBox>
+            플로깅으로&nbsp;<S.PloggingCalories>39 kcal</S.PloggingCalories>
+            &nbsp;가 소모되었습니다.
+          </S.PloggingCaloriesBox>
+        </S.PloggingState>
+      </S.PloggingInfoBox>
+      <S.UserAccess>
+        <S.CameraButton onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}>
+          <CameraSvg />
+        </S.CameraButton>
+        <S.BackToMapButton onClick={() => setPloggingInfoOn(false)}>
+          <SmallRunnerSvg /> 지도로 돌아가기
+        </S.BackToMapButton>
+      </S.UserAccess>
     </S.Wrap>
   );
 };
@@ -39,45 +51,115 @@ export default PloggingInfo;
 
 const S = {
   Wrap: styled.div`
+    position: absolute;
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     background-color: ${({ theme }) => theme.color.background};
+    padding: 94px 16px 0;
   `,
-  CurrentState: styled.div`
+  PloggingInfoBox: styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
-    height: 94px;
-    padding: 0 30px;
   `,
-  CurrentCoin: styled.div`
-    display: flex;
-    align-items: center;
-    font-size: ${({ theme }) => theme.font.size.display3};
-    font-family: ${({ theme }) => theme.font.family.display3};
-    line-height: ${({ theme }) => theme.font.lineheight.display3};
+  PloggingTime: styled.div`
+    font-size: 40px;
+    font-family: ${({ theme }) => theme.font.family.display1};
+    line-height: 40px;
     color: ${({ theme }) => theme.color.gray2};
-
-    & > svg {
-      margin: 2px;
-    }
+    margin: 70px 0 40px;
   `,
-  ExitButton: styled.button<ModalState>`
+  PloggingState: styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 110px;
-    height: 34px;
-    border-radius: 4px;
-    color: ${({ theme }) => theme.color.white};
-    background-color: ${({ theme }) => theme.color.main};
+    justify-content: flex-start;
+    width: 100%;
+    height: 130px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.color.white};
+    padding: 28px 30px;
+  `,
+  PloggingStateTitle: styled.div`
+    width: 100%;
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
-    padding: 6px 10px;
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    margin: 0 0 14px 0;
+  `,
+  PloggingDistanceBox: styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: ${({ theme }) => theme.color.gray2};
+    margin: 0 0 8px;
+  `,
+  PloggingDistance: styled.div`
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: ${({ theme }) => theme.color.main};
+  `,
+  PloggingCaloriesBox: styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: ${({ theme }) => theme.color.gray2};
+  `,
+  PloggingCalories: styled.div`
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: ${({ theme }) => theme.color.main};
+  `,
+  UserAccess: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto 0 56px;
+    padding: 0 28px;
+  `,
+  CameraButton: styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+    background-color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.white};
+    pointer-events: auto;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.sub};
+    }
+  `,
+  BackToMapButton: styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 34px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.white};
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    pointer-events: auto;
+
+    & > svg {
+      margin: 0 6px 0 0;
+    }
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};

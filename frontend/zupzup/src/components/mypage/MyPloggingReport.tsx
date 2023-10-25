@@ -13,7 +13,7 @@ const MyPloggingReport = ({ lastPlogging }: Props) => {
         <span>누적 레포트</span>
       </S.IndexTitle>
       <S.BoxFrame>
-        <div className="title">지난주에는 이만큼 플로깅 했어요</div>
+        <div className="title">그동안 이만큼 플로깅 했어요</div>
         <div className="eachInfo">
           <div>{lastPlogging.count} 회</div>
           <div>{lastPlogging.hour} 시간</div>

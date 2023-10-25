@@ -1,12 +1,31 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import { PloggingMap, OnPloggingBackground } from 'components';
+import {
+  ExitModal,
+  OnPloggingHeader,
+  PloggingMap,
+  OnPloggingBackground,
+} from 'components';
+import { useStopWatch } from 'hooks';
 
 const OnPlogging = () => {
+  const [exitOn, setExitOn] = useState<boolean>(false);
+  const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
+  const stopwatch = useStopWatch();
+
   return (
     <S.Wrap>
-      <OnPloggingBackground />
-      <PloggingMap />
+      {exitOn && <ExitModal setExitOn={setExitOn} />}
+      <OnPloggingHeader exitOn={exitOn} setExitOn={setExitOn} />
+      <OnPloggingBackground
+        time={stopwatch}
+        exitOn={exitOn}
+        setExitOn={setExitOn}
+        ploggingInfoOn={ploggingInfoOn}
+        setPloggingInfoOn={setPloggingInfoOn}
+      />
+      <PloggingMap exitOn={exitOn} ploggingInfoOn={ploggingInfoOn} />
     </S.Wrap>
   );
 };

@@ -78,6 +78,7 @@ class PloggingLogControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/histories/period")
+                                .contextPath("/api")
                                 .queryParam(
                                         "startDate", LocalDateTime.of(2023, 10, 1, 0, 0).toString())
                                 .queryParam(
@@ -119,6 +120,7 @@ class PloggingLogControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/histories/days")
+                                .contextPath("/api")
                                 .queryParam("date", LocalDate.of(2023, 10, 1).toString())
                                 .contentType(MediaType.APPLICATION_JSON));
 
@@ -153,7 +155,9 @@ class PloggingLogControllerTest extends RestDocsTest {
 
         ResultActions perform =
                 mockMvc.perform(
-                        get("/api/v1/histories/recent").contentType(MediaType.APPLICATION_JSON));
+                        get("/api/v1/histories/recent")
+                                .contextPath("/api")
+                                .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk());
 

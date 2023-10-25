@@ -2,8 +2,8 @@ package com.twoez.zupzup.plogginglog.controller;
 
 
 import com.twoez.zupzup.global.response.ApiResponse;
-import com.twoez.zupzup.plogginglog.dto.response.PloggingLogListResponse;
-import com.twoez.zupzup.plogginglog.dto.response.RecentPloggingLogResponse;
+import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
+import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

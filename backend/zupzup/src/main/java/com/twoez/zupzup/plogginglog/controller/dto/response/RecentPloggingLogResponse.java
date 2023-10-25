@@ -1,4 +1,4 @@
-package com.twoez.zupzup.plogginglog.dto.response;
+package com.twoez.zupzup.plogginglog.controller.dto.response;
 
 
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
@@ -6,20 +6,18 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record PloggingLogListResponse(
+public record RecentPloggingLogResponse(
         LocalDateTime startDateTime,
         LocalDateTime endDateTime,
         Integer distance,
-        Integer calories,
-        String routeImageUrl) {
+        Integer calories) {
 
-    public static PloggingLogListResponse from(PloggingLog ploggingLog) {
-        return PloggingLogListResponse.builder()
+    public static RecentPloggingLogResponse from(PloggingLog ploggingLog) {
+        return RecentPloggingLogResponse.builder()
                 .startDateTime(ploggingLog.getStartDateTime())
                 .endDateTime(ploggingLog.getEndDateTime())
                 .distance(ploggingLog.getDistance())
                 .calories(ploggingLog.getCalories())
-                .routeImageUrl(ploggingLog.getRouteImageUrl())
                 .build();
     }
 }

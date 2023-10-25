@@ -56,7 +56,12 @@ const S = {
   RightSection: styled.div`
     cursor: pointer;
     display: flex;
-    gap: 8px;
+    gap: 10px;
+
+    & svg {
+      width: 22px;
+      height: 22px;
+    }
   `,
 };
 

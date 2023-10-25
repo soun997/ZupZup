@@ -1,6 +1,7 @@
 package com.twoez.zupzup.plogginglog.service;
 
 
+import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +32,6 @@ public class PloggingLogQueryService {
     public PloggingLog searchRecentLog(Long memberId) {
         return ploggingLogQueryRepository
                 .findOneOrderByDateDesc(memberId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(PloggingLogNotFoundException::new);
     }
 }

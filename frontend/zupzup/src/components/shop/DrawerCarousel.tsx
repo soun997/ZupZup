@@ -1,8 +1,11 @@
 import { styled } from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Food } from 'types/Food';
 import { DrawerFrame } from './DrawerFrame';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 interface Props {
   foodList: Food[];
@@ -17,7 +20,7 @@ const DrawerCarousel = ({ foodList }: Props) => {
     <S.Container>
       <Swiper
         slidesPerView={1}
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        modules={[Pagination]}
         pagination={{ clickable: true }}
       >
         {chunks.map((chunk, index) => (
@@ -54,11 +57,9 @@ const S = {
     flex-wrap: wrap;
     overflow: hidden;
     justify-content: space-between;
+    height: 550px;
     & .swiper {
       width: 100%;
-    }
-    & .each-slide {
-      cursor: pointer;
     }
     & .swiper-slide {
       width: 100%;
@@ -67,9 +68,12 @@ const S = {
       display: -webkit-inline-box;
     }
 
-    & .swiper-button-prev,
-    & .swiper-button-next {
-      color: ${({ theme }) => theme.color.main};
+    & .swiper-pagination {
+      margin-top: 20px;
+    }
+
+    & .swiper-pagination-bullets {
+      /* bottom: var(--swiper-pagination-bottom, -10px); */
     }
 
     & .swiper-scrollbar-drag,

@@ -56,6 +56,10 @@ const Router = () => {
             path={utils.URL.MYPAGE.SHOP}
             element={<pages.ShoppingList />}
           />
+          <Route
+            path={utils.URL.MYPAGE.SHOP_DETAIL + '/:id'}
+            element={<pages.EachShopDetail />}
+          />
 
           <Route
             path={utils.URL.SETTING.HOME}

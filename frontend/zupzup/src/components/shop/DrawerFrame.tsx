@@ -10,7 +10,7 @@ export interface DrawerFrameProps {
 export const DrawerFrame: React.FC<DrawerFrameProps> = ({ foodList }) => {
   const navigate = useNavigate();
   const handleClickOpen = (foodId: number) => {
-    navigate(utils.URL.MYPAGE.SHOP + `/${foodId}`);
+    navigate(utils.URL.MYPAGE.SHOP_DETAIL + `/${foodId}`);
   };
 
   return (

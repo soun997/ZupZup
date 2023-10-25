@@ -2,15 +2,24 @@ import styled from 'styled-components';
 
 interface ButtonAttributes {
   text: string;
+  color?: string;
   onClick: () => void;
 }
 
-const ConfirmButton = ({ text, onClick }: ButtonAttributes) => {
-  return <S.Button onClick={onClick}>{text}</S.Button>;
+const ConfirmButton = ({ text, color, onClick }: ButtonAttributes) => {
+  return (
+    <S.Button color={color} onClick={onClick}>
+      {text}
+    </S.Button>
+  );
 };
 
+interface StyleProps {
+  color?: string;
+}
+
 const S = {
-  Button: styled.div`
+  Button: styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,7 +29,8 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
     border-radius: 8px;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: ${({ theme, color }) =>
+      color ? color : theme.color.main};
     color: ${({ theme }) => theme.color.white};
     margin: 42px 28px 0;
     padding: 8px 16px;

@@ -24,6 +24,7 @@ export const URL = {
   MYPAGE: {
     HOME: '/mypage',
     SHOP: '/shop',
+    SHOP_DETAIL: '/shop/detail',
   },
   SETTING: {
     HOME: '/setting',

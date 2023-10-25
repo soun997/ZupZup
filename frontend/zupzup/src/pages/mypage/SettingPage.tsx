@@ -30,24 +30,31 @@ const Setting = () => {
 
       <S.SettingSection>
         <S.SubTitle>계정</S.SubTitle>
-        <SettingComponent text="로그아웃" svg={<></>} />
+        <SettingComponent
+          text="로그아웃"
+          svg={<></>}
+          onClick={() => navigate(utils.URL.LOGIN.HOME)}
+        />
       </S.SettingSection>
 
       <S.SettingSection>
         <S.SubTitle>약관</S.SubTitle>
         <SettingComponent
           text="서비스 이용약관"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(utils.URL.MAIN.HOME)}
         />
         <SettingComponent
           text="개인정보 처리방침"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(utils.URL.MAIN.HOME)}
         />
         <SettingComponent text="앱 버전" svg={<>1.0.0</>} />
-        <SettingComponent text="줍줍 새소식" onClick={() => navigate('/')} />
+        <SettingComponent
+          text="줍줍 새소식"
+          onClick={() => navigate(utils.URL.MAIN.HOME)}
+        />
         <SettingComponent
           text="오픈소스 라이선스 보기"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(utils.URL.MAIN.HOME)}
         />
       </S.SettingSection>
       <Navigation />

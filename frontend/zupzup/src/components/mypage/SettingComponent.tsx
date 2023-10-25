@@ -8,11 +8,9 @@ interface Props {
 }
 const SettingComponent = (props: Props) => {
   return (
-    <S.SectionBody>
+    <S.SectionBody onClick={() => props.onClick && props.onClick()}>
       <div className="title">{props.text}</div>
-      <S.SvgWrapper onClick={() => props.onClick && props.onClick()}>
-        {props.svg ? props.svg : <NextArrowSvg />}
-      </S.SvgWrapper>
+      <S.SvgWrapper>{props.svg ? props.svg : <NextArrowSvg />}</S.SvgWrapper>
     </S.SectionBody>
   );
 };

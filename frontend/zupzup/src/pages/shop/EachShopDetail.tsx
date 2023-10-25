@@ -1,9 +1,11 @@
-import { Coin, ConfirmButton, TopNavigation } from 'components';
+import { Coin, ConfirmButton, FoodDetailPage, TopNavigation } from 'components';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { FoodDetail } from 'types/Food';
 import * as utils from 'utils';
 
-const FoodDetail = {
+const FoodDetail: FoodDetail = {
+  id: 2,
   image: '../../assets/images/big-food.png',
   name: '햄버거',
   coin: 4,
@@ -20,8 +22,7 @@ const EachShopDetail = () => {
         <S.SubTitle>캐릭터의 성장을 위한 아이템을 구매해보세요!</S.SubTitle>
       </S.TitleFrame>
       <S.Content>
-        <S.Image src={FoodDetail.image} />
-
+        <FoodDetailPage foodDetail={FoodDetail} />
         <S.ButtonSection>
           <ConfirmButton
             text="다시 선택하기"
@@ -71,10 +72,6 @@ const S = {
     align-items: center;
     margin-top: 100px;
     height: 100%;
-  `,
-
-  Image: styled.img`
-    width: 230px;
   `,
 
   ButtonSection: styled.div`

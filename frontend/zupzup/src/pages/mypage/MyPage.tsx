@@ -49,7 +49,7 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background: url('assets/images/mypage-wall.png');
+    background: url('/assets/images/mypage-wall.png');
   `,
   Title: styled.div`
     font-size: ${({ theme }) => theme.font.size.display1};

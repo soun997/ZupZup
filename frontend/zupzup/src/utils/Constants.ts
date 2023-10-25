@@ -24,10 +24,12 @@ export const URL = {
   MYPAGE: {
     HOME: '/mypage',
     SHOP: '/shop',
+    SHOP_DETAIL: '/shop/detail',
+    PURCHASE: '/success-purchase',
   },
   SETTING: {
     HOME: '/setting',
-    PROFILE: '/profile',
+    PROFILE: '/setting/profile',
   },
 };
 

@@ -29,9 +29,10 @@ const MyPageNav = ({ coin }: Props) => {
 
 const S = {
   Wrap: styled.div`
-    width: 100%;
+    margin-top: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
     height: 44px;
     justify-content: space-between;
     overflow: hidden;
@@ -56,7 +57,12 @@ const S = {
   RightSection: styled.div`
     cursor: pointer;
     display: flex;
-    gap: 8px;
+    gap: 10px;
+
+    & svg {
+      width: 22px;
+      height: 22px;
+    }
   `,
 };
 

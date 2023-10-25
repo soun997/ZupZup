@@ -51,6 +51,28 @@ const Router = () => {
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 
           <Route path={utils.URL.MYPAGE.HOME} element={<pages.MyPage />} />
+
+          <Route
+            path={utils.URL.MYPAGE.SHOP}
+            element={<pages.ShoppingList />}
+          />
+          <Route
+            path={utils.URL.MYPAGE.SHOP_DETAIL + '/:id'}
+            element={<pages.EachShopDetail />}
+          />
+          <Route
+            path={utils.URL.MYPAGE.PURCHASE}
+            element={<pages.PurchaseSuccess />}
+          />
+
+          <Route
+            path={utils.URL.SETTING.HOME}
+            element={<pages.SettingPage />}
+          />
+          <Route
+            path={utils.URL.SETTING.PROFILE}
+            element={<pages.ProfileSettingPage />}
+          />
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

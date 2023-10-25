@@ -4,13 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
-import com.twoez.zupzup.history.domain.FloggingLog;
-import com.twoez.zupzup.history.repository.FloggingLogQueryRepository;
+import com.twoez.zupzup.history.domain.PloggingLog;
+import com.twoez.zupzup.history.repository.PloggingLogQueryRepository;
 import com.twoez.zupzup.member.domain.AuthProvider;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.domain.OAuth;
 import com.twoez.zupzup.member.domain.Role;
-import com.twoez.zupzup.history.service.FloggingLogQueryService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,11 +23,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class FloggingLogQueryServiceTest {
+class PloggingLogQueryServiceTest {
 
-    @Mock FloggingLogQueryRepository floggingLogQueryRepository;
+    @Mock
+    PloggingLogQueryRepository ploggingLogQueryRepository;
     @InjectMocks
-    FloggingLogQueryService floggingLogQueryService;
+    PloggingLogQueryService ploggingLogQueryService;
 
     Member member;
 
@@ -52,7 +52,7 @@ class FloggingLogQueryServiceTest {
     @DisplayName("기간 내의 플로깅 로그들을 가져온다.")
     void searchInPeriod() {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .id(1L)
                 .startDateTime(now)
                 .endDateTime(now)
@@ -64,21 +64,21 @@ class FloggingLogQueryServiceTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryRepository.findByBetweenStartDateAndEndDate(any(LocalDateTime.class),
-                any(LocalDateTime.class), any(Long.class))).willReturn(List.of(floggingLog));
+        given(ploggingLogQueryRepository.findByBetweenStartDateAndEndDate(any(LocalDateTime.class),
+                any(LocalDateTime.class), any(Long.class))).willReturn(List.of(ploggingLog));
 
-        List<FloggingLog> floggingLogs = floggingLogQueryService.searchInPeriod(LocalDateTime.now(),
+        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchInPeriod(LocalDateTime.now(),
                 LocalDateTime.now().plusDays(2),
                 1L);
 
-        assertThat(floggingLogs).containsExactly(floggingLog);
+        assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
 
     @Test
     @DisplayName("특정 일의 플로깅 로그들을 가져온다.")
     void searchByDate() {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .id(1L)
                 .startDateTime(now)
                 .endDateTime(now)
@@ -90,20 +90,20 @@ class FloggingLogQueryServiceTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryRepository.findByDate(any(LocalDate.class),
-                any(Long.class))).willReturn(List.of(floggingLog));
+        given(ploggingLogQueryRepository.findByDate(any(LocalDate.class),
+                any(Long.class))).willReturn(List.of(ploggingLog));
 
-        List<FloggingLog> floggingLogs = floggingLogQueryService.searchByDate(LocalDate.now(),
+        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(),
                 1L);
 
-        assertThat(floggingLogs).containsExactly(floggingLog);
+        assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
 
     @Test
     @DisplayName("최근 플로깅 로그를 가져온다.")
     void searchRecent() {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .id(1L)
                 .startDateTime(now)
                 .endDateTime(now)
@@ -115,11 +115,11 @@ class FloggingLogQueryServiceTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
-                .willReturn(Optional.ofNullable(floggingLog));
+        given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
+                .willReturn(Optional.ofNullable(ploggingLog));
 
-        FloggingLog findFloggingLog = floggingLogQueryService.searchRecentLog(1L);
+        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(1L);
 
-        assertThat(findFloggingLog).isEqualTo(floggingLog);
+        assertThat(findPloggingLog).isEqualTo(ploggingLog);
     }
 }

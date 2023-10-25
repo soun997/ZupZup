@@ -11,9 +11,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.twoez.zupzup.history.controller.FloggingLogController;
-import com.twoez.zupzup.history.domain.FloggingLog;
-import com.twoez.zupzup.history.service.FloggingLogQueryService;
+import com.twoez.zupzup.history.domain.PloggingLog;
+import com.twoez.zupzup.history.service.PloggingLogQueryService;
 import com.twoez.zupzup.member.domain.AuthProvider;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.domain.OAuth;
@@ -30,11 +29,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-@WebMvcTest(FloggingLogController.class)
-class FloggingLogControllerTest extends RestDocsTest {
+@WebMvcTest(PloggingLogController.class)
+class PloggingLogControllerTest extends RestDocsTest {
 
     @MockBean
-    FloggingLogQueryService floggingLogQueryService;
+    PloggingLogQueryService ploggingLogQueryService;
     Member member;
 
     @BeforeEach
@@ -57,7 +56,7 @@ class FloggingLogControllerTest extends RestDocsTest {
     @DisplayName("특정 기간의 플로깅 기록을 조회한다.")
     void floggingLogByStartDateAndEndDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .startDateTime(now)
                 .endDateTime(now)
                 .distance(12345)
@@ -68,9 +67,9 @@ class FloggingLogControllerTest extends RestDocsTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryService.searchInPeriod(any(LocalDateTime.class),
+        given(ploggingLogQueryService.searchInPeriod(any(LocalDateTime.class),
                 any(LocalDateTime.class), any(Long.class)))
-                .willReturn(List.of(floggingLog));
+                .willReturn(List.of(ploggingLog));
 
         ResultActions perform = mockMvc.perform(get("/api/v1/histories/period")
                 .queryParam("startDate", LocalDateTime.of(2023, 10, 1, 0, 0).toString())
@@ -92,7 +91,7 @@ class FloggingLogControllerTest extends RestDocsTest {
     @DisplayName("특정 일의 플로깅 기록을 조회한다.")
     void floggingLogByDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .startDateTime(now)
                 .endDateTime(now)
                 .distance(12345)
@@ -103,8 +102,8 @@ class FloggingLogControllerTest extends RestDocsTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryService.searchByDate(any(LocalDate.class), any(Long.class)))
-                .willReturn(List.of(floggingLog));
+        given(ploggingLogQueryService.searchByDate(any(LocalDate.class), any(Long.class)))
+                .willReturn(List.of(ploggingLog));
 
         ResultActions perform = mockMvc.perform(get("/api/v1/histories/days")
                 .queryParam("date", LocalDate.of(2023, 10, 1).toString())
@@ -124,7 +123,7 @@ class FloggingLogControllerTest extends RestDocsTest {
     @DisplayName("최근 플로깅 기록을 조회한다.")
     void recentFloggingLog() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        FloggingLog floggingLog = FloggingLog.builder()
+        PloggingLog ploggingLog = PloggingLog.builder()
                 .startDateTime(now)
                 .endDateTime(now)
                 .distance(12345)
@@ -135,8 +134,8 @@ class FloggingLogControllerTest extends RestDocsTest {
                 .routeImageUrl("https://image.com")
                 .isDeleted(false)
                 .build();
-        given(floggingLogQueryService.searchRecentLog(any(Long.class)))
-                .willReturn(floggingLog);
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class)))
+                .willReturn(ploggingLog);
 
         ResultActions perform = mockMvc.perform(get("/api/v1/histories/recent")
                 .contentType(MediaType.APPLICATION_JSON));

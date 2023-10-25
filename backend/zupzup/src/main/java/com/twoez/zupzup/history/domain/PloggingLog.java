@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FloggingLog extends BaseTime {
+public class PloggingLog extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +56,7 @@ public class FloggingLog extends BaseTime {
     private Member member;
 
     @Builder
-    public FloggingLog(
+    public PloggingLog(
             Long id,
             Integer distance,
             LocalDateTime startDateTime,

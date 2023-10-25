@@ -12,6 +12,7 @@ export { default as ConfirmButton } from './common/ConfirmButton';
 export { default as ProgressBar } from './common/ProgressBar';
 export { default as SocialLoginButton } from './common/SocialLoginButton';
 
+export { default as PloggingInfo } from './plogging/PloggingInfo';
 export { default as RecentRecord } from './plogging/RecentRecord';
 export { default as PloggingStartBackground } from './plogging/PloggingStartBackground';
 export { default as OnPloggingBackground } from './plogging/OnPloggingBackground';

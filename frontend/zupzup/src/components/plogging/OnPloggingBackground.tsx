@@ -16,11 +16,11 @@ interface TrashButtonProps {
   trashOn: boolean;
 }
 
-interface ExitButtonProps {
-  exitOn: boolean;
+interface ModalState {
+  modalOn: boolean;
 }
 
-interface ButtonProps extends TrashButtonProps, ExitButtonProps {}
+interface ButtonProps extends TrashButtonProps, ModalState {}
 
 interface Props {
   exitOn: boolean;
@@ -34,35 +34,35 @@ const OnPloggingBackground = ({ exitOn, setExitOn }: Props) => {
 
   return (
     <S.Wrap>
-      {exitOn && <ExitModal />}
+      {exitOn && <ExitModal setExitOn={setExitOn} />}
       <S.CurrentState>
         <S.CurrentCoin>
           <CoinSvg />
           15
         </S.CurrentCoin>
-        <S.ExitButton onClick={() => setExitOn(true)} exitOn={exitOn}>
+        <S.ExitButton onClick={() => setExitOn(true)} modalOn={exitOn}>
           <SmallRunnerSvg /> 종료하기
         </S.ExitButton>
       </S.CurrentState>
       <S.TrashToggleBox>
-        <S.RefreshButton trashOn={trashOn} exitOn={exitOn}>
+        <S.RefreshButton trashOn={trashOn} modalOn={exitOn}>
           <RefreshSvg />
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
         <S.CameraButton
           onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}
-          exitOn={exitOn}
+          modalOn={exitOn}
         >
           <CameraSvg />
         </S.CameraButton>
-        <S.PloggingInfoButton exitOn={exitOn}>
+        <S.PloggingInfoButton modalOn={exitOn}>
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
         <S.TrashButton
           onClick={() => setTrashOn(!trashOn)}
           trashOn={trashOn}
-          exitOn={exitOn}
+          modalOn={exitOn}
         >
           {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>
@@ -115,7 +115,7 @@ const S = {
       margin: 2px;
     }
   `,
-  ExitButton: styled.button<ExitButtonProps>`
+  ExitButton: styled.button<ModalState>`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -128,7 +128,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
     padding: 6px 10px;
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
@@ -141,7 +141,7 @@ const S = {
     margin: 20px 0 56px;
     padding: 0 28px;
   `,
-  CameraButton: styled.button<ExitButtonProps>`
+  CameraButton: styled.button<ModalState>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,13 +150,13 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
-  PloggingInfoButton: styled.button<ExitButtonProps>`
+  PloggingInfoButton: styled.button<ModalState>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +168,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
 
     & > svg {
       margin: 0 6px 0 0;
@@ -195,7 +195,7 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.sub2};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
@@ -211,7 +211,7 @@ const S = {
     background-color: ${({ trashOn, theme }) =>
       trashOn ? theme.color.main : theme.color.gray3};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ exitOn }) => (exitOn ? 'none' : 'auto')};
+    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ trashOn, theme }) =>

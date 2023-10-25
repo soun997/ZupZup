@@ -5,14 +5,20 @@ import * as utils from 'utils';
 
 import XSvg from 'assets/icons/x.svg?react';
 
-const ExitModal = () => {
+interface Props {
+  setExitOn: (exitOn: boolean) => void;
+}
+
+const ExitModal = ({ setExitOn }: Props) => {
   const navigate = useNavigate();
 
   return (
     <S.Wrap>
       <S.ModalBox>
         <S.Header>
-          <XSvg />
+          <S.CancelButton onClick={() => setExitOn(false)}>
+            <XSvg />
+          </S.CancelButton>
         </S.Header>
         <S.MessageBox>정말 종료하시겠습니까?</S.MessageBox>
         <S.ExitButton onClick={() => navigate(utils.URL.RESULT.FLOGGING)}>
@@ -51,15 +57,6 @@ const S = {
     justify-content: flex-end;
     width: 100%;
     pointer-events: auto;
-
-    & > svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
   `,
   MessageBox: styled.div`
     display: flex;
@@ -69,6 +66,12 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.main2};
     line-height: ${({ theme }) => theme.font.lineheight.main2};
     margin: 20px 0 0 0;
+  `,
+  CancelButton: styled.button`
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
   `,
 
   ExitButton: styled.button`

@@ -27,6 +27,8 @@ export { default as MyPloggingReport } from './mypage/MyPloggingReport';
 export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
 
+export { default as Coin } from './shop/Coin';
+
 export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';
 export { default as SuccessAnimation } from './animation/SuccessLottie';

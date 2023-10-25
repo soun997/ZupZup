@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // jdbc
@@ -97,7 +98,7 @@ asciidoctor {
 }
 
 asciidoctor.doFirst {
-    delete file('src/docs/asciidoc/html')
+    delete file('src/main/resources/templates')
 }
 
 bootJar {
@@ -110,7 +111,7 @@ bootJar {
 
 tasks.register('copyDocument', Copy) {
     from file("build/docs/asciidoc")
-    into file("src/docs/asciidoc/html")
+    into file("src/main/resources/templates")
 }
 
 // spotless
@@ -125,3 +126,5 @@ spotless {
         endWithNewline()
     }
 }
+
+spotlessJava.dependsOn copyDocument

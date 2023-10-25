@@ -11,7 +11,7 @@ const RecordReport = ({ record }: Props) => {
     <S.ContentFrame>
       <S.EachFrame>
         <div className="eachName">소요시간</div>
-        <div className="eachVal">{useFormatTime(record.time)} </div>
+        <div className="eachVal">{useFormatTime.formatTime(record.time)} </div>
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">획득한 코인</div>

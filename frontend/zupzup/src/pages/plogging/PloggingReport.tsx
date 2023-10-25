@@ -59,6 +59,7 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    padding-top: 10px;
   `,
 
   Content: styled.div`
@@ -105,7 +106,7 @@ const S = {
   `,
 
   SubTitle: styled.div`
-    margin-top: 35px;
+    margin-top: 40px;
     color: ${({ theme }) => theme.color.gray2};
     font-size: ${({ theme }) => theme.font.size.body1};
     font-family: ${({ theme }) => theme.font.family.focus2};
@@ -119,7 +120,7 @@ const S = {
     align-items: center;
     bottom: 0;
     width: 100%;
-    margin: auto 0 25px 0;
+    margin: auto 0 50px 0;
   `,
 
   SaveImage: styled.div`

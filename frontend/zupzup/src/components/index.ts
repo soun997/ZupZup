@@ -11,6 +11,7 @@ export { default as TopNavigation } from './common/TopNavigation';
 export { default as ConfirmButton } from './common/ConfirmButton';
 export { default as ProgressBar } from './common/ProgressBar';
 export { default as SocialLoginButton } from './common/SocialLoginButton';
+export { default as BlankFrame } from './common/BlankFrame';
 
 export { default as RecentRecord } from './plogging/RecentRecord';
 export { default as PloggingStartBackground } from './plogging/PloggingStartBackground';
@@ -26,6 +27,10 @@ export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 export { default as MyPloggingReport } from './mypage/MyPloggingReport';
 export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
+
+export { default as Coin } from './shop/Coin';
+export { default as DrawerCarousel } from './shop/DrawerCarousel';
+export { default as FoodDetailPage } from './shop/FoodDetail';
 
 export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';

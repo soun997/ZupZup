@@ -10,15 +10,17 @@ interface Props {
 const TopNavigation = (props: Props) => {
   const navigate = useNavigate();
   return (
-    <S.Wrap>
-      <S.LeftSection onClick={() => navigate(-1)}>
-        <AngleLeftSvg />
-      </S.LeftSection>
-      {props.title && <S.MiddleSection>{props.title}</S.MiddleSection>}
-      {props.rightComponent && (
-        <S.RightSection>{props.rightComponent}</S.RightSection>
-      )}
-    </S.Wrap>
+    <>
+      <S.Wrap>
+        <S.LeftSection onClick={() => navigate(-1)}>
+          <AngleLeftSvg />
+        </S.LeftSection>
+        {props.title && <S.MiddleSection>{props.title}</S.MiddleSection>}
+        {props.rightComponent && (
+          <S.RightSection>{props.rightComponent}</S.RightSection>
+        )}
+      </S.Wrap>
+    </>
   );
 };
 
@@ -29,6 +31,7 @@ const S = {
     align-items: center;
     height: 44px;
     justify-content: space-between;
+    margin-top: 10px;
   `,
 
   LeftSection: styled.div`
@@ -46,10 +49,12 @@ const S = {
     text-align: center;
     flex-basis: 1;
     font-family: ${({ theme }) => theme.font.family.focus2};
+    font-size: ${({ theme }) => theme.font.size.focus1};
+    color: ${({ theme }) => theme.color.gray1};
   `,
   RightSection: styled.div`
     cursor: pointer;
-    width: 40px;
+    min-width: 40px;
   `,
 };
 

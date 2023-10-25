@@ -6,8 +6,10 @@ import { SOCIAL_KEY, getSocialLoginAuthUrl } from 'utils';
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
 import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const handleSocialLogin = async (domain: string) => {
     //1. back 에게 요청 보내고
     // const response = await axios.get('');
@@ -42,7 +44,8 @@ const Login = () => {
         <SocialLoginButton
           backgroundColor="#FFFFFF"
           color="#4E5968"
-          onClick={() => handleSocialLogin(SOCIAL_KEY.GOOGLE)}
+          // onClick={() => handleSocialLogin(SOCIAL_KEY.GOOGLE)}
+          onClick={() => navigate('/success-regist')}
         >
           <GoogleIcon />
           구글로 시작하기

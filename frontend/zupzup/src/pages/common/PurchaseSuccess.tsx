@@ -4,20 +4,20 @@ import * as utils from 'utils';
 
 import { SuccessAnimation, ConfirmButton } from 'components';
 
-const RegistSuccess = () => {
+const PurchaseSuccess = () => {
   const navigate = useNavigate();
 
   return (
     <S.Wrap>
       <S.TitleFrame>
-        <S.MainTitle>가입이 완료 되었어요</S.MainTitle>
-        <S.SubTitle>즐거운 줍줍 기록을 시작해요 🎉</S.SubTitle>
+        <S.MainTitle>구매가 완료 되었어요</S.MainTitle>
+        <S.SubTitle>줍줍님의 성장치가 증가하였어요 🎉</S.SubTitle>
       </S.TitleFrame>
       <SuccessAnimation />
       <S.BottomFrame>
         <ConfirmButton
-          text="플로깅 시작하기"
-          onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}
+          text="마이페이지로 이동"
+          onClick={() => navigate(utils.URL.MYPAGE.HOME)}
         />
       </S.BottomFrame>
     </S.Wrap>
@@ -62,4 +62,4 @@ const S = {
     margin: auto 0 50px 0;
   `,
 };
-export default RegistSuccess;
+export default PurchaseSuccess;

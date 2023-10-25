@@ -27,7 +27,7 @@ const OnPloggingBackground = () => {
           <CoinSvg />
           15
         </S.CurrentCoin>
-        <S.ExitButton>
+        <S.ExitButton onClick={() => navigate(utils.URL.RESULT.FLOGGING)}>
           <SmallRunnerSvg /> 종료하기
         </S.ExitButton>
       </S.CurrentState>

@@ -25,6 +25,7 @@ export const URL = {
     HOME: '/mypage',
     SHOP: '/shop',
     SHOP_DETAIL: '/shop/detail',
+    PURCHASE: '/success-purchase',
   },
   SETTING: {
     HOME: '/setting',

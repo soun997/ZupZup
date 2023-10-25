@@ -1,8 +1,10 @@
 import { Coin, ConfirmButton, FoodDetailPage, TopNavigation } from 'components';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { FoodDetail } from 'types/Food';
 import * as utils from 'utils';
+import axios from 'api/apiController';
 
 const FoodDetail: FoodDetail = {
   id: 2,
@@ -13,6 +15,11 @@ const FoodDetail: FoodDetail = {
 };
 const EachShopDetail = () => {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    axios.get(`/${id}`);
+  }, [id]);
 
   return (
     <S.Wrap>
@@ -27,11 +34,11 @@ const EachShopDetail = () => {
           <ConfirmButton
             text="다시 선택하기"
             color="#a0a0a0"
-            onClick={() => navigate(utils.URL.MYPAGE.HOME)}
+            onClick={() => navigate(utils.URL.MYPAGE.SHOP)}
           />
           <ConfirmButton
             text="구입하기"
-            onClick={() => navigate(utils.URL.MYPAGE.HOME)}
+            onClick={() => navigate(utils.URL.MYPAGE.PURCHASE)}
           />
         </S.ButtonSection>
       </S.Content>

@@ -6,6 +6,7 @@ import { DrawerFrame } from './DrawerFrame';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { BlankFrame } from 'components';
 
 interface Props {
   foodList: Food[];
@@ -25,18 +26,18 @@ const DrawerCarousel = ({ foodList }: Props) => {
       >
         {chunks.map((chunk, index) => (
           <SwiperSlide key={index}>
-            <S.BlankFrame margin={70} />
+            <BlankFrame margin={70} />
             <DrawerFrame foodList={chunk.slice(0, 3)} />
 
             {chunk.length > 3 && (
               <>
-                <S.BlankFrame margin={60} />
+                <BlankFrame margin={60} />
                 <DrawerFrame foodList={chunk.slice(3, 6)} />
               </>
             )}
             {chunk.length > 6 && (
               <>
-                <S.BlankFrame margin={80} />
+                <BlankFrame margin={80} />
                 <DrawerFrame foodList={chunk.slice(6, 9)} />
               </>
             )}

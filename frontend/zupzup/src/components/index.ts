@@ -11,6 +11,7 @@ export { default as TopNavigation } from './common/TopNavigation';
 export { default as ConfirmButton } from './common/ConfirmButton';
 export { default as ProgressBar } from './common/ProgressBar';
 export { default as SocialLoginButton } from './common/SocialLoginButton';
+export { default as BlankFrame } from './common/BlankFrame';
 
 export { default as RecentRecord } from './plogging/RecentRecord';
 export { default as PloggingStartBackground } from './plogging/PloggingStartBackground';

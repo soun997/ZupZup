@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
-import { ConfirmButton, RecordReport } from 'components';
+import { BlankFrame, ConfirmButton, RecordReport } from 'components';
 import { PloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
 import { useCapture } from 'hooks';
@@ -22,6 +22,7 @@ const PloggingReport = () => {
 
   return (
     <S.Wrap>
+      <BlankFrame margin={12} />
       <S.Content ref={captureRef}>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
@@ -105,7 +106,7 @@ const S = {
   `,
 
   SubTitle: styled.div`
-    margin-top: 35px;
+    margin-top: 40px;
     color: ${({ theme }) => theme.color.gray2};
     font-size: ${({ theme }) => theme.font.size.body1};
     font-family: ${({ theme }) => theme.font.family.focus2};

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { RecentRecord, ConfirmButton } from 'components';
+import { RecentRecord, ConfirmButton, BlankFrame } from 'components';
 import * as utils from 'utils';
 
 const PloggingStartBackground = () => {
@@ -9,6 +9,7 @@ const PloggingStartBackground = () => {
 
   return (
     <S.Wrap>
+      <BlankFrame margin={10} />
       <RecentRecord />
       <S.Header>
         <S.SubTitle>

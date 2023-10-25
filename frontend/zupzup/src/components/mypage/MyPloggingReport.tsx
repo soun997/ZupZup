@@ -43,7 +43,7 @@ const S = {
     gap: 5px;
     width: 105px;
     height: 26px;
-    span {
+    & span {
       margin-top: 2px;
       font-size: ${({ theme }) => theme.font.size.body3};
       font-weight: ${({ theme }) => theme.font.weight.body2};
@@ -56,25 +56,25 @@ const S = {
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.6);
     width: 100%;
-    padding: 24px 20px;
+    padding: 24px 20px 20px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 
-    .title {
+    & .title {
       color: ${({ theme }) => theme.color.gray3};
       font-size: ${({ theme }) => theme.font.size.body2};
       font-weight: ${({ theme }) => theme.font.weight.body2};
     }
 
-    .eachInfo {
+    & .eachInfo {
       display: flex;
       justify-content: space-between;
 
-      div {
+      & div {
         color: ${({ theme }) => theme.color.gray2};
-        font-size: ${({ theme }) => theme.font.size.display1};
+        font-size: ${({ theme }) => theme.font.size.display2};
         font-weight: ${({ theme }) => theme.font.weight.focus2};
       }
     }

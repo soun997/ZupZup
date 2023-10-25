@@ -4,6 +4,7 @@ import {
   ProgressBar,
   MyPloggingReport,
   MyPageNav,
+  BlankFrame,
 } from 'components';
 import { ProfileInfo } from 'types/ProfileInfo';
 
@@ -23,6 +24,7 @@ const MyPage = () => {
   return (
     <S.Wrap>
       <S.Content>
+        <BlankFrame margin={10} />
         <MyPageNav coin={320} />
         <S.Title>
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
@@ -65,7 +67,7 @@ const S = {
 
   Image: styled.img`
     position: absolute;
-    bottom: 90px;
+    bottom: 100px;
     margin-left: 30px;
     width: 200px;
   `,

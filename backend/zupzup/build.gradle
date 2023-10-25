@@ -60,6 +60,9 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.projectlombok:lombok'
+
+    // actuator
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
 }
 
 tasks.named('test') {

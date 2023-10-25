@@ -28,6 +28,7 @@ export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
 
 export { default as Coin } from './shop/Coin';
+export { default as DrawerCarousel } from './shop/DrawerCarousel';
 
 export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';

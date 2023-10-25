@@ -1,18 +1,21 @@
-import { Coin, RegistInfoFrame, TopNavigation } from 'components';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as utils from 'utils';
+import { Coin, DrawerCarousel, TopNavigation } from 'components';
 import styled from 'styled-components';
+import { Food } from 'types/Food';
 
+const FoodList: Food[] = [
+  { id: 1, image: 'assets/images/food1.png' },
+  { id: 2, image: 'assets/images/food2.png' },
+  { id: 3, image: 'assets/images/food3.png' },
+  { id: 4, image: 'assets/images/food4.png' },
+  { id: 5, image: 'assets/images/food5.png' },
+  { id: 6, image: 'assets/images/food6.png' },
+  { id: 1, image: 'assets/images/food1.png' },
+  { id: 1, image: 'assets/images/food1.png' },
+  { id: 1, image: 'assets/images/food1.png' },
+  { id: 1, image: 'assets/images/food1.png' },
+  { id: 1, image: 'assets/images/food1.png' },
+];
 const ShoppingList = () => {
-  const navigate = useNavigate();
-  const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
-  const [nowSelectId, setNowSelectId] = useState<number>(-1);
-
-  const handleMoreInfo = () => {
-    navigate(utils.URL.MYPAGE.SHOP);
-  };
-
   return (
     <S.Wrap>
       <TopNavigation rightComponent={<Coin coin={320} />} />
@@ -20,17 +23,10 @@ const ShoppingList = () => {
         <S.MainTitle>상점</S.MainTitle>
         <S.SubTitle>캐릭터의 성장을 위한 아이템을 구매해보세요!</S.SubTitle>
       </S.TitleFrame>
-
-      <S.NextButton disabled={isNextButtonDisabled} onClick={handleMoreInfo}>
-        구입하기
-      </S.NextButton>
+      <DrawerCarousel foodList={FoodList} />
     </S.Wrap>
   );
 };
-
-interface ButtonProps {
-  disabled: boolean;
-}
 
 const S = {
   Wrap: styled.div`
@@ -57,24 +53,6 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
-  `,
-
-  NextButton: styled.div<ButtonProps>`
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    height: 52px;
-    font-weight: ${({ theme }) => theme.font.weight.body2};
-    font-family: ${({ theme }) => theme.font.family.focus2};
-    font-size: ${({ theme }) => theme.font.size.focus2};
-    color: ${({ disabled, theme }) =>
-      disabled ? theme.color.gray3 : theme.color.white};
-    background-color: ${({ disabled, theme }) =>
-      disabled ? theme.color.gray4 : theme.color.main};
-    margin-bottom: 20px;
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   `,
 };
 export default ShoppingList;

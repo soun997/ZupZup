@@ -37,7 +37,7 @@ const S = {
     flex-direction: column;
     width: 100%;
     height: 94px;
-    z-index: 100;
+    z-index: 300;
   `,
   CurrentState: styled.div`
     display: flex;

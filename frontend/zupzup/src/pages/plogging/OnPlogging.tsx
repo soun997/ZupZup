@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -6,26 +6,81 @@ import {
   OnPloggingHeader,
   PloggingMap,
   OnPloggingBackground,
+  PloggingInfo,
 } from 'components';
-import { useStopWatch } from 'hooks';
+
+import { useGeolocation, useStopWatch, useDistance } from 'hooks';
 
 const OnPlogging = () => {
+  const location = useGeolocation();
+  const stopwatch = useStopWatch();
   const [exitOn, setExitOn] = useState<boolean>(false);
   const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
-  const stopwatch = useStopWatch();
+  const [totalDistance, setTotalDistance] = useState<number>(0.0);
+  const LOCATIONS_KEY = 'locations';
+
+  useEffect(() => {
+    const recordLocation = () => {
+      let locations = JSON.parse(localStorage.getItem(LOCATIONS_KEY) as string);
+      if (locations === null) {
+        locations = [];
+      }
+
+      if (location.loaded) {
+        const lat = location.coordinates!.lat;
+        const lng = location.coordinates!.lng;
+        if (locations.length > 0) {
+          setTotalDistance(
+            totalDistance =>
+              totalDistance +
+              useDistance.fromLocation({
+                prevLat: locations[locations.length - 1].lat,
+                prevLng: locations[locations.length - 1].lng,
+                curLat: lat,
+                curLng: lng,
+              }),
+          );
+        }
+        console.log('total', totalDistance);
+        locations.push({ lat, lng });
+      }
+
+      localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
+    };
+
+    if (stopwatch % 5 === 0) {
+      recordLocation();
+    }
+
+    () => {
+      localStorage.clear();
+      localStorage.removeItem(LOCATIONS_KEY);
+    };
+  }, [stopwatch, location]);
 
   return (
     <S.Wrap>
       {exitOn && <ExitModal setExitOn={setExitOn} />}
       <OnPloggingHeader exitOn={exitOn} setExitOn={setExitOn} />
+      {ploggingInfoOn && (
+        <PloggingInfo
+          time={stopwatch}
+          distance={totalDistance}
+          exitOn={exitOn}
+          setExitOn={setExitOn}
+          setPloggingInfoOn={setPloggingInfoOn}
+        />
+      )}
       <OnPloggingBackground
-        time={stopwatch}
         exitOn={exitOn}
-        setExitOn={setExitOn}
         ploggingInfoOn={ploggingInfoOn}
         setPloggingInfoOn={setPloggingInfoOn}
       />
-      <PloggingMap exitOn={exitOn} ploggingInfoOn={ploggingInfoOn} />
+      <PloggingMap
+        exitOn={exitOn}
+        ploggingInfoOn={ploggingInfoOn}
+        location={location}
+      />
     </S.Wrap>
   );
 };

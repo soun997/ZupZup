@@ -13,18 +13,16 @@ interface MapProps {
 }
 
 interface Props {
-  exitOn: boolean;
-  ploggingInfoOn: boolean;
   location: GeoLocationType;
 }
 
-const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
+const PloggingStartMap = ({ location }: Props) => {
   const mapRef = useRef(null);
 
   const initMap = (location: Location) => {
     const { Tmapv3 } = window;
     const map = new Tmapv3.Map(mapRef.current!, {
-      center: new Tmapv3.LatLng(location.lat, location.lng),
+      center: new Tmapv3.LatLng(location.lat + 0.0008, location.lng),
       width: '100%',
       height: '100%',
       zoom: 17,
@@ -47,12 +45,12 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
 
   return (
     <S.Wrap>
-      <S.Map ref={mapRef} modalOn={exitOn || ploggingInfoOn}></S.Map>
+      <S.Map ref={mapRef} modalOn={true}></S.Map>
     </S.Wrap>
   );
 };
 
-export default PloggingMap;
+export default PloggingStartMap;
 
 const S = {
   Wrap: styled.div`

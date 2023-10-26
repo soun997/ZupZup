@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PloggingInfo } from 'components';
 import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
@@ -22,17 +21,13 @@ interface ModalState {
 interface ButtonProps extends TrashButtonProps, ModalState {}
 
 interface Props {
-  time: number;
   exitOn: boolean;
-  setExitOn: (exitOn: boolean) => void;
   ploggingInfoOn: boolean;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
 }
 
 const OnPloggingBackground = ({
-  time,
   exitOn,
-  setExitOn,
   ploggingInfoOn,
   setPloggingInfoOn,
 }: Props) => {
@@ -42,14 +37,6 @@ const OnPloggingBackground = ({
 
   return (
     <S.Wrap>
-      {ploggingInfoOn && (
-        <PloggingInfo
-          time={time}
-          exitOn={exitOn}
-          setExitOn={setExitOn}
-          setPloggingInfoOn={setPloggingInfoOn}
-        />
-      )}
       <S.TrashToggleBox>
         <S.RefreshButton trashOn={trashOn} modalOn={exitOn || ploggingInfoOn}>
           <RefreshSvg />
@@ -101,7 +88,7 @@ const S = {
 
     filter: drop-shadow(0px 20px 20px rgba(112, 112, 112, 0.1));
     box-shadow: 0px 20px 20px 0px rgba(112, 112, 112, 0.1);
-    z-index: 99;
+    z-index: 100;
     pointer-events: none;
   `,
   CurrentState: styled.div`

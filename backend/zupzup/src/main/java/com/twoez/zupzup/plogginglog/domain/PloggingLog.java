@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -37,18 +38,22 @@ public class PloggingLog extends BaseTime {
     private LocalDateTime endDateTime;
 
     @Column(nullable = false)
+    private Long time;
+
+    @Column(nullable = false)
     private Integer calories;
 
     @Column(nullable = false)
     private Integer gatheredTrash;
 
     @Column(nullable = false)
-    private Long coin;
+    private Integer coins;
 
     @Column(nullable = false)
     private String routeImageUrl;
 
     @Column(nullable = false)
+    @ColumnDefault("false")
     private Boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,9 +66,10 @@ public class PloggingLog extends BaseTime {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
+            Long time,
             Integer calories,
             Integer gatheredTrash,
-            Long coin,
+            Integer coins,
             String routeImageUrl,
             Boolean isDeleted,
             Member member) {
@@ -71,9 +77,10 @@ public class PloggingLog extends BaseTime {
         this.distance = distance;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.time = time;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
-        this.coin = coin;
+        this.coins = coins;
         this.routeImageUrl = routeImageUrl;
         this.isDeleted = isDeleted;
         this.member = member;

@@ -21,31 +21,31 @@ const OnPlogging = () => {
 
   useEffect(() => {
     const recordLocation = () => {
-      let locations = JSON.parse(localStorage.getItem(LOCATIONS_KEY) as string);
-      if (locations === null) {
-        locations = [];
+      if (!location.loaded) {
+        return;
       }
 
-      if (location.loaded) {
-        const lat = location.coordinates!.lat;
-        const lng = location.coordinates!.lng;
-        if (locations.length > 0) {
-          setTotalDistance(
-            totalDistance =>
-              totalDistance +
-              useDistance.fromLocation({
-                prevLat: locations[locations.length - 1].lat,
-                prevLng: locations[locations.length - 1].lng,
-                curLat: lat,
-                curLng: lng,
-              }),
-          );
-        }
-        console.log('total', totalDistance);
+      const lat = location.coordinates!.lat;
+      const lng = location.coordinates!.lng;
+      const locations = JSON.parse(
+        localStorage.getItem(LOCATIONS_KEY) as string,
+      );
+      if (!locations) {
+        localStorage.setItem(LOCATIONS_KEY, JSON.stringify([{ lat, lng }]));
+        return;
+      }
+
+      const distance = useDistance.fromLocation({
+        prevLat: locations[locations.length - 1].lat,
+        prevLng: locations[locations.length - 1].lng,
+        curLat: lat,
+        curLng: lng,
+      });
+      if (distance >= 1) {
+        setTotalDistance(totalDistance => totalDistance + distance);
         locations.push({ lat, lng });
+        localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
       }
-
-      localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
     };
 
     if (stopwatch % 5 === 0) {

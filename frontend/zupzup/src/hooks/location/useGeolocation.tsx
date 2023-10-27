@@ -22,7 +22,7 @@ const useGeolocation = () => {
 
   const onError = (error: { code: number; message: string }) => {
     setLocation({
-      loaded: true,
+      loaded: false,
       error,
     });
   };

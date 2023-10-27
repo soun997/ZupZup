@@ -13,7 +13,14 @@ const PloggingStart = () => {
   return (
     <S.Wrap>
       <PloggingStartBackground />
-      <PloggingStartMap location={location} />
+      {location.loaded && (
+        <PloggingStartMap
+          location={{
+            lat: location.coordinates!.lat,
+            lng: location.coordinates!.lng,
+          }}
+        />
+      )}
       <Navigation />
     </S.Wrap>
   );

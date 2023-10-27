@@ -1,8 +1,6 @@
 import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { GeoLocationType } from 'types';
-
 interface Location {
   lat: number;
   lng: number;
@@ -13,7 +11,7 @@ interface MapProps {
 }
 
 interface Props {
-  location: GeoLocationType;
+  location: Location;
 }
 
 const PloggingStartMap = ({ location }: Props) => {
@@ -35,10 +33,10 @@ const PloggingStartMap = ({ location }: Props) => {
   };
 
   useEffect(() => {
-    if (!(mapRef.current! as HTMLElement).firstChild && location.loaded) {
+    if (!(mapRef.current! as HTMLElement).firstChild) {
       initMap({
-        lat: location.coordinates!.lat,
-        lng: location.coordinates!.lng,
+        lat: location.lat,
+        lng: location.lng,
       });
     }
   }, [location]);

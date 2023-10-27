@@ -1,8 +1,6 @@
-import { useDistance } from 'hooks';
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { GeoLocationType } from 'types';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
 
 interface Location {
@@ -17,7 +15,7 @@ interface MapProps {
 interface Props {
   exitOn: boolean;
   ploggingInfoOn: boolean;
-  location: GeoLocationType;
+  location: Location;
 }
 
 const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
@@ -26,9 +24,9 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
   const [curMarker, setCurMarker] = useState<Marker>();
   const [polyline, setPolyline] = useState<Polyline>();
 
-  const initMap = (location: Location) => {
+  const initMap = ({ lat, lng }: Location) => {
     const { Tmapv3 } = window;
-    const latlng = new Tmapv3.LatLng(location.lat, location.lng);
+    const latlng = new Tmapv3.LatLng(lat, lng);
     const map = new Tmapv3.Map(mapRef.current!, {
       center: latlng,
       width: '100%',
@@ -54,15 +52,13 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
   };
 
   useEffect(() => {
-    const updateMapCenter = (location: Location) => {
-      tmap?.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
-    };
+    // const updateMapCenter = ({ lat, lng }: Location) => {
+    //   tmap?.setCenter(new window.Tmapv3.LatLng(lat, lng));
+    // };
 
-    const updateMarker = (location: Location) => {
+    const updateMarker = ({ lat, lng }: Location) => {
       if (curMarker) {
-        curMarker.setPosition(
-          new window.Tmapv3.LatLng(location.lat, location.lng),
-        );
+        curMarker.setPosition(new window.Tmapv3.LatLng(lat, lng));
       }
     };
 
@@ -92,23 +88,19 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
       }
     };
 
-    if (!(mapRef.current! as HTMLElement).firstChild && location.loaded) {
+    if (!(mapRef.current! as HTMLElement).firstChild) {
       initMap({
-        lat: location.coordinates!.lat,
-        lng: location.coordinates!.lng,
+        lat: location.lat,
+        lng: location.lng,
       });
     }
 
-    updateMarker({
-      lat: location.coordinates!.lat,
-      lng: location.coordinates!.lng,
-    });
-
-    if (tmap) {
-      updateMapCenter({
-        lat: location.coordinates!.lat,
-        lng: location.coordinates!.lng,
+    if (tmap && curMarker && polyline) {
+      updateMarker({
+        lat: location.lat,
+        lng: location.lng,
       });
+
       updatePath();
     }
   }, [curMarker, location, polyline, tmap]);

@@ -76,11 +76,16 @@ const OnPlogging = () => {
         ploggingInfoOn={ploggingInfoOn}
         setPloggingInfoOn={setPloggingInfoOn}
       />
-      <PloggingMap
-        exitOn={exitOn}
-        ploggingInfoOn={ploggingInfoOn}
-        location={location}
-      />
+      {location.loaded && (
+        <PloggingMap
+          exitOn={exitOn}
+          ploggingInfoOn={ploggingInfoOn}
+          location={{
+            lat: location.coordinates!.lat,
+            lng: location.coordinates!.lng,
+          }}
+        />
+      )}
     </S.Wrap>
   );
 };

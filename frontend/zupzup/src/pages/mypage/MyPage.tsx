@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {
   Navigation,
   ProgressBar,
   MyPloggingReport,
   MyPageNav,
+  KeyFrameList,
 } from 'components';
 import { ProfileInfo } from 'types/ProfileInfo';
 
@@ -52,29 +53,19 @@ const MyPage = () => {
         </S.Report>
       </S.Content>
 
-      <S.Image src={profileInfo.characterImage}></S.Image>
+      <S.Image
+        src={`/assets/character/penguin-lv${profileInfo.level}.png`}
+        $daytime={isDaytime}
+        level={profileInfo.level}
+      ></S.Image>
       <Navigation />
     </S.Wrap>
   );
 };
 
-const animation = keyframes`
-  0%{
-    transform: translateX(100px);
-    transform: rotate(0deg);
-  }
-  50%{
-    transform: translateX(100px);
-    transform: rotate(10deg);
-  }
-  100%{
-    transform: translateX(100px);
-    transform: rotate(0deg);
-  }
-`;
-
 interface StyleProps {
   $daytime: boolean;
+  level?: number;
 }
 const S = {
   Wrap: styled.div<StyleProps>`
@@ -103,10 +94,11 @@ const S = {
     padding: 0 20px;
   `,
 
-  Image: styled.img`
+  Image: styled.img<StyleProps>`
     margin: auto 0 -15vh 2vw;
     width: 50%;
-    animation: ${animation} 2s ease-in-out infinite;
+    animation: ${props => KeyFrameList[(props.level && props.level - 1) || 0]}
+      2s ease-in-out infinite;
   `,
 
   Level: styled.div`

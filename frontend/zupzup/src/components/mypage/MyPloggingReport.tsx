@@ -13,7 +13,7 @@ const MyPloggingReport = ({ lastPlogging, isDayTime }: Props) => {
         <NoteSvg />
         <span>누적 레포트</span>
       </S.IndexTitle>
-      <S.BoxFrame daytime={isDayTime}>
+      <S.BoxFrame $daytime={isDayTime}>
         <div className="title">그동안 이만큼 플로깅 했어요</div>
         <div className="eachInfo">
           <div>{lastPlogging.count} 회</div>
@@ -26,7 +26,7 @@ const MyPloggingReport = ({ lastPlogging, isDayTime }: Props) => {
 };
 
 interface StyleProps {
-  daytime: boolean;
+  $daytime: boolean;
 }
 
 const S = {
@@ -68,8 +68,8 @@ const S = {
     gap: 15px;
 
     & .title {
-      color: ${({ theme, daytime }) =>
-        daytime ? theme.color.gray3 : theme.color.white};
+      color: ${({ theme, $daytime }) =>
+        $daytime ? theme.color.gray3 : theme.color.white};
       font-size: ${({ theme }) => theme.font.size.body2};
       font-weight: ${({ theme }) => theme.font.weight.body2};
     }
@@ -79,8 +79,8 @@ const S = {
       justify-content: space-between;
 
       & div {
-        color: ${({ theme, daytime }) =>
-          daytime ? theme.color.gray2 : theme.color.white};
+        color: ${({ theme, $daytime }) =>
+          $daytime ? theme.color.gray2 : theme.color.white};
         font-size: ${({ theme }) => theme.font.size.display2};
         font-weight: ${({ theme }) => theme.font.weight.focus2};
       }

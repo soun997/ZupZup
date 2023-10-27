@@ -32,14 +32,14 @@ const MyPage = () => {
   }, []);
 
   return (
-    <S.Wrap daytime={isDaytime}>
+    <S.Wrap $daytime={isDaytime}>
       <S.Content>
         <MyPageNav coin={320} />
-        <S.Title daytime={isDaytime}>
+        <S.Title $daytime={isDaytime}>
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
         </S.Title>
         <S.Level>
-          <S.SubInfo daytime={isDaytime}>
+          <S.SubInfo $daytime={isDaytime}>
             레벨 {profileInfo.level + 1} 까지{' '}
           </S.SubInfo>
           <ProgressBar score={profileInfo.exp} total={200} />
@@ -59,20 +59,22 @@ const MyPage = () => {
 };
 
 const animation = keyframes`
-
   0%{
+    transform: translateX(100px);
     transform: rotate(0deg);
   }
   50%{
+    transform: translateX(100px);
     transform: rotate(10deg);
   }
   100%{
+    transform: translateX(100px);
     transform: rotate(0deg);
   }
 `;
 
 interface StyleProps {
-  daytime: boolean;
+  $daytime: boolean;
 }
 const S = {
   Wrap: styled.div<StyleProps>`
@@ -81,14 +83,15 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background: ${({ daytime }) =>
-      daytime
+    background: ${({ $daytime }) =>
+      $daytime
         ? 'url("/assets/character/egloo-crop.jpg")'
         : 'url("/assets/character/egloo-crop-night.jpg")'};
     background-size: cover;
   `,
   Title: styled.div<StyleProps>`
-    color: ${({ theme, daytime }) => (daytime ? '#01302D' : theme.color.white)};
+    color: ${({ theme, $daytime }) =>
+      $daytime ? '#01302D' : theme.color.white};
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.title};
     line-height: 30px;
@@ -113,7 +116,8 @@ const S = {
     margin-top: 10px;
   `,
   SubInfo: styled.div<StyleProps>`
-    color: ${({ theme, daytime }) => (daytime ? '#01302D' : theme.color.white)};
+    color: ${({ theme, $daytime }) =>
+      $daytime ? '#01302D' : theme.color.white};
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.focus2};
   `,

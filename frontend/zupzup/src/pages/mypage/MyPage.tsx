@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 import {
   Navigation,
   ProgressBar,
@@ -9,7 +10,7 @@ import { ProfileInfo } from 'types/ProfileInfo';
 
 const profileInfo: ProfileInfo = {
   nickname: '줍줍',
-  characterImage: 'assets/images/character.png',
+  characterImage: '/assets/character/penguin-baby.png',
   day: 12,
   level: 1,
   exp: 160,
@@ -20,19 +21,34 @@ const profileInfo: ProfileInfo = {
   },
 };
 const MyPage = () => {
+  const [isDaytime, setIsDaytime] = useState(true);
+  useEffect(() => {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+
+    const isDay = currentHour >= 6 && currentHour < 18;
+
+    setIsDaytime(isDay);
+  }, []);
+
   return (
-    <S.Wrap>
+    <S.Wrap daytime={isDaytime}>
       <S.Content>
         <MyPageNav coin={320} />
-        <S.Title>
+        <S.Title daytime={isDaytime}>
           {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
         </S.Title>
         <S.Level>
-          <S.SubInfo>레벨 {profileInfo.level + 1} 까지 </S.SubInfo>
+          <S.SubInfo daytime={isDaytime}>
+            레벨 {profileInfo.level + 1} 까지{' '}
+          </S.SubInfo>
           <ProgressBar score={profileInfo.exp} total={200} />
         </S.Level>
         <S.Report>
-          <MyPloggingReport lastPlogging={profileInfo.lastPlogging} />
+          <MyPloggingReport
+            lastPlogging={profileInfo.lastPlogging}
+            isDayTime={isDaytime}
+          />
         </S.Report>
       </S.Content>
 
@@ -42,19 +58,40 @@ const MyPage = () => {
   );
 };
 
+const animation = keyframes`
+
+  0%{
+    transform: rotate(0deg);
+  }
+  50%{
+    transform: rotate(10deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+`;
+
+interface StyleProps {
+  daytime: boolean;
+}
 const S = {
-  Wrap: styled.div`
+  Wrap: styled.div<StyleProps>`
     display: flex;
     flex-direction: column;
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background: url('/assets/images/mypage-wall.png');
+    background: ${({ daytime }) =>
+      daytime
+        ? 'url("/assets/character/egloo-crop.jpg")'
+        : 'url("/assets/character/egloo-crop-night.jpg")'};
+    background-size: cover;
   `,
-  Title: styled.div`
+  Title: styled.div<StyleProps>`
+    color: ${({ theme, daytime }) => (daytime ? '#01302D' : theme.color.white)};
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.title};
-    line-height: 29px;
+    line-height: 30px;
     text-align: right;
     margin-top: 30px;
   `,
@@ -64,10 +101,9 @@ const S = {
   `,
 
   Image: styled.img`
-    position: absolute;
-    bottom: 100px;
-    margin-left: 30px;
-    width: 200px;
+    margin: auto 0 -15vh 2vw;
+    width: 50%;
+    animation: ${animation} 2s ease-in-out infinite;
   `,
 
   Level: styled.div`
@@ -76,9 +112,10 @@ const S = {
     gap: 5px;
     margin-top: 10px;
   `,
-  SubInfo: styled.div`
+  SubInfo: styled.div<StyleProps>`
+    color: ${({ theme, daytime }) => (daytime ? '#01302D' : theme.color.white)};
     font-size: ${({ theme }) => theme.font.size.body3};
-    font-family: ${({ theme }) => theme.font.family.body3};
+    font-family: ${({ theme }) => theme.font.family.focus2};
   `,
 
   Report: styled.div`

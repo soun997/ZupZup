@@ -36,6 +36,11 @@ const S = {
     height: 44px;
     justify-content: space-between;
     overflow: hidden;
+
+    & svg g g path,
+    svg g path {
+      stroke: white;
+    }
   `,
 
   LeftSection: styled.div`
@@ -46,7 +51,7 @@ const S = {
     gap: 4px;
     flex-shrink: 0;
     span {
-      color: ${({ theme }) => theme.color.gray2};
+      color: ${({ theme }) => theme.color.white};
       font-weight: ${({ theme }) => theme.font.weight.body2};
       font-size: ${({ theme }) => theme.font.size.body2};
       font-family: ${({ theme }) => theme.font.family.focus2};

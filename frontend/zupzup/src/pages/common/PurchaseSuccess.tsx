@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
-
-import { SuccessAnimation, ConfirmButton } from 'components';
+import character from '/assets/character/after-eating.gif';
+import { ConfirmButton } from 'components';
 
 const PurchaseSuccess = () => {
   const navigate = useNavigate();
@@ -10,10 +10,10 @@ const PurchaseSuccess = () => {
   return (
     <S.Wrap>
       <S.TitleFrame>
-        <S.MainTitle>구매가 완료 되었어요</S.MainTitle>
-        <S.SubTitle>줍줍님의 성장치가 증가하였어요 🎉</S.SubTitle>
+        <S.MainTitle>음~ 맛있는 식사였다고 하네요</S.MainTitle>
+        <S.SubTitle>줍줍님의 성장도가 증가하였어요 🎉</S.SubTitle>
       </S.TitleFrame>
-      <SuccessAnimation />
+      <S.GIF src={character} alt="eating..." />
       <S.BottomFrame>
         <ConfirmButton
           text="마이페이지로 이동"
@@ -32,10 +32,10 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background-color: ${({ theme }) => theme.color.background};
+    background-color: ${({ theme }) => theme.color.white};
   `,
   TitleFrame: styled.div`
-    margin-top: 75px;
+    margin-top: 80px;
     text-align: center;
   `,
   MainTitle: styled.div`
@@ -60,6 +60,11 @@ const S = {
     bottom: 0;
     width: 100%;
     margin: auto 0 50px 0;
+  `,
+
+  GIF: styled.img`
+    width: 90%;
+    margin: 150px auto 0;
   `,
 };
 export default PurchaseSuccess;

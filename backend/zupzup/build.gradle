@@ -31,6 +31,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // annotation processor
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
     // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 

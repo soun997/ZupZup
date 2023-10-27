@@ -6,6 +6,7 @@ import * as utils from 'utils';
 import CoinSvg from 'assets/icons/coin.svg?react';
 import ShopSvg from 'assets/icons/shop.svg?react';
 import SettingSvg from 'assets/icons/setting.svg?react';
+import MoreInfoSvg from 'assets/icons/question.svg?react';
 
 interface Props {
   coin: number;
@@ -20,6 +21,7 @@ const MyPageNav = ({ coin }: Props) => {
         <span>{coin}</span>
       </S.LeftSection>
       <S.RightSection>
+        <MoreInfoSvg onClick={() => navigate(utils.URL.ONBORDING.CHARACTER)} />
         <ShopSvg onClick={() => navigate(utils.URL.MYPAGE.SHOP)} />
         <SettingSvg onClick={() => navigate(utils.URL.SETTING.HOME)} />
       </S.RightSection>

@@ -11,10 +11,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.twoez.zupzup.member.domain.AuthProvider;
+import com.twoez.zupzup.fixture.member.MemberFixture;
+import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.domain.OAuth;
-import com.twoez.zupzup.member.domain.Role;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.support.docs.RestDocsTest;
@@ -37,19 +36,7 @@ class PloggingLogControllerTest extends RestDocsTest {
 
     @BeforeEach
     void initObjects() {
-        this.member =
-                Member.builder()
-                        .id(1L)
-                        .oAuth(new OAuth(AuthProvider.GOOGLE, "1234567"))
-                        .name("zupzup")
-                        .gender("F")
-                        .birthYear(2002)
-                        .height(160)
-                        .weight(50)
-                        .coin(24L)
-                        .isDeleted(false)
-                        .role(List.of(Role.ROLE_USER))
-                        .build();
+        this.member = MemberFixture.DEFAULT.getMember();
     }
 
     @Test
@@ -57,17 +44,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     void floggingLogByStartDateAndEndDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
         given(
                         ploggingLogQueryService.searchInPeriod(
                                 any(LocalDateTime.class),
@@ -103,17 +80,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     void floggingLogByDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
         given(ploggingLogQueryService.searchByDate(any(LocalDate.class), any(Long.class)))
                 .willReturn(List.of(ploggingLog));
 
@@ -140,17 +107,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     void recentFloggingLog() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
         given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLog);
 
         ResultActions perform =

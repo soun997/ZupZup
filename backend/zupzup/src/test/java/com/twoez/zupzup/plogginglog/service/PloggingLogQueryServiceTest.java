@@ -1,20 +1,20 @@
 package com.twoez.zupzup.plogginglog.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
-import com.twoez.zupzup.member.domain.AuthProvider;
+import com.twoez.zupzup.fixture.member.MemberFixture;
+import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
+import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.domain.OAuth;
-import com.twoez.zupzup.member.domain.Role;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,42 +28,14 @@ class PloggingLogQueryServiceTest {
     @Mock PloggingLogQueryRepository ploggingLogQueryRepository;
     @InjectMocks PloggingLogQueryService ploggingLogQueryService;
 
-    Member member;
-
-    @BeforeEach
-    void initObjects() {
-        this.member =
-                Member.builder()
-                        .id(1L)
-                        .oAuth(new OAuth(AuthProvider.GOOGLE, "1234567"))
-                        .name("zupzup")
-                        .gender("F")
-                        .birthYear(2002)
-                        .height(160)
-                        .weight(50)
-                        .coin(24L)
-                        .isDeleted(false)
-                        .role(List.of(Role.ROLE_USER))
-                        .build();
-    }
+    Member member = MemberFixture.DEFAULT.getMember();
 
     @Test
     @DisplayName("기간 내의 플로깅 로그들을 가져온다.")
     void searchInPeriod() {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .id(1L)
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member);
         given(
                         ploggingLogQueryRepository.findByBetweenStartDateAndEndDate(
                                 any(LocalDateTime.class),
@@ -73,7 +45,7 @@ class PloggingLogQueryServiceTest {
 
         List<PloggingLog> ploggingLogs =
                 ploggingLogQueryService.searchInPeriod(
-                        LocalDateTime.now(), LocalDateTime.now().plusDays(2), 1L);
+                        LocalDateTime.now(), LocalDateTime.now().plusDays(2), member.getId());
 
         assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
@@ -83,22 +55,11 @@ class PloggingLogQueryServiceTest {
     void searchByDate() {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .id(1L)
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member);
         given(ploggingLogQueryRepository.findByDate(any(LocalDate.class), any(Long.class)))
                 .willReturn(List.of(ploggingLog));
 
-        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(), 1L);
+        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(), member.getId());
 
         assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
@@ -108,23 +69,22 @@ class PloggingLogQueryServiceTest {
     void searchRecent() {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
-                PloggingLog.builder()
-                        .id(1L)
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build();
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member);
         given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
                 .willReturn(Optional.ofNullable(ploggingLog));
 
-        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(1L);
+        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(member.getId());
 
         assertThat(findPloggingLog).isEqualTo(ploggingLog);
+    }
+
+    @Test
+    @DisplayName("최근 플로깅 로그가 없으면 예외가 발생한다")
+    void ifNotExistsRecentPloggingLogThrowsPloggingNotFoundException() {
+        given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> ploggingLogQueryService.searchRecentLog(member.getId()))
+                .isInstanceOf(PloggingLogNotFoundException.class);
     }
 }

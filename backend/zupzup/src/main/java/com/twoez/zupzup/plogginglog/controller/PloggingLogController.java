@@ -27,7 +27,7 @@ public class PloggingLogController {
     private final RouteService routeService;
 
     @GetMapping("/period")
-    public ApiResponse<List<PloggingLogListResponse>> floggingListByPeriod(
+    public ApiResponse<List<PloggingLogListResponse>> ploggingListByPeriod(
             @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) {
         return ApiResponse.ok(
                 ploggingLogQueryService.searchInPeriod(startDate, endDate, 1L).stream()
@@ -36,7 +36,7 @@ public class PloggingLogController {
     }
 
     @GetMapping("/days")
-    public ApiResponse<List<PloggingLogListResponse>> floggingListByDay(
+    public ApiResponse<List<PloggingLogListResponse>> ploggingListByDay(
             @RequestParam LocalDate date) {
         return ApiResponse.ok(
                 ploggingLogQueryService.searchByDate(date, 1L).stream()
@@ -45,7 +45,7 @@ public class PloggingLogController {
     }
 
     @GetMapping("/recent")
-    public ApiResponse<RecentPloggingLogResponse> recentFloggingLogDetails() {
+    public ApiResponse<RecentPloggingLogResponse> recentPloggingLogDetails() {
         return ApiResponse.ok(
                 RecentPloggingLogResponse.from(
                         ploggingLogQueryService.searchRecentLog(1L)));

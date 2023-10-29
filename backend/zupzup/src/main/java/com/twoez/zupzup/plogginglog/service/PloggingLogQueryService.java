@@ -4,7 +4,6 @@ package com.twoez.zupzup.plogginglog.service;
 import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
-import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PloggingLogQueryService {
 
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
-    private final PloggingLogRepository ploggingLogRepository;
 
     public List<PloggingLog> searchInPeriod(
             LocalDateTime startDate, LocalDateTime endDate, Long memberId) {
@@ -34,11 +32,5 @@ public class PloggingLogQueryService {
         return ploggingLogQueryRepository
                 .findOneOrderByDateDesc(memberId)
                 .orElseThrow(PloggingLogNotFoundException::new);
-    }
-
-    @Transactional
-    public PloggingLog add(PloggingLog ploggingLog) {
-
-        return ploggingLogRepository.save(ploggingLog);
     }
 }

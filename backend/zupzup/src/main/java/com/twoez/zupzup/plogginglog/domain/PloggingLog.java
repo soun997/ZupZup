@@ -52,7 +52,6 @@ public class PloggingLog extends BaseTime {
     @Column(nullable = false)
     private String routeImageUrl;
 
-    @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isDeleted;
 

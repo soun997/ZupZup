@@ -11,3 +11,22 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope: email, profile, openid
+
+
+client:
+  url: ${CLIENT_URL}
+
+jwt:
+  secret_key: ${JWT_SECRET_KEY}
+  access_expired_min: ${JWT_ACCESS_EXPIRED_MIN}
+  refresh_expired_day: ${JWT_REFRESH_EXPIRED_DAY}

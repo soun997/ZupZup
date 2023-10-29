@@ -1,9 +1,11 @@
 package com.twoez.zupzup.config.security;
 
+import com.twoez.zupzup.config.security.filter.JwtAuthenticationFilter;
 import com.twoez.zupzup.config.security.handler.DefaultAccessDeniedHandler;
 import com.twoez.zupzup.config.security.handler.DefaultAuthenticationEntryPoint;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,16 +26,20 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final HttpRequestEndpointChecker httpRequestEndpointChecker;
     private final DefaultAccessDeniedHandler accessDeniedHandler;
     private final DefaultAuthenticationEntryPoint authenticationEntryPoint;
+    private final OidcUserService oidcUserService;
+    private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${CLIENT_URL}")
+    @Value("${client.url}")
     private String clientUrl;
 
     @Bean
@@ -42,6 +52,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
             HandlerMappingIntrospector introspector)
             throws Exception {
+        log.info("Security filter chain Setting");
         return httpSecurity
                 .exceptionHandling(config -> config
                         .accessDeniedHandler(accessDeniedHandler)
@@ -50,11 +61,22 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
+                                        new MvcRequestMatcher(introspector, "login/**")
+                                ).permitAll()
+                                .requestMatchers(
                                         new MvcRequestMatcher(introspector, "api/**"))
                                 .authenticated()
                                 .anyRequest().authenticated())
+                .oauth2Login(config -> config
+                        .authorizationEndpoint(
+                                oauthConfig -> oauthConfig.baseUri("/oauth2/authorization"))
+                        .userInfoEndpoint(
+                                endpointConfig -> endpointConfig.oidcUserService(oidcUserService))
+                        .successHandler(successHandler)
+                        .failureHandler(failureHandler)) // TODO: oauth login 설정
                 .sessionManagement(
                         config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
                 .build();
     }
 
@@ -70,7 +92,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
 
 
 }

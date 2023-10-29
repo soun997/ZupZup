@@ -12,6 +12,7 @@ public enum PloggingLogFixture {
             10,
             LocalDateTime.of(2023, 10, 30, 0, 0),
             LocalDateTime.of(2023, 10, 30, 2, 0),
+            120L,
             600,
             50,
             200,
@@ -22,6 +23,7 @@ public enum PloggingLogFixture {
     private Integer distance;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private Long time;
     private Integer calories;
     private Integer gatheredTrash;
     private Integer coin;
@@ -34,6 +36,7 @@ public enum PloggingLogFixture {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
+            Long time,
             Integer calories,
             Integer gatheredTrash,
             Integer coin,
@@ -44,6 +47,7 @@ public enum PloggingLogFixture {
         this.distance = distance;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.time = time;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
         this.coin = coin;
@@ -58,6 +62,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
+                .time(time)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
@@ -74,6 +79,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
+                .time(time)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)

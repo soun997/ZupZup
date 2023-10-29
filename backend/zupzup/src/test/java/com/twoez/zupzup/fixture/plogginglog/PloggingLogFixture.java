@@ -7,17 +7,50 @@ import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDateTime;
 
 public enum PloggingLogFixture {
-    DEFAULT;
-    private Long id = 1L;
-    private Integer distance = 10;
-    private LocalDateTime startDateTime = LocalDateTime.of(2023, 10, 30, 0, 0);
-    private LocalDateTime endDateTime = LocalDateTime.of(2023, 10, 30, 2, 0);
-    private Integer calories = 600;
-    private Integer gatheredTrash = 50;
-    private Long coin = 200L;
-    private String routeImageUrl = "https://image.com";
-    private Boolean isDeleted = false;
-    private Member member = MemberFixture.DEFAULT.getMember();
+    DEFAULT(
+            1L,
+            10,
+            LocalDateTime.of(2023, 10, 30, 0, 0),
+            LocalDateTime.of(2023, 10, 30, 2, 0),
+            600,
+            50,
+            200L,
+            "https://image.com",
+            false,
+            MemberFixture.DEFAULT.getMember());
+    private Long id;
+    private Integer distance;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private Integer calories;
+    private Integer gatheredTrash;
+    private Long coin;
+    private String routeImageUrl;
+    private Boolean isDeleted;
+    private Member member;
+
+    PloggingLogFixture(
+            Long id,
+            Integer distance,
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime,
+            Integer calories,
+            Integer gatheredTrash,
+            Long coin,
+            String routeImageUrl,
+            Boolean isDeleted,
+            Member member) {
+        this.id = id;
+        this.distance = distance;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.calories = calories;
+        this.gatheredTrash = gatheredTrash;
+        this.coin = coin;
+        this.routeImageUrl = routeImageUrl;
+        this.isDeleted = isDeleted;
+        this.member = member;
+    }
 
     public PloggingLog getPloggingLog() {
         return PloggingLog.builder()

@@ -14,7 +14,7 @@ public enum PloggingLogFixture {
             LocalDateTime.of(2023, 10, 30, 2, 0),
             600,
             50,
-            200L,
+            200,
             "https://image.com",
             false,
             MemberFixture.DEFAULT.getMember());
@@ -24,7 +24,7 @@ public enum PloggingLogFixture {
     private LocalDateTime endDateTime;
     private Integer calories;
     private Integer gatheredTrash;
-    private Long coin;
+    private Integer coin;
     private String routeImageUrl;
     private Boolean isDeleted;
     private Member member;
@@ -36,7 +36,7 @@ public enum PloggingLogFixture {
             LocalDateTime endDateTime,
             Integer calories,
             Integer gatheredTrash,
-            Long coin,
+            Integer coin,
             String routeImageUrl,
             Boolean isDeleted,
             Member member) {

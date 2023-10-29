@@ -43,7 +43,7 @@ public class PloggingLog extends BaseTime {
     private Integer gatheredTrash;
 
     @Column(nullable = false)
-    private Long coin;
+    private Integer coin;
 
     @Column(nullable = false)
     private String routeImageUrl;
@@ -63,7 +63,7 @@ public class PloggingLog extends BaseTime {
             LocalDateTime endDateTime,
             Integer calories,
             Integer gatheredTrash,
-            Long coin,
+            Integer coin,
             String routeImageUrl,
             Boolean isDeleted,
             Member member) {

@@ -10,10 +10,10 @@ public record PloggingLogRequest(
         @NotNull Integer distance,
         @NotNull LocalDateTime startDateTime,
         @NotNull LocalDateTime endDateTime,
-        @NotNull Long time,
+        @NotNull Integer time,
         @NotNull Integer calories,
         @NotNull Integer gatheredTrash,
-        @NotNull Integer coins,
+        @NotNull Integer coin,
         @NotNull String routeImageUrl) {
 
     public PloggingLog toEntity(Member member) {
@@ -24,7 +24,7 @@ public record PloggingLogRequest(
                 .time(time)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
-                .coins(coins)
+                .coin(coin)
                 .routeImageUrl(routeImageUrl)
                 .member(member)
                 .build();

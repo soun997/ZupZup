@@ -38,7 +38,7 @@ public class PloggingLog extends BaseTime {
     private LocalDateTime endDateTime;
 
     @Column(nullable = false)
-    private Long time;
+    private Integer time;
 
     @Column(nullable = false)
     private Integer calories;
@@ -47,7 +47,7 @@ public class PloggingLog extends BaseTime {
     private Integer gatheredTrash;
 
     @Column(nullable = false)
-    private Integer coins;
+    private Integer coin;
 
     @Column(nullable = false)
     private String routeImageUrl;
@@ -66,10 +66,10 @@ public class PloggingLog extends BaseTime {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
-            Long time,
+            Integer time,
             Integer calories,
             Integer gatheredTrash,
-            Integer coins,
+            Integer coin,
             String routeImageUrl,
             Boolean isDeleted,
             Member member) {
@@ -80,7 +80,7 @@ public class PloggingLog extends BaseTime {
         this.time = time;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
-        this.coins = coins;
+        this.coin = coin;
         this.routeImageUrl = routeImageUrl;
         this.isDeleted = isDeleted;
         this.member = member;

@@ -6,10 +6,10 @@ import com.twoez.zupzup.plogginglog.domain.Route;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
-public record RouteResponse(@NotNull List<Location> locations) {
+public record RouteDetailsResponse(@NotNull List<Location> locations) {
 
-    public static RouteResponse from(Route route) {
+    public static RouteDetailsResponse from(Route route) {
 
-        return new RouteResponse(route.getLocations());
+        return new RouteDetailsResponse(route.getLocations());
     }
 }

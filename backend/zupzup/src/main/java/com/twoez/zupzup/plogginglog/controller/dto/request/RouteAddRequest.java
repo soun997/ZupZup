@@ -7,10 +7,9 @@ import java.util.List;
 
 // TODO: List를 검증하기 위한 custom validation 구현
 public record RouteAddRequest(
-        @Valid Long ploggingLogId,
         @Valid List<Location> locations) {
 
-    public Route toDocument() {
+    public Route toDocument(Long ploggingLogId) {
         return new Route(ploggingLogId, locations);
     }
 }

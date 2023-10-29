@@ -43,3 +43,13 @@ include::{snippets}/plogginglog-by-recent/http-request.adoc[]
 === Response
 
 include::{snippets}/plogginglog-by-recent/http-response.adoc[]
+
+== 플로깅 기록 추가
+
+=== Request
+
+include::{snippets}/plogginglog-add/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-add/http-response.adoc[]

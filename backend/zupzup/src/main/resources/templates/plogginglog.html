@@ -465,6 +465,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_3">Response</a></li>
 </ul>
 </li>
+<li><a href="#_플로깅_기록_추가">플로깅 기록 추가</a>
+<ul class="sectlevel2">
+<li><a href="#_request_4">Request</a></li>
+<li><a href="#_response_4">Response</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -476,7 +482,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_request"><a class="link" href="#_request">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/period?startDate=2023-10-01T00:00&amp;endDate=2023-10-03T00:00 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/period?startDate=2023-10-01T00:00&amp;endDate=2023-10-03T00:00 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -510,13 +516,13 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 232
+Content-Length: 241
 
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-10-29T16:18:58.688913",
-    "endDateTime" : "2023-10-29T16:18:58.688913",
+    "startDateTime" : "2023-10-30T04:17:02.350609",
+    "endDateTime" : "2023-10-30T04:17:02.350609",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -534,7 +540,7 @@ Content-Length: 232
 <h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/days?date=2023-10-01 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/days?date=2023-10-01 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -564,13 +570,13 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 232
+Content-Length: 243
 
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-10-29T16:18:58.770107",
-    "endDateTime" : "2023-10-29T16:18:58.770107",
+    "startDateTime" : "2023-10-30T04:17:02.6535132",
+    "endDateTime" : "2023-10-30T04:17:02.6535132",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -588,7 +594,7 @@ Content-Length: 232
 <h3 id="_request_3"><a class="link" href="#_request_3">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/recent HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/recent HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -600,15 +606,59 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 185
+Content-Length: 195
 
 {
   "status" : 200,
   "results" : {
-    "startDateTime" : "2023-10-29T16:18:58.378405",
-    "endDateTime" : "2023-10-29T16:18:58.378405",
+    "startDateTime" : "2023-10-30T04:17:02.0334273",
+    "endDateTime" : "2023-10-30T04:17:02.0334273",
     "distance" : 10,
     "calories" : 600
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_플로깅_기록_추가"><a class="link" href="#_플로깅_기록_추가">플로깅 기록 추가</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_4"><a class="link" href="#_request_4">Request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/plogging-logs HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 232
+Host: k9a202.p.ssafy.io:8080
+
+{
+  "distance" : 10,
+  "startDateTime" : "2023-10-30T00:00:00",
+  "endDateTime" : "2023-10-30T02:00:00",
+  "time" : 3600,
+  "calories" : 600,
+  "gatheredTrash" : 50,
+  "coin" : 200,
+  "routeImageUrl" : "https://image.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_4"><a class="link" href="#_response_4">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 59
+
+{
+  "status" : 201,
+  "results" : {
+    "id" : 1
   }
 }</code></pre>
 </div>
@@ -620,7 +670,7 @@ Content-Length: 185
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-10-25 19:14:05 +0900
+Last updated 2023-10-30 03:39:37 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

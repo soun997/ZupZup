@@ -28,7 +28,10 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException arg2) throws IOException {
-
+        log.info("DefaultAuthenticationEntryPoint - commence called");
+        log.info("request : {}", request);
+        log.info("response: {}", response);
+        arg2.printStackTrace();
         HttpExceptionCode authenticationExceptionCode = HttpExceptionCode.SECURITY_AUTHENTICATION_EXCEPTION;
 
         Assertion.with(request)

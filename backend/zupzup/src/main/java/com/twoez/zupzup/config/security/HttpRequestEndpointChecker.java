@@ -36,7 +36,8 @@ public class HttpRequestEndpointChecker {
             }
             return false;
         } catch (Exception e) {
-            throw new UnexpectedException();
+            e.printStackTrace();
+            return false;
         }
     }
 }

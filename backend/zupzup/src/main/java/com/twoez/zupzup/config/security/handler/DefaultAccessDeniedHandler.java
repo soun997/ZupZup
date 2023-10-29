@@ -33,7 +33,7 @@ public class DefaultAccessDeniedHandler extends AccessDeniedHandlerImpl {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
-
+        log.info("DefaultAccessDeniedHandler - handle called");
         HttpExceptionCode authorizationExceptionCode = HttpExceptionCode.SECURITY_AUTHORIZATION_EXCEPTION;
 
         Assertion.with(request)

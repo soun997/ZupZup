@@ -2,10 +2,9 @@ package com.twoez.zupzup.plogginglog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.twoez.zupzup.member.domain.AuthProvider;
+import com.twoez.zupzup.fixture.member.MemberFixture;
+import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.domain.OAuth;
-import com.twoez.zupzup.member.domain.Role;
 import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDate;
@@ -28,19 +27,7 @@ class PloggingLogQueryRepositoryTest {
 
     @BeforeEach
     void initObjects() {
-        this.member =
-                memberRepository.save(
-                        Member.builder()
-                                .oAuth(new OAuth(AuthProvider.GOOGLE, "1234567"))
-                                .name("zupzup")
-                                .gender("F")
-                                .birthYear(2002)
-                                .height(160)
-                                .weight(50)
-                                .coin(24L)
-                                .isDeleted(false)
-                                .role(List.of(Role.ROLE_USER))
-                                .build());
+        this.member = memberRepository.save(MemberFixture.DEFAULT.getMemberNoneId());
     }
 
     @Test
@@ -48,17 +35,7 @@ class PloggingLogQueryRepositoryTest {
     void searchInPeriod() {
         LocalDateTime now = LocalDateTime.now();
         ploggingLogRepository.save(
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now.plusHours(1))
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build());
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusHours(1), member));
 
         LocalDateTime startDate = now.minusDays(1);
         LocalDateTime endDate = now.plusDays(2);
@@ -76,17 +53,7 @@ class PloggingLogQueryRepositoryTest {
     void searchByDate() {
         LocalDateTime now = LocalDateTime.now();
         ploggingLogRepository.save(
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now.plusDays(2))
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build());
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member));
 
         LocalDate date = now.toLocalDate();
         List<PloggingLog> ploggingLogs =
@@ -101,17 +68,7 @@ class PloggingLogQueryRepositoryTest {
     void searchRecent() {
         LocalDateTime now = LocalDateTime.now();
         ploggingLogRepository.save(
-                PloggingLog.builder()
-                        .startDateTime(now)
-                        .endDateTime(now)
-                        .distance(12345)
-                        .gatheredTrash(24)
-                        .coin(240L)
-                        .calories(240)
-                        .member(member)
-                        .routeImageUrl("https://image.com")
-                        .isDeleted(false)
-                        .build());
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusHours(1), member));
 
         Optional<PloggingLog> findPloggingLog =
                 ploggingLogQueryRepository.findOneOrderByDateDesc(member.getId());

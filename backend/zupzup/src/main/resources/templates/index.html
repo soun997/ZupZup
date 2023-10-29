@@ -481,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_request"><a class="link" href="#_request">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/period?startDate=2023-10-01T00:00&amp;endDate=2023-10-03T00:00 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/period?startDate=2023-10-01T00:00&amp;endDate=2023-10-03T00:00 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -520,8 +520,8 @@ Content-Length: 232
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-10-29T16:18:58.688913",
-    "endDateTime" : "2023-10-29T16:18:58.688913",
+    "startDateTime" : "2023-10-30T02:26:34.196364",
+    "endDateTime" : "2023-10-30T02:26:34.196364",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -539,7 +539,7 @@ Content-Length: 232
 <h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/days?date=2023-10-01 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/days?date=2023-10-01 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -574,8 +574,8 @@ Content-Length: 232
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-10-29T16:18:58.770107",
-    "endDateTime" : "2023-10-29T16:18:58.770107",
+    "startDateTime" : "2023-10-30T02:26:34.298049",
+    "endDateTime" : "2023-10-30T02:26:34.298049",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -593,7 +593,7 @@ Content-Length: 232
 <h3 id="_request_3"><a class="link" href="#_request_3">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/histories/recent HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/recent HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -610,8 +610,8 @@ Content-Length: 185
 {
   "status" : 200,
   "results" : {
-    "startDateTime" : "2023-10-29T16:18:58.378405",
-    "endDateTime" : "2023-10-29T16:18:58.378405",
+    "startDateTime" : "2023-10-30T02:26:33.839089",
+    "endDateTime" : "2023-10-30T02:26:33.839089",
     "distance" : 10,
     "calories" : 600
   }

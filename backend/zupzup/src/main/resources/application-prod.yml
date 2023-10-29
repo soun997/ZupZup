@@ -12,6 +12,11 @@ spring:
       host: redis
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
+    mongodb:
+      uri: ${MONGO_URI}
+      database: ${MONGO_DATABASE}
+      username: ${MONGO_USERNAME}
+      password: ${MONGO_PASSWORD}
 
 server:
   servlet:

@@ -2,7 +2,6 @@ spring:
   h2:
     console:
       enabled: true
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -11,6 +10,12 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: ${MONGO_DATABASE}
+
 server:
   servlet:
     context-path: /api
+

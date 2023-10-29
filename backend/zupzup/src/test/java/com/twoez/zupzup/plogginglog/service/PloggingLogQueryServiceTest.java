@@ -1,11 +1,13 @@
 package com.twoez.zupzup.plogginglog.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
+import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
@@ -43,7 +45,7 @@ class PloggingLogQueryServiceTest {
 
         List<PloggingLog> ploggingLogs =
                 ploggingLogQueryService.searchInPeriod(
-                        LocalDateTime.now(), LocalDateTime.now().plusDays(2), 1L);
+                        LocalDateTime.now(), LocalDateTime.now().plusDays(2), member.getId());
 
         assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
@@ -57,7 +59,7 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findByDate(any(LocalDate.class), any(Long.class)))
                 .willReturn(List.of(ploggingLog));
 
-        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(), 1L);
+        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(), member.getId());
 
         assertThat(ploggingLogs).containsExactly(ploggingLog);
     }
@@ -71,8 +73,18 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
                 .willReturn(Optional.ofNullable(ploggingLog));
 
-        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(1L);
+        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(member.getId());
 
         assertThat(findPloggingLog).isEqualTo(ploggingLog);
+    }
+
+    @Test
+    @DisplayName("최근 플로깅 로그가 없으면 예외가 발생한다")
+    void ifNotExistsRecentPloggingLogThrowsPloggingNotFoundException() {
+        given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> ploggingLogQueryService.searchRecentLog(member.getId()))
+                .isInstanceOf(PloggingLogNotFoundException.class);
     }
 }

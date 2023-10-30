@@ -15,10 +15,11 @@ interface MapProps {
 interface Props {
   exitOn: boolean;
   ploggingInfoOn: boolean;
+  cameraOn: boolean;
   location: Location;
 }
 
-const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
+const PloggingMap = ({ exitOn, ploggingInfoOn, cameraOn, location }: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
@@ -59,16 +60,8 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
       });
     }
 
-    const updateMarker = ({ lat, lng }: Location) => {
+    const updateMarker = () => {
       if (!curMarker) {
-        return;
-      }
-
-      curMarker.setPosition(new window.Tmapv3.LatLng(lat, lng));
-    };
-
-    const updatePath = () => {
-      if (!tmap || !polyline) {
         return;
       }
 
@@ -81,12 +74,32 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
         return;
       }
 
-      const { Tmapv3 } = window;
-      const newPolyline = new Tmapv3.Polyline({
-        path: locations.map(
-          (location: Location) =>
-            new window.Tmapv3.LatLng(location.lat, location.lng),
-        ),
+      curMarker.setPosition(
+        new window.Tmapv3.LatLng(location.lat, location.lng),
+      );
+    };
+
+    const updatePath = () => {
+      if (!tmap || !polyline) {
+        return;
+      }
+
+      const LOCATIONS_KEY = 'locations';
+      const locations = JSON.parse(
+        localStorage.getItem(LOCATIONS_KEY) as string,
+      );
+
+      if (!locations || locations.length < 1) {
+        return;
+      }
+
+      const paths = locations.map(
+        (location: Location) =>
+          new window.Tmapv3.LatLng(location.lat, location.lng),
+      );
+
+      const newPolyline = new window.Tmapv3.Polyline({
+        path: paths,
         strokeColor: '#dd00dd',
         strokeWeight: 6,
         direction: true,
@@ -95,17 +108,16 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, location }: Props) => {
       setPolyline(newPolyline);
     };
 
-    updateMarker({
-      lat: location.lat,
-      lng: location.lng,
-    });
-
+    updateMarker();
     updatePath();
   }, [location]);
 
   return (
     <S.Wrap>
-      <S.Map ref={mapRef} $modalOn={exitOn || ploggingInfoOn}></S.Map>
+      <S.Map
+        ref={mapRef}
+        $modalOn={exitOn || ploggingInfoOn || cameraOn}
+      ></S.Map>
     </S.Wrap>
   );
 };

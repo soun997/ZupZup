@@ -32,11 +32,11 @@ const Router = () => {
           />
 
           <Route
-            path={utils.URL.LOGIN.REGIST_INFO + '/physical'}
+            path={utils.URL.LOGIN.REGIST_INFO.PHYSICAL}
             element={<pages.RegistInfoPhysical />}
           />
           <Route
-            path={utils.URL.LOGIN.REGIST_INFO + '/profile'}
+            path={utils.URL.LOGIN.REGIST_INFO.PROFILE}
             element={<pages.RegistInfoProfile />}
           />
 

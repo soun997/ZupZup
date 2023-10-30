@@ -5,7 +5,10 @@ export const URL = {
   OPINION: '/opinion',
   LOGIN: {
     HOME: '/login',
-    REGIST_INFO: '/regist-info',
+    REGIST_INFO: {
+      PHYSICAL: '/regist-info/physical',
+      PROFILE: '/regist-info/profile',
+    },
   },
   MAIN: {
     HOME: '/',
@@ -47,4 +50,11 @@ export const SOCIAL_KEY = {
 export const GENDER = {
   MALE: '남성',
   FEMALE: '여성',
+};
+
+export const AUTH = {
+  ACCESS_KEY: 'access-token',
+  REFRESH_KEY: 'refresh-token',
+  MEMBER_ID: 'member-id',
+  NICKNAME: 'nickname',
 };

@@ -36,6 +36,7 @@ const S = {
     flex-direction: column;
     align-items: end;
     justify-content: center;
+    font-family: ${({ theme }) => theme.font.family.body2};
   `,
 
   IndexTitle: styled.div`

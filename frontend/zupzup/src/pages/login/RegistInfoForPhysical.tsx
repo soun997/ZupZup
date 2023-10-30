@@ -44,7 +44,7 @@ const RegistInfo = () => {
         inputRefForWeight.current?.value,
       )
     ) {
-      navigate(utils.URL.LOGIN.REGIST_INFO + '/profile', {
+      navigate(utils.URL.LOGIN.REGIST_INFO.PROFILE, {
         state: {
           height: inputRefForHeight.current?.value,
           weight: inputRefForWeight.current?.value,

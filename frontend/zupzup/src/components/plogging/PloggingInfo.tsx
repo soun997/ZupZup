@@ -1,7 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import * as utils from 'utils';
 import { useFormatTime } from 'hooks';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
@@ -13,11 +11,15 @@ interface Props {
   exitOn: boolean;
   setExitOn: (exitOn: boolean) => void;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
+  setCameraOn: (cameraOn: boolean) => void;
 }
 
-const PloggingInfo = ({ time, distance, setPloggingInfoOn }: Props) => {
-  const navigate = useNavigate();
-
+const PloggingInfo = ({
+  time,
+  distance,
+  setPloggingInfoOn,
+  setCameraOn,
+}: Props) => {
   return (
     <S.Wrap>
       <S.PloggingInfoBox>
@@ -37,7 +39,7 @@ const PloggingInfo = ({ time, distance, setPloggingInfoOn }: Props) => {
         </S.PloggingState>
       </S.PloggingInfoBox>
       <S.UserAccess>
-        <S.CameraButton onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}>
+        <S.CameraButton onClick={() => setCameraOn(true)}>
           <CameraSvg />
         </S.CameraButton>
         <S.BackToMapButton onClick={() => setPloggingInfoOn(false)}>

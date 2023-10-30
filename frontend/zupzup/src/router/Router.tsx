@@ -18,7 +18,6 @@ const Router = () => {
             path={utils.URL.PLOGGING.LOBBY}
             element={<pages.PloggingStart />}
           />
-          <Route path={utils.URL.PLOGGING.CAMERA} element={<pages.Camera />} />
           <Route path={utils.URL.PLOGGING.ON} element={<pages.OnPlogging />} />
           <Route
             path={utils.URL.PLOGGING.TRASH}

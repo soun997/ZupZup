@@ -18,8 +18,9 @@ import org.springframework.context.annotation.Configuration;
 public class JwtProperty {
 
     private String secretKey;
-    private Integer accessExpiredMin;
-    private Integer refreshExpiredDay;
+    private Integer authTokenExpiredSecond;
+    private Integer accessExpiredSecond;
+    private Integer refreshExpiredSecond;
 
     @Bean
     public Key getKey() {

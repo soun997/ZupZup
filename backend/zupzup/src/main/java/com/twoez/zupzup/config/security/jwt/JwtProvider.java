@@ -21,6 +21,8 @@ public class JwtProvider {
         this.refreshExpiredDay = jwtProperty.getRefreshExpiredDay();
     }
 
+//    public String createAuthToken()
+
 
 
 }

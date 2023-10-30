@@ -43,7 +43,7 @@ const OnPlogging = () => {
         curLat: lat,
         curLng: lng,
       });
-      if (distance >= 1) {
+      if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
@@ -53,12 +53,14 @@ const OnPlogging = () => {
     if (stopwatch % 5 === 0) {
       recordLocation();
     }
-
-    () => {
-      localStorage.clear();
-      localStorage.removeItem(LOCATIONS_KEY);
-    };
   }, [stopwatch, location]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem(LOCATIONS_KEY);
+      localStorage.clear();
+    };
+  }, []);
 
   return (
     <S.Wrap>
@@ -86,6 +88,7 @@ const OnPlogging = () => {
         <PloggingMap
           exitOn={exitOn}
           ploggingInfoOn={ploggingInfoOn}
+          cameraOn={cameraOn}
           location={{
             lat: location.coordinates!.lat,
             lng: location.coordinates!.lng,

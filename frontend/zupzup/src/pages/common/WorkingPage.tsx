@@ -1,12 +1,16 @@
 import styled from 'styled-components';
-import useCountdownTimer from 'hooks/useCountdownTimer';
 import * as utils from 'utils';
+import { ConfirmButton, TopNavigation } from 'components';
+import { useNavigate } from 'react-router-dom';
 
 const WorkingPage = () => {
-  const time = useCountdownTimer(10, utils.URL.PLOGGING.LOBBY);
-
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(utils.URL.OPINION);
+  };
   return (
     <S.Wrap>
+      <TopNavigation />
       <S.Image src="/assets/images/coding.png" />
       <S.Content>
         안녕하세요, 줍줍 개발자팀입니다 😀 <br />
@@ -19,7 +23,8 @@ const WorkingPage = () => {
         약속할게요 🙏
       </S.Content>
       <S.BottomFrame>
-        <S.BottomText>{time}초 후 메인화면으로 이동합니다</S.BottomText>
+        <div className="text">줍줍팀에게 피드백은 언제든 환영입니다!</div>
+        <ConfirmButton text="의견 남기기" onClick={handleNavigate} />
       </S.BottomFrame>
     </S.Wrap>
   );
@@ -70,10 +75,14 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    bottom: 0;
+    margin: auto 0 50px 0;
     width: 100%;
-    margin-bottom: 35px;
+    & .text {
+      margin-top: 30px;
+      margin-bottom: -30px;
+      font-size: ${({ theme }) => theme.font.size.body3};
+      font-family: ${({ theme }) => theme.font.family.body3};
+    }
   `,
   BottomText: styled.div`
     font-size: ${({ theme }) => theme.font.size.body3};
@@ -83,7 +92,7 @@ const S = {
   `,
   Image: styled.img`
     width: 90%;
-    margin-top: 80px;
+    margin-top: 20px;
   `,
 };
 export default WorkingPage;

@@ -139,22 +139,20 @@ class PloggingLogControllerTest extends RestDocsTest {
         PloggingLogRequest request = PloggingLogFixture.DEFAULT.getPloggingLogRequest();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogService.add(any(PloggingLog.class)))
-                .willReturn(ploggingLog);
+        given(ploggingLogService.add(any(PloggingLog.class))).willReturn(ploggingLog);
 
-        ResultActions perform = mockMvc.perform(
-                post("/api/v1/plogging-logs")
-                        .contextPath("/api")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(request)));
+        ResultActions perform =
+                mockMvc.perform(
+                        post("/api/v1/plogging-logs")
+                                .contextPath("/api")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(request)));
 
         perform.andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.results.id").value(1L));
 
         perform.andDo(print())
-                .andDo(document("plogginglog-add",
-                        getDocumentRequest(),
-                        getDocumentResponse()));
+                .andDo(document("plogginglog-add", getDocumentRequest(), getDocumentResponse()));
     }
 }

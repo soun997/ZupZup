@@ -1,5 +1,6 @@
 package com.twoez.zupzup.plogginglog.service;
 
+
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import lombok.RequiredArgsConstructor;

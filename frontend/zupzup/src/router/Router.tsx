@@ -74,6 +74,7 @@ const Router = () => {
             element={<pages.ProfileSettingPage />}
           />
 
+          <Route path={utils.URL.OPINION} element={<pages.Opinion />} />
           <Route
             path={utils.URL.ONBORDING.CHARACTER}
             element={<pages.CharacterInfo />}

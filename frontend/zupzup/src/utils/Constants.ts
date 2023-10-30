@@ -2,6 +2,7 @@ export const URL = {
   ONBORDING: {
     CHARACTER: '/info/character',
   },
+  OPINION: '/opinion',
   LOGIN: {
     HOME: '/login',
     REGIST_INFO: '/regist-info',

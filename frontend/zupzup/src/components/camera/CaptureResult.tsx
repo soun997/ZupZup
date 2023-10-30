@@ -119,6 +119,7 @@ const S = {
     align-items: center;
   `,
   CanvasBox: styled.canvas`
+    object-fit: cover;
     width: 100%;
   `,
   UserAccess: styled.div`

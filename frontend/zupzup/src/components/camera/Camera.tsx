@@ -11,7 +11,6 @@ interface Props {
 
 const Camera = ({ setCameraOn }: Props) => {
   const cameraRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [capture, setCapture] = useState<boolean>(false);
 
   useEffect(() => {
@@ -55,8 +54,7 @@ const Camera = ({ setCameraOn }: Props) => {
           <XSvg />
         </S.CancelButton>
       </S.Header>
-      <S.CameraBox ref={cameraRef} autoPlay playsInline />
-      <S.CanvasBox ref={canvasRef} />
+      <S.CameraBox ref={cameraRef} autoPlay playsInline height="100%" />
       <S.UserAccess>
         <S.CaptureButton onClick={() => setCapture(true)}></S.CaptureButton>
       </S.UserAccess>
@@ -97,16 +95,17 @@ const S = {
     }
   `,
   CameraBox: styled.video`
+    flex-grow: 1;
     width: 100%;
-    height: 100%;
+    object-fit: cover;
   `,
-  CanvasBox: styled.canvas``,
   UserAccess: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100px;
+    height: 200px;
+    padding: 20px 0;
   `,
   CaptureButton: styled.button`
     width: 50px;

@@ -16,7 +16,7 @@ const ProgressBarFrame = ({ score, total }: Props) => {
 
 const ProgressBar = styled.div`
   width: 100%;
-  background-color: ${({ theme }) => theme.color.gray4};
+  background-color: ${({ theme }) => theme.color.white};
   border-radius: 10px;
 `;
 const Progress = styled.div<Props>`

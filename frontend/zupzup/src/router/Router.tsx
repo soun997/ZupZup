@@ -73,6 +73,17 @@ const Router = () => {
             path={utils.URL.SETTING.PROFILE}
             element={<pages.ProfileSettingPage />}
           />
+
+          <Route path={utils.URL.OPINION} element={<pages.Opinion />} />
+          <Route
+            path={utils.URL.RESULT.OPINION}
+            element={<pages.OpinionSuccess />}
+          />
+          <Route
+            path={utils.URL.ONBORDING.CHARACTER}
+            element={<pages.CharacterInfo />}
+          />
+
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

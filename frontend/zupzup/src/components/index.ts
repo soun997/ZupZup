@@ -39,3 +39,4 @@ export { default as FoodDetailPage } from './shop/FoodDetail';
 export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';
 export { default as SuccessAnimation } from './animation/SuccessLottie';
+export { default as KeyFrameList } from './animation/KeyFrame';

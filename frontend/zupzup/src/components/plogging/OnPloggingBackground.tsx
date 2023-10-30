@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PloggingInfo } from 'components';
 import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
@@ -12,68 +11,59 @@ import CameraSvg from 'assets/icons/camera.svg?react';
 import RefreshSvg from 'assets/icons/refresh.svg?react';
 
 interface TrashButtonProps {
-  trashOn: boolean;
+  $trashOn: boolean;
 }
 
 interface ModalState {
-  modalOn: boolean;
+  $modalOn: boolean;
 }
 
 interface ButtonProps extends TrashButtonProps, ModalState {}
 
 interface Props {
-  time: number;
   exitOn: boolean;
-  setExitOn: (exitOn: boolean) => void;
   ploggingInfoOn: boolean;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
 }
 
 const OnPloggingBackground = ({
-  time,
   exitOn,
-  setExitOn,
   ploggingInfoOn,
   setPloggingInfoOn,
 }: Props) => {
   const navigate = useNavigate();
 
-  const [trashOn, setTrashOn] = useState<boolean>(false);
+  const [$trashOn, setTrashOn] = useState<boolean>(false);
 
   return (
     <S.Wrap>
-      {ploggingInfoOn && (
-        <PloggingInfo
-          time={time}
-          exitOn={exitOn}
-          setExitOn={setExitOn}
-          setPloggingInfoOn={setPloggingInfoOn}
-        />
-      )}
       <S.TrashToggleBox>
-        <S.RefreshButton trashOn={trashOn} modalOn={exitOn || ploggingInfoOn}>
+        <S.RefreshButton
+          $trashOn={$trashOn}
+          $modalOn={exitOn || ploggingInfoOn}
+        >
           <RefreshSvg />
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
         <S.CameraButton
           onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}
-          modalOn={exitOn || ploggingInfoOn}
+          $modalOn={exitOn || ploggingInfoOn}
         >
           <CameraSvg />
         </S.CameraButton>
         <S.PloggingInfoButton
           onClick={() => setPloggingInfoOn(true)}
-          modalOn={exitOn || ploggingInfoOn}
+          $modalOn={exitOn || ploggingInfoOn}
         >
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
         <S.TrashButton
-          onClick={() => setTrashOn(!trashOn)}
-          trashOn={trashOn}
-          modalOn={exitOn || ploggingInfoOn}
+          onClick={() => setTrashOn(!$trashOn)}
+          $trashOn={$trashOn}
+          $modalOn={exitOn || ploggingInfoOn}
         >
-          {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
+          {$trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>
       </S.UserAccess>
     </S.Wrap>
@@ -101,7 +91,7 @@ const S = {
 
     filter: drop-shadow(0px 20px 20px rgba(112, 112, 112, 0.1));
     box-shadow: 0px 20px 20px 0px rgba(112, 112, 112, 0.1);
-    z-index: 99;
+    z-index: 100;
     pointer-events: none;
   `,
   CurrentState: styled.div`
@@ -124,25 +114,6 @@ const S = {
       margin: 2px;
     }
   `,
-  ExitButton: styled.button<ModalState>`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 110px;
-    height: 34px;
-    border-radius: 4px;
-    color: ${({ theme }) => theme.color.white};
-    background-color: ${({ theme }) => theme.color.main};
-    font-size: ${({ theme }) => theme.font.size.focus2};
-    font-family: ${({ theme }) => theme.font.family.focus2};
-    line-height: ${({ theme }) => theme.font.lineheight.focus2};
-    padding: 6px 10px;
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
-
-    &:hover {
-      background-color: ${({ theme }) => theme.color.sub};
-    }
-  `,
   UserAccess: styled.div`
     display: flex;
     align-items: center;
@@ -159,7 +130,7 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
@@ -177,7 +148,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     & > svg {
       margin: 0 6px 0 0;
@@ -196,7 +167,7 @@ const S = {
     padding: 0 30px;
   `,
   RefreshButton: styled.button<ButtonProps>`
-    display: ${({ trashOn }) => (trashOn ? 'flex' : 'none')};
+    display: ${({ $trashOn }) => ($trashOn ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
     width: 58px;
@@ -204,7 +175,7 @@ const S = {
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.sub2};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};
@@ -217,14 +188,14 @@ const S = {
     width: 58px;
     height: 58px;
     border-radius: 29px;
-    background-color: ${({ trashOn, theme }) =>
-      trashOn ? theme.color.main : theme.color.gray3};
+    background-color: ${({ $trashOn, theme }) =>
+      $trashOn ? theme.color.main : theme.color.gray3};
     color: ${({ theme }) => theme.color.white};
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:hover {
-      background-color: ${({ trashOn, theme }) =>
-        trashOn ? theme.color.sub : ''};
+      background-color: ${({ $trashOn, theme }) =>
+        $trashOn ? theme.color.sub : ''};
     }
   `,
 };

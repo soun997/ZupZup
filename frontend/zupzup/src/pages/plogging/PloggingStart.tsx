@@ -1,12 +1,26 @@
 import styled from 'styled-components';
 
-import { PloggingStartBackground, PloggingMap, Navigation } from 'components';
+import {
+  PloggingStartBackground,
+  PloggingStartMap,
+  Navigation,
+} from 'components';
+import { useGeolocation } from 'hooks';
 
 const PloggingStart = () => {
+  const location = useGeolocation();
+
   return (
     <S.Wrap>
       <PloggingStartBackground />
-      <PloggingMap />
+      {location.loaded && (
+        <PloggingStartMap
+          location={{
+            lat: location.coordinates!.lat,
+            lng: location.coordinates!.lng,
+          }}
+        />
+      )}
       <Navigation />
     </S.Wrap>
   );

@@ -9,12 +9,13 @@ import CameraSvg from 'assets/icons/camera.svg?react';
 
 interface Props {
   time: number;
+  distance: number;
   exitOn: boolean;
   setExitOn: (exitOn: boolean) => void;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
 }
 
-const PloggingInfo = ({ time, setPloggingInfoOn }: Props) => {
+const PloggingInfo = ({ time, distance, setPloggingInfoOn }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -26,11 +27,11 @@ const PloggingInfo = ({ time, setPloggingInfoOn }: Props) => {
         <S.PloggingState>
           <S.PloggingStateTitle>현재 플로깅 정보</S.PloggingStateTitle>
           <S.PloggingDistanceBox>
-            <S.PloggingDistance>150 m</S.PloggingDistance>&nbsp;째 플로깅
+            <S.PloggingDistance>{distance} m</S.PloggingDistance>&nbsp;째 플로깅
             중입니다.
           </S.PloggingDistanceBox>
           <S.PloggingCaloriesBox>
-            플로깅으로&nbsp;<S.PloggingCalories>39 kcal</S.PloggingCalories>
+            플로깅으로&nbsp;<S.PloggingCalories>0 kcal</S.PloggingCalories>
             &nbsp;가 소모되었습니다.
           </S.PloggingCaloriesBox>
         </S.PloggingState>
@@ -58,6 +59,7 @@ const S = {
     height: 100%;
     background-color: ${({ theme }) => theme.color.background};
     padding: 94px 16px 0;
+    z-index: 200;
   `,
   PloggingInfoBox: styled.div`
     display: flex;

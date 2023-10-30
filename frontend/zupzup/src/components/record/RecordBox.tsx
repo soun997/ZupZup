@@ -32,12 +32,12 @@ const RecordBox = () => {
       {showImage ? (
         <>
           <S.Image src="/assets/images/map.png"></S.Image>
-          <S.BottomBox isOpen={showImage}>
+          <S.BottomBox $isOpen={showImage}>
             <ArrowUpSvg onClick={handleMoreInfo} />
           </S.BottomBox>
         </>
       ) : (
-        <S.BottomBox isOpen={showImage}>
+        <S.BottomBox $isOpen={showImage}>
           <MoreSvg onClick={handleMoreInfo} />
         </S.BottomBox>
       )}
@@ -46,7 +46,7 @@ const RecordBox = () => {
 };
 
 interface StyleProps {
-  isOpen: boolean;
+  $isOpen: boolean;
 }
 const S = {
   Wrap: styled.div`
@@ -92,8 +92,8 @@ const S = {
   BottomBox: styled.div<StyleProps>`
     display: flex;
     align-items: center;
-    justify-content: ${({ isOpen }) =>
-      isOpen === true ? 'center' : 'flex-end'};
+    justify-content: ${({ $isOpen }) =>
+      $isOpen === true ? 'center' : 'flex-end'};
     margin: 4px 0 -10px 0;
     width: 100%;
     & svg {

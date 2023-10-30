@@ -58,6 +58,9 @@ dependencies {
     // prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    // mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.1.5'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.projectlombok:lombok'
 

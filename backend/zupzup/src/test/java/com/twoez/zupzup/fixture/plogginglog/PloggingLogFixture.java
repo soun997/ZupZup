@@ -3,6 +3,7 @@ package com.twoez.zupzup.fixture.plogginglog;
 
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ public enum PloggingLogFixture {
             10,
             LocalDateTime.of(2023, 10, 30, 0, 0),
             LocalDateTime.of(2023, 10, 30, 2, 0),
-            120L,
+            7200,
             600,
             50,
             200,
@@ -23,7 +24,7 @@ public enum PloggingLogFixture {
     private Integer distance;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private Long time;
+    private Integer durationTime;
     private Integer calories;
     private Integer gatheredTrash;
     private Integer coin;
@@ -36,7 +37,7 @@ public enum PloggingLogFixture {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
-            Long time,
+            Integer durationTime,
             Integer calories,
             Integer gatheredTrash,
             Integer coin,
@@ -47,7 +48,7 @@ public enum PloggingLogFixture {
         this.distance = distance;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.time = time;
+        this.durationTime = durationTime;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
         this.coin = coin;
@@ -62,7 +63,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .time(time)
+                .durationTime(durationTime)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
@@ -79,7 +80,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .time(time)
+                .durationTime(durationTime)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
@@ -87,5 +88,12 @@ public enum PloggingLogFixture {
                 .isDeleted(isDeleted)
                 .member(member)
                 .build();
+    }
+
+    public PloggingLogRequest getPloggingLogRequest() {
+
+        return new PloggingLogRequest(
+                distance, startDateTime, endDateTime, durationTime,
+                calories, gatheredTrash, coin, routeImageUrl);
     }
 }

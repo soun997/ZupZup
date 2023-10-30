@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -37,7 +38,7 @@ public class PloggingLog extends BaseTime {
     private LocalDateTime endDateTime;
 
     @Column(nullable = false)
-    private Long time;
+    private Integer durationTime;
 
     @Column(nullable = false)
     private Integer calories;
@@ -64,7 +65,7 @@ public class PloggingLog extends BaseTime {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
-            Long time,
+            Integer durationTime,
             Integer calories,
             Integer gatheredTrash,
             Integer coin,
@@ -75,7 +76,7 @@ public class PloggingLog extends BaseTime {
         this.distance = distance;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.time = time;
+        this.durationTime = durationTime;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
         this.coin = coin;

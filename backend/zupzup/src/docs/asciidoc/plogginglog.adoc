@@ -43,3 +43,37 @@ include::{snippets}/plogginglog-by-recent/http-request.adoc[]
 === Response
 
 include::{snippets}/plogginglog-by-recent/http-response.adoc[]
+
+== 플로깅 기록 저장
+
+=== Request
+
+include::{snippets}/plogginglog-add/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-add/http-response.adoc[]
+
+== 플로깅 경로 저장
+
+=== Request
+
+include::{snippets}/route-add/http-request.adoc[]
+
+include::{snippets}/route-add/path-parameters.adoc[]
+
+=== Response
+
+include::{snippets}/route-add/http-response.adoc[]
+
+== 플로깅 경로 조회
+
+=== Request
+
+include::{snippets}/route-details/http-request.adoc[]
+
+include::{snippets}/route-add/path-parameters.adoc[]
+
+=== Response
+
+include::{snippets}/route-details/http-response.adoc[]

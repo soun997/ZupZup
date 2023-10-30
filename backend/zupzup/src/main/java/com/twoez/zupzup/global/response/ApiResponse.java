@@ -41,6 +41,10 @@ public record ApiResponse<T>(int status, T results) {
         return new ApiResponseBuilder(HttpStatus.BAD_REQUEST);
     }
 
+    public static ApiResponseBuilder created() {
+        return new ApiResponseBuilder(HttpStatus.CREATED);
+    }
+
     public static <T> ApiResponse<T> notFound(T body) {
         return new ApiResponse<>(HttpStatus.NOT_FOUND.value(), body);
     }
@@ -51,6 +55,10 @@ public record ApiResponse<T>(int status, T results) {
 
     public static <T> ApiResponse<T> badRequest(T body) {
         return new ApiResponse<>(HttpStatus.BAD_REQUEST.value(), body);
+    }
+
+    public static <T> ApiResponse<T> created(T body) {
+        return new ApiResponse<>(HttpStatus.CREATED.value(), body);
     }
 
     public static <T> ApiResponse<T> internalServerError(T body) {

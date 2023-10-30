@@ -4,7 +4,6 @@ package com.twoez.zupzup.plogginglog.service;
 import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

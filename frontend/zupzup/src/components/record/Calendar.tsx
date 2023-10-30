@@ -7,21 +7,25 @@ import { isSameMonth, isSameDay, addDays } from 'date-fns';
 
 import { CalendarMonth } from 'components';
 
-import DoubleDashSvg from 'assets/icons/double_dash.svg?react';
+import DownSvg from 'assets/icons/angle-down.svg?react';
 
 interface CalendarProps {
   selectedDate: Date | null;
-  setSelectedDate: (date: Date) => void;
+  setSelectedDate: (date: Date | null) => void;
 }
 
 const Calendar = (props: CalendarProps) => {
   const now = new Date();
   const [calendar, setCalendar] = useState<JSX.Element[]>();
-
   const monthStart = startOfMonth(now);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
+
+  const handleChangeMode = () => {
+    initCalendar();
+    props.setSelectedDate(null);
+  };
 
   const selectDate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLElement;
@@ -124,8 +128,8 @@ const Calendar = (props: CalendarProps) => {
         </S.DaysOfWeek>
         {calendar}
         {props.selectedDate && (
-          <S.StretchAccess>
-            <DoubleDashSvg />
+          <S.StretchAccess onClick={handleChangeMode}>
+            <DownSvg />
           </S.StretchAccess>
         )}
       </S.Calendar>
@@ -227,5 +231,6 @@ const S = {
     display: flex;
     width: 100%;
     justify-content: center;
+    cursor: pointer;
   `,
 };

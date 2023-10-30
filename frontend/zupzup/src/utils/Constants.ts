@@ -1,5 +1,6 @@
 export const URL = {
   ONBORDING: {
+    WORKING: '/working',
     CHARACTER: '/info/character',
   },
   OPINION: '/opinion',

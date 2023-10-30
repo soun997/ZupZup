@@ -83,6 +83,10 @@ const Router = () => {
             element={<pages.CharacterInfo />}
           />
 
+          <Route
+            path={utils.URL.ONBORDING.WORKING}
+            element={<pages.Working />}
+          ></Route>
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

@@ -23,6 +23,7 @@ export { default as PurchaseSuccess } from './common/PurchaseSuccess';
 export { default as PloggingDone } from './common/PloggingDone';
 export { default as Loading } from './common/Loading';
 export { default as Error } from './common/ErrorPage';
+export { default as Working } from './common/WorkingPage';
 export { default as Opinion } from './common/Opinion';
 export { default as OpinionSuccess } from './common/OpinionSuccess';
 

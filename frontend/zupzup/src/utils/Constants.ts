@@ -52,6 +52,8 @@ export const GENDER = {
   FEMALE: '여성',
 };
 
+export const IMAGE_MIME_TYPE = 'image/jpeg';
+
 export const AUTH = {
   ACCESS_KEY: 'access-token',
   REFRESH_KEY: 'refresh-token',

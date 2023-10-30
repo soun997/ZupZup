@@ -7,8 +7,6 @@ export { default as OnPlogging } from './plogging/OnPlogging';
 export { default as TrashReport } from './plogging/TrashReport';
 export { default as PloggingReport } from './plogging/PloggingReport';
 
-export { default as Camera } from './camera/Camera';
-
 export { default as Login } from './login/Login';
 export { default as RegistInfoPhysical } from './login/RegistInfoForPhysical';
 export { default as RegistInfoProfile } from './login/RegistInfoForProfile';

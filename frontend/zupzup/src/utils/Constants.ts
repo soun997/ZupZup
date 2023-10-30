@@ -48,3 +48,5 @@ export const GENDER = {
   MALE: '남성',
   FEMALE: '여성',
 };
+
+export const IMAGE_MIME_TYPE = 'image/jpeg';

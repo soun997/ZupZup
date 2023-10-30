@@ -7,6 +7,7 @@ import {
   PloggingMap,
   OnPloggingBackground,
   PloggingInfo,
+  Camera,
 } from 'components';
 
 import { useGeolocation, useStopWatch, useDistance } from 'hooks';
@@ -16,6 +17,7 @@ const OnPlogging = () => {
   const stopwatch = useStopWatch();
   const [exitOn, setExitOn] = useState<boolean>(false);
   const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
+  const [cameraOn, setCameraOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
   const LOCATIONS_KEY = 'locations';
 
@@ -61,6 +63,7 @@ const OnPlogging = () => {
   return (
     <S.Wrap>
       {exitOn && <ExitModal setExitOn={setExitOn} />}
+      {cameraOn && <Camera setCameraOn={setCameraOn} />}
       <OnPloggingHeader exitOn={exitOn} setExitOn={setExitOn} />
       {ploggingInfoOn && (
         <PloggingInfo
@@ -69,12 +72,15 @@ const OnPlogging = () => {
           exitOn={exitOn}
           setExitOn={setExitOn}
           setPloggingInfoOn={setPloggingInfoOn}
+          setCameraOn={setCameraOn}
         />
       )}
       <OnPloggingBackground
         exitOn={exitOn}
         ploggingInfoOn={ploggingInfoOn}
         setPloggingInfoOn={setPloggingInfoOn}
+        cameraOn={cameraOn}
+        setCameraOn={setCameraOn}
       />
       {location.loaded && (
         <PloggingMap

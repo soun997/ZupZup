@@ -1,6 +1,5 @@
 package com.twoez.zupzup.plogginglog.service;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
@@ -22,10 +21,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class RouteServiceTest {
 
-    @Mock
-    RouteRepository routeRepository;
-    @InjectMocks
-    RouteService routeService;
+    @Mock RouteRepository routeRepository;
+    @InjectMocks RouteService routeService;
 
     @Test
     @DisplayName("플로깅 이동경로를 저장한다.")

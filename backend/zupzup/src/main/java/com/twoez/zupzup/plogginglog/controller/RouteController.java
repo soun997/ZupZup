@@ -24,17 +24,18 @@ public class RouteController {
     private final RouteService routeService;
 
     @PostMapping("/{ploggingLogId}")
-    public ApiResponse<?> routeAdd(@PathVariable @NotNull @Min(1L) Long ploggingLogId,
-                                @Valid @RequestBody RouteAddRequest request) {
+    public ApiResponse<?> routeAdd(
+            @PathVariable @NotNull @Min(1L) Long ploggingLogId,
+            @Valid @RequestBody RouteAddRequest request) {
 
         routeService.addRoute(request.toDocument(ploggingLogId));
         return ApiResponse.created().build();
     }
 
     @GetMapping("/{ploggingLogId}")
-    public ApiResponse<RouteDetailsResponse> routeDetails(@PathVariable @NotNull @Min(1L) Long ploggingLogId) {
+    public ApiResponse<RouteDetailsResponse> routeDetails(
+            @PathVariable @NotNull @Min(1L) Long ploggingLogId) {
 
-        return ApiResponse.ok(
-                RouteDetailsResponse.from(routeService.searchRoute(ploggingLogId)));
+        return ApiResponse.ok(RouteDetailsResponse.from(routeService.searchRoute(ploggingLogId)));
     }
 }

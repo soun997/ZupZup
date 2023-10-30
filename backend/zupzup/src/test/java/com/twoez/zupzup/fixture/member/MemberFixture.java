@@ -15,7 +15,7 @@ public enum MemberFixture {
             AuthProvider.GOOGLE,
             "1234567",
             "줍줍이",
-            "M",
+            'M',
             2000,
             180,
             80,
@@ -27,7 +27,7 @@ public enum MemberFixture {
             AuthProvider.GOOGLE,
             "1234567",
             "줍줍이",
-            "M",
+            'M',
             2000,
             180,
             80,
@@ -39,7 +39,7 @@ public enum MemberFixture {
     private AuthProvider oauthProvider;
     private String oauthAccount;
     private String name;
-    private String gender;
+    private Character gender;
     private Integer birthYear;
     private Integer height;
     private Integer weight;
@@ -52,7 +52,7 @@ public enum MemberFixture {
             AuthProvider oauthProvider,
             String oauthAccount,
             String name,
-            String gender,
+            Character gender,
             Integer birthYear,
             Integer height,
             Integer weight,

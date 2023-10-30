@@ -96,7 +96,8 @@ const S = {
 
   Image: styled.img<StyleProps>`
     margin: auto 0 -15vh 2vw;
-    width: 50%;
+    width: ${props => `calc(45% + ${props.level ? props.level * 5 : 0}%)`};
+    /* width:  */
     animation: ${props => KeyFrameList[(props.level && props.level - 1) || 0]}
       2s ease-in-out infinite;
   `,

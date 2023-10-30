@@ -12,7 +12,7 @@ public record PloggingLogRequest(
         @NotNull @Min(0) Integer distance,
         @NotNull LocalDateTime startDateTime,
         @NotNull LocalDateTime endDateTime,
-        @NotNull @Min(0) Integer time,
+        @NotNull @Min(0) Integer durationTime,
         @NotNull @Min(0) Integer calories,
         @NotNull @Min(0) Integer gatheredTrash,
         @NotNull @Min(0) Integer coin,
@@ -23,11 +23,12 @@ public record PloggingLogRequest(
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .time(time)
+                .durationTime(durationTime)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
                 .routeImageUrl(routeImageUrl)
+                .isDeleted(false)
                 .member(member)
                 .build();
     }

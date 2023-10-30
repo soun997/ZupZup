@@ -24,7 +24,7 @@ public enum PloggingLogFixture {
     private Integer distance;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private Integer time;
+    private Integer durationTime;
     private Integer calories;
     private Integer gatheredTrash;
     private Integer coin;
@@ -37,7 +37,7 @@ public enum PloggingLogFixture {
             Integer distance,
             LocalDateTime startDateTime,
             LocalDateTime endDateTime,
-            Integer time,
+            Integer durationTime,
             Integer calories,
             Integer gatheredTrash,
             Integer coin,
@@ -48,7 +48,7 @@ public enum PloggingLogFixture {
         this.distance = distance;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.time = time;
+        this.durationTime = durationTime;
         this.calories = calories;
         this.gatheredTrash = gatheredTrash;
         this.coin = coin;
@@ -63,7 +63,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .time(time)
+                .durationTime(durationTime)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
@@ -80,7 +80,7 @@ public enum PloggingLogFixture {
                 .distance(distance)
                 .startDateTime(startDateTime)
                 .endDateTime(endDateTime)
-                .time(time)
+                .durationTime(durationTime)
                 .calories(calories)
                 .gatheredTrash(gatheredTrash)
                 .coin(coin)
@@ -93,7 +93,7 @@ public enum PloggingLogFixture {
     public PloggingLogRequest getPloggingLogRequest() {
 
         return new PloggingLogRequest(
-                distance, startDateTime, endDateTime, time,
+                distance, startDateTime, endDateTime, durationTime,
                 calories, gatheredTrash, coin, routeImageUrl);
     }
 }

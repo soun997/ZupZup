@@ -73,12 +73,14 @@ const RegistInfo = () => {
           title="몸무게 (kg)"
         />
       </RegistInfoFrame.InputSection>
-      <RegistInfoFrame.NextButton
-        disabled={isNextButtonDisabled}
-        onClick={handleNextPage}
-      >
-        다음
-      </RegistInfoFrame.NextButton>
+      <RegistInfoFrame.BottomSection>
+        <RegistInfoFrame.NextButton
+          disabled={isNextButtonDisabled}
+          onClick={handleNextPage}
+        >
+          다음
+        </RegistInfoFrame.NextButton>
+      </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>
   );
 };

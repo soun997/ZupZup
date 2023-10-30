@@ -5,11 +5,20 @@ interface ButtonProps {
 }
 
 const RegistInfoFrame = {
+  BottomSection: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    margin: auto 0 50px 0;
+  `,
+
   Wrap: styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
   `,
 

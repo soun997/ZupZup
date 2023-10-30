@@ -73,12 +73,14 @@ const RegistInfo = () => {
           onChange={handleSelectChange}
         />
       </RegistInfoFrame.InputSection>
-      <RegistInfoFrame.NextButton
-        disabled={isNextButtonDisabled}
-        onClick={handleNextPage}
-      >
-        가입 완료하기
-      </RegistInfoFrame.NextButton>
+      <RegistInfoFrame.BottomSection>
+        <RegistInfoFrame.NextButton
+          disabled={isNextButtonDisabled}
+          onClick={handleNextPage}
+        >
+          가입 완료하기
+        </RegistInfoFrame.NextButton>
+      </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>
   );
 };

@@ -24,6 +24,7 @@ export const URL = {
   RESULT: {
     REGIST: '/success-regist',
     FLOGGING: '/success-plogging',
+    OPINION: '/success-opinion',
   },
   MYPAGE: {
     HOME: '/mypage',

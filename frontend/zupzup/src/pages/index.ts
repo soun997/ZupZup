@@ -26,5 +26,6 @@ export { default as PloggingDone } from './common/PloggingDone';
 export { default as Loading } from './common/Loading';
 export { default as Error } from './common/ErrorPage';
 export { default as Opinion } from './common/Opinion';
+export { default as OpinionSuccess } from './common/OpinionSuccess';
 
 export { default as CharacterInfo } from './onboard/CharacterInfo';

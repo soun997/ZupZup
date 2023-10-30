@@ -13,7 +13,8 @@ public enum HttpExceptionCode {
             "서버 내부에서 오류가 발생했습니다."),
 
     SECURITY_AUTHORIZATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_001", "사용자 인가에 실패했습니다."),
-    SECURITY_AUTHENTICATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_002", "사용자 인증에 실패했습니다.");
+    SECURITY_AUTHENTICATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_002", "사용자 인증에 실패했습니다."),
+    OAUTH_PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_003", "Oauth Provider 가 존재하지 않습니다.");
 
 
 

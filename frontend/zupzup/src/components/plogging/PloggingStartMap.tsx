@@ -7,7 +7,7 @@ interface Location {
 }
 
 interface MapProps {
-  modalOn: boolean;
+  $modalOn: boolean;
 }
 
 interface Props {
@@ -43,7 +43,7 @@ const PloggingStartMap = ({ location }: Props) => {
 
   return (
     <S.Wrap>
-      <S.Map ref={mapRef} modalOn={true}></S.Map>
+      <S.Map ref={mapRef} $modalOn={true}></S.Map>
     </S.Wrap>
   );
 };
@@ -58,6 +58,6 @@ const S = {
   Map: styled.div<MapProps>`
     width: 100%;
     height: 100%;
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
   `,
 };

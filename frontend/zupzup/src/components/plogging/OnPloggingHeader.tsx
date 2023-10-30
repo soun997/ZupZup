@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface ModalState {
-  modalOn: boolean;
+  $modalOn: boolean;
 }
 
 const OnPloggingHeader = ({ exitOn, setExitOn }: Props) => {
@@ -20,7 +20,7 @@ const OnPloggingHeader = ({ exitOn, setExitOn }: Props) => {
           <CoinSvg />
           15
         </S.CurrentCoin>
-        <S.ExitButton onClick={() => setExitOn(true)} modalOn={exitOn}>
+        <S.ExitButton onClick={() => setExitOn(true)} $modalOn={exitOn}>
           <SmallRunnerSvg /> 종료하기
         </S.ExitButton>
       </S.CurrentState>
@@ -72,7 +72,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
     padding: 6px 10px;
-    pointer-events: ${({ modalOn }) => (modalOn ? 'none' : 'auto')};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:hover {
       background-color: ${({ theme }) => theme.color.sub};

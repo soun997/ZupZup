@@ -27,7 +27,7 @@ class PloggingLogQueryRepositoryTest {
 
     @BeforeEach
     void initObjects() {
-        this.member = memberRepository.save(MemberFixture.DEFAULT.getMemberNoneId());
+        this.member = memberRepository.save(MemberFixture.NONE_ID.getMember());
     }
 
     @Test

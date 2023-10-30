@@ -59,7 +59,8 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findByDate(any(LocalDate.class), any(Long.class)))
                 .willReturn(List.of(ploggingLog));
 
-        List<PloggingLog> ploggingLogs = ploggingLogQueryService.searchByDate(LocalDate.now(), member.getId());
+        List<PloggingLog> ploggingLogs =
+                ploggingLogQueryService.searchByDate(LocalDate.now(), member.getId());
 
         assertThat(ploggingLogs).containsExactly(ploggingLog);
     }

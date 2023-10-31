@@ -43,10 +43,10 @@ public class AuthController {
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
             AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
-            authResponse = AuthResponse.from(authorizationToken, member);
+            authResponse = AuthResponse.from(authorizationToken, member.getId());
         } else {
             Member member = memberService.save(authUser);
-            authResponse = AuthResponse.unregisteredUser(member);
+            authResponse = AuthResponse.unregisteredUser(member.getId());
         }
 
         return ApiResponse.ok(authResponse);

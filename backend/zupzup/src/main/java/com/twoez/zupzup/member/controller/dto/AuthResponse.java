@@ -9,22 +9,22 @@ public record AuthResponse(
         boolean isNewMember,
         String accessToken,
         String refreshToken,
-        Member member
+        Long memberId
 ) {
 
-    public static AuthResponse from(AuthorizationToken authorizationToken, Member member) {
+    public static AuthResponse from(AuthorizationToken authorizationToken, Long memberId) {
         return AuthResponse.builder()
                 .isNewMember(false)
                 .accessToken(authorizationToken.getAccessToken())
                 .refreshToken(authorizationToken.getRefreshToken())
-                .member(member)
+                .memberId(memberId)
                 .build();
     }
 
-    public static AuthResponse unregisteredUser(Member member) {
+    public static AuthResponse unregisteredUser(Long memberId) {
         return AuthResponse.builder()
                 .isNewMember(true)
-                .member(member)
+                .memberId(memberId)
                 .build();
     }
 

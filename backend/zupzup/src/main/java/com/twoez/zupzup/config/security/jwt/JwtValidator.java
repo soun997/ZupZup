@@ -6,7 +6,6 @@ import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.util.Assertion;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -71,39 +70,6 @@ public class JwtValidator {
         }
     }
 
-    public String getKidFromIdToken(String token, String iss, String aud) {
-        Jws<Claims> claimsJws = validateIdTokenByIssAndAud(token, iss, aud);
-        Header header = claimsJws.getHeader();
-        Object kid = header.get("kid");
-
-        Assertion.with(kid)
-                .setValidation(Objects::nonNull)
-                .validateOrThrow(() -> new InvalidIdTokenException(
-                        HttpExceptionCode.ID_TOKEN_KID_NOT_FOUND));
-
-        return (String) kid;
-    }
-
-    private Jws<Claims> validateIdTokenByIssAndAud(String token, String iss, String aud) {
-        try {
-            return Jwts.parserBuilder()
-                    .requireIssuer(iss)
-                    .requireAudience(aud)
-                    .build()
-                    .parseClaimsJws(token);
-        } catch (ExpiredJwtException e) {
-            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_EXPIRED);
-        } catch (MalformedJwtException e) {
-            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_MALFORMED);
-        } catch (UnsupportedJwtException e) {
-            throw new InvalidIdTokenException(HttpExceptionCode.JWT_UNSUPPORTED);
-        } catch (Exception e) {
-            log.warn("처리되지 않은 Exception 발생 - validateIdTokenByIssAndAud");
-            e.printStackTrace();
-            throw new InvalidIdTokenException(HttpExceptionCode.JWT_NOT_FOUND);
-        }
-    }
-
     public Map<String, Object> getPayloadFromIdToken(String idToken, String modulus, String exponent) {
         Jws<Claims> claimsJws = validateSignatureIdToken(idToken, modulus, exponent);
         return claimsJws.getBody();
@@ -137,6 +103,5 @@ public class JwtValidator {
         RSAPublicKeySpec keySpec = new RSAPublicKeySpec(mod, exp);
         return keyFactory.generatePublic(keySpec);
     }
-
 
 }

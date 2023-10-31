@@ -7,3 +7,5 @@
 :sectlinks:
 
 include::{docdir}/src/docs/asciidoc/plogginglog.adoc[]
+
+include::{docdir}/src/docs/asciidoc/plogging.adoc[]

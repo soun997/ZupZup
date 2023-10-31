@@ -11,6 +11,9 @@ spring:
         show_sql: true
         format_sql: true
   data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
     mongodb:
       uri: ${MONGO_URI}
       database: ${MONGO_DATABASE}

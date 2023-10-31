@@ -1,0 +1,45 @@
+= Plogging API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 플로깅 시작
+
+총 플로깅 인원을 1 증가시킨다.
+
+=== Request
+
+include::{snippets}/plogger-add/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogger-add/http-response.adoc[]
+
+== 플로깅 종료
+
+총 플로깅 인원을 1 감소시킨다.
+
+=== Request
+
+include::{snippets}/plogger-remove/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogger-remove/http-response.adoc[]
+
+== 총 플로깅 인원 조회
+
+=== Request
+
+include::{snippets}/plogger-details/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogger-details/http-response.adoc[]

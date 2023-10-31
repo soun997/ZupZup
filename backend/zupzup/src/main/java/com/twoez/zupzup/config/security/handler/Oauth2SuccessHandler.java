@@ -1,6 +1,7 @@
 package com.twoez.zupzup.config.security.handler;
 
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
+import com.twoez.zupzup.member.domain.OauthProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,9 +35,9 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 
         log.info("onAuthenticationSuccess called");
         OidcUser oidcUser = (OidcUser) authentication.getPrincipal();
-//        log.info("idToken : {}", oidcUser.getIdToken().getTokenValue());
         String authToken = jwtProvider.createAuthToken(oidcUser);
-        String loginSuccessRedirectUrl = clientUrl + redirectUrl + "?token=" + authToken;
+        OauthProvider oauthProvider = OauthProvider.findByIss(oidcUser.getIssuer().toString());
+        String loginSuccessRedirectUrl = clientUrl + redirectUrl + "?token=" + authToken + "&provider=" + oauthProvider.getProvider();
         getRedirectStrategy().sendRedirect(request, response, loginSuccessRedirectUrl);
         super.onAuthenticationSuccess(request, response, authentication);
     }

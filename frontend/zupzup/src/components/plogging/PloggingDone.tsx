@@ -1,10 +1,19 @@
 import styled from 'styled-components';
 import { SuccessAnimation } from 'components';
-import useCountdownTimer from 'hooks/useCountdownTimer';
-import * as utils from 'utils';
+import { useStopWatch } from 'hooks';
 
-const PloggingDone = () => {
-  const time = useCountdownTimer(3, utils.URL.PLOGGING.REPORT);
+interface Props {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const PloggingDone = ({ setLoading }: Props) => {
+  const time = 3 - useStopWatch();
+
+  if (time === 0) {
+    setLoading(false);
+    return;
+  }
+
   return (
     <S.Wrap>
       <S.TitleFrame>

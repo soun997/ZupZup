@@ -28,7 +28,6 @@ export const URL = {
   LOADING: 'loading',
   RESULT: {
     REGIST: '/success-regist',
-    FLOGGING: '/success-plogging',
     OPINION: '/success-opinion',
   },
   MYPAGE: {

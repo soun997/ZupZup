@@ -36,7 +36,7 @@ const S = {
     padding: 8px 16px;
     pointer-events: auto;
 
-    &:hover {
+    &:active {
       cursor: pointer;
       background-color: ${({ theme }) => theme.color.sub};
     }

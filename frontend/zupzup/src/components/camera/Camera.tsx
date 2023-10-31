@@ -115,7 +115,7 @@ const S = {
     border: 4px solid ${({ theme }) => theme.color.gray5};
     box-shadow: 0px 0px 10px 1px #3333;
 
-    &:hover {
+    &:active {
       box-shadow: 0px 0px 4px 1px #3333;
     }
   `,

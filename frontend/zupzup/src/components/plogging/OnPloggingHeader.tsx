@@ -74,7 +74,7 @@ const S = {
     padding: 6px 10px;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,

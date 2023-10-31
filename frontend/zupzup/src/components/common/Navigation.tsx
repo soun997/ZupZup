@@ -63,13 +63,13 @@ const S = {
     background-color: ${({ theme }) => theme.color.main};
     box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.25) inset;
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
       cursor: pointer;
     }
   `,
   SideButton: styled.div`
-    &:hover {
+    &:active {
       cursor: pointer;
     }
   `,

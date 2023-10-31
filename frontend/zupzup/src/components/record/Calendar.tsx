@@ -205,7 +205,7 @@ const S = {
       color: ${({ theme }) => theme.color.white};
     }
 
-    &.active:hover {
+    &.active:active {
       background-color: ${({ theme }) => theme.color.main};
       color: ${({ theme }) => theme.color.white};
       cursor: pointer;

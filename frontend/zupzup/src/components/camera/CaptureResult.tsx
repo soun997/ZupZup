@@ -5,6 +5,7 @@ import * as utils from 'utils';
 
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import DownloadSvg from 'assets/icons/download.svg?react';
+import ShareSvg from 'assets/icons/share.svg?react';
 
 interface Props {
   cameraRef: React.RefObject<HTMLVideoElement>;
@@ -13,6 +14,7 @@ interface Props {
 
 const CaptureResult = ({ cameraRef, setCapture }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [captureFile, setCaptureFile] = useState<File>();
@@ -36,6 +38,25 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
 
     downloadButton.href = URL.createObjectURL(captureFile);
     downloadButton.download = captureFile.name;
+  };
+
+  const shareImage = async () => {
+    const shareButton = shareRef.current;
+    if (!shareButton || !captureFile) {
+      return;
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          files: [captureFile],
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log('not support share in this browser');
+    }
   };
 
   useEffect(() => {
@@ -79,6 +100,9 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
         <S.CanvasBox ref={canvasRef} />
       </S.Content>
       <S.UserAccess>
+        <S.ShareButton ref={shareRef} onClick={() => shareImage()}>
+          <ShareSvg /> 공유하기
+        </S.ShareButton>
         <S.DownloadButton ref={downloadRef} onClick={() => downloadImage()}>
           <DownloadSvg /> 이미지 저장
         </S.DownloadButton>
@@ -125,10 +149,25 @@ const S = {
   UserAccess: styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
     height: 30%;
     padding: 15px;
+  `,
+  ShareButton: styled.button`
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: transparent;
+    text-align: center;
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.body3};
+    line-height: ${({ theme }) => theme.font.lineheight.body3};
+
+    & > svg {
+      width: 25px;
+      margin: 0 8px 0 0;
+    }
   `,
   DownloadButton: styled.a`
     display: flex;
@@ -141,6 +180,7 @@ const S = {
     line-height: ${({ theme }) => theme.font.lineheight.body3};
 
     & > svg {
+      width: 25px;
       margin: 0 8px 0 0;
     }
   `,

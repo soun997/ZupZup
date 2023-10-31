@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { RecordBox } from "components";
+import { RecordBox } from 'components';
 
 const Record = () => {
   return (
@@ -40,7 +40,7 @@ const S = {
       background: ${({ theme }) => theme.color.main};
       border-radius: 45px;
     }
-    &::-webkit-scrollbar-thumb:hover {
+    &::-webkit-scrollbar-thumb:active {
       background: ${({ theme }) => theme.color.main};
     }
   `,

@@ -45,7 +45,8 @@ public class AuthController {
             AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
             authResponse = AuthResponse.from(authorizationToken, member);
         } else {
-            authResponse = AuthResponse.unregisteredUser();
+            Member member = memberService.save(authUser);
+            authResponse = AuthResponse.unregisteredUser(member);
         }
 
         return ApiResponse.ok(authResponse);

@@ -21,9 +21,10 @@ public record AuthResponse(
                 .build();
     }
 
-    public static AuthResponse unregisteredUser() {
+    public static AuthResponse unregisteredUser(Member member) {
         return AuthResponse.builder()
                 .isNewMember(true)
+                .member(member)
                 .build();
     }
 

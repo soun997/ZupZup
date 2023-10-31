@@ -1,5 +1,6 @@
 package com.twoez.zupzup.member.domain;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.ToString;
 
@@ -19,5 +20,15 @@ public class AuthUser {
 
     public Oauth getOauth() {
         return new Oauth(oauthProvider, oauthAccount);
+    }
+
+    public Member toNewMember() {
+        return Member.builder()
+                .oauth(getOauth())
+                .name(name)
+                .coin(0)
+                .role(List.of(MemberRole.ROLE_USER))
+                .deleted(false)
+                .build();
     }
 }

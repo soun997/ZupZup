@@ -53,7 +53,7 @@ const MyPage = () => {
           </S.SubInfo>
           <ProgressBar score={characterInfo.exp} total={200} />
         </S.Level>
-        <S.Report>
+        <S.Report $daytime={isDaytime}>
           <img
             src="/assets/images/mail.png"
             onClick={() => navigate(utils.URL.MYPAGE.REPORT)}
@@ -122,7 +122,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
   `,
 
-  Report: styled.div`
+  Report: styled.div<StyleProps>`
     font-family: ${({ theme }) => theme.font.family.focus2};
     display: flex;
     align-items: center;
@@ -132,7 +132,8 @@ const S = {
     img {
       cursor: pointer;
       filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.77));
-      background-color: ${({ theme }) => theme.color.main};
+      background-color: ${({ theme, $daytime }) =>
+        $daytime ? theme.color.main : theme.color.main};
       border-radius: 50%;
       width: 45px;
     }

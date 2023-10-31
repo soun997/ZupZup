@@ -21,7 +21,7 @@ const MyPloggingReport = () => {
           <div>{ploggingInfo.totalCount} 회</div>
           <div>{Math.floor(ploggingInfo.totalTime / 3600)} 시간</div>
           <div>{ploggingInfo.totalDistance / 1000} km</div>
-          <div>{ploggingInfo.totalCalorie} cal</div>
+          <div>{ploggingInfo.totalCalorie} kcal</div>
         </div>
       </S.BoxFrame>
       <S.BoxFrame>
@@ -31,7 +31,7 @@ const MyPloggingReport = () => {
         </div>
       </S.BoxFrame>
       <S.InfoBox>
-        <div className="title">잠시만요! 그 점 알고 계신가요?</div>
+        <div className="title">❕ 잠시만요! 그 점 알고 계신가요?</div>
         <div className="content">
           플로깅의 효과에 대해 적고싶어요. 자료조사해주세요..플로깅의 효과에
           대해 적고싶어요. 자료조사해주세요..플로깅의 효과에 대해 적고싶어요.

@@ -44,10 +44,7 @@ const Router = () => {
             path={utils.URL.RESULT.REGIST}
             element={<pages.RegistSuccess />}
           />
-          <Route
-            path={utils.URL.RESULT.FLOGGING}
-            element={<pages.PloggingDone />}
-          />
+
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 
           <Route path={utils.URL.MYPAGE.HOME} element={<pages.MyPage />} />

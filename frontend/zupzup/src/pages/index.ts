@@ -22,7 +22,6 @@ export { default as EachShopDetail } from './shop/EachShopDetail';
 
 export { default as RegistSuccess } from './common/RegistSuccess';
 export { default as PurchaseSuccess } from './common/PurchaseSuccess';
-export { default as PloggingDone } from './common/PloggingDone';
 export { default as Loading } from './common/Loading';
 export { default as Error } from './common/ErrorPage';
 export { default as Opinion } from './common/Opinion';

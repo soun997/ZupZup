@@ -35,8 +35,8 @@ public class AuthController {
         AuthUser authUser = idTokenService.extractAuthUser(authRequest);
         log.info("AuthUser by idToken : {}", authUser);
 
-        // TODO 4: 만약 AuthUser로부터 얻어낸 사용자 정보가 이미 저장되어 있다면 accessToken과 RefreshToken을 발급한다.
-        // TODO 5: 새로운 회원이라면 isNewMember->false 로 응답한다.
+        // 만약 AuthUser로부터 얻어낸 사용자 정보가 이미 저장되어 있다면 accessToken과 RefreshToken을 발급한다.
+        // 새로운 회원이라면 isNewMember->false 로 응답한다.
         Optional<Member> memberOptional = memberService.findMemberByOauth(authUser);
 
         AuthResponse authResponse;

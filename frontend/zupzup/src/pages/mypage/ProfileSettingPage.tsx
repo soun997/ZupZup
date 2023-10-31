@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { Navigation, SettingComponent, TopNavigation } from 'components';
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
 import ModifSvg from 'assets/icons/pencil-modif.svg?react';
 
 const profileInfo = {
@@ -10,16 +12,26 @@ const profileInfo = {
 };
 
 const ProfileSettingPage = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(utils.URL.ONBORDING.WORKING);
+  };
   return (
     <S.Wrap>
       <TopNavigation title="내 정보" rightComponent={<></>} />
 
       <S.SettingSection>
         <S.SubTitle>내 정보</S.SubTitle>
-        <SettingComponent text={profileInfo.nickname} svg={<ModifSvg />} />
+        <SettingComponent
+          text={profileInfo.nickname}
+          svg={<ModifSvg />}
+          onClick={handleNavigate}
+        />
         <SettingComponent
           text={profileInfo.birthYear.toString()}
           svg={<ModifSvg />}
+          onClick={handleNavigate}
         />
       </S.SettingSection>
 
@@ -28,10 +40,12 @@ const ProfileSettingPage = () => {
         <SettingComponent
           text={profileInfo.height.toString() + 'cm'}
           svg={<ModifSvg />}
+          onClick={handleNavigate}
         />
         <SettingComponent
           text={profileInfo.weight.toString() + 'kg'}
           svg={<ModifSvg />}
+          onClick={handleNavigate}
         />
       </S.SettingSection>
       <Navigation />

@@ -19,7 +19,8 @@ const S = {
     align-items: center;
   `,
   Image: styled.img`
-    width: 230px;
+    width: 200px;
+    height: 200px;
   `,
 
   Title: styled.div`

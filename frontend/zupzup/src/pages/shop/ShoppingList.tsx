@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import { Food } from 'types/Food';
 
 const FoodList: Food[] = [
-  { id: 1, image: 'assets/images/food1.png' },
-  { id: 2, image: 'assets/images/food2.png' },
-  { id: 3, image: 'assets/images/food3.png' },
-  { id: 4, image: 'assets/images/food4.png' },
-  { id: 5, image: 'assets/images/food5.png' },
-  { id: 6, image: 'assets/images/food6.png' },
-  { id: 1, image: 'assets/images/food1.png' },
-  { id: 1, image: 'assets/images/food1.png' },
-  { id: 1, image: 'assets/images/food1.png' },
-  { id: 1, image: 'assets/images/food1.png' },
-  { id: 1, image: 'assets/images/food1.png' },
+  { id: 1, image: '/assets/images/food/food1.png' },
+  { id: 2, image: '/assets/images/food/food2.png' },
+  { id: 3, image: '/assets/images/food/food3.png' },
+  { id: 4, image: '/assets/images/food/food4.png' },
+  { id: 5, image: '/assets/images/food/food5.png' },
+  { id: 6, image: '/assets/images/food/food6.png' },
+  { id: 1, image: '/assets/images/food/food7.png' },
+  { id: 1, image: '/assets/images/food/food8.png' },
+  { id: 1, image: '/assets/images/food/food9.png' },
+  { id: 1, image: '/assets/images/food/food10.png' },
+  { id: 1, image: '/assets/images/food/food11.png' },
 ];
 const ShoppingList = () => {
   return (

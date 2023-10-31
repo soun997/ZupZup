@@ -31,11 +31,16 @@ const Router = () => {
           />
 
           <Route
-            path={utils.URL.LOGIN.REGIST_INFO + '/physical'}
+            path={utils.URL.LOGIN.SUCCESS}
+            element={<pages.LoginSuccess />}
+          />
+
+          <Route
+            path={utils.URL.LOGIN.REGIST_INFO.PHYSICAL}
             element={<pages.RegistInfoPhysical />}
           />
           <Route
-            path={utils.URL.LOGIN.REGIST_INFO + '/profile'}
+            path={utils.URL.LOGIN.REGIST_INFO.PROFILE}
             element={<pages.RegistInfoProfile />}
           />
 
@@ -43,10 +48,7 @@ const Router = () => {
             path={utils.URL.RESULT.REGIST}
             element={<pages.RegistSuccess />}
           />
-          <Route
-            path={utils.URL.RESULT.FLOGGING}
-            element={<pages.PloggingDone />}
-          />
+
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 
           <Route path={utils.URL.MYPAGE.HOME} element={<pages.MyPage />} />
@@ -83,6 +85,10 @@ const Router = () => {
             element={<pages.CharacterInfo />}
           />
 
+          <Route
+            path={utils.URL.ONBORDING.WORKING}
+            element={<pages.Working />}
+          ></Route>
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

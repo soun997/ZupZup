@@ -47,12 +47,13 @@ const S = {
     width: fit-content;
     align-items: center;
     justify-content: center;
-    margin: 0 10px -20px;
+    margin: 0 10px -30px;
     position: relative;
   `,
 
   FoodImage: styled.img`
-    object-fit: cover;
+    z-index: 999;
+    width: 100px;
   `,
 
   Image: styled.img`

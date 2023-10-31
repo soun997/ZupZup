@@ -9,6 +9,8 @@ import {
   RegistInfoTitle,
   RegistInfoFrame,
 } from 'components';
+import { RegistInfo } from 'types/ProfileInfo';
+import { MemberApi } from 'api';
 
 const RegistInfo = () => {
   const { state } = useLocation();
@@ -40,16 +42,21 @@ const RegistInfo = () => {
     setNextButtonDisabled(!inputCheck(birthYearInput));
   };
 
-  const handleNextPage = () => {
-    if (inputCheck(inputRefForBirthYear.current?.value)) {
-      //내가 보낼 데이터
-      const postData = {
+  const handleNextPage = async () => {
+    if (
+      inputRefForBirthYear.current &&
+      inputCheck(inputRefForBirthYear.current?.value)
+    ) {
+      const postData: RegistInfo = {
         height: state.height,
         weight: state.weight,
         gender,
-        birthYear: inputRefForBirthYear.current?.value,
+        birthYear: inputRefForBirthYear.current.value,
       };
+
+      await MemberApi.registInfo(postData);
       console.log(postData);
+
       navigate(utils.URL.RESULT.REGIST);
     }
   };

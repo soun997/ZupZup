@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { LastPloggingInfo } from 'types/ProfileInfo';
+import { TotalPloggingInfo } from 'types/ProfileInfo';
 import NoteSvg from 'assets/icons/note.svg?react';
 
 interface Props {
-  lastPlogging: LastPloggingInfo;
+  lastPlogging: TotalPloggingInfo;
   isDayTime: boolean;
 }
 const MyPloggingReport = ({ lastPlogging, isDayTime }: Props) => {
@@ -16,9 +16,9 @@ const MyPloggingReport = ({ lastPlogging, isDayTime }: Props) => {
       <S.BoxFrame $daytime={isDayTime}>
         <div className="title">그동안 이만큼 플로깅 했어요</div>
         <div className="eachInfo">
-          <div>{lastPlogging.count} 회</div>
-          <div>{lastPlogging.hour} 시간</div>
-          <div>{lastPlogging.calories} kcal</div>
+          <div>{lastPlogging.totalCount} 회</div>
+          <div>{Math.floor(lastPlogging.totalTime / 3600)} 시간</div>
+          <div>{lastPlogging.totalCalorie} cal</div>
         </div>
       </S.BoxFrame>
     </S.Wrap>

@@ -26,7 +26,11 @@ public enum HttpExceptionCode {
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_JWT_005", "JWT를 찾을 수 없습니다."),
     ID_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_JWT_006", "authToken에서 idToken을 찾을 수 없습니다."),
 
-    ID_TOKEN_KID_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_IDTOKEN_001", "유효한 Id Token이 아닙니다. - kid가 존재하지 않습니다.");
+    ID_TOKEN_KID_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_IDTOKEN_001", "유효한 Id Token이 아닙니다. - kid가 존재하지 않습니다."),
+    ID_TOKEN_INVALID_KID(HttpStatus.UNAUTHORIZED, "ERR_IDTOKEN_002", "유효한 Id Token이 아닙니다. - 출처를 알 수 없는 token입니다."),
+    ID_TOKEN_INVALID_SIGNATURE(HttpStatus.UNAUTHORIZED, "ERR_IDTOKEN_003", "유효한 Id Token이 아닙니다. - 유효한 서명이 아닙니다."),
+
+    OIDC_PUBLIC_KEY_FEIGN_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_OIDC_001", "Oidc 공개키 목록을 가져오는데 실패하였습니다.");
 
 
 

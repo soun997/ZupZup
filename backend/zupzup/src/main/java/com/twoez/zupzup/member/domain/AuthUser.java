@@ -1,5 +1,8 @@
 package com.twoez.zupzup.member.domain;
 
+import lombok.Builder;
+
+@Builder
 public class AuthUser {
 
     private OauthProvider oauthProvider;

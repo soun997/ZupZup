@@ -1,11 +1,16 @@
 export const URL = {
   ONBORDING: {
+    WORKING: '/working',
     CHARACTER: '/info/character',
   },
   OPINION: '/opinion',
   LOGIN: {
     HOME: '/login',
-    REGIST_INFO: '/regist-info',
+    SUCCESS: '/login-success',
+    REGIST_INFO: {
+      PHYSICAL: '/regist-info/physical',
+      PROFILE: '/regist-info/profile',
+    },
   },
   MAIN: {
     HOME: '/',
@@ -50,3 +55,10 @@ export const GENDER = {
 };
 
 export const IMAGE_MIME_TYPE = 'image/jpeg';
+
+export const AUTH = {
+  ACCESS_KEY: 'access-token',
+  REFRESH_KEY: 'refresh-token',
+  MEMBER_ID: 'member-id',
+  NICKNAME: 'nickname',
+};

@@ -1,14 +1,25 @@
 export interface ProfileInfo {
-  nickname: string;
-  characterImage: string;
-  day: number;
-  level: number;
-  exp: number;
-  lastPlogging: LastPloggingInfo;
+  name: string;
+  coin: number;
+  createdAt: string;
 }
 
-export interface LastPloggingInfo {
-  count: number;
-  hour: number;
-  calories: number;
+export interface CharacterInfo {
+  exp: number;
+  level: number;
+}
+
+export interface TotalPloggingInfo {
+  totalCount: number;
+  totalDistance: number;
+  totalTime: number;
+  totalCalorie: number;
+  totalGatheredTrash: number;
+}
+
+export interface RegistInfo {
+  height: number;
+  weight: number;
+  gender: string;
+  birthYear: string;
 }

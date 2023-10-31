@@ -20,8 +20,8 @@ public class PloggingService {
 
         return ploggerRedisRepository.save(
                 ploggerRedisRepository.findById(TOTAL_PLOGGER)
-                        .orElse(new Plogger(TOTAL_PLOGGER, 0L)
-                                .increase()));
+                        .map(Plogger::increase)
+                        .orElse(new Plogger(TOTAL_PLOGGER, 1L)));
     }
 
     @Transactional
@@ -29,8 +29,8 @@ public class PloggingService {
 
         return ploggerRedisRepository.save(
                 ploggerRedisRepository.findById(TOTAL_PLOGGER)
-                        .orElse(new Plogger(TOTAL_PLOGGER, 0L)
-                                .decrease()));
+                        .map(Plogger::decrease)
+                        .orElse(new Plogger(TOTAL_PLOGGER, 0L)));
     }
 
     public Plogger searchTotalPlogger() {

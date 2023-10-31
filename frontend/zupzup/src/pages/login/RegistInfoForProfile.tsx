@@ -54,12 +54,15 @@ const RegistInfo = () => {
         birthYear: inputRefForBirthYear.current.value,
       };
 
-      await MemberApi.registInfo(postData);
-      console.log(postData);
-
-      navigate(utils.URL.RESULT.REGIST);
+      try {
+        await MemberApi.registInfo(postData);
+        navigate(utils.URL.RESULT.REGIST);
+      } catch (error) {
+        console.error('가입정보 전송 에러:', error);
+      }
     }
   };
+
   return (
     <RegistInfoFrame.Wrap>
       <TopNavigation />

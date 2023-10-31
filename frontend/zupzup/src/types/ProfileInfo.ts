@@ -21,5 +21,6 @@ export interface RegistInfo {
   height: number;
   weight: number;
   gender: string;
-  birthYear: string;
+  birthYear: number;
+  memberId: string;
 }

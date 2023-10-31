@@ -1,31 +1,53 @@
 package com.twoez.zupzup.member.controller;
 
-import com.twoez.zupzup.config.security.jwt.JwtValidator;
+import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.AuthRequest;
 import com.twoez.zupzup.member.controller.dto.AuthResponse;
+import com.twoez.zupzup.member.domain.AuthUser;
+import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.member.service.IdTokenService;
+import com.twoez.zupzup.member.service.MemberService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final JwtValidator jwtValidator;
+    private final IdTokenService idTokenService;
+    private final MemberService memberService;
 
+    @PostMapping
     public ApiResponse<AuthResponse> authorizeUser(
             @RequestBody @Validated AuthRequest authRequest
     ) {
-        // TODO 1: authRequest의 jwt에서 idToken을 가져온다. -> jwtValidator
-        // TODO 2: jwt에서 발생할 수 있는 에러에 대해 ControllerAdvice 처리를 한다.
-        // TODO 3: IdTokenValidator로 idToken으로부터 OidcUser를 가져온다.
-        // TODO 4: 만약 OidcUser로부터 얻어낸 사용자 정보가 이미 저장되어 있다면 accessToken과 RefreshToken을 발급한다.
-        // TODO 5: 새로운 회원이라면 isNewMember->false 로 응답한다.
+        log.info("AuthRequest : {}", authRequest);
 
+        AuthUser authUser = idTokenService.extractAuthUser(authRequest);
+
+        // TODO 4: 만약 AuthUser로부터 얻어낸 사용자 정보가 이미 저장되어 있다면 accessToken과 RefreshToken을 발급한다.
+        // TODO 5: 새로운 회원이라면 isNewMember->false 로 응답한다.
+        Optional<Member> memberOptional = memberService.findMemberByOauth(authUser);
+
+        AuthResponse authResponse;
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
+            authResponse = AuthResponse.from(authorizationToken, member);
+        } else {
+            authResponse = AuthResponse.unregisteredUser();
+        }
+
+        return ApiResponse.ok(authResponse);
     }
 
 }

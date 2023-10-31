@@ -4,6 +4,7 @@ import { MemberApi } from 'api';
 import * as useAuth from 'hooks';
 import * as utils from 'utils';
 import { LoadingAnimation } from 'components';
+import styled from 'styled-components';
 
 const LoginSuccess = () => {
   const navigate = useNavigate();
@@ -14,10 +15,11 @@ const LoginSuccess = () => {
     const auth = async () => {
       const token = {
         authToken: params.get('token'),
+        provider: params.get('provider'),
       };
 
       try {
-        const res = await MemberApi.login(token.authToken!);
+        const res = await MemberApi.login(token.authToken!, token.provider!);
 
         const data = res.data.results;
         console.log('login data >: ', data);
@@ -42,10 +44,20 @@ const LoginSuccess = () => {
   }, []);
 
   return (
-    <>
+    <S.Wrap>
       <LoadingAnimation />
-    </>
+    </S.Wrap>
   );
+};
+
+const S = {
+  Wrap: styled.div`
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
 };
 
 export default LoginSuccess;

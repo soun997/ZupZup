@@ -3,8 +3,8 @@ import { BASE_URL } from 'api/apiController';
 import axios from 'axios';
 
 const MemberApis = {
-  login: (token: string) =>
-    axios.post(BASE_URL + '/auth', { authToken: token }),
+  login: (token: string, provider: string) =>
+    axios.post(BASE_URL + '/auth', { authToken: token, provider }),
   logout: () => instance.post(BASE_URL + '/members/logout'),
 };
 

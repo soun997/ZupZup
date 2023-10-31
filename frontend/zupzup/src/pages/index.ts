@@ -8,6 +8,7 @@ export { default as TrashReport } from './plogging/TrashReport';
 export { default as PloggingReport } from './plogging/PloggingReport';
 
 export { default as Login } from './login/Login';
+export { default as LoginSuccess } from './login/LoginSuccess';
 export { default as RegistInfoPhysical } from './login/RegistInfoForPhysical';
 export { default as RegistInfoProfile } from './login/RegistInfoForProfile';
 

@@ -31,6 +31,11 @@ const Router = () => {
           />
 
           <Route
+            path={utils.URL.LOGIN.SUCCESS}
+            element={<pages.LoginSuccess />}
+          />
+
+          <Route
             path={utils.URL.LOGIN.REGIST_INFO.PHYSICAL}
             element={<pages.RegistInfoPhysical />}
           />

@@ -1,7 +1,6 @@
 import { instance } from 'api';
-import { BASE_URL } from 'api/apiController';
 
-const FEEDBACK_URL = `${BASE_URL}/feedbacks`;
+const FEEDBACK_URL = `/feedbacks`;
 
 const MemberApis = {
   postFeedback: (feedback: string) => {

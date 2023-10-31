@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from 'api/apiController';
 import { RegistInfo } from 'types/ProfileInfo';
 
-const MEMBER_URL = `${BASE_URL}/members`;
+const MEMBER_URL = `/members`;
 
 const MemberApis = {
   login: (token: string, provider: string) =>
@@ -14,8 +14,7 @@ const MemberApis = {
 
   getProfileInfo: () => instance.get(`${MEMBER_URL}/profiles`),
   getCharacterInfo: () => instance.get(`${MEMBER_URL}/profiles/characters`),
-  getPloggingInfo: () =>
-    instance.get(`${MEMBER_URL}/members/profiles/total-ploggings`),
+  getPloggingInfo: () => instance.get(`${MEMBER_URL}/profiles/total-ploggings`),
 };
 
 export default MemberApis;

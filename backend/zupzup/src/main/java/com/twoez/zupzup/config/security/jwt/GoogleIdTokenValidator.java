@@ -5,9 +5,8 @@ import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.OauthProvider;
 import com.twoez.zupzup.member.exception.OidcPublicKeyFeignException;
 import com.twoez.zupzup.member.service.client.GoogleOauthClient;
-import com.twoez.zupzup.member.service.dto.OidcPublicKeyDetailResponse;
+import com.twoez.zupzup.member.service.dto.OidcPublicKeyList;
 import feign.FeignException;
-import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +26,11 @@ public class GoogleIdTokenValidator extends AbstractIdTokenValidator {
     }
 
     @Override
-    public List<OidcPublicKeyDetailResponse> getOidcPublicKeys() {
+    public OidcPublicKeyList getOidcPublicKeys() {
         try {
             return googleOauthClient.getGoogleOidcPublicKeys();
         } catch (FeignException e) {
+            e.printStackTrace();
             throw new OidcPublicKeyFeignException();
         }
     }

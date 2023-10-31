@@ -2,6 +2,7 @@ package com.twoez.zupzup.member.service;
 
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
+import com.twoez.zupzup.member.controller.dto.MemberHealthRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
@@ -28,6 +29,10 @@ public class MemberService {
 
     public AuthorizationToken issueAuthorizationToken(Member member) {
         return jwtProvider.createAuthorizationToken(member.getId());
+    }
+
+    public void modifyMemberHealth(MemberHealthRequest memberHealthRequest) {
+
     }
 
 }

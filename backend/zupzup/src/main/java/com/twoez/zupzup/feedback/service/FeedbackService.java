@@ -24,6 +24,6 @@ public class FeedbackService {
 
     public Page<Feedback> searchAll(Pageable pageable) {
 
-        return feedbackRepository.findAll(pageable);
+        return feedbackRepository.findAllByOrderByIdDesc(pageable);
     }
 }

@@ -4,15 +4,16 @@ import NoteSvg from 'assets/icons/note.svg?react';
 
 interface Props {
   lastPlogging: LastPloggingInfo;
+  isDayTime: boolean;
 }
-const MyPloggingReport = ({ lastPlogging }: Props) => {
+const MyPloggingReport = ({ lastPlogging, isDayTime }: Props) => {
   return (
     <S.Wrap>
       <S.IndexTitle>
         <NoteSvg />
         <span>누적 레포트</span>
       </S.IndexTitle>
-      <S.BoxFrame>
+      <S.BoxFrame $daytime={isDayTime}>
         <div className="title">그동안 이만큼 플로깅 했어요</div>
         <div className="eachInfo">
           <div>{lastPlogging.count} 회</div>
@@ -23,6 +24,10 @@ const MyPloggingReport = ({ lastPlogging }: Props) => {
     </S.Wrap>
   );
 };
+
+interface StyleProps {
+  $daytime: boolean;
+}
 
 const S = {
   Wrap: styled.div`
@@ -51,7 +56,7 @@ const S = {
     z-index: 1;
   `,
 
-  BoxFrame: styled.div`
+  BoxFrame: styled.div<StyleProps>`
     margin-top: -15px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.6);
@@ -63,7 +68,8 @@ const S = {
     gap: 15px;
 
     & .title {
-      color: ${({ theme }) => theme.color.gray3};
+      color: ${({ theme, $daytime }) =>
+        $daytime ? theme.color.gray3 : theme.color.white};
       font-size: ${({ theme }) => theme.font.size.body2};
       font-weight: ${({ theme }) => theme.font.weight.body2};
     }
@@ -73,7 +79,8 @@ const S = {
       justify-content: space-between;
 
       & div {
-        color: ${({ theme }) => theme.color.gray2};
+        color: ${({ theme, $daytime }) =>
+          $daytime ? theme.color.gray2 : theme.color.white};
         font-size: ${({ theme }) => theme.font.size.display2};
         font-weight: ${({ theme }) => theme.font.weight.focus2};
       }

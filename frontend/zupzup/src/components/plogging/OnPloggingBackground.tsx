@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import * as utils from 'utils';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
 import TrashCanSvg from 'assets/icons/trash_can.svg?react';
@@ -24,46 +21,45 @@ interface Props {
   exitOn: boolean;
   ploggingInfoOn: boolean;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
+  cameraOn: boolean;
+  setCameraOn: (cameraOn: boolean) => void;
 }
 
 const OnPloggingBackground = ({
   exitOn,
   ploggingInfoOn,
   setPloggingInfoOn,
+  cameraOn,
+  setCameraOn,
 }: Props) => {
-  const navigate = useNavigate();
-
-  const [$trashOn, setTrashOn] = useState<boolean>(false);
+  const [trashOn, setTrashOn] = useState<boolean>(false);
 
   return (
     <S.Wrap>
       <S.TrashToggleBox>
-        <S.RefreshButton
-          $trashOn={$trashOn}
-          $modalOn={exitOn || ploggingInfoOn}
-        >
+        <S.RefreshButton $trashOn={trashOn} $modalOn={exitOn || ploggingInfoOn}>
           <RefreshSvg />
         </S.RefreshButton>
       </S.TrashToggleBox>
       <S.UserAccess>
         <S.CameraButton
-          onClick={() => navigate(utils.URL.PLOGGING.CAMERA)}
-          $modalOn={exitOn || ploggingInfoOn}
+          onClick={() => setCameraOn(true)}
+          $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
           <CameraSvg />
         </S.CameraButton>
         <S.PloggingInfoButton
           onClick={() => setPloggingInfoOn(true)}
-          $modalOn={exitOn || ploggingInfoOn}
+          $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
         <S.TrashButton
-          onClick={() => setTrashOn(!$trashOn)}
-          $trashOn={$trashOn}
-          $modalOn={exitOn || ploggingInfoOn}
+          onClick={() => setTrashOn(!trashOn)}
+          $trashOn={trashOn}
+          $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
-          {$trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
+          {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
         </S.TrashButton>
       </S.UserAccess>
     </S.Wrap>

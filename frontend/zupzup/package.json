@@ -21,9 +21,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "styled-components": "^6.1.0",
+    "swiper": "^10.1.0",
     "vite-plugin-svgr": "^4.1.0",
-    "vite-tsconfig-paths": "^4.2.1",
-    "swiper": "^10.1.0"
+    "vite-tsconfig-paths": "^4.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -41,6 +41,7 @@
     "prettier": "^3.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-mkcert": "^1.16.0"
+    "vite-plugin-mkcert": "^1.16.0",
+    "vite-plugin-pwa": "^0.16.6"
   }
 }

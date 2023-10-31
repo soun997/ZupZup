@@ -93,7 +93,13 @@ public enum PloggingLogFixture {
     public PloggingLogRequest getPloggingLogRequest() {
 
         return new PloggingLogRequest(
-                distance, startDateTime, endDateTime, durationTime,
-                calories, gatheredTrash, coin, routeImageUrl);
+                distance,
+                startDateTime,
+                endDateTime,
+                durationTime,
+                calories,
+                gatheredTrash,
+                coin,
+                routeImageUrl);
     }
 }

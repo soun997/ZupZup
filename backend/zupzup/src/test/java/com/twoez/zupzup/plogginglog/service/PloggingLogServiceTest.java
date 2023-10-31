@@ -1,6 +1,5 @@
 package com.twoez.zupzup.plogginglog.service;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -17,18 +16,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class PloggingLogServiceTest {
 
-    @Mock
-    PloggingLogRepository ploggingLogRepository;
-    @InjectMocks
-    PloggingLogService ploggingLogService;
+    @Mock PloggingLogRepository ploggingLogRepository;
+    @InjectMocks PloggingLogService ploggingLogService;
 
     @Test
     @DisplayName("플로깅 기록을 저장한다.")
     void addPloggingLogTest() {
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogRepository.save(ploggingLog))
-                .willReturn(ploggingLog);
+        given(ploggingLogRepository.save(ploggingLog)).willReturn(ploggingLog);
 
         PloggingLog result = ploggingLogService.add(ploggingLog);
 

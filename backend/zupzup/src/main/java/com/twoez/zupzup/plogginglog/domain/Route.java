@@ -10,8 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 public class Route {
 
-    @Id
-    private Long id;
+    @Id private Long id;
     private List<Location> locations;
 
     public Route(Long id, List<Location> locations) {

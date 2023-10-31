@@ -1,4 +1,8 @@
 export const URL = {
+  ONBORDING: {
+    CHARACTER: '/info/character',
+  },
+  OPINION: '/opinion',
   LOGIN: {
     HOME: '/login',
     REGIST_INFO: '/regist-info',
@@ -20,6 +24,7 @@ export const URL = {
   RESULT: {
     REGIST: '/success-regist',
     FLOGGING: '/success-plogging',
+    OPINION: '/success-opinion',
   },
   MYPAGE: {
     HOME: '/mypage',
@@ -43,3 +48,5 @@ export const GENDER = {
   MALE: '남성',
   FEMALE: '여성',
 };
+
+export const IMAGE_MIME_TYPE = 'image/jpeg';

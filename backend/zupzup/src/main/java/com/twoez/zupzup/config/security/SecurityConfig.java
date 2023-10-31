@@ -61,7 +61,8 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
-                                        new MvcRequestMatcher(introspector, "login/**")
+                                        new MvcRequestMatcher(introspector, "login/**"),
+                                        new MvcRequestMatcher(introspector, "api/v1/auth")
                                 ).permitAll()
                                 .requestMatchers(
                                         new MvcRequestMatcher(introspector, "api/**"))

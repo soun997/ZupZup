@@ -24,7 +24,9 @@ const LoginSuccess = () => {
         const data = res.data.results;
         console.log('login data >: ', data);
 
-        if (data.isNew) {
+        useAuth.setMemberId(data.memberId);
+
+        if (data.isNewMember) {
           const accessToken = data.accessToken;
           const refreshToken = data.refreshToken;
           useAuth.setAccessToken(accessToken);

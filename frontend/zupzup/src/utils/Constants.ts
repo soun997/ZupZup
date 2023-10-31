@@ -32,6 +32,7 @@ export const URL = {
   },
   MYPAGE: {
     HOME: '/mypage',
+    REPORT: '/mypage/report',
     SHOP: '/shop',
     SHOP_DETAIL: '/shop/detail',
     PURCHASE: '/success-purchase',

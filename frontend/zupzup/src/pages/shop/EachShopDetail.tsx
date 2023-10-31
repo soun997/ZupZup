@@ -8,7 +8,7 @@ import axios from 'api/apiController';
 
 const FoodDetail: FoodDetail = {
   id: 2,
-  image: '../../assets/images/big-food.png',
+  image: `/assets/images/food/food4.png`,
   name: '햄버거',
   coin: 4,
   exp: 3,
@@ -77,7 +77,7 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 50px;
     height: 100%;
   `,
 

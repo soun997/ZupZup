@@ -69,6 +69,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    font-family: ${({ theme }) => theme.font.family.body2};
   `,
   Content: styled.div`
     padding: 0 20px 20px;
@@ -133,7 +134,7 @@ const S = {
 
     & .content {
       margin-top: 10px;
-      padding: 10px;
+      padding: 20px;
       background-color: ${({ theme }) => theme.color.white};
       font-family: ${({ theme }) => theme.font.family.body2};
       line-height: 1.5;

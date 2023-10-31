@@ -37,7 +37,7 @@ const DrawerCarousel = ({ foodList }: Props) => {
             )}
             {chunk.length > 6 && (
               <>
-                <BlankFrame margin={80} />
+                <BlankFrame margin={60} />
                 <DrawerFrame foodList={chunk.slice(6, 9)} />
               </>
             )}
@@ -56,12 +56,11 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-wrap: wrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     justify-content: space-between;
-    height: 550px;
-    & .swiper {
-      width: 100%;
-    }
+    height: 100dvh;
+    width: 100%;
+
     & .swiper-slide {
       width: 100%;
     }
@@ -70,11 +69,7 @@ const S = {
     }
 
     & .swiper-pagination {
-      margin-top: 20px;
-    }
-
-    & .swiper-pagination-bullets {
-      /* bottom: var(--swiper-pagination-bottom, -10px); */
+      margin-top: -20px;
     }
 
     & .swiper-scrollbar-drag,

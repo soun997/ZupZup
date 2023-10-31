@@ -44,7 +44,7 @@ const RegistInfo = () => {
         inputRefForWeight.current?.value,
       )
     ) {
-      navigate(utils.URL.LOGIN.REGIST_INFO + '/profile', {
+      navigate(utils.URL.LOGIN.REGIST_INFO.PROFILE, {
         state: {
           height: inputRefForHeight.current?.value,
           weight: inputRefForWeight.current?.value,
@@ -73,12 +73,14 @@ const RegistInfo = () => {
           title="몸무게 (kg)"
         />
       </RegistInfoFrame.InputSection>
-      <RegistInfoFrame.NextButton
-        disabled={isNextButtonDisabled}
-        onClick={handleNextPage}
-      >
-        다음
-      </RegistInfoFrame.NextButton>
+      <RegistInfoFrame.BottomSection>
+        <RegistInfoFrame.NextButton
+          disabled={isNextButtonDisabled}
+          onClick={handleNextPage}
+        >
+          다음
+        </RegistInfoFrame.NextButton>
+      </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>
   );
 };

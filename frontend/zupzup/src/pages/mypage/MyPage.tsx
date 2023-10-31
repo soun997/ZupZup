@@ -7,22 +7,44 @@ import {
   MyPageNav,
   KeyFrameList,
 } from 'components';
-import { ProfileInfo } from 'types/ProfileInfo';
+import {
+  CharacterInfo,
+  ProfileInfo,
+  TotalPloggingInfo,
+} from 'types/ProfileInfo';
 
 const profileInfo: ProfileInfo = {
-  nickname: '줍줍',
-  characterImage: '/assets/character/penguin-baby.png',
-  day: 12,
+  name: '줍줍',
+  coin: 320,
+  createdAt: '2023-10-12',
+};
+
+const characterInfo: CharacterInfo = {
   level: 1,
   exp: 160,
-  lastPlogging: {
-    count: 2,
-    hour: 2,
-    calories: 200,
-  },
 };
+
+const ploggingInfo: TotalPloggingInfo = {
+  totalCalorie: 330, //cal
+  totalCount: 1,
+  totalTime: 7200, //초
+  totalDistance: 1, //미터
+  totalGatheredTrash: 17,
+};
+
+const calculateDaysPassed = (inputDate: string): number => {
+  const inputDateObj = new Date(inputDate);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - inputDateObj.getTime();
+
+  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  return daysPassed;
+};
+
 const MyPage = () => {
   const [isDaytime, setIsDaytime] = useState(true);
+
   useEffect(() => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
@@ -37,26 +59,24 @@ const MyPage = () => {
       <S.Content>
         <MyPageNav coin={320} />
         <S.Title $daytime={isDaytime}>
-          {profileInfo.nickname}님과 함께한지 <br /> {profileInfo.day} 일째
+          {profileInfo.name}님과 함께한지 <br />{' '}
+          {calculateDaysPassed(profileInfo.createdAt)} 일째
         </S.Title>
         <S.Level>
           <S.SubInfo $daytime={isDaytime}>
-            레벨 {profileInfo.level + 1} 까지{' '}
+            레벨 {characterInfo.level + 1} 까지{' '}
           </S.SubInfo>
-          <ProgressBar score={profileInfo.exp} total={200} />
+          <ProgressBar score={characterInfo.exp} total={200} />
         </S.Level>
         <S.Report>
-          <MyPloggingReport
-            lastPlogging={profileInfo.lastPlogging}
-            isDayTime={isDaytime}
-          />
+          <MyPloggingReport lastPlogging={ploggingInfo} isDayTime={isDaytime} />
         </S.Report>
       </S.Content>
 
       <S.Image
-        src={`/assets/character/penguin-lv${profileInfo.level}.png`}
+        src={`/assets/character/penguin-lv${characterInfo.level}.png`}
         $daytime={isDaytime}
-        level={profileInfo.level}
+        level={characterInfo.level}
       ></S.Image>
       <Navigation />
     </S.Wrap>
@@ -97,7 +117,6 @@ const S = {
   Image: styled.img<StyleProps>`
     margin: auto 0 -15vh 2vw;
     width: ${props => `calc(45% + ${props.level ? props.level * 5 : 0}%)`};
-    /* width:  */
     animation: ${props => KeyFrameList[(props.level && props.level - 1) || 0]}
       2s ease-in-out infinite;
   `,

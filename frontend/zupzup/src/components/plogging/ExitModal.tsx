@@ -40,7 +40,7 @@ const S = {
     width: 100%;
     height: 100%;
     background-color: #7777;
-    z-index: 400;
+    z-index: 500;
   `,
   ModalBox: styled.div`
     display: flex;

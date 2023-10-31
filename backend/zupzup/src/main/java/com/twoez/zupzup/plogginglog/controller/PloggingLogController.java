@@ -49,15 +49,14 @@ public class PloggingLogController {
     @GetMapping("/recent")
     public ApiResponse<RecentPloggingLogResponse> recentPloggingLogDetails() {
         return ApiResponse.ok(
-                RecentPloggingLogResponse.from(
-                        ploggingLogQueryService.searchRecentLog(1L)));
+                RecentPloggingLogResponse.from(ploggingLogQueryService.searchRecentLog(1L)));
     }
 
     @PostMapping
-    public ApiResponse<PloggingLogAddResponse> ploggingLogAdd(@Valid @RequestBody PloggingLogRequest request) {
+    public ApiResponse<PloggingLogAddResponse> ploggingLogAdd(
+            @Valid @RequestBody PloggingLogRequest request) {
 
         return ApiResponse.created(
-                PloggingLogAddResponse.from(
-                        ploggingLogService.add(request.toEntity(null))));
+                PloggingLogAddResponse.from(ploggingLogService.add(request.toEntity(null))));
     }
 }

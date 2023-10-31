@@ -41,20 +41,20 @@ const Setting = () => {
         <S.SubTitle>약관</S.SubTitle>
         <SettingComponent
           text="서비스 이용약관"
-          onClick={() => navigate(utils.URL.MAIN.HOME)}
+          onClick={() => navigate(utils.URL.ONBORDING.WORKING)}
         />
         <SettingComponent
           text="개인정보 처리방침"
-          onClick={() => navigate(utils.URL.MAIN.HOME)}
+          onClick={() => navigate(utils.URL.ONBORDING.WORKING)}
         />
         <SettingComponent text="앱 버전" svg={<>1.0.0</>} />
         <SettingComponent
           text="줍줍 새소식"
-          onClick={() => navigate(utils.URL.MAIN.HOME)}
+          onClick={() => navigate(utils.URL.ONBORDING.WORKING)}
         />
         <SettingComponent
           text="오픈소스 라이선스 보기"
-          onClick={() => navigate(utils.URL.MAIN.HOME)}
+          onClick={() => navigate(utils.URL.ONBORDING.WORKING)}
         />
       </S.SettingSection>
       <Navigation />

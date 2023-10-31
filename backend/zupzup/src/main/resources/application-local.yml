@@ -22,6 +22,10 @@ spring:
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             scope: email, profile, openid
 
+oidc:
+  google:
+    iss: https://accounts.google.com
+    iss2: accounts.google.com
 
 client:
   url: ${CLIENT_URL}

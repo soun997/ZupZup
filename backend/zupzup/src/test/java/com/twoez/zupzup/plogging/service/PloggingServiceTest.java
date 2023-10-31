@@ -32,7 +32,7 @@ public class PloggingServiceTest {
         given(ploggingRedisRepository.findById(TOTAL_PLOGGER))
                 .willReturn(Optional.of(plogger));
         given(ploggingRedisRepository.save(plogger))
-                .willReturn(plogger.increase());
+                .willReturn(plogger);
 
         Plogger result = ploggingService.increaseTotalPlogger();
 
@@ -47,7 +47,7 @@ public class PloggingServiceTest {
         given(ploggingRedisRepository.findById(TOTAL_PLOGGER))
                 .willReturn(Optional.of(plogger));
         given(ploggingRedisRepository.save(plogger))
-                .willReturn(plogger.decrease());
+                .willReturn(plogger);
 
         Plogger result = ploggingService.decreaseTotalPlogger();
 

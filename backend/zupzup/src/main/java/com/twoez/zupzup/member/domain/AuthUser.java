@@ -16,4 +16,8 @@ public class AuthUser {
         this.oauthAccount = oauthAccount;
         this.name = name;
     }
+
+    public Oauth getOauth() {
+        return new Oauth(oauthProvider, oauthAccount);
+    }
 }

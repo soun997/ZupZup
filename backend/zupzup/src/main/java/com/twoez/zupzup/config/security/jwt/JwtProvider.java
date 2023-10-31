@@ -44,6 +44,21 @@ public class JwtProvider {
         return generateToken(oidcUser, claims, authTokenExpiredSecond);
     }
 
+    public AuthorizationToken createAuthorizationToken(Long memberId) {
+        String accessToken = generateToken(memberId, accessExpiredSecond);
+        String refreshToken = generateToken(memberId, refreshExpiredSecond);
+        return new AuthorizationToken(accessToken, refreshToken, GRANT_TYPE);
+    }
+
+    private String generateToken(Long memberId, Integer validationSecond) {
+        Instant expiredTime = Instant.now().plus(validationSecond, ChronoUnit.SECONDS);
+        return Jwts.builder()
+                .setSubject(String.valueOf(memberId))
+                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .setExpiration(Date.from(expiredTime))
+                .compact();
+    }
+
     private String generateToken(OidcUser oidcUser, Claims claims, Integer validationSecond) {
         Instant expiredTime = Instant.now().plus(validationSecond, ChronoUnit.SECONDS);
         return Jwts.builder()

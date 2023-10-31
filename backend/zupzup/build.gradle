@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // annotation processor
@@ -37,6 +38,9 @@ dependencies {
     // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // spring cloud open feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
 
     // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -96,6 +100,7 @@ clean.doLast {
 // rest docs Settings
 ext {
     set('snippetsDir', file("build/generated-snippets"))
+    set('springCloudVersion', "2022.0.3")
 }
 
 test {
@@ -135,5 +140,11 @@ spotless {
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }

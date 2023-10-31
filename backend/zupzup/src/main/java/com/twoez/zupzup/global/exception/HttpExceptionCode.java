@@ -14,13 +14,19 @@ public enum HttpExceptionCode {
 
     SECURITY_AUTHORIZATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_001", "사용자 인가에 실패했습니다."),
     SECURITY_AUTHENTICATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_002", "사용자 인증에 실패했습니다."),
-    OAUTH_PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_003", "Oauth Provider 가 존재하지 않습니다."),
+
+    OAUTH_PROVIDER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_OAUTH_001", "Oauth Provider 가 존재하지 않습니다."),
+    OAUTH_PROVIDER_NULL_EXCEPTION(HttpStatus.BAD_REQUEST, "ERR_OAUTH_002", "Oauth Provider Value는 null이 될 수 없습니다."),
+
 
     JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "ERR_JWT_001", "JWT 기한이 만료되었습니다."),
     JWT_MALFORMED(HttpStatus.UNAUTHORIZED, "ERR_JWT_002", "JWT가 손상되었습니다."),
     JWT_UNSUPPORTED(HttpStatus.UNAUTHORIZED, "ERR_JWT_003", "지원되지 않는 JWT 입니다."),
     JWT_INVALID_SIGNATURE(HttpStatus.UNAUTHORIZED, "ERR_JWT_004", "signature가 유효하지 않습니다."),
-    JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_JWT_005", "JWT를 찾을 수 없습니다.");
+    JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_JWT_005", "JWT를 찾을 수 없습니다."),
+    ID_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_JWT_006", "authToken에서 idToken을 찾을 수 없습니다."),
+
+    ID_TOKEN_KID_NOT_FOUND(HttpStatus.UNAUTHORIZED, "ERR_IDTOKEN_001", "유효한 Id Token이 아닙니다. - kid가 존재하지 않습니다.");
 
 
 

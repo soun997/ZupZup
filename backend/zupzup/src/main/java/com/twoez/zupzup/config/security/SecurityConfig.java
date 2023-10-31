@@ -62,7 +62,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
                                         new MvcRequestMatcher(introspector, "login/**"),
-                                        new MvcRequestMatcher(introspector, "api/v1/auth")
+                                        new MvcRequestMatcher(introspector, "api/v1/auth"),
+                                        new MvcRequestMatcher(introspector, "api/v1/members/health")
                                 ).permitAll()
                                 .requestMatchers(
                                         new MvcRequestMatcher(introspector, "api/**"))

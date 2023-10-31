@@ -1,0 +1,22 @@
+= Trashcan API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 반경 100m 이내의 쓰레기통 조회
+
+=== Request
+
+include::{snippets}/trashcan-list-by-location/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/trashcan-list-by-location/http-response.adoc[]

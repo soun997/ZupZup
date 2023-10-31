@@ -78,4 +78,11 @@ public class Member extends BaseTime {
         this.role = role;
         this.deleted = deleted;
     }
+
+    public void updateHealthInfo(Integer birthYear, Gender gender, Integer height, Integer weight) {
+        this.birthYear = birthYear;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+    }
 }

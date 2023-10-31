@@ -53,7 +53,7 @@ instance.interceptors.request.use(
       } catch (error) {
         // **만약 refreshToken 보내도 error 가 뜨면 login 화면으로 보내기 -> redirect
         //!login 이동
-        window.location.href = '/'; // 로그인화면으로 보내기
+        window.location.href = utils.URL.LOGIN.HOME; // 로그인화면으로 보내기
         useAuth.deleteAllCookies();
       }
 

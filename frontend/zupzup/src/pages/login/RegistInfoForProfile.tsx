@@ -9,6 +9,8 @@ import {
   RegistInfoTitle,
   RegistInfoFrame,
 } from 'components';
+import { RegistInfo } from 'types/ProfileInfo';
+import { MemberApi } from 'api';
 
 const RegistInfo = () => {
   const { state } = useLocation();
@@ -40,19 +42,27 @@ const RegistInfo = () => {
     setNextButtonDisabled(!inputCheck(birthYearInput));
   };
 
-  const handleNextPage = () => {
-    if (inputCheck(inputRefForBirthYear.current?.value)) {
-      //내가 보낼 데이터
-      const postData = {
+  const handleNextPage = async () => {
+    if (
+      inputRefForBirthYear.current &&
+      inputCheck(inputRefForBirthYear.current?.value)
+    ) {
+      const postData: RegistInfo = {
         height: state.height,
         weight: state.weight,
         gender,
-        birthYear: inputRefForBirthYear.current?.value,
+        birthYear: inputRefForBirthYear.current.value,
       };
-      console.log(postData);
-      navigate(utils.URL.RESULT.REGIST);
+
+      try {
+        await MemberApi.registInfo(postData);
+        navigate(utils.URL.RESULT.REGIST);
+      } catch (error) {
+        console.error('가입정보 전송 에러:', error);
+      }
     }
   };
+
   return (
     <RegistInfoFrame.Wrap>
       <TopNavigation />
@@ -73,12 +83,14 @@ const RegistInfo = () => {
           onChange={handleSelectChange}
         />
       </RegistInfoFrame.InputSection>
-      <RegistInfoFrame.NextButton
-        disabled={isNextButtonDisabled}
-        onClick={handleNextPage}
-      >
-        가입 완료하기
-      </RegistInfoFrame.NextButton>
+      <RegistInfoFrame.BottomSection>
+        <RegistInfoFrame.NextButton
+          disabled={isNextButtonDisabled}
+          onClick={handleNextPage}
+        >
+          가입 완료하기
+        </RegistInfoFrame.NextButton>
+      </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>
   );
 };

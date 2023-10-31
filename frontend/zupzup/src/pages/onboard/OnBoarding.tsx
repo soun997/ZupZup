@@ -4,7 +4,7 @@ import { useCountdownTimer } from 'hooks';
 import * as utils from 'utils';
 
 const OnBoarding = () => {
-  useCountdownTimer(3, utils.URL.PLOGGING.LOBBY);
+  useCountdownTimer(3, utils.URL.LOGIN.HOME);
 
   return (
     <S.Wrap>

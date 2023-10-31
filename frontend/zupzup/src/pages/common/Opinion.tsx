@@ -1,14 +1,27 @@
-import { ConfirmButton, TopNavigation } from 'components';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import styled from 'styled-components';
+import { ConfirmButton, TopNavigation } from 'components';
+import { FeedbackApi } from 'api';
 
 const Opinion = () => {
   const navigate = useNavigate();
+  const [value, setValue] = useState<string>('');
 
-  const handleNavigate = () => {
-    navigate(utils.URL.RESULT.OPINION);
+  const handleNavigate = async () => {
+    try {
+      await FeedbackApi.postFeedback(value);
+      navigate(utils.URL.RESULT.OPINION);
+    } catch (error) {
+      console.error('피드백 전송 에러:', error);
+    }
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
   return (
     <S.Wrap>
       <TopNavigation />
@@ -18,7 +31,11 @@ const Opinion = () => {
           주신 의견은 한글자도 빼놓지 않고 꼼꼼히 읽어볼게요!
         </S.SubTitle>
       </S.TitleFrame>
-      <S.InputBox placeholder="내용을 입력해주세요"></S.InputBox>
+      <S.InputBox
+        placeholder="내용을 입력해주세요"
+        value={value}
+        onChange={handleChange}
+      ></S.InputBox>
       <S.BottomFrame>
         <ConfirmButton onClick={handleNavigate} text="전송하기" />
       </S.BottomFrame>

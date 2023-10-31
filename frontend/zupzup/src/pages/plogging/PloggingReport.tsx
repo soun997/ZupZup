@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
 import { PloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
 import { useCapture } from 'hooks';
+import PloggingDone from 'components/plogging/PloggingDone';
 
 const ploggingReport: PloggingReport = {
   image: '../../../assets/images/route.png',
@@ -19,7 +21,11 @@ const ploggingReport: PloggingReport = {
 const PloggingReport = () => {
   const navigate = useNavigate();
   const { handleCaptureClick, captureRef } = useCapture();
+  const [showLoading, setLoading] = useState<boolean>(true);
 
+  if (showLoading) {
+    return <PloggingDone setLoading={setLoading} />;
+  }
   return (
     <S.Wrap>
       <S.Content ref={captureRef}>

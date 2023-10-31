@@ -21,7 +21,7 @@ const ExitModal = ({ setExitOn }: Props) => {
           </S.CancelButton>
         </S.Header>
         <S.MessageBox>정말 종료하시겠습니까?</S.MessageBox>
-        <S.ExitButton onClick={() => navigate(utils.URL.RESULT.FLOGGING)}>
+        <S.ExitButton onClick={() => navigate(utils.URL.PLOGGING.REPORT)}>
           종료하기
         </S.ExitButton>
       </S.ModalBox>

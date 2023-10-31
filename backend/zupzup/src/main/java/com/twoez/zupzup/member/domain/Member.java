@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseTime {
 
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,7 +35,7 @@ public class Member extends BaseTime {
     private String name;
 
     @Column(nullable = false)
-    private String gender;
+    private Character gender;
 
     @Column(nullable = false)
     private Integer birthYear;
@@ -60,7 +61,7 @@ public class Member extends BaseTime {
             Long id,
             OAuth oAuth,
             String name,
-            String gender,
+            Character gender,
             Integer birthYear,
             Integer height,
             Integer weight,

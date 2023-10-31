@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {
-  Navigation,
-  ProgressBar,
-  MyPloggingReport,
-  MyPageNav,
-  KeyFrameList,
-} from 'components';
-import {
-  CharacterInfo,
-  ProfileInfo,
-  TotalPloggingInfo,
-} from 'types/ProfileInfo';
+import { Navigation, ProgressBar, MyPageNav, KeyFrameList } from 'components';
+import { CharacterInfo, ProfileInfo } from 'types/ProfileInfo';
+import { useNavigate } from 'react-router-dom';
+import * as utils from 'utils';
 
 const profileInfo: ProfileInfo = {
   name: '줍줍',
@@ -22,14 +14,6 @@ const profileInfo: ProfileInfo = {
 const characterInfo: CharacterInfo = {
   level: 1,
   exp: 160,
-};
-
-const ploggingInfo: TotalPloggingInfo = {
-  totalCalorie: 330, //cal
-  totalCount: 1,
-  totalTime: 7200, //초
-  totalDistance: 1, //미터
-  totalGatheredTrash: 17,
 };
 
 const calculateDaysPassed = (inputDate: string): number => {
@@ -43,7 +27,8 @@ const calculateDaysPassed = (inputDate: string): number => {
 };
 
 const MyPage = () => {
-  const [isDaytime, setIsDaytime] = useState(true);
+  const navigate = useNavigate();
+  const [isDaytime, setIsDaytime] = useState<boolean>(true);
 
   useEffect(() => {
     const currentTime = new Date();
@@ -68,8 +53,11 @@ const MyPage = () => {
           </S.SubInfo>
           <ProgressBar score={characterInfo.exp} total={200} />
         </S.Level>
-        <S.Report>
-          <MyPloggingReport lastPlogging={ploggingInfo} isDayTime={isDaytime} />
+        <S.Report $daytime={isDaytime}>
+          <img
+            src="/assets/images/mail.png"
+            onClick={() => navigate(utils.URL.MYPAGE.REPORT)}
+          />
         </S.Report>
       </S.Content>
 
@@ -115,7 +103,7 @@ const S = {
   `,
 
   Image: styled.img<StyleProps>`
-    margin: auto 0 -15vh 2vw;
+    margin: auto 0 -24vh 8vw;
     width: ${props => `calc(45% + ${props.level ? props.level * 5 : 0}%)`};
     animation: ${props => KeyFrameList[(props.level && props.level - 1) || 0]}
       2s ease-in-out infinite;
@@ -134,11 +122,21 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus2};
   `,
 
-  Report: styled.div`
+  Report: styled.div<StyleProps>`
+    font-family: ${({ theme }) => theme.font.family.focus2};
     display: flex;
     align-items: center;
     margin-top: 20px;
-    justify-content: center;
+    justify-content: flex-end;
+
+    img {
+      cursor: pointer;
+      filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.77));
+      background-color: ${({ theme, $daytime }) =>
+        $daytime ? theme.color.main : theme.color.main};
+      border-radius: 50%;
+      width: 45px;
+    }
   `,
 };
 

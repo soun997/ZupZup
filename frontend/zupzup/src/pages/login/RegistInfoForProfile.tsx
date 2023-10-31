@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import * as useAuth from 'hooks';
 import * as utils from 'utils';
 import {
   TopNavigation,
@@ -51,7 +51,8 @@ const RegistInfo = () => {
         height: state.height,
         weight: state.weight,
         gender,
-        birthYear: inputRefForBirthYear.current.value,
+        birthYear: Number(inputRefForBirthYear.current.value),
+        memberId: useAuth.getCookie(utils.AUTH.MEMBER_ID),
       };
 
       try {

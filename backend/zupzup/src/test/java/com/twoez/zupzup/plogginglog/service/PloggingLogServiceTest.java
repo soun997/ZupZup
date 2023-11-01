@@ -5,10 +5,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
+import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
+    @Mock MemberRepository memberRepository;
     @InjectMocks PloggingLogService ploggingLogService;
 
     @Test
@@ -35,8 +38,11 @@ public class PloggingLogServiceTest {
                         50,
                         200,
                         "https://image.com");
+
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+        given(memberRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(ploggingLog.getMember()));
 
         PloggingLog result = ploggingLogService.add(request, 1L);
 

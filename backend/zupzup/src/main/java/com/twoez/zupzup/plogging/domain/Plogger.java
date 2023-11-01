@@ -1,5 +1,6 @@
 package com.twoez.zupzup.plogging.domain;
 
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

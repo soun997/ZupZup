@@ -143,7 +143,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     pointer-events: auto;
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
@@ -165,7 +165,7 @@ const S = {
       margin: 0 6px 0 0;
     }
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,

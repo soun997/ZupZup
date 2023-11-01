@@ -17,9 +17,18 @@ interface Props {
   ploggingInfoOn: boolean;
   cameraOn: boolean;
   location: Location;
+  fixCenter: boolean;
+  setFixCenter: (fixCenter: boolean) => void;
 }
 
-const PloggingMap = ({ exitOn, ploggingInfoOn, cameraOn, location }: Props) => {
+const PloggingMap = ({
+  exitOn,
+  ploggingInfoOn,
+  cameraOn,
+  location,
+  fixCenter,
+  setFixCenter,
+}: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
@@ -59,6 +68,10 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, cameraOn, location }: Props) => {
         lng: location.lng,
       });
     }
+
+    const updateMapCenter = () => {
+      tmap?.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
+    };
 
     const updateMarker = () => {
       if (!curMarker) {
@@ -110,6 +123,9 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, cameraOn, location }: Props) => {
 
     updateMarker();
     updatePath();
+    if (fixCenter) {
+      updateMapCenter();
+    }
   }, [location]);
 
   return (
@@ -117,6 +133,7 @@ const PloggingMap = ({ exitOn, ploggingInfoOn, cameraOn, location }: Props) => {
       <S.Map
         ref={mapRef}
         $modalOn={exitOn || ploggingInfoOn || cameraOn}
+        onTouchStart={() => setFixCenter(false)}
       ></S.Map>
     </S.Wrap>
   );

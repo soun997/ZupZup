@@ -6,6 +6,7 @@ import TrashCanSvg from 'assets/icons/trash_can.svg?react';
 import CancelTrashCanSvg from 'assets/icons/cancel_trash_can.svg?react';
 import CameraSvg from 'assets/icons/camera.svg?react';
 import RefreshSvg from 'assets/icons/refresh.svg?react';
+import AimSvg from 'assets/icons/aim.svg?react';
 
 interface TrashButtonProps {
   $trashOn: boolean;
@@ -23,6 +24,8 @@ interface Props {
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
   cameraOn: boolean;
   setCameraOn: (cameraOn: boolean) => void;
+  fixCenter: boolean;
+  setFixCenter: (fixCenter: boolean) => void;
 }
 
 const OnPloggingBackground = ({
@@ -31,16 +34,29 @@ const OnPloggingBackground = ({
   setPloggingInfoOn,
   cameraOn,
   setCameraOn,
+  fixCenter,
+  setFixCenter,
 }: Props) => {
   const [trashOn, setTrashOn] = useState<boolean>(false);
 
   return (
     <S.Wrap>
-      <S.TrashToggleBox>
-        <S.RefreshButton $trashOn={trashOn} $modalOn={exitOn || ploggingInfoOn}>
+      <S.RefreshMapBox>
+        <S.AimButton
+          className={fixCenter ? 'active' : ''}
+          $trashOn={trashOn}
+          $modalOn={exitOn || ploggingInfoOn || cameraOn}
+          onClick={() => setFixCenter(!fixCenter)}
+        >
+          <AimSvg />
+        </S.AimButton>
+        <S.RefreshButton
+          $trashOn={trashOn}
+          $modalOn={exitOn || ploggingInfoOn || cameraOn}
+        >
           <RefreshSvg />
         </S.RefreshButton>
-      </S.TrashToggleBox>
+      </S.RefreshMapBox>
       <S.UserAccess>
         <S.CameraButton
           onClick={() => setCameraOn(true)}
@@ -128,7 +144,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
@@ -150,17 +166,35 @@ const S = {
       margin: 0 6px 0 0;
     }
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
-  TrashToggleBox: styled.div`
+  RefreshMapBox: styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100%;
     height: 56px;
     margin: auto 0 0 0;
     padding: 0 30px;
+  `,
+  AimButton: styled.button<ButtonProps>`
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+    background-color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.white};
+    pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
+
+    &.active {
+      background-color: ${({ theme }) => theme.color.sub2};
+    }
+
+    &:active {
+      background-color: ${({ theme }) => theme.color.sub};
+    }
   `,
   RefreshButton: styled.button<ButtonProps>`
     display: ${({ $trashOn }) => ($trashOn ? 'flex' : 'none')};
@@ -173,7 +207,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
-    &:hover {
+    &:active {
       background-color: ${({ theme }) => theme.color.sub};
     }
   `,
@@ -189,7 +223,7 @@ const S = {
     color: ${({ theme }) => theme.color.white};
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
-    &:hover {
+    &:active {
       background-color: ${({ $trashOn, theme }) =>
         $trashOn ? theme.color.sub : ''};
     }

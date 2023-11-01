@@ -87,7 +87,7 @@ const S = {
     margin: auto 0 0 0;
     pointer-events: auto;
 
-    &:hover {
+    &:active {
       cursor: pointer;
       background-color: ${({ theme }) => theme.color.sub};
     }

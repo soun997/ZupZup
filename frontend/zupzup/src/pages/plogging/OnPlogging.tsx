@@ -19,6 +19,7 @@ const OnPlogging = () => {
   const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
+  const [fixCenter, setFixCenter] = useState<boolean>(false);
   const LOCATIONS_KEY = 'locations';
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const OnPlogging = () => {
         curLat: lat,
         curLng: lng,
       });
+
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
         locations.push({ lat, lng });
@@ -50,10 +52,8 @@ const OnPlogging = () => {
       }
     };
 
-    if (stopwatch % 5 === 0) {
-      recordLocation();
-    }
-  }, [stopwatch, location]);
+    recordLocation();
+  }, [location]);
 
   useEffect(() => {
     return () => {
@@ -83,6 +83,8 @@ const OnPlogging = () => {
         setPloggingInfoOn={setPloggingInfoOn}
         cameraOn={cameraOn}
         setCameraOn={setCameraOn}
+        fixCenter={fixCenter}
+        setFixCenter={setFixCenter}
       />
       {location.loaded && (
         <PloggingMap
@@ -93,6 +95,8 @@ const OnPlogging = () => {
             lat: location.coordinates!.lat,
             lng: location.coordinates!.lng,
           }}
+          fixCenter={fixCenter}
+          setFixCenter={setFixCenter}
         />
       )}
     </S.Wrap>

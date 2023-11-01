@@ -28,13 +28,19 @@ const useGeolocation = () => {
   };
 
   useEffect(() => {
-    if (!('geolocation' in navigator)) {
-      onError({
-        code: 0,
-        message: 'Geolocation not supported',
-      });
-    }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    const getLocation = setInterval(() => {
+      if (!('geolocation' in navigator)) {
+        onError({
+          code: 0,
+          message: 'Geolocation not supported',
+        });
+      }
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }, 5000);
+
+    return () => {
+      clearInterval(getLocation);
+    };
   }, []);
 
   return location;

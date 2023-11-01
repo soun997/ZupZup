@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import styled from 'styled-components';
 
-const characterName = '펭귄';
+const characterName = '로귄';
 const CharacterInfo = () => {
   const navigate = useNavigate();
 

@@ -5,9 +5,9 @@ import * as utils from 'utils';
 import {
   TopNavigation,
   RegistInfoInput,
-  RegistInfoSelectBox,
   RegistInfoTitle,
   RegistInfoFrame,
+  RegistInfoCheckBox,
 } from 'components';
 //! import { RegistInfo } from 'types/ProfileInfo';
 //! import { MemberApi } from 'api';
@@ -20,8 +20,8 @@ const RegistInfo = () => {
   const [gender, setGender] = useState<string>(utils.GENDER.MALE);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setGender(event.target.value);
+  const handleSelectChange = (value: string) => {
+    setGender(value);
   };
 
   const inputCheck = (birthYearInput: string | undefined) => {
@@ -67,7 +67,7 @@ const RegistInfo = () => {
         useAuth.setAccessToken(data.accessToken);
         useAuth.setRefreshToken(data.refreshToken);
         navigate(utils.URL.RESULT.REGIST);
-        
+
       }catch (error) {
         console.error('가입정보 전송 에러:', error);
       }
@@ -87,7 +87,7 @@ const RegistInfo = () => {
           onChange={handleInputChange}
           title="출생 연도"
         />
-        <RegistInfoSelectBox
+        <RegistInfoCheckBox
           title="성별"
           value={gender}
           onChange={handleSelectChange}

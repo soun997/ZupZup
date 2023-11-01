@@ -32,7 +32,7 @@ public class JwtProperty {
                 .setValidation((key) -> key.length() > 0)
                 .validateOrThrow(EmptyEnvironmentVariableException::new);
         Assertion.with(secretKey)
-                .setValidation((key) -> key.length() > 90)
+                .setValidation((key) -> key.length() > 10)
                 .validateOrThrow(ShortEnvironmentVariableException::new);
         Assertion.with(secretKey)
                 .setValidation((key) -> key.startsWith("win"))

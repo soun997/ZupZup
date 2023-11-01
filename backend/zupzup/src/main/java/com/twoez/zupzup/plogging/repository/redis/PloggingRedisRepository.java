@@ -1,4 +1,4 @@
-package com.twoez.zupzup.plogging.repository;
+package com.twoez.zupzup.plogging.repository.redis;
 
 import com.twoez.zupzup.plogging.domain.Plogger;
 import org.springframework.data.repository.CrudRepository;

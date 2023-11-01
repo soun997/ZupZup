@@ -14,6 +14,8 @@ public enum HttpExceptionCode {
 
     SECURITY_AUTHORIZATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_001", "사용자 인가에 실패했습니다."),
     SECURITY_AUTHENTICATION_EXCEPTION(HttpStatus.FORBIDDEN, "ERR_AUTH_002", "사용자 인증에 실패했습니다."),
+    INVALID_AUTHORIZATION_HEADER(HttpStatus.UNAUTHORIZED, "ERR_AUTH_003", "Authorization Header가 유효하지 않습니다."),
+    MEMBER_ID_NOT_FOUND_IN_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "ERR_AUTH_004", "memberId가 Token에 존재하지 않습니다."),
 
     OAUTH_PROVIDER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_OAUTH_001", "Oauth Provider 가 존재하지 않습니다."),
     OAUTH_PROVIDER_NULL_EXCEPTION(HttpStatus.BAD_REQUEST, "ERR_OAUTH_002", "Oauth Provider Value는 null이 될 수 없습니다."),

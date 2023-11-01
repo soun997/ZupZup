@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ConfirmButton } from 'components';
+import {
+  ConfirmButton,
+  OnBoardingFirst,
+  OnBoardingSecond,
+  OnBoardingThird,
+} from 'components';
 import { URL } from 'utils';
 
-import OnBoardFirst from 'components/onboarding/OnBoardFirst';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 
 const RegistSuccess = () => {
@@ -38,11 +42,12 @@ const RegistSuccess = () => {
           onClick={() => setTab(3)}
         ></S.BarSegment>
       </S.Bar>
-      <S.TopFrame>
+      <S.TopFrame onClick={() => navigate(URL.PLOGGING.LOBBY)}>
         Skip <ArrowSvg />
       </S.TopFrame>
-      {tab === 1 && <OnBoardFirst />}
-      {tab === 2 && <OnBoardFirst />}
+      {tab === 1 && <OnBoardingFirst />}
+      {tab === 2 && <OnBoardingSecond />}
+      {tab === 3 && <OnBoardingThird />}
 
       <S.BottomFrame>
         {tab !== 1 && (
@@ -71,6 +76,7 @@ const S = {
 
   TopFrame: styled.div`
     cursor: pointer;
+    width: fit-content;
     display: flex;
     align-items: flex-end;
     gap: 2px;

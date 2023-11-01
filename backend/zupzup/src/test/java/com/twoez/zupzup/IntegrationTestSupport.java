@@ -1,5 +1,6 @@
 package com.twoez.zupzup;
 
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,4 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public abstract class IntegrationTestSupport {
-
-}
+public abstract class IntegrationTestSupport {}

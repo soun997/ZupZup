@@ -4,9 +4,13 @@ const OnBoardThird = () => {
   return (
     <S.Wrap>
       <S.TitleFrame>
-        <S.MainTitle>가입이 완료 되었어요3</S.MainTitle>
-        <S.SubTitle>즐거운 줍줍 기록을 시작해요 🎉</S.SubTitle>
+        <S.MainTitle>
+          획득한 코인으로
+          <br /> 로귄이를 키워주세요
+        </S.MainTitle>
+        <S.SubTitle>상점을 통해 음식을 구매할 수 있어요</S.SubTitle>
       </S.TitleFrame>
+      <S.Image src="/assets/character/penguin-shop.png" />
     </S.Wrap>
   );
 };
@@ -22,14 +26,14 @@ const S = {
     background-color: ${({ theme }) => theme.color.background};
   `,
   TitleFrame: styled.div`
-    margin-top: 75px;
+    margin-top: 50px;
     text-align: center;
   `,
   MainTitle: styled.div`
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.display1};
     font-weight: ${({ theme }) => theme.font.weight.body2};
-    line-height: ${({ theme }) => theme.font.lineheight.display1};
+    line-height: 1.25;
   `,
   SubTitle: styled.div`
     margin-top: 10px;
@@ -38,6 +42,10 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
+  `,
+  Image: styled.img`
+    margin: auto;
+    width: 100%;
   `,
 };
 export default OnBoardThird;

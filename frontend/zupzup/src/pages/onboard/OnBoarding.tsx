@@ -54,7 +54,7 @@ const RegistSuccess = () => {
           <ConfirmButton
             text="이전"
             onClick={handlePrevButton}
-            color="#A0A0A0"
+            color="#a0a0a0ad"
           />
         )}
         <ConfirmButton text="다음" onClick={handleNextButton} />
@@ -98,7 +98,7 @@ const S = {
     width: 33.3%;
     height: 5px;
     background-color: ${props =>
-      props.active ? props.theme.color.main : props.theme.color.gray3};
+      props.active ? props.theme.color.main : props.theme.color.gray4};
     border-radius: 4px;
     cursor: pointer;
   `,

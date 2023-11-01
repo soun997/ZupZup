@@ -4,9 +4,16 @@ const OnBoardSecond = () => {
   return (
     <S.Wrap>
       <S.TitleFrame>
-        <S.MainTitle>가입이 완료 되었어요2</S.MainTitle>
-        <S.SubTitle>즐거운 줍줍 기록을 시작해요 🎉</S.SubTitle>
+        <S.MainTitle>
+          플로깅을 시작하고 쓰레기를 발견하면
+          <br />
+          하단의 카메라 버튼을 눌러주세요
+        </S.MainTitle>
+        <S.SubTitle>
+          AI를 통해 인식된 쓰레기 결과에 따라 코인이 부여돼요
+        </S.SubTitle>
       </S.TitleFrame>
+      <S.Image src="/assets/character/penguin-trash.png" />
     </S.Wrap>
   );
 };
@@ -22,14 +29,14 @@ const S = {
     background-color: ${({ theme }) => theme.color.background};
   `,
   TitleFrame: styled.div`
-    margin-top: 75px;
+    margin-top: 50px;
     text-align: center;
   `,
   MainTitle: styled.div`
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.display1};
     font-weight: ${({ theme }) => theme.font.weight.body2};
-    line-height: ${({ theme }) => theme.font.lineheight.display1};
+    line-height: 1.25;
   `,
   SubTitle: styled.div`
     margin-top: 10px;
@@ -38,6 +45,11 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
+  `,
+
+  Image: styled.img`
+    margin: auto;
+    width: 95%;
   `,
 };
 export default OnBoardSecond;

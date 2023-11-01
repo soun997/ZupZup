@@ -7,7 +7,7 @@ const OnBoardFirst = () => {
         <S.MainTitle>
           안녕하세요,
           <br />
-          여러분의 플로깅을 함께할 로귕입니다{' '}
+          오늘부터 플로깅을 함께할 로귕입니다{' '}
         </S.MainTitle>
         <S.SubTitle>간단한 줍줍 사용법을 알려드릴게요</S.SubTitle>
       </S.TitleFrame>
@@ -27,7 +27,7 @@ const S = {
     background-color: ${({ theme }) => theme.color.background};
   `,
   TitleFrame: styled.div`
-    margin-top: 75px;
+    margin-top: 50px;
     text-align: center;
   `,
   MainTitle: styled.div`

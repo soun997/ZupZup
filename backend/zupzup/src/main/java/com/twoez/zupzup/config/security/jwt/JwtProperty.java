@@ -3,6 +3,8 @@ package com.twoez.zupzup.config.security.jwt;
 
 import com.twoez.zupzup.config.security.exception.EmptyEnvironmentVariableException;
 import com.twoez.zupzup.config.security.exception.InvalidEnvironmentVariableException;
+import com.twoez.zupzup.config.security.exception.ShortEnvironmentVariableException;
+import com.twoez.zupzup.config.security.exception.WrongEnvironmentVariableException;
 import com.twoez.zupzup.global.util.Assertion;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -30,8 +32,15 @@ public class JwtProperty {
                 .setValidation((key) -> key.length() > 0)
                 .validateOrThrow(EmptyEnvironmentVariableException::new);
         Assertion.with(secretKey)
-                .setValidation((key) -> key.startsWith("wingardiumleviosa"))
+                .setValidation((key) -> key.length() > 200)
+                .validateOrThrow(ShortEnvironmentVariableException::new);
+        Assertion.with(secretKey)
+                .setValidation((key) -> key.startsWith("win"))
                 .validateOrThrow(InvalidEnvironmentVariableException::new);
+        Assertion.with(secretKey)
+                .setValidation((key) -> key.length() == 300)
+                .validateOrThrow(WrongEnvironmentVariableException::new);
+
         return Keys.hmacShaKeyFor(Base64.encode(secretKey.getBytes()));
     }
 }

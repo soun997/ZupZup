@@ -36,14 +36,5 @@ public class MemberController {
         return ApiResponse.ok(
                 MemberHealthCreateResponse.from(authorizationToken, requestedMemberId));
     }
-
-    @GetMapping("/test")
-    public ApiResponse<String> testtest(@AuthenticationPrincipal LoginUser loginUser) {
-        log.info("test called!!");
-        log.info("loginUser : {}", loginUser);
-        log.info("loginUser Id : {}", loginUser.getMember().getId());
-
-        return ApiResponse.ok("ok");
-    }
 }
 

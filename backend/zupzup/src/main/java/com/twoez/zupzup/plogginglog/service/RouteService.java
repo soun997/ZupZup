@@ -3,7 +3,7 @@ package com.twoez.zupzup.plogginglog.service;
 
 import com.twoez.zupzup.global.exception.flogginglog.RouteNotFoundException;
 import com.twoez.zupzup.plogginglog.domain.Route;
-import com.twoez.zupzup.plogginglog.repository.RouteRepository;
+import com.twoez.zupzup.plogginglog.repository.mongo.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

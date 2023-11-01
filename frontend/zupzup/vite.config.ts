@@ -21,7 +21,7 @@ export default defineConfig({
       manifest: {
         icons: [
           {
-            src: '/logo.png',
+            src: '/thumbnail.png',
             type: 'image/png',
             sizes: '192x192',
           },

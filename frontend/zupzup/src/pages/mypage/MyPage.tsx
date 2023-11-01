@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { URL } from 'utils';
 import { Navigation, ProgressBar, MyPageNav, KeyFrameList } from 'components';
 import { CharacterInfo, ProfileInfo } from 'types/ProfileInfo';
-import { useNavigate } from 'react-router-dom';
-import * as utils from 'utils';
+import BoardSvg from 'assets/icons/clipboard.svg?react';
 
 const profileInfo: ProfileInfo = {
   name: '줍줍',
@@ -44,20 +45,17 @@ const MyPage = () => {
       <S.Content>
         <MyPageNav coin={320} />
         <S.Title $daytime={isDaytime}>
-          {profileInfo.name}님과 함께한지 <br />{' '}
+          {profileInfo.name}님과 함께한지 <br />
           {calculateDaysPassed(profileInfo.createdAt)} 일째
         </S.Title>
         <S.Level>
           <S.SubInfo $daytime={isDaytime}>
-            레벨 {characterInfo.level + 1} 까지{' '}
+            레벨 {characterInfo.level + 1} 까지
           </S.SubInfo>
           <ProgressBar score={characterInfo.exp} total={200} />
         </S.Level>
         <S.Report $daytime={isDaytime}>
-          <img
-            src="/assets/images/mail.png"
-            onClick={() => navigate(utils.URL.MYPAGE.REPORT)}
-          />
+          <BoardSvg onClick={() => navigate(URL.MYPAGE.REPORT)} />
         </S.Report>
       </S.Content>
 
@@ -100,6 +98,8 @@ const S = {
 
   Content: styled.div`
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
   `,
 
   Image: styled.img<StyleProps>`
@@ -123,20 +123,22 @@ const S = {
   `,
 
   Report: styled.div<StyleProps>`
+    cursor: pointer;
     font-family: ${({ theme }) => theme.font.family.focus2};
     display: flex;
     align-items: center;
     margin-top: 20px;
-    justify-content: flex-end;
-
-    img {
-      cursor: pointer;
-      filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.77));
-      background-color: ${({ theme, $daytime }) =>
-        $daytime ? theme.color.main : theme.color.main};
-      border-radius: 50%;
-      width: 45px;
-    }
+    justify-content: center;
+    border-radius: 50%;
+    border: 3px solid white;
+    padding: 4px;
+    width: fit-content;
+    align-self: flex-end;
+    filter: drop-shadow(
+      0px 0px 20px
+        ${({ $daytime }) =>
+          $daytime ? 'rgba(26, 90, 228, 0.329)' : 'rgba(255, 255, 255, 0.77)'}
+    );
   `,
 };
 

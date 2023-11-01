@@ -1,4 +1,4 @@
-package com.twoez.zupzup.plogginglog.repository;
+package com.twoez.zupzup.plogginglog.repository.mongo;
 
 
 import com.twoez.zupzup.plogginglog.domain.Route;

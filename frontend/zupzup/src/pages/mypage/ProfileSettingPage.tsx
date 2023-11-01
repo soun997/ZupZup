@@ -75,7 +75,7 @@ const S = {
     gap: 10px;
     align-self: stretch;
     font-size: ${({ theme }) => theme.font.size.focus2};
-    font-weight: ${({ theme }) => theme.font.weight.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus1};
   `,
 };
 

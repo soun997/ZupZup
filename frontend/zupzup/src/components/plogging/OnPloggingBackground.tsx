@@ -179,6 +179,7 @@ const S = {
     padding: 0 30px;
   `,
   AimButton: styled.button<ButtonProps>`
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 58px;

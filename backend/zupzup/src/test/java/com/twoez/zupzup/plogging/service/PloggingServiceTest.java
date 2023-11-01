@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import com.twoez.zupzup.plogging.domain.Plogger;
-import com.twoez.zupzup.plogging.repository.PloggingRedisRepository;
+import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

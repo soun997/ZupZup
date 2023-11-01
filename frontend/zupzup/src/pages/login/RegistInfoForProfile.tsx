@@ -56,7 +56,10 @@ const RegistInfo = () => {
       };
 
       try {
-        await MemberApi.registInfo(postData);
+        const res = await MemberApi.registInfo(postData);
+        const data = res.data.results;
+        useAuth.setAccessToken(data.accessToken);
+        useAuth.setRefreshToken(data.refreshToken);
         navigate(utils.URL.RESULT.REGIST);
       } catch (error) {
         console.error('가입정보 전송 에러:', error);

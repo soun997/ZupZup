@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import * as useAuth from 'hooks';
+//! import * as useAuth from 'hooks';
 import * as utils from 'utils';
 import {
   TopNavigation,
@@ -9,8 +9,8 @@ import {
   RegistInfoTitle,
   RegistInfoFrame,
 } from 'components';
-import { RegistInfo } from 'types/ProfileInfo';
-import { MemberApi } from 'api';
+//! import { RegistInfo } from 'types/ProfileInfo';
+//! import { MemberApi } from 'api';
 
 const RegistInfo = () => {
   const { state } = useLocation();
@@ -47,6 +47,12 @@ const RegistInfo = () => {
       inputRefForBirthYear.current &&
       inputCheck(inputRefForBirthYear.current?.value)
     ) {
+      navigate(utils.URL.RESULT.REGIST);
+    }
+  };
+
+  //!이거 밑에꺼 나중에 넣어야됨! (api 연결되면..)
+  /*
       const postData: RegistInfo = {
         height: state.height,
         weight: state.weight,
@@ -61,11 +67,11 @@ const RegistInfo = () => {
         useAuth.setAccessToken(data.accessToken);
         useAuth.setRefreshToken(data.refreshToken);
         navigate(utils.URL.RESULT.REGIST);
-      } catch (error) {
+        
+      }catch (error) {
         console.error('가입정보 전송 에러:', error);
       }
-    }
-  };
+  */
 
   return (
     <RegistInfoFrame.Wrap>

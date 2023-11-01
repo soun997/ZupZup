@@ -20,7 +20,8 @@ const RegistSuccess = () => {
           className="skip"
           onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}
         >
-          건너뛰기 <ArrowSvg />
+          건너뛸게요
+          <ArrowSvg />
         </div>
         <ConfirmButton
           text="튜토리얼 보러가기"
@@ -79,6 +80,7 @@ const S = {
       display: flex;
       align-items: center;
       color: ${({ theme }) => theme.color.gray2};
+      gap: 3px;
     }
   `,
 };

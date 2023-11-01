@@ -16,7 +16,7 @@ const RegistSuccess = () => {
   const [tab, setTab] = useState<number>(1);
 
   const handleFinishTutorial = () => {
-    confirm('튜토리얼은 마이페이지 > 설정에서 다시 확인할 수 있어요!');
+    alert('튜토리얼은 마이페이지 > 설정에서 다시 확인할 수 있어요!');
     navigate(URL.PLOGGING.LOBBY);
   };
 

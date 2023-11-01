@@ -37,7 +37,6 @@ public class PloggingControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 put("/api/v1/ploggings/start")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk())
@@ -60,7 +59,6 @@ public class PloggingControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 put("/api/v1/ploggings/finish")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk())
@@ -83,7 +81,6 @@ public class PloggingControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 put("/api/v1/ploggings/finish")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk())
@@ -106,7 +103,6 @@ public class PloggingControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 get("/api/v1/ploggings/number-of-users")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk())

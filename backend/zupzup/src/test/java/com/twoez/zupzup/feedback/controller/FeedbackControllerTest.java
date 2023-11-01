@@ -49,7 +49,6 @@ public class FeedbackControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 post("/api/v1/feedbacks")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(request)));
 
@@ -85,7 +84,6 @@ public class FeedbackControllerTest extends RestDocsTest {
 
         ResultActions perform = mockMvc.perform(
                 get("/api/v1/feedbacks")
-                        .contextPath("/api")
                         .contentType(MediaType.APPLICATION_JSON)
                         .queryParam("page", "0")
                         .queryParam("size", "5"));

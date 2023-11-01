@@ -39,7 +39,6 @@ public class RouteControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         post("/api/v1/routes/{ploggingLogId}", 1L)
-                                .contextPath("/api")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 
@@ -67,7 +66,6 @@ public class RouteControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/routes/{ploggingLogId}", 1L)
-                                .contextPath("/api")
                                 .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk())

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/ploggings")
+@RequestMapping("api/v1/ploggings")
 public class PloggingController {
 
     private final PloggingService ploggingService;

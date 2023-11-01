@@ -1,6 +1,5 @@
 package com.twoez.zupzup.member.domain;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -12,15 +11,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OAuth {
+public class Oauth {
 
     @Enumerated(EnumType.STRING)
-    private AuthProvider oauthProvider;
+    @Column(nullable = false)
+    private OauthProvider oauthProvider;
 
     @Column(nullable = false)
     private String oauthAccount;
 
-    public OAuth(AuthProvider oauthProvider, String oauthAccount) {
+    public Oauth(OauthProvider oauthProvider, String oauthAccount) {
         this.oauthProvider = oauthProvider;
         this.oauthAccount = oauthAccount;
     }

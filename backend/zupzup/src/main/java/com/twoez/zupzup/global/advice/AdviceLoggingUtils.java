@@ -2,7 +2,7 @@ package com.twoez.zupzup.global.advice;
 
 
 import com.twoez.zupzup.global.exception.ApplicationException;
-import com.twoez.zupzup.global.exception.ExceptionCode;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -16,7 +16,7 @@ public class AdviceLoggingUtils {
                 e.getExceptionCode().getMessage());
     }
 
-    public static void exceptionLog(ExceptionCode exceptionCode, Exception e) {
+    public static void exceptionLog(HttpExceptionCode exceptionCode, Exception e) {
         log.info(
                 "[EXCEPTION] ({}) {} : {}",
                 exceptionCode.getHttpStatus().value(),

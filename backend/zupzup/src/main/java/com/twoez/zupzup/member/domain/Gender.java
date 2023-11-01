@@ -1,5 +1,5 @@
 package com.twoez.zupzup.member.domain;
 
-public enum AuthProvider {
-    GOOGLE
+public enum Gender {
+    M, F
 }

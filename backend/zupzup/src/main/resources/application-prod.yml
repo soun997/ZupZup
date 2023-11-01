@@ -17,7 +17,3 @@ spring:
       database: ${MONGO_DATABASE}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
-
-server:
-  servlet:
-    context-path: /api

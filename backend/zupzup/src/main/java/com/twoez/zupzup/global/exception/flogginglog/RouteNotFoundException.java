@@ -2,17 +2,17 @@ package com.twoez.zupzup.global.exception.flogginglog;
 
 
 import com.twoez.zupzup.global.exception.ApplicationException;
-import com.twoez.zupzup.global.exception.ExceptionCode;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import lombok.Getter;
 
 @Getter
 public class RouteNotFoundException extends ApplicationException {
 
-    public RouteNotFoundException(ExceptionCode exceptionCode) {
+    public RouteNotFoundException(HttpExceptionCode exceptionCode) {
         super(exceptionCode);
     }
 
     public RouteNotFoundException() {
-        this(ExceptionCode.PLOGGING_LOG_NOT_FOUND);
+        this(HttpExceptionCode.PLOGGING_LOG_NOT_FOUND);
     }
 }

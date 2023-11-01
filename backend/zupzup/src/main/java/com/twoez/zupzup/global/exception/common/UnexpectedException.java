@@ -2,17 +2,17 @@ package com.twoez.zupzup.global.exception.common;
 
 
 import com.twoez.zupzup.global.exception.ApplicationException;
-import com.twoez.zupzup.global.exception.ExceptionCode;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import lombok.Getter;
 
 @Getter
 public class UnexpectedException extends ApplicationException {
 
-    public UnexpectedException(ExceptionCode exceptionCode) {
+    public UnexpectedException(HttpExceptionCode exceptionCode) {
         super(exceptionCode);
     }
 
     public UnexpectedException() {
-        this(ExceptionCode.UNEXPECTED_EXCEPTION);
+        this(HttpExceptionCode.UNEXPECTED_EXCEPTION);
     }
 }

@@ -2,6 +2,7 @@ package com.twoez.zupzup.plogginglog.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.twoez.zupzup.IntegrationTestSupport;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
@@ -15,10 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class PloggingLogQueryRepositoryTest {
+class PloggingLogQueryRepositoryTest extends IntegrationTestSupport {
 
     @Autowired PloggingLogQueryRepository ploggingLogQueryRepository;
     @Autowired PloggingLogRepository ploggingLogRepository;

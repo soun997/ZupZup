@@ -27,7 +27,7 @@ public class FeedbackController {
     public ApiResponse<?> feedbackAdd(
             @Validated @RequestBody FeedbackAddRequest feedbackAddRequest) {
 
-        feedbackService.add(feedbackAddRequest.toEntity());
+        feedbackService.add(feedbackAddRequest);
         return ApiResponse.created().build();
     }
 

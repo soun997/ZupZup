@@ -1,0 +1,44 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+    mongodb:
+      uri: ${MONGO_URI}
+      database: ${MONGO_DATABASE}
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope: email, profile, openid
+
+oidc:
+  google:
+    iss: https://accounts.google.com
+    iss2: accounts.google.com
+
+client:
+  url: ${CLIENT_URL}
+  redirect:
+    login-success: ${CLIENT_REDIRECT_LOGIN_SUCCESS}
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  auth-token-expired_second: ${JWT_AUTH_TOKEN_EXPIRED_SECOND}
+  access-expired-second: ${JWT_ACCESS_EXPIRED_SECOND}
+  refresh_expired_second: ${JWT_REFRESH_EXPIRED_SECOND}

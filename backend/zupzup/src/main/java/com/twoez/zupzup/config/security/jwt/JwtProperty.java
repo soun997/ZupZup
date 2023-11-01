@@ -1,5 +1,6 @@
 package com.twoez.zupzup.config.security.jwt;
 
+
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import lombok.Getter;

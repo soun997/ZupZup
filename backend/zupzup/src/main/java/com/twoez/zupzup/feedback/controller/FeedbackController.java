@@ -24,7 +24,8 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping
-    public ApiResponse<?> feedbackAdd(@Validated @RequestBody FeedbackAddRequest feedbackAddRequest) {
+    public ApiResponse<?> feedbackAdd(
+            @Validated @RequestBody FeedbackAddRequest feedbackAddRequest) {
 
         feedbackService.add(feedbackAddRequest.toEntity());
         return ApiResponse.created().build();
@@ -33,8 +34,8 @@ public class FeedbackController {
     @GetMapping
     public ApiResponse<Page<FeedbackListResponse>> feedbackList(Pageable pageable) {
 
-        return ApiResponse.ok(PageCollectors.convertContent(
-                feedbackService.searchAll(pageable), pageable, FeedbackListResponse::of));
-
+        return ApiResponse.ok(
+                PageCollectors.convertContent(
+                        feedbackService.searchAll(pageable), pageable, FeedbackListResponse::of));
     }
 }

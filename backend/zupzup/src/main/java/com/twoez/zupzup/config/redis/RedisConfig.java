@@ -6,6 +6,4 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @Configuration
 @EnableRedisRepositories(basePackages = "com.twoez.zupzup.plogging.repository.redis")
-public class RedisConfig {
-
-}
+public class RedisConfig {}

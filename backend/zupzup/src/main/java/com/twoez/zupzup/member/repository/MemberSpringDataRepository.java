@@ -5,5 +5,5 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberSpringDataRepository extends JpaRepository<Member, Long> {
-    Optional<Member> findMemberByDeletedIsFalseAndIdEquals(Long memberId);
+    Optional<Member> findMemberByIsDeletedIsFalseAndIdEquals(Long memberId);
 }

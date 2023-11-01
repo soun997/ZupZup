@@ -37,7 +37,7 @@ public class Member extends BaseTime {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(length = 2)
     private Gender gender; // TODO char 타입 바꾸기
 
     @Column

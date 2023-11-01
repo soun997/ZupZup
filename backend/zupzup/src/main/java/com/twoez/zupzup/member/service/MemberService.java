@@ -55,7 +55,7 @@ public class MemberService {
 
     public Member findById(Long memberId) {
         log.info("findById Service - memberId : {}", memberId);
-        return memberSpringDataRepository.findMemberByDeletedIsFalseAndIdEquals(memberId)
+        return memberSpringDataRepository.findMemberByIsDeletedIsFalseAndIdEquals(memberId)
                 .orElseThrow(
                         () -> new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
     }

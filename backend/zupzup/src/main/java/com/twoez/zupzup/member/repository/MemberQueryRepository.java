@@ -19,7 +19,7 @@ public class MemberQueryRepository extends QuerydslRepositorySupport {
 
     public Optional<Member> findByOauth(Oauth oauth) {
         Member searchedMember = selectFrom(member)
-                .where(member.oauth.eq(oauth).and(member.deleted.isFalse()))
+                .where(member.oauth.eq(oauth).and(member.isDeleted.isFalse()))
                 .fetchOne();
         return Optional.ofNullable(searchedMember);
     }

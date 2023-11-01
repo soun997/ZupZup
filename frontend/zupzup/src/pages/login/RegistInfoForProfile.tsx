@@ -69,7 +69,7 @@ const RegistInfo = () => {
 
   return (
     <RegistInfoFrame.Wrap>
-      <TopNavigation />
+      <TopNavigation navigationTo={utils.URL.LOGIN.REGIST_INFO.PHYSICAL} />
       <RegistInfoTitle
         mainTitle={'나이와 성별을 입력해주세요'}
         subTitle={'칼로리 계산에 사용됩니다'}

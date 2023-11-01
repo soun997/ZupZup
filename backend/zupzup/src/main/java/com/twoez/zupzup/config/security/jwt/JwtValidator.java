@@ -104,4 +104,16 @@ public class JwtValidator {
         return keyFactory.generatePublic(keySpec);
     }
 
+    public Long getMemberIdFromAccessToken(String accessToken) {
+        Jws<Claims> validatedClaims = validateAuthorizationToken(accessToken);
+        String memberId = validatedClaims.getBody().getSubject();
+        Assertion.with(memberId)
+                .setValidation(Objects::nonNull)
+                .validateOrThrow(() -> new InvalidAuthorizationTokenException(
+                        HttpExceptionCode.MEMBER_ID_NOT_FOUND_IN_ACCESS_TOKEN));
+
+        return Long.valueOf(memberId);
+    }
+
+
 }

@@ -1,20 +1,23 @@
 package com.twoez.zupzup.config.security.filter;
 
-import com.twoez.zupzup.config.security.jwt.JwtProvider;
+import com.twoez.zupzup.config.security.exception.InvalidAuthorizationHeaderException;
+import com.twoez.zupzup.config.security.jwt.JwtValidator;
+import com.twoez.zupzup.global.util.Assertion;
+import com.twoez.zupzup.member.domain.LoginUser;
+import com.twoez.zupzup.member.domain.mapper.LoginUserMapper;
+import com.twoez.zupzup.member.service.MemberService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.Iterator;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
@@ -23,22 +26,25 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private final JwtProvider jwtProvider;
+    private static final String GRANT_TYPE_BEARER = "Bearer ";
+
+    private final JwtValidator jwtValidator;
+    private final MemberService memberService;
+    private final LoginUserMapper loginUserMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         log.info("[Filter - START] JwtAuthFilter - {}", request.getRequestURI());
-        getTokenFromHeader(request).ifPresent(System.out::println);
-        log.info("query String : {}", request.getQueryString());
-        Iterator<String> paramIterator = request.getParameterNames().asIterator();
-        log.info("param is Empty ? {}", !paramIterator.hasNext());
-        while (paramIterator.hasNext()) {
-            log.info(paramIterator.next());
-        }
-        log.info("state : {}", (Object) request.getParameterValues("state"));
-        log.info("code : {}", (Object) request.getParameterValues("code"));
 
+        // 1. Bearer 토큰 검증
+        // 2. AccessToken 검증
+        // 3. accessToken에서 Id 뽑아서 context에 저장
+
+        getTokenFromHeader(request).ifPresent((bearerToken) -> {
+            String token = validateBearerToken(bearerToken);
+            setAuthenticationInSecurityContext(token);
+        });
 
         doFilter(request, response, filterChain);
         log.info("[Filter - END] JwtAuthFilter");
@@ -49,7 +55,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return Optional.ofNullable(request.getHeader(AUTHORIZATION_HEADER));
     }
 
-    private Optional<String> getTokenFromHeader(HttpServletRequest request, String header) {
-        return Optional.ofNullable(request.getHeader(header));
+    private String validateBearerToken(String bearerToken) {
+        Assertion.with(bearerToken)
+                .setValidation(this::isValidBearerToken)
+                .validateOrThrow(InvalidAuthorizationHeaderException::new);
+        return bearerToken.substring(GRANT_TYPE_BEARER.length());
+    }
+
+    private boolean isValidBearerToken(String bearerToken) {
+        return StringUtils.hasText(bearerToken) && bearerToken.startsWith(
+                GRANT_TYPE_BEARER);
+    }
+
+    private void setAuthenticationInSecurityContext(String token) {
+        Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
+
+        // TODO : 예외 write
+        LoginUser loginUser = loginUserMapper.toLoginUser(
+                memberService.findById(memberIdInAccessToken));
+
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(loginUser, "", loginUser.getAuthorities()));
     }
 }

@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Getter
 @Entity
@@ -84,5 +85,12 @@ public class Member extends BaseTime {
         this.gender = gender;
         this.height = height;
         this.weight = weight;
+    }
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return role.stream()
+                .map(MemberRole::name)
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 }

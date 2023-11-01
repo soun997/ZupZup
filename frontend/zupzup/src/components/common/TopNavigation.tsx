@@ -5,14 +5,23 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   title?: string;
   rightComponent?: React.ReactElement;
+  navigationTo?: string;
 }
 
 const TopNavigation = (props: Props) => {
   const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (props.navigationTo) {
+      navigate(props.navigationTo);
+    } else {
+      navigate(-1);
+    }
+  };
   return (
     <>
       <S.Wrap>
-        <S.LeftSection onClick={() => navigate(-1)}>
+        <S.LeftSection onClick={handleNavigate}>
           <AngleLeftSvg />
         </S.LeftSection>
         {props.title && <S.MiddleSection>{props.title}</S.MiddleSection>}

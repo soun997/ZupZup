@@ -19,14 +19,14 @@ const S = {
     align-items: center;
   `,
   Image: styled.img`
-    width: 200px;
-    height: 200px;
+    width: 80%;
+    height: 80%;
   `,
 
   Title: styled.div`
     font-size: 20px;
     font-family: ${({ theme }) => theme.font.family.focus1};
-    margin-top: 42px;
+    margin-top: 5%;
   `,
   SubTitle: styled.div`
     color: ${({ theme }) => theme.color.main};
@@ -38,7 +38,7 @@ const S = {
     color: ${({ theme }) => theme.color.gray2};
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.focus1};
-    margin-top: 22px;
+    margin: 20px 0;
   `,
 };
 

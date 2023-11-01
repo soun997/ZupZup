@@ -1,5 +1,6 @@
 import { Coin, DrawerCarousel, TopNavigation } from 'components';
 import styled from 'styled-components';
+import { URL } from 'utils';
 import { Food } from 'types/Food';
 
 const FoodList: Food[] = [
@@ -18,7 +19,10 @@ const FoodList: Food[] = [
 const ShoppingList = () => {
   return (
     <S.Wrap>
-      <TopNavigation rightComponent={<Coin coin={320} />} />
+      <TopNavigation
+        rightComponent={<Coin coin={320} />}
+        navigationTo={URL.MYPAGE.HOME}
+      />
       <S.TitleFrame>
         <S.MainTitle>상점</S.MainTitle>
         <S.SubTitle>캐릭터의 성장을 위한 아이템을 구매해보세요!</S.SubTitle>

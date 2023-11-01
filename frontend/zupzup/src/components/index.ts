@@ -31,7 +31,7 @@ export { RegistInfoInput, RegistInfoSelectBox } from './login/RegistInfoInput';
 export { default as RegistInfoTitle } from './login/RegistInfoTitle';
 export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 
-export { default as MyPloggingReport } from './mypage/MyPloggingReport';
+export { default as PloggingMemo } from './mypage/PloggingMemo';
 export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
 

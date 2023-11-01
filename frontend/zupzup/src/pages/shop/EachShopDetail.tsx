@@ -82,7 +82,7 @@ const S = {
   `,
 
   ButtonSection: styled.div`
-    margin: auto;
+    margin: auto 0 50px 0;
     display: flex;
     flex-direction: column;
     width: 100%;

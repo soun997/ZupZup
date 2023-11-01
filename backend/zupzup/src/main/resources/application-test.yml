@@ -39,6 +39,6 @@ client:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  auth-token-expired_second: ${JWT_AUTH_TOKEN_EXPIRED_SECOND}
-  access-expired-second: ${JWT_ACCESS_EXPIRED_SECOND}
-  refresh_expired_second: ${JWT_REFRESH_EXPIRED_SECOND}
+  auth-token-expired_second: 60
+  access-expired-second: 7200
+  refresh_expired_second: 1209600

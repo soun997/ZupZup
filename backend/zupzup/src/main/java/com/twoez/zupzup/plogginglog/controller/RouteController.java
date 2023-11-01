@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/routes")
+@RequestMapping("api/v1/routes")
 @RequiredArgsConstructor
 public class RouteController {
 

@@ -6,10 +6,10 @@ import com.twoez.zupzup.feedback.controller.dto.FeedbackListResponse;
 import com.twoez.zupzup.feedback.service.FeedbackService;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.global.support.PageCollectors;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @PostMapping
-    public ApiResponse<?> feedbackAdd(@Valid FeedbackAddRequest feedbackAddRequest) {
+    public ApiResponse<?> feedbackAdd(@Validated FeedbackAddRequest feedbackAddRequest) {
 
         feedbackService.add(feedbackAddRequest.toEntity());
         return ApiResponse.created().build();

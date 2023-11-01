@@ -34,7 +34,11 @@ public enum HttpExceptionCode {
 
     OIDC_PUBLIC_KEY_FEIGN_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_OIDC_001", "Oidc 공개키 목록을 가져오는데 실패하였습니다."),
 
-    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다.");
+    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다."),
+
+    PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
+
+    ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다.");
 
 
 

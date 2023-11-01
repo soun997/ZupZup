@@ -75,7 +75,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(
                                 endpointConfig -> endpointConfig.oidcUserService(oidcUserService))
                         .successHandler(successHandler)
-                        .failureHandler(failureHandler)) // TODO: oauth login 설정
+                        .failureHandler(failureHandler))
                 .sessionManagement(
                         config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)

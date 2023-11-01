@@ -16,17 +16,9 @@ public class CustomOidcUserService extends OidcUserService {
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        // TODO 1: 사용자 정보를 OidcUser로 가져온다.
-        // TODO 2: Id Token 검증
-        // idToken validation은 api/v1/auth 에서!
+        // 이 로직에서 idToken은 Provider로부터 직접 발급받아 가져왔기 때문에 여기서 검증할 필요 없음
 
         log.info("customOidcUserService - loadUser called");
-        Map<String, Object> claims = userRequest.getIdToken().getClaims();
-        log.info("Claim keys : {}", claims.keySet());
-        OidcUser oidcUser = super.loadUser(userRequest);
-        log.info("oidcUser : {}", oidcUser);
-        log.info("id token value : {}", userRequest.getIdToken().getTokenValue());
-
         return super.loadUser(userRequest);
     }
 }

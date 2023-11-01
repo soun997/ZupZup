@@ -39,7 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 1. Bearer 토큰 검증
         // 2. AccessToken 검증
-        // 3. accessToken에서 Id 뽑아서 context에 저장
+        // 3. accessToken에서 Id 뽑아서 db에 저장된 유저 정보 검색
+        // 4. 유저 정보를 LoginUser에 매핑
+        // 5. LoginUser로 Authentication을 만들어서 Security Context에 저장
 
         getTokenFromHeader(request).ifPresent((bearerToken) -> {
             String token = validateBearerToken(bearerToken);

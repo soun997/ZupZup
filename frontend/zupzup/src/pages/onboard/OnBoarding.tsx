@@ -14,12 +14,14 @@ import ArrowSvg from 'assets/icons/angle-right.svg?react';
 const RegistSuccess = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(1);
+
+  const handleFinishTutorial = () => {
+    confirm('튜토리얼은 마이페이지 > 설정에서 다시 확인할 수 있어요!');
+    navigate(URL.PLOGGING.LOBBY);
+  };
+
   const handleNextButton = () => {
-    if (tab === 3) {
-      navigate(URL.PLOGGING.LOBBY);
-    } else {
-      setTab(tab + 1);
-    }
+    setTab(tab + 1);
   };
 
   const handlePrevButton = () => {
@@ -42,7 +44,7 @@ const RegistSuccess = () => {
           onClick={() => setTab(3)}
         ></S.BarSegment>
       </S.Bar>
-      <S.TopFrame onClick={() => navigate(URL.PLOGGING.LOBBY)}>
+      <S.TopFrame onClick={handleFinishTutorial}>
         Skip <ArrowSvg />
       </S.TopFrame>
       {tab === 1 && <OnBoardingFirst />}
@@ -57,7 +59,12 @@ const RegistSuccess = () => {
             color="#a0a0a0ad"
           />
         )}
-        <ConfirmButton text="다음" onClick={handleNextButton} />
+        <ConfirmButton
+          text={tab === 3 ? '시작하기' : '다음'}
+          onClick={() =>
+            tab === 3 ? handleFinishTutorial() : handleNextButton()
+          }
+        />
       </S.BottomFrame>
     </S.Wrap>
   );

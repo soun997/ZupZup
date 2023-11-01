@@ -51,7 +51,7 @@ const MyPloggingReport = () => {
       <S.BoxFrame>
         <div className="title">플로깅으로 이만큼 개선됐어요!</div>
         <div className="eachInfo">
-          총 {ploggingInfo.totalGatheredTrash}회 쓰레기를 주워주셨어요.
+          총 {ploggingInfo.totalGatheredTrash}회 쓰레기를 주웠어요.
         </div>
         <div className="memoInfo">
           <PloggingMemo trashInfo={trashInfos} />

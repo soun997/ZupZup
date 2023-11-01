@@ -11,3 +11,5 @@ include::{docdir}/src/docs/asciidoc/plogginglog.adoc[]
 include::{docdir}/src/docs/asciidoc/plogging.adoc[]
 
 include::{docdir}/src/docs/asciidoc/trashcan.adoc[]
+
+include::{docdir}/src/docs/asciidoc/feedback.adoc[]

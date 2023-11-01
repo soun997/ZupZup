@@ -8,11 +8,11 @@ import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListRespo
 import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
-import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,7 +54,7 @@ public class PloggingLogController {
 
     @PostMapping
     public ApiResponse<PloggingLogAddResponse> ploggingLogAdd(
-            @Valid @RequestBody PloggingLogRequest request) {
+            @Validated @RequestBody PloggingLogRequest request) {
 
         return ApiResponse.created(
                 PloggingLogAddResponse.from(ploggingLogService.add(request.toEntity(null))));

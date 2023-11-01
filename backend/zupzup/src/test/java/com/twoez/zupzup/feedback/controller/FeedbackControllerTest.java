@@ -43,7 +43,7 @@ public class FeedbackControllerTest extends RestDocsTest {
 
         FeedbackAddRequest request = new FeedbackAddRequest("너무 좋은 어플이에요");
 
-        feedbackService.add(any(Feedback.class));
+        feedbackService.add(any(FeedbackAddRequest.class));
 
         ResultActions perform =
                 mockMvc.perform(

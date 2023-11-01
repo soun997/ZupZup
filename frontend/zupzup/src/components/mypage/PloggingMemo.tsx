@@ -83,7 +83,8 @@ const S = {
       padding-right: 1.5rem;
 
       & .count {
-        font-weight: ${({ theme }) => theme.font.weight.focus2};
+        font-family: ${({ theme }) => theme.font.family.focus2};
+        font-size: ${({ theme }) => theme.font.size.body2};
       }
     }
   `,

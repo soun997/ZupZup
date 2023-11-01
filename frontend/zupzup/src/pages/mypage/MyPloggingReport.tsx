@@ -140,8 +140,8 @@ const S = {
       ${({ theme, $isLast }) =>
         $isLast ? theme.color.white : theme.color.gray3};
     & .tag {
+      font-family: ${({ theme }) => theme.font.family.focus1};
       font-size: ${({ theme }) => theme.font.size.focus1};
-      font-weight: ${({ theme }) => theme.font.weight.focus1};
     }
   `,
 

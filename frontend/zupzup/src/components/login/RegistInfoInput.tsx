@@ -61,7 +61,8 @@ const S = {
     width: 100%;
     height: 56px;
     border: none;
-    background-color: ${({ theme }) => theme.color.gray4};
+    border: 1px solid ${({ theme }) => theme.color.gray4};
+    background-color: transparent;
     padding: 0 16px;
     border-radius: 8px;
     font-weight: ${({ theme }) => theme.font.weight.body3};
@@ -69,6 +70,9 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body3};
     &:focus {
       outline: none;
+    }
+    &:active {
+      border: 1px solid ${({ theme }) => theme.color.main};
     }
   `,
 };

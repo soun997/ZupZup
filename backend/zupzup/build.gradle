@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // annotation processor
@@ -73,8 +74,17 @@ dependencies {
     // prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    // mongodb
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:3.1.5'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.projectlombok:lombok'
+
+    // actuator
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
 }
 
 tasks.named('test') {
@@ -83,14 +93,14 @@ tasks.named('test') {
 
 
 // Querydsl Settings
-def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = layout.buildDirectory.dir("/generated/querydsl")
 
 sourceSets {
     main.java.srcDirs += [ querydslDir ]
 }
 
 tasks.withType(JavaCompile) {
-    options.generatedSourceOutputDirectory = file(querydslDir)
+    options.generatedSourceOutputDirectory.file(querydslDir)
 }
 
 clean.doLast {
@@ -114,7 +124,7 @@ asciidoctor {
 }
 
 asciidoctor.doFirst {
-    delete file('src/docs/asciidoc/html')
+    delete file('src/main/resources/templates')
 }
 
 bootJar {
@@ -127,7 +137,7 @@ bootJar {
 
 tasks.register('copyDocument', Copy) {
     from file("build/docs/asciidoc")
-    into file("src/docs/asciidoc/html")
+    into file("src/main/resources/templates")
 }
 
 // spotless
@@ -142,6 +152,8 @@ spotless {
         endWithNewline()
     }
 }
+
+spotlessJava.dependsOn copyDocument
 
 dependencyManagement {
     imports {

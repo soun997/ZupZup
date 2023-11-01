@@ -1,27 +1,31 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-import { format } from "date-fns";
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
-import { isSameMonth, isSameDay, addDays } from "date-fns";
+import { format } from 'date-fns';
+import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
+import { isSameMonth, isSameDay, addDays } from 'date-fns';
 
-import { CalendarMonth } from "components";
+import { CalendarMonth } from 'components';
 
-import DoubleDashSvg from "assets/icons/double_dash.svg?react";
+import DownSvg from 'assets/icons/angle-down.svg?react';
 
 interface CalendarProps {
   selectedDate: Date | null;
-  setSelectedDate: (date: Date) => void;
+  setSelectedDate: (date: Date | null) => void;
 }
 
 const Calendar = (props: CalendarProps) => {
   const now = new Date();
   const [calendar, setCalendar] = useState<JSX.Element[]>();
-
   const monthStart = startOfMonth(now);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
+
+  const handleChangeMode = () => {
+    initCalendar();
+    props.setSelectedDate(null);
+  };
 
   const selectDate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLElement;
@@ -40,15 +44,15 @@ const Calendar = (props: CalendarProps) => {
     for (let i = 0; i < 7; i++) {
       days.push(
         <S.Date
-          className={`${isSameMonth(now, day) ? "active" : ""} ${
-            isSameDay(now, day) ? "today" : ""
-          } ${isSameDay(date, day) ? "selected" : ""}`}
+          className={`${isSameMonth(now, day) ? 'active' : ''} ${
+            isSameDay(now, day) ? 'today' : ''
+          } ${isSameDay(date, day) ? 'selected' : ''}`}
           key={day.getTime()}
-          onClick={(e) => selectDate(e)}
+          onClick={e => selectDate(e)}
         >
           <input type="hidden" value={day.toISOString()} />
-          {isSameMonth(now, day) ? format(day, "d") : ""}
-        </S.Date>
+          {isSameMonth(now, day) ? format(day, 'd') : ''}
+        </S.Date>,
       );
 
       if (isSameMonth(now, day)) {
@@ -61,7 +65,7 @@ const Calendar = (props: CalendarProps) => {
       <S.Row key={day.getTime()}>
         <S.Week>{days}</S.Week>
         <S.Dots>{dots}</S.Dots>
-      </S.Row>
+      </S.Row>,
     );
     setCalendar([...row]);
   };
@@ -76,15 +80,15 @@ const Calendar = (props: CalendarProps) => {
       for (let i = 0; i < 7; i++) {
         days.push(
           <S.Date
-            className={`${isSameMonth(now, day) ? "active" : ""} ${
-              isSameDay(now, day) ? "today" : ""
+            className={`${isSameMonth(now, day) ? 'active' : ''} ${
+              isSameDay(now, day) ? 'today' : ''
             }`}
             key={day.getTime()}
-            onClick={(e) => selectDate(e)}
+            onClick={e => selectDate(e)}
           >
             <input type="hidden" value={day.toISOString()} />
-            {isSameMonth(now, day) ? format(day, "d") : ""}
-          </S.Date>
+            {isSameMonth(now, day) ? format(day, 'd') : ''}
+          </S.Date>,
         );
 
         if (isSameMonth(now, day)) {
@@ -97,7 +101,7 @@ const Calendar = (props: CalendarProps) => {
         <S.Row key={day.getTime()}>
           <S.Week>{days}</S.Week>
           <S.Dots>{dots}</S.Dots>
-        </S.Row>
+        </S.Row>,
       );
       days = [];
       dots = [];
@@ -112,7 +116,7 @@ const Calendar = (props: CalendarProps) => {
   return (
     <S.Wrap>
       <CalendarMonth />
-      <S.Calendar className={props.selectedDate === null ? "month" : "week"}>
+      <S.Calendar className={props.selectedDate === null ? 'month' : 'week'}>
         <S.DaysOfWeek>
           <S.NameOfDays>일</S.NameOfDays>
           <S.NameOfDays>월</S.NameOfDays>
@@ -124,8 +128,8 @@ const Calendar = (props: CalendarProps) => {
         </S.DaysOfWeek>
         {calendar}
         {props.selectedDate && (
-          <S.StretchAccess>
-            <DoubleDashSvg />
+          <S.StretchAccess onClick={handleChangeMode}>
+            <DownSvg />
           </S.StretchAccess>
         )}
       </S.Calendar>
@@ -201,7 +205,7 @@ const S = {
       color: ${({ theme }) => theme.color.white};
     }
 
-    &.active:hover {
+    &.active:active {
       background-color: ${({ theme }) => theme.color.main};
       color: ${({ theme }) => theme.color.white};
       cursor: pointer;
@@ -227,5 +231,6 @@ const S = {
     display: flex;
     width: 100%;
     justify-content: center;
+    cursor: pointer;
   `,
 };

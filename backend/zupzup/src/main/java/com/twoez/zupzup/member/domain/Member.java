@@ -31,14 +31,14 @@ public class Member extends BaseTime {
     private Long id;
 
     @Embedded
-    private Oauth oauth;
+    private Oauth oauth; // TODO oAuth 바꾸기
 
     @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column
-    private Gender gender;
+    private Gender gender; // TODO char 타입 바꾸기
 
     @Column
     private Integer birthYear;
@@ -51,16 +51,16 @@ public class Member extends BaseTime {
 
     @Column(nullable = false)
     @ColumnDefault("0")
-    private Integer coin;
+    private Integer coin; // TODO : Long
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<MemberRole> role;
+    private List<MemberRole> role; // TODO : Role
 
 
     @Column(nullable = false)
     @ColumnDefault("false")
-    private Boolean deleted;
+    private Boolean deleted; // TODO : isDeleted
 
     @Builder
     public Member(Long id, Oauth oauth,

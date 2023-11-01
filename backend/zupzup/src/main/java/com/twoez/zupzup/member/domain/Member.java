@@ -51,23 +51,23 @@ public class Member extends BaseTime {
 
     @Column(nullable = false)
     @ColumnDefault("0")
-    private Integer coin; // TODO : Long
+    private Long coin;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<MemberRole> role; // TODO : Role
+    private List<Role> role;
 
 
     @Column(nullable = false)
     @ColumnDefault("false")
-    private Boolean deleted; // TODO : isDeleted
+    private Boolean isDeleted;
 
     @Builder
     public Member(Long id, Oauth oauth,
             String name, Gender gender,
             Integer birthYear, Integer height,
-            Integer weight, Integer coin,
-            List<MemberRole> role, Boolean deleted) {
+            Integer weight, Long coin,
+            List<Role> role, Boolean isDeleted) {
         this.id = id;
         this.oauth = oauth;
         this.name = name;
@@ -77,7 +77,7 @@ public class Member extends BaseTime {
         this.weight = weight;
         this.coin = coin;
         this.role = role;
-        this.deleted = deleted;
+        this.isDeleted = isDeleted;
     }
 
     public void updateHealthInfo(Integer birthYear, Gender gender, Integer height, Integer weight) {
@@ -89,7 +89,7 @@ public class Member extends BaseTime {
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         return role.stream()
-                .map(MemberRole::name)
+                .map(Role::name)
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }

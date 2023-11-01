@@ -4,9 +4,12 @@ import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.MemberHealthRequest;
 import com.twoez.zupzup.member.controller.dto.MemberHealthCreateResponse;
+import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,15 @@ public class MemberController {
 
         return ApiResponse.ok(
                 MemberHealthCreateResponse.from(authorizationToken, requestedMemberId));
+    }
+
+    @GetMapping("/test")
+    public ApiResponse<String> testtest(@AuthenticationPrincipal LoginUser loginUser) {
+        log.info("test called!!");
+        log.info("loginUser : {}", loginUser);
+        log.info("loginUser Id : {}", loginUser.getMember().getId());
+
+        return ApiResponse.ok("ok");
     }
 }
 

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { TotalPloggingInfo } from 'types/ProfileInfo';
 import { PloggingMemo, TopNavigation } from 'components';
+import { URL } from 'utils';
 
 const ploggingInfo: TotalPloggingInfo = {
   totalCalorie: 330, //cal
@@ -21,7 +22,11 @@ const trashInfos = [
 const MyPloggingReport = () => {
   return (
     <S.Wrap>
-      <TopNavigation title="누적 레포트" rightComponent={<></>} />
+      <TopNavigation
+        title="누적 레포트"
+        rightComponent={<></>}
+        navigationTo={URL.MYPAGE.HOME}
+      />
       <S.Image src="/assets/character/penguin-stair.png" />
       <S.BoxFrame>
         <div className="title">

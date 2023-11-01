@@ -2,7 +2,7 @@ package com.twoez.zupzup.plogging.service;
 
 
 import com.twoez.zupzup.plogging.domain.Plogger;
-import com.twoez.zupzup.plogging.repository.PloggingRedisRepository;
+import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

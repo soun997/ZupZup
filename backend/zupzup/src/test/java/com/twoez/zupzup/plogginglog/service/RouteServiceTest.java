@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import com.twoez.zupzup.fixture.plogginglog.RouteFixture;
 import com.twoez.zupzup.global.exception.flogginglog.RouteNotFoundException;
 import com.twoez.zupzup.plogginglog.domain.Route;
-import com.twoez.zupzup.plogginglog.repository.RouteRepository;
+import com.twoez.zupzup.plogginglog.repository.mongo.RouteRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,10 +2,8 @@ package com.twoez.zupzup;
 
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ZupzupApplicationTests {
+class ZupzupApplicationTests extends IntegrationTestSupport {
 
     @Test
     void contextLoads() {}

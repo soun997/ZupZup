@@ -29,13 +29,13 @@ public class JwtProperty {
     @Bean
     public Key getKey() {
         Assertion.with(secretKey)
-                .setValidation((key) -> key.startsWith("JWT"))
+                .setValidation((key) -> key.length() > 14)
                 .validateOrThrow(EmptyEnvironmentVariableException::new);
         Assertion.with(secretKey)
-                .setValidation((key) -> key.length() > 15)
+                .setValidation((key) -> key.contains("JWT"))
                 .validateOrThrow(ShortEnvironmentVariableException::new);
         Assertion.with(secretKey)
-                .setValidation((key) -> key.startsWith("/login"))
+                .setValidation((key) -> key.contains(" "))
                 .validateOrThrow(InvalidEnvironmentVariableException::new);
         Assertion.with(secretKey)
                 .setValidation((key) -> key.contains("e"))

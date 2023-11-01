@@ -29,17 +29,17 @@ public class JwtProperty {
     @Bean
     public Key getKey() {
         Assertion.with(secretKey)
-                .setValidation((key) -> key.contains("JWT_SECRET_KEY"))
+                .setValidation((key) -> key.startsWith("$"))
                 .validateOrThrow(EmptyEnvironmentVariableException::new);
         Assertion.with(secretKey)
-                .setValidation((key) -> key.length()==15)
+                .setValidation((key) -> key.equals("${JWT_SECRET_KEY}"))
                 .validateOrThrow(ShortEnvironmentVariableException::new);
-        Assertion.with(secretKey)
-                .setValidation((key) -> Character.isAlphabetic(key.charAt(0)))
-                .validateOrThrow(InvalidEnvironmentVariableException::new);
-        Assertion.with(secretKey)
-                .setValidation((key) -> Character.isDigit(key.charAt(0)))
-                .validateOrThrow(WrongEnvironmentVariableException::new);
+//        Assertion.with(secretKey)
+//                .setValidation((key) -> key.equals("${JWT_SECRET_KEY}"))
+//                .validateOrThrow(InvalidEnvironmentVariableException::new);
+//        Assertion.with(secretKey)
+//                .setValidation((key) -> Character.isDigit(key.charAt(0)))
+//                .validateOrThrow(WrongEnvironmentVariableException::new);
 //        Assertion.with(secretKey)
 //                .setValidation((key) -> key.startsWith("win"))
 //                .validateOrThrow(InvalidEnvironmentVariableException::new);

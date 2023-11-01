@@ -51,6 +51,7 @@ const S = {
     width: 100%;
     padding: 0 18px 30px;
   `,
+
   Title: styled.div`
     font-weight: ${({ theme }) => theme.font.weight.body2};
     font-size: ${({ theme }) => theme.font.size.body2};
@@ -68,10 +69,14 @@ const S = {
     font-weight: ${({ theme }) => theme.font.weight.body3};
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.body3};
+    color: ${({ theme }) => theme.color.black};
+
     &:focus {
       outline: none;
+      color: ${({ theme }) => theme.color.black};
     }
     &:active {
+      color: ${({ theme }) => theme.color.black};
       border: 1px solid ${({ theme }) => theme.color.main};
     }
   `,
@@ -99,6 +104,7 @@ const Input = styled.input`
   }
   &:focus {
     outline: none;
+    border-radius: 0px;
     border-bottom: 1px solid ${({ theme }) => theme.color.main};
   }
 `;

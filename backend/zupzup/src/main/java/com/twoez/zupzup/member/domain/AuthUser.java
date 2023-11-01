@@ -26,9 +26,9 @@ public class AuthUser {
         return Member.builder()
                 .oauth(getOauth())
                 .name(name)
-                .coin(0)
+                .coin(0L)
                 .role(List.of(Role.ROLE_USER))
-                .deleted(false)
+                .isDeleted(false)
                 .build();
     }
 }

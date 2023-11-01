@@ -1,6 +1,9 @@
 package com.twoez.zupzup.config.security.jwt;
 
 
+import com.twoez.zupzup.config.security.exception.EmptyEnvironmentVariableException;
+import com.twoez.zupzup.config.security.exception.InvalidEnvironmentVariableException;
+import com.twoez.zupzup.global.util.Assertion;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import lombok.Getter;
@@ -23,6 +26,12 @@ public class JwtProperty {
 
     @Bean
     public Key getKey() {
+        Assertion.with(secretKey)
+                .setValidation((key) -> key.length() > 0)
+                .validateOrThrow(EmptyEnvironmentVariableException::new);
+        Assertion.with(secretKey)
+                .setValidation((key) -> key.startsWith("wingardiumleviosa"))
+                .validateOrThrow(InvalidEnvironmentVariableException::new);
         return Keys.hmacShaKeyFor(Base64.encode(secretKey.getBytes()));
     }
 }

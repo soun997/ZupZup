@@ -51,7 +51,7 @@ const S = {
     height: 200px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.color.white};
-    padding: 30px;
+    padding: 20px 20px 30px;
   `,
   Header: styled.div`
     display: flex;
@@ -66,12 +66,21 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.main2};
     font-family: ${({ theme }) => theme.font.family.main2};
     line-height: ${({ theme }) => theme.font.lineheight.main2};
+    color: ${({ theme }) => theme.color.dark};
     margin: 20px 0 0 0;
   `,
   CancelButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
     & > svg {
       width: 20px;
       height: 20px;
+      filter: ${({ theme }) => theme.color.darkFilter};
     }
   `,
 

@@ -53,7 +53,7 @@ const S = {
     gap: 4px;
     flex-shrink: 0;
     span {
-      color: ${({ theme }) => theme.color.white};
+      color: #fff;
       font-weight: ${({ theme }) => theme.font.weight.body2};
       font-size: ${({ theme }) => theme.font.size.body2};
       font-family: ${({ theme }) => theme.font.family.focus2};

@@ -54,6 +54,7 @@ const S = {
     justify-content: center;
     text-align: center;
     line-height: 35px;
+    color: ${({ theme }) => theme.color.dark};
   `,
   SubTitle: styled.div`
     margin-top: 10px;
@@ -78,6 +79,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body3};
     font-weight: ${({ theme }) => theme.font.weight.body3};
     line-height: ${({ theme }) => theme.font.lineheight.body3};
+    color: ${({ theme }) => theme.color.dark};
   `,
 };
 export default PloggingDone;

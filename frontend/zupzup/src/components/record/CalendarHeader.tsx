@@ -25,6 +25,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.display3};
     font-family: ${({ theme }) => theme.font.family.display3};
     line-height: ${({ theme }) => theme.font.lineheight.display3};
+    color: ${({ theme }) => theme.color.dark};
     margin: 0 4px 0 0;
   `,
 };

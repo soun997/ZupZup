@@ -85,6 +85,7 @@ const S = {
         ? 'url("/assets/character/egloo-crop.jpg")'
         : 'url("/assets/character/egloo-crop-night.jpg")'};
     background-size: cover;
+    color: ${({ theme }) => theme.color.dark};
   `,
   Title: styled.div<StyleProps>`
     color: ${({ theme, $daytime }) =>

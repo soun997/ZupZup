@@ -25,6 +25,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.dark};
   `,
   BottomFrame: styled.div`
     display: flex;

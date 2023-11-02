@@ -63,8 +63,6 @@ public class MockSecurityFilter implements Filter {
                 .weight(56)
                 .coin(100L)
                 .isDeleted(false)
-                .createdAt(now)
-                .modifiedAt(now)
                 .role(List.of(Role.ROLE_USER))
                 .build();
     }

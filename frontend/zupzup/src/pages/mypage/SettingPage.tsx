@@ -13,7 +13,11 @@ const Setting = () => {
 
   return (
     <S.Wrap>
-      <TopNavigation title="설정" rightComponent={<></>} />
+      <TopNavigation
+        title="설정"
+        rightComponent={<></>}
+        navigationTo={utils.URL.MYPAGE.HOME}
+      />
       <S.SettingSection>
         <S.SubTitle>
           <S.MyInfo onClick={() => navigate(utils.URL.SETTING.PROFILE)}>

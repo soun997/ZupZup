@@ -15,4 +15,3 @@ export {
 } from './useAuth';
 export * from './store/useStore';
 export * from './store/themeSlice';
-export { default as ThemeChanger } from './store/themeSlice';

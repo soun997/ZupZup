@@ -9,21 +9,32 @@ import CheckSvg from 'assets/icons/check.svg?react';
 
 const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
-  const theme = useAppSelector(state => state.themeChanger.value);
+  const curTheme = useAppSelector(state => state.themeChanger.value);
   const dispatch = useAppDispatch();
 
   const handleListClick = (index: number) => {
     setSelectedList(index);
     if (index === 0) {
-      dispatch(themeActions.toDark());
-    } else if (index === 1) {
       dispatch(themeActions.toLight());
+    } else if (index === 1) {
+      dispatch(themeActions.toDark());
     }
   };
 
   useEffect(() => {
-    console.log(theme);
-  }, [theme]);
+    const initSettings = () => {
+      if (curTheme === 'light') {
+        setSelectedList(0);
+        return;
+      }
+      if (curTheme === 'dark') {
+        setSelectedList(1);
+        return;
+      }
+      setSelectedList(2);
+    };
+    initSettings();
+  }, []);
 
   const listData = ['밝은 모드', '어두운 모드', '시스템 설정과 같이'];
   return (

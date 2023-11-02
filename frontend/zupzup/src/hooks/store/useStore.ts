@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import * as hooks from 'hooks';
+import { themeSlice } from './themeSlice';
 
 export const store = configureStore({
   reducer: {
-    themeChanger: hooks.ThemeChanger,
+    themeChanger: themeSlice.reducer,
   },
 });
 

@@ -52,6 +52,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.dark};
   `,
   TitleFrame: styled.div`
     margin-top: 30px;
@@ -86,6 +87,7 @@ const S = {
     resize: none;
     background-color: ${({ theme }) => theme.color.gray4};
     font-family: ${({ theme }) => theme.font.family.body2};
+    color: ${({ theme }) => theme.color.dark};
     &:focus {
       outline: none;
     }

@@ -59,6 +59,7 @@ const S = {
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.04);
     padding: 14px 16px;
     margin: 0 0 20px 0;
+    color: ${({ theme }) => theme.color.dark};
   `,
   Header: styled.div`
     color: ${({ theme }) => theme.color.gray3};
@@ -86,6 +87,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus3};
     font-family: ${({ theme }) => theme.font.family.focus3};
     line-height: ${({ theme }) => theme.font.lineheight.focus3};
+    color: ${({ theme }) => theme.color.dark};
     white-space: nowrap;
   `,
 

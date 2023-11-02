@@ -141,7 +141,7 @@ const S = {
     height: 58px;
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.main};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:active {
@@ -156,7 +156,7 @@ const S = {
     height: 34px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
@@ -186,7 +186,7 @@ const S = {
     height: 58px;
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.main};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &.active {
@@ -205,7 +205,7 @@ const S = {
     height: 58px;
     border-radius: 29px;
     background-color: ${({ theme }) => theme.color.sub2};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:active {
@@ -221,7 +221,7 @@ const S = {
     border-radius: 29px;
     background-color: ${({ $trashOn, theme }) =>
       $trashOn ? theme.color.main : theme.color.gray3};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 
     &:active {

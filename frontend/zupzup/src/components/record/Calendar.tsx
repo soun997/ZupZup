@@ -161,6 +161,8 @@ const S = {
     margin: 0 0 20px 0;
   `,
   NameOfDays: styled.li`
+    color: ${({ theme }) => theme.color.dark};
+
     &:first-child {
       color: ${({ theme }) => theme.color.warning};
     }
@@ -187,6 +189,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus3};
     font-family: ${({ theme }) => theme.font.family.focus3};
     line-height: ${({ theme }) => theme.font.lineheight.focus3};
+    color: ${({ theme }) => theme.color.dark};
 
     &:first-child {
       color: ${({ theme }) => theme.color.warning};

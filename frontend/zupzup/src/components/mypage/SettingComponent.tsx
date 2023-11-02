@@ -30,6 +30,7 @@ const S = {
     letter-spacing: -0.014px;
     & .title {
       width: 100%;
+      color: ${({ theme }) => theme.color.dark};
     }
     & .sub-text {
       font-weight: ${({ theme }) => theme.font.weight.focus2};
@@ -44,6 +45,7 @@ const S = {
     align-items: center;
     gap: 2px;
     align-self: stretch;
+    color: ${({ theme }) => theme.color.dark};
   `,
 };
 

@@ -86,6 +86,7 @@ const OnPlogging = () => {
         fixCenter={fixCenter}
         setFixCenter={setFixCenter}
       />
+      {}
       {location.loaded && (
         <PloggingMap
           exitOn={exitOn}

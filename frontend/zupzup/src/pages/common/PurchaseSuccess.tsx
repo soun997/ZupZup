@@ -33,6 +33,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.dark};
   `,
   TitleFrame: styled.div`
     margin-top: 80px;

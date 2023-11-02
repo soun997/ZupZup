@@ -53,6 +53,7 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   TitleFrame: styled.div`

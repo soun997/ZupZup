@@ -7,7 +7,7 @@ import * as hooks from 'hooks';
 
 const App = () => {
   return (
-    <Provider store={hooks.useStore}>
+    <Provider store={hooks.store}>
       <ThemeProvider theme={styles.DarkTheme}>
         <styles.GlobalStyles />
         <router.Router />

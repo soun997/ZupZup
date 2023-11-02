@@ -27,11 +27,11 @@ export { default as CoinReport } from './plogging/CoinReport';
 export { default as RecordReport } from './plogging/RecordReport';
 export { default as ExitModal } from './plogging/ExitModal';
 
-export { RegistInfoInput, RegistInfoSelectBox } from './login/RegistInfoInput';
+export { RegistInfoInput, RegistInfoCheckBox } from './login/RegistInfoInput';
 export { default as RegistInfoTitle } from './login/RegistInfoTitle';
 export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 
-export { default as MyPloggingReport } from './mypage/MyPloggingReport';
+export { default as PloggingMemo } from './mypage/PloggingMemo';
 export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
 
@@ -43,3 +43,7 @@ export { default as ErrorAnimation } from './animation/ErrorLottie';
 export { default as LoadingAnimation } from './animation/LoadingLottie';
 export { default as SuccessAnimation } from './animation/SuccessLottie';
 export { default as KeyFrameList } from './animation/KeyFrame';
+
+export { default as OnBoardingFirst } from './onboarding/OnBoardFirst';
+export { default as OnBoardingSecond } from './onboarding/OnBoardSecond';
+export { default as OnBoardingThird } from './onboarding/OnBoardThird';

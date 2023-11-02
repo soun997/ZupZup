@@ -27,14 +27,12 @@ const LoginSuccess = () => {
         useAuth.setMemberId(data.memberId);
 
         if (data.isNewMember) {
+          navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL);
+        } else {
           const accessToken = data.accessToken;
           const refreshToken = data.refreshToken;
           useAuth.setAccessToken(accessToken);
           useAuth.setRefreshToken(refreshToken);
-          navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL, {
-            state: data.tempToken,
-          });
-        } else {
           navigate(utils.URL.PLOGGING.LOBBY);
         }
       } catch (err) {

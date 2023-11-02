@@ -8,7 +8,7 @@ import axios from 'api/apiController';
 
 const FoodDetail: FoodDetail = {
   id: 2,
-  image: `/assets/images/food/food4.png`,
+  image: `https://zupzup-assets.s3.ap-northeast-2.amazonaws.com/food/소시지.png`,
   name: '햄버거',
   coin: 4,
   exp: 3,
@@ -53,6 +53,7 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   TitleFrame: styled.div`
@@ -82,7 +83,7 @@ const S = {
   `,
 
   ButtonSection: styled.div`
-    margin: auto;
+    margin: auto 0 50px 0;
     display: flex;
     flex-direction: column;
     width: 100%;

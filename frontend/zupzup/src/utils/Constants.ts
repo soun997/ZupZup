@@ -2,6 +2,7 @@ export const URL = {
   ONBORDING: {
     WORKING: '/working',
     CHARACTER: '/info/character',
+    EXPLAIN: '/onboard',
   },
   OPINION: '/opinion',
   LOGIN: {
@@ -40,6 +41,7 @@ export const URL = {
   SETTING: {
     HOME: '/setting',
     PROFILE: '/setting/profile',
+    THEME: '/setting/theme',
   },
 };
 

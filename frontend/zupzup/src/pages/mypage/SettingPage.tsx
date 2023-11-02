@@ -13,7 +13,11 @@ const Setting = () => {
 
   return (
     <S.Wrap>
-      <TopNavigation title="설정" rightComponent={<></>} />
+      <TopNavigation
+        title="설정"
+        rightComponent={<></>}
+        navigationTo={utils.URL.MYPAGE.HOME}
+      />
       <S.SettingSection>
         <S.SubTitle>
           <S.MyInfo onClick={() => navigate(utils.URL.SETTING.PROFILE)}>
@@ -28,6 +32,17 @@ const Setting = () => {
         </S.SubTitle>
       </S.SettingSection>
 
+      <S.SettingSection>
+        <S.SubTitle>앱 설정</S.SubTitle>
+        <SettingComponent
+          text="테마 변경"
+          onClick={() => navigate(utils.URL.SETTING.THEME)}
+        />
+        <SettingComponent
+          text="튜토리얼 확인하기"
+          onClick={() => navigate(utils.URL.ONBORDING.EXPLAIN)}
+        />
+      </S.SettingSection>
       <S.SettingSection>
         <S.SubTitle>계정</S.SubTitle>
         <SettingComponent
@@ -83,7 +98,8 @@ const S = {
     gap: 10px;
     align-self: stretch;
     font-size: ${({ theme }) => theme.font.size.focus2};
-    font-weight: ${({ theme }) => theme.font.weight.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   SvgWrapper: styled.div`
@@ -101,6 +117,7 @@ const S = {
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    color: ${({ theme }) => theme.color.dark};
 
     & .textInfo {
       display: flex;
@@ -109,7 +126,7 @@ const S = {
 
       & .nickname {
         font-size: ${({ theme }) => theme.font.size.focus2};
-        font-weight: ${({ theme }) => theme.font.weight.focus2};
+        font-family: ${({ theme }) => theme.font.family.focus1};
       }
 
       & .modify {

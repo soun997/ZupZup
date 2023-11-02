@@ -1,4 +1,4 @@
-export { default as OnBoarding } from './onboard/OnBoarding';
+export { default as LoginOnboard } from './onboard/Main';
 
 export { default as PloggingRecord } from './record/PloggingRecord';
 
@@ -15,6 +15,7 @@ export { default as RegistInfoProfile } from './login/RegistInfoForProfile';
 export { default as MyPage } from './mypage/MyPage';
 export { default as MyPloggingReport } from './mypage/MyPloggingReport';
 export { default as SettingPage } from './mypage/SettingPage';
+export { default as Theme } from './mypage/Theme';
 export { default as ProfileSettingPage } from './mypage/ProfileSettingPage';
 
 export { default as ShoppingList } from './shop/ShoppingList';
@@ -29,3 +30,4 @@ export { default as Opinion } from './common/Opinion';
 export { default as OpinionSuccess } from './common/OpinionSuccess';
 
 export { default as CharacterInfo } from './onboard/CharacterInfo';
+export { default as OnBoarding } from './onboard/OnBoarding';

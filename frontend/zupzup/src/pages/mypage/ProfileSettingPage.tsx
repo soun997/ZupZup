@@ -61,6 +61,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.dark};
   `,
   SettingSection: styled.div`
     margin-top: 10px;
@@ -75,7 +76,7 @@ const S = {
     gap: 10px;
     align-self: stretch;
     font-size: ${({ theme }) => theme.font.size.focus2};
-    font-weight: ${({ theme }) => theme.font.weight.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus1};
   `,
 };
 

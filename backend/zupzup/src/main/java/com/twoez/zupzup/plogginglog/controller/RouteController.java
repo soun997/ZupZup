@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/routes")
+@RequestMapping("api/v1/routes")
 @RequiredArgsConstructor
 public class RouteController {
 
@@ -28,14 +28,13 @@ public class RouteController {
             @PathVariable @NotNull @Min(1L) Long ploggingLogId,
             @Validated @RequestBody RouteAddRequest request) {
 
-        routeService.addRoute(request.toDocument(ploggingLogId));
+        routeService.addRoute(request, ploggingLogId);
         return ApiResponse.created().build();
     }
 
     @GetMapping("/{ploggingLogId}")
     public ApiResponse<RouteDetailsResponse> routeDetails(
             @PathVariable @NotNull @Min(1L) Long ploggingLogId) {
-
         return ApiResponse.ok(RouteDetailsResponse.from(routeService.searchRoute(ploggingLogId)));
     }
 }

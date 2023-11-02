@@ -66,7 +66,7 @@ const S = {
     width: 110px;
     height: 34px;
     border-radius: 4px;
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     background-color: ${({ theme }) => theme.color.main};
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};

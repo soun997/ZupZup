@@ -26,7 +26,7 @@ const Opinion = () => {
     <S.Wrap>
       <TopNavigation />
       <S.TitleFrame>
-        <S.MainTitle>펭귄이에게 하고 싶은 말이 있나요 ?</S.MainTitle>
+        <S.MainTitle>로귄이에게 하고 싶은 말이 있나요 ?</S.MainTitle>
         <S.SubTitle>
           주신 의견은 한글자도 빼놓지 않고 꼼꼼히 읽어볼게요!
         </S.SubTitle>
@@ -52,6 +52,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.dark};
   `,
   TitleFrame: styled.div`
     margin-top: 30px;
@@ -86,6 +87,7 @@ const S = {
     resize: none;
     background-color: ${({ theme }) => theme.color.gray4};
     font-family: ${({ theme }) => theme.font.family.body2};
+    color: ${({ theme }) => theme.color.dark};
     &:focus {
       outline: none;
     }

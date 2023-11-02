@@ -11,7 +11,7 @@ const PurchaseSuccess = () => {
     <S.Wrap>
       <S.TitleFrame>
         <S.MainTitle>음~ 맛있는 식사였다고 하네요</S.MainTitle>
-        <S.SubTitle>줍줍님의 성장도가 증가하였어요 🎉</S.SubTitle>
+        <S.SubTitle>줍줍님의 성장도가 +3 증가하였어요 🎉</S.SubTitle>
       </S.TitleFrame>
       <S.GIF src={character} alt="eating..." />
       <S.BottomFrame>
@@ -33,6 +33,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.dark};
   `,
   TitleFrame: styled.div`
     margin-top: 80px;

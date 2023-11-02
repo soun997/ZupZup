@@ -1,11 +1,10 @@
 package com.twoez.zupzup.plogging.service;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import com.twoez.zupzup.plogging.domain.Plogger;
-import com.twoez.zupzup.plogging.repository.PloggingRedisRepository;
+import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class PloggingServiceTest {
 
-    @Mock
-    PloggingRedisRepository ploggingRedisRepository;
-    @InjectMocks
-    PloggingService ploggingService;
+    @Mock PloggingRedisRepository ploggingRedisRepository;
+    @InjectMocks PloggingService ploggingService;
 
     private final String TOTAL_PLOGGER = "total_plogger";
 
@@ -29,10 +26,8 @@ public class PloggingServiceTest {
     void increaseTotalPloggerTest() {
         Plogger plogger = new Plogger(TOTAL_PLOGGER, 1L);
 
-        given(ploggingRedisRepository.findById(TOTAL_PLOGGER))
-                .willReturn(Optional.of(plogger));
-        given(ploggingRedisRepository.save(plogger))
-                .willReturn(plogger);
+        given(ploggingRedisRepository.findById(TOTAL_PLOGGER)).willReturn(Optional.of(plogger));
+        given(ploggingRedisRepository.save(plogger)).willReturn(plogger);
 
         Plogger result = ploggingService.increaseTotalPlogger();
 
@@ -44,10 +39,8 @@ public class PloggingServiceTest {
     void decreaseTotalPloggerTest() {
         Plogger plogger = new Plogger(TOTAL_PLOGGER, 1L);
 
-        given(ploggingRedisRepository.findById(TOTAL_PLOGGER))
-                .willReturn(Optional.of(plogger));
-        given(ploggingRedisRepository.save(plogger))
-                .willReturn(plogger);
+        given(ploggingRedisRepository.findById(TOTAL_PLOGGER)).willReturn(Optional.of(plogger));
+        given(ploggingRedisRepository.save(plogger)).willReturn(plogger);
 
         Plogger result = ploggingService.decreaseTotalPlogger();
 

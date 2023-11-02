@@ -7,7 +7,10 @@ const MEMBER_URL = `/members`;
 
 const MemberApis = {
   login: (token: string, provider: string) =>
-    axios.post(BASE_URL + '/auth', { authToken: token, provider }),
+    axios.post(BASE_URL + '/auth', {
+      authToken: token,
+      oauthProvider: provider,
+    }),
   logout: () => instance.post(`${MEMBER_URL}/logout`),
   registInfo: (healthData: RegistInfo) =>
     instance.post(`${MEMBER_URL}/health`, healthData),

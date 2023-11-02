@@ -28,6 +28,26 @@ const color = {
   white: '#FFFFFF',
   background: '#F5F4F8',
   warning: '#FA4B4B',
+  darkFilter:
+    'invert(9%) sepia(4%) saturate(2%) hue-rotate(359deg) brightness(102%) contrast(92%);',
+};
+
+const darkColor = {
+  main: '#00C4B8',
+  sub: '#63EAB1',
+  sub2: '#3CB4F7',
+  dark: '#C3C3C5',
+  gray1: '#E4E4E5',
+  gray2: '#888888',
+  gray3: '#666666',
+  gray4: '#353538',
+  gray5: '#F0F0F0',
+  gray6: '#F8F8F8',
+  white: '#2C2C35',
+  background: '#202027',
+  warning: '#FA4B4B',
+  darkFilter:
+    'invert(85%) sepia(5%) saturate(62%) hue-rotate(202deg) brightness(92%) contrast(92%);',
 };
 
 const font = {
@@ -95,7 +115,7 @@ const shadow = {
   button: `8px 4px 40px rgba(0, 0, 0, 0.3);`,
 };
 
-const Theme = {
+export const Theme = {
   deviceSize,
   device,
   color,
@@ -103,4 +123,12 @@ const Theme = {
   shadow,
 };
 
-export default Theme;
+export const DarkTheme = {
+  deviceSize,
+  device,
+  color: darkColor,
+  font,
+  shadow,
+};
+
+// export default { Theme, DarkTheme };

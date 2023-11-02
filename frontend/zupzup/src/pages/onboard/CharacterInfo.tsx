@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import styled from 'styled-components';
 
-const characterName = '펭귄';
+const characterName = '로귄';
 const CharacterInfo = () => {
   const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const S = {
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
+    color: ${({ theme }) => theme.color.dark};
   `,
   Content: styled.div`
     padding: 0 20px 20px;

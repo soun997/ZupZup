@@ -67,10 +67,18 @@ const S = {
       background-color: ${({ theme }) => theme.color.sub};
       cursor: pointer;
     }
+
+    & > svg {
+      filter: ${({ theme }) => theme.color.darkFilter};
+    }
   `,
   SideButton: styled.div`
     &:active {
       cursor: pointer;
+    }
+
+    & > svg {
+      filter: ${({ theme }) => theme.color.darkFilter};
     }
   `,
 };

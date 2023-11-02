@@ -1,9 +1,10 @@
 package com.twoez.zupzup.fixture.member;
 
 
-import com.twoez.zupzup.member.domain.AuthProvider;
+import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.domain.OAuth;
+import com.twoez.zupzup.member.domain.Oauth;
+import com.twoez.zupzup.member.domain.OauthProvider;
 import com.twoez.zupzup.member.domain.Role;
 import java.util.List;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import lombok.NoArgsConstructor;
 public enum MemberFixture {
     DEFAULT(
             1L,
-            AuthProvider.GOOGLE,
+            OauthProvider.GOOGLE,
             "1234567",
             "줍줍이",
-            'M',
+            Gender.M,
             2000,
             180,
             80,
@@ -24,10 +25,10 @@ public enum MemberFixture {
             false),
     NONE_ID(
             null,
-            AuthProvider.GOOGLE,
+            OauthProvider.GOOGLE,
             "1234567",
             "줍줍이",
-            'M',
+            Gender.M,
             2000,
             180,
             80,
@@ -36,10 +37,10 @@ public enum MemberFixture {
             false);
 
     private Long id;
-    private AuthProvider oauthProvider;
+    private OauthProvider oauthProvider;
     private String oauthAccount;
     private String name;
-    private Character gender;
+    private Gender gender;
     private Integer birthYear;
     private Integer height;
     private Integer weight;
@@ -49,10 +50,10 @@ public enum MemberFixture {
 
     MemberFixture(
             Long id,
-            AuthProvider oauthProvider,
+            OauthProvider oauthProvider,
             String oauthAccount,
             String name,
-            Character gender,
+            Gender gender,
             Integer birthYear,
             Integer height,
             Integer weight,
@@ -75,7 +76,7 @@ public enum MemberFixture {
     public Member getMember() {
         return Member.builder()
                 .id(id)
-                .oAuth(new OAuth(oauthProvider, oauthAccount))
+                .oauth(new Oauth(oauthProvider, oauthAccount))
                 .name(name)
                 .gender(gender)
                 .birthYear(birthYear)

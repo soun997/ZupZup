@@ -31,6 +31,10 @@ const Setting = () => {
       <S.SettingSection>
         <S.SubTitle>앱 설정</S.SubTitle>
         <SettingComponent
+          text="테마 변경"
+          onClick={() => navigate(utils.URL.SETTING.THEME)}
+        />
+        <SettingComponent
           text="튜토리얼 확인하기"
           onClick={() => navigate(utils.URL.ONBORDING.EXPLAIN)}
         />

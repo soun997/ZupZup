@@ -45,7 +45,6 @@ public class ItemControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/items")
-                                .contextPath("/api")
                 );
 
         perform.andExpect(status().isOk());

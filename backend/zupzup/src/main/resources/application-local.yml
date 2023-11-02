@@ -1,10 +1,15 @@
 spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${MARIA_URL}
+    username: ${MARIA_USER}
+    password: ${MARIA_PASSWORD}
   h2:
     console:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     open-in-view: false
     properties:
       hibernate:
@@ -14,6 +19,7 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
     mongodb:
       uri: ${MONGO_URI}
       database: ${MONGO_DATABASE}
@@ -21,4 +27,3 @@ spring:
 server:
   servlet:
     context-path: /api
-

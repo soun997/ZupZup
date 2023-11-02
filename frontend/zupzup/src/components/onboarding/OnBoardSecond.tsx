@@ -33,13 +33,13 @@ const S = {
     text-align: center;
   `,
   MainTitle: styled.div`
-    font-size: ${({ theme }) => theme.font.size.display1};
-    font-family: ${({ theme }) => theme.font.family.display1};
+    font-size: ${({ theme }) => theme.font.size.display2};
+    font-family: ${({ theme }) => theme.font.family.display2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
-    line-height: 1.25;
+    line-height: 1.45;
   `,
   SubTitle: styled.div`
-    margin-top: 10px;
+    margin-top: 15px;
     color: ${({ theme }) => theme.color.gray2};
     font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.body2};

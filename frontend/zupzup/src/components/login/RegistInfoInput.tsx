@@ -85,13 +85,13 @@ const S = {
       gap: 6px;
     }
 
-    span {
+    & span {
       margin-left: 0.3rem;
       font-size: ${({ theme }) => theme.font.size.focus2};
       font-family: ${({ theme }) => theme.font.family.body2};
     }
 
-    input[type='radio'] {
+    & input[type='radio'] {
       height: 1.5rem;
       aspect-ratio: 1;
       border: calc(1.5rem / 8) solid ${({ theme }) => theme.color.gray3};
@@ -111,7 +111,7 @@ const S = {
       font-size: inherit;
       transition: 0.3s;
     }
-    input[type='radio']:checked {
+    & input[type='radio']:checked {
       border-color: ${({ theme }) => theme.color.main};
       background-size: 100% 100%;
     }
@@ -122,29 +122,6 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     margin-bottom: 12px;
-  `,
-
-  SelectBox: styled.select`
-    width: 100%;
-    height: 56px;
-    border: none;
-    border: 1px solid ${({ theme }) => theme.color.gray4};
-    background-color: transparent;
-    padding: 0 16px;
-    border-radius: 8px;
-    font-weight: ${({ theme }) => theme.font.weight.body3};
-    font-size: ${({ theme }) => theme.font.size.body3};
-    font-family: ${({ theme }) => theme.font.family.body3};
-    color: ${({ theme }) => theme.color.black} !important;
-
-    &:focus {
-      outline: none;
-      color: ${({ theme }) => theme.color.black} !important;
-    }
-    &:active {
-      color: ${({ theme }) => theme.color.black} !important;
-      border: 1px solid ${({ theme }) => theme.color.main};
-    }
   `,
 };
 

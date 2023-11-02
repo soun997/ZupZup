@@ -12,7 +12,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -69,10 +68,7 @@ public class Member extends BaseTime {
             Integer weight,
             Long coin,
             List<Role> role,
-            Boolean isDeleted,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt) {
-        super(createdAt, modifiedAt);
+            Boolean isDeleted) {
         this.id = id;
         this.oauth = oauth;
         this.name = name;

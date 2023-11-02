@@ -55,7 +55,6 @@ public class TrashcanControllerTest extends RestDocsTest {
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/trashcans")
-                                .contextPath("/api")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 

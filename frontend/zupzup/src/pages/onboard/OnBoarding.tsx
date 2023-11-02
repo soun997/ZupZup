@@ -14,6 +14,11 @@ import ArrowSvg from 'assets/icons/angle-right.svg?react';
 const RegistSuccess = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<number>(1);
+  const tabContent = [
+    <OnBoardingFirst />,
+    <OnBoardingSecond />,
+    <OnBoardingThird />,
+  ];
 
   const handleFinishTutorial = () => {
     alert('튜토리얼은 마이페이지 > 설정에서 다시 확인할 수 있어요!');
@@ -31,25 +36,15 @@ const RegistSuccess = () => {
   return (
     <S.Wrap>
       <S.Bar>
-        <S.BarSegment
-          active={tab === 1}
-          onClick={() => setTab(1)}
-        ></S.BarSegment>
-        <S.BarSegment
-          active={tab === 2}
-          onClick={() => setTab(2)}
-        ></S.BarSegment>
-        <S.BarSegment
-          active={tab === 3}
-          onClick={() => setTab(3)}
-        ></S.BarSegment>
+        {[...new Array(3)].map((_, i) => (
+          <S.BarSegment active={tab === i + 1} onClick={() => setTab(i + 1)} />
+        ))}
       </S.Bar>
       <S.TopFrame onClick={handleFinishTutorial}>
         Skip <ArrowSvg />
       </S.TopFrame>
-      {tab === 1 && <OnBoardingFirst />}
-      {tab === 2 && <OnBoardingSecond />}
-      {tab === 3 && <OnBoardingThird />}
+
+      {tabContent[tab - 1]}
 
       <S.BottomFrame>
         {tab !== 1 && (

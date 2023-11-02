@@ -5,18 +5,14 @@ import lombok.Builder;
 
 @Builder
 public record ItemListResponse(
+        Long id,
         String name,
-        String description,
-        Integer exp,
-        Integer price,
         String itemImgUrl
 ) {
     public static ItemListResponse from(Item item){
         return ItemListResponse.builder()
+                .id(item.getId())
                 .name(item.getName())
-                .description(item.getDescription())
-                .exp(item.getExp())
-                .price(item.getPrice())
                 .itemImgUrl(item.getItemImgUrl())
                 .build();
     }

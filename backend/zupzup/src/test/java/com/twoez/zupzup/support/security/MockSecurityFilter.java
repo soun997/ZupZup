@@ -1,6 +1,7 @@
 package com.twoez.zupzup.support.security;
 
 
+import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.domain.Oauth;
@@ -56,8 +57,14 @@ public class MockSecurityFilter implements Filter {
                 .id(1L)
                 .oauth(oauth)
                 .name("mock")
-                .coin(0L)
+                .gender(Gender.M)
+                .birthYear(2000)
+                .height(180)
+                .weight(56)
+                .coin(100L)
                 .isDeleted(false)
+                .createdAt(now)
+                .modifiedAt(now)
                 .role(List.of(Role.ROLE_USER))
                 .build();
     }

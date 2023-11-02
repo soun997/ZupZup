@@ -26,6 +26,7 @@ spring:
             client-secret: ${GOOGLE_CLIENT_SECRET}
             redirect-uri: ${GOOGLE_REDIRECT_URL}
             scope: email, profile, openid
+            client-authentication-method: POST
 
 oidc:
   google:
@@ -42,3 +43,22 @@ jwt:
   auth-token-expired_second: 60
   access-expired-second: 7200
   refresh_expired_second: 1209600
+
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+  server:
+    port: ${HEALTH_PORT}

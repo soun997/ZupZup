@@ -10,7 +10,9 @@ const OnBoardThird = () => {
         </S.MainTitle>
         <S.SubTitle>상점을 통해 음식을 구매할 수 있어요</S.SubTitle>
       </S.TitleFrame>
-      <S.Image src="/assets/character/penguin-shop.png" />
+      <S.Image
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-shop.png`}
+      />
     </S.Wrap>
   );
 };

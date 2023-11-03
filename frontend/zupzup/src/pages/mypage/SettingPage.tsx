@@ -4,12 +4,14 @@ import * as utils from 'utils';
 import NextArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Navigation, TopNavigation } from 'components';
 import SettingComponent from 'components/mypage/SettingComponent';
+import { deleteAllAuth, useAppDispatch } from 'hooks';
 
 const profileInfo = {
   nickname: '줍줍',
 };
 const Setting = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <S.Wrap>
@@ -49,7 +51,10 @@ const Setting = () => {
           <SettingComponent
             text="로그아웃"
             svg={<></>}
-            onClick={() => navigate(utils.URL.LOGIN.HOME)}
+            onClick={() => {
+              dispatch(deleteAllAuth());
+              navigate(utils.URL.LOGIN.HOME);
+            }}
           />
         </S.SettingSection>
 

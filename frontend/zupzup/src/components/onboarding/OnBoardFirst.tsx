@@ -11,7 +11,9 @@ const OnBoardFirst = () => {
         </S.MainTitle>
         <S.SubTitle>간단한 줍줍 사용법을 알려드릴게요</S.SubTitle>
       </S.TitleFrame>
-      <S.Image src="/assets/character/penguin-hi.png" />
+      <S.Image
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-hi.png`}
+      />
     </S.Wrap>
   );
 };

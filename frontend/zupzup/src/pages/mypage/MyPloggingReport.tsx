@@ -27,7 +27,9 @@ const MyPloggingReport = () => {
         rightComponent={<></>}
         navigationTo={URL.MYPAGE.HOME}
       />
-      <S.Image src="/assets/character/penguin-stair.png" />
+      <S.Image
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-stair.png`}
+      />
       <S.BoxFrame>
         <div className="title">
           그동안 {ploggingInfo.totalDistance / 1000} km 만큼 플로깅 했어요 👍

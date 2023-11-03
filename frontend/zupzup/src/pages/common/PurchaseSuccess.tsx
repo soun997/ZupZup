@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
-import character from '/assets/character/after-eating.gif';
 import { ConfirmButton } from 'components';
 
 const PurchaseSuccess = () => {
@@ -13,7 +12,10 @@ const PurchaseSuccess = () => {
         <S.MainTitle>음~ 맛있는 식사였다고 하네요</S.MainTitle>
         <S.SubTitle>줍줍님의 성장도가 +3 증가하였어요 🎉</S.SubTitle>
       </S.TitleFrame>
-      <S.GIF src={character} alt="eating..." />
+      <S.GIF
+        src={`${import.meta.env.VITE_S3_URL}/character/after-eating.gif`}
+        alt="eating..."
+      />
       <S.BottomFrame>
         <ConfirmButton
           text="마이페이지로 이동"

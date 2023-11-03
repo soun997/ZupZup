@@ -32,7 +32,11 @@ const MyPage = () => {
   const navigate = useNavigate();
   const curTheme = useAppSelector(state => state.themeChanger.value);
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
-
+  console.log(
+    `${import.meta.env.VITE_S3_URL}/character/penguin-lv${
+      characterInfo.level
+    }.png`,
+  );
   useEffect(() => {
     if (curTheme === 'light') {
       setIsDaytime(true);
@@ -61,7 +65,9 @@ const MyPage = () => {
       </S.Content>
 
       <S.Image
-        src={`/assets/character/penguin-lv${characterInfo.level}.png`}
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-lv${
+          characterInfo.level
+        }.png`}
         $daytime={isDaytime}
         level={characterInfo.level}
       ></S.Image>
@@ -83,8 +89,10 @@ const S = {
     height: 100vh;
     background: ${({ $daytime }) =>
       $daytime
-        ? 'url("/assets/character/egloo-crop.jpg")'
-        : 'url("/assets/character/egloo-crop-night.jpg")'};
+        ? `url("${import.meta.env.VITE_S3_URL}/character/egloo-crop.jpg")`
+        : `url("${
+            import.meta.env.VITE_S3_URL
+          }/character/egloo-crop-night.jpg")`};
     background-size: cover;
     color: ${({ theme }) => theme.color.dark};
   `,

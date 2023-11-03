@@ -19,12 +19,12 @@ const PurchaseSuccess = () => {
       <S.BottomFrame>
         <ConfirmButton
           text="상점으로 이동"
-          onClick={() => navigate(utils.URL.MYPAGE.HOME)}
+          onClick={() => navigate(utils.URL.MYPAGE.SHOP)}
         />
         <ConfirmButton
           text="마이페이지로 이동"
           color="#a0a0a0"
-          onClick={() => navigate(utils.URL.MYPAGE.SHOP)}
+          onClick={() => navigate(utils.URL.MYPAGE.HOME)}
         />
       </S.BottomFrame>
     </S.Wrap>

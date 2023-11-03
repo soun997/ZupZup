@@ -92,6 +92,7 @@ const S = {
     & > svg {
       width: 20px;
       height: 20px;
+      filter: ${({ theme }) => theme.color.darkFilter};
     }
   `,
   CameraBox: styled.video`

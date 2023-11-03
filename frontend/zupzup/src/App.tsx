@@ -1,18 +1,19 @@
 import { ThemeProvider } from 'styled-components';
-import { Provider } from 'react-redux';
+import { useAppSelector } from 'hooks';
 
 import * as styles from 'styles';
 import * as router from 'router';
-import * as hooks from 'hooks';
 
 const App = () => {
+  const curTheme = useAppSelector(state => state.themeChanger.value);
+
   return (
-    <Provider store={hooks.useStore}>
-      <ThemeProvider theme={styles.DarkTheme}>
-        <styles.GlobalStyles />
-        <router.Router />
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider
+      theme={curTheme === 'light' ? styles.Theme : styles.DarkTheme}
+    >
+      <styles.GlobalStyles />
+      <router.Router />
+    </ThemeProvider>
   );
 };
 

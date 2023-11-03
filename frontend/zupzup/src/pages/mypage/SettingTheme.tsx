@@ -42,7 +42,7 @@ const SettingTheme = () => {
     initSettings();
   }, []);
 
-  const listData = ['밝은 모드', '어두운 모드', '시스템 설정과 같이'];
+  const listData = ['밝은 모드', '어두운 모드', '현재 시간에 따라'];
   return (
     <S.Wrap>
       <TopNavigation

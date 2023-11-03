@@ -13,9 +13,15 @@ export const themeSlice = createSlice({
     toLight: state => {
       state.value = 'light';
     },
+    toSystem: state => {
+      state.value =
+        new Date().getHours() >= 6 && new Date().getHours() < 18
+          ? 'light'
+          : 'dark';
+    },
   },
 });
 
-export const themeActions = themeSlice.actions;
+export const { toDark, toLight, toSystem } = themeSlice.actions;
 export const currentTheme = (state: RootState) => state.themeChanger.value;
 export default themeSlice.reducer;

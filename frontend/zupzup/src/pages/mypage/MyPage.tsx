@@ -5,6 +5,7 @@ import { URL } from 'utils';
 import { Navigation, ProgressBar, MyPageNav, KeyFrameList } from 'components';
 import { CharacterInfo, ProfileInfo } from 'types/ProfileInfo';
 import BoardSvg from 'assets/icons/clipboard.svg?react';
+import { useAppSelector } from 'hooks';
 
 const profileInfo: ProfileInfo = {
   name: '줍줍',
@@ -29,15 +30,15 @@ const calculateDaysPassed = (inputDate: string): number => {
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const curTheme = useAppSelector(state => state.themeChanger.value);
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
 
   useEffect(() => {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-
-    const isDay = currentHour >= 6 && currentHour < 18;
-
-    setIsDaytime(isDay);
+    if (curTheme === 'light') {
+      setIsDaytime(true);
+    } else {
+      setIsDaytime(false);
+    }
   }, []);
 
   return (
@@ -88,8 +89,7 @@ const S = {
     color: ${({ theme }) => theme.color.dark};
   `,
   Title: styled.div<StyleProps>`
-    color: ${({ theme, $daytime }) =>
-      $daytime ? '#01302D' : theme.color.dark};
+    color: ${({ $daytime }) => ($daytime ? '#01302D' : '#fff')};
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.title};
     line-height: 30px;
@@ -117,8 +117,7 @@ const S = {
     margin-top: 10px;
   `,
   SubInfo: styled.div<StyleProps>`
-    color: ${({ theme, $daytime }) =>
-      $daytime ? '#01302D' : theme.color.dark};
+    color: ${({ $daytime }) => ($daytime ? '#01302D' : '#fff')};
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.focus2};
   `,

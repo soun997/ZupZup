@@ -3,7 +3,7 @@ import { TopNavigation } from 'components';
 import { URL } from 'utils';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { themeActions } from 'hooks';
+import { toDark, toLight, toSystem } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
 
@@ -15,9 +15,11 @@ const SettingTheme = () => {
   const handleListClick = (index: number) => {
     setSelectedList(index);
     if (index === 0) {
-      dispatch(themeActions.toLight());
+      dispatch(toLight());
     } else if (index === 1) {
-      dispatch(themeActions.toDark());
+      dispatch(toDark());
+    } else if (index === 2) {
+      dispatch(toSystem());
     }
   };
 
@@ -68,12 +70,12 @@ const S = {
   `,
   List: styled.div`
     margin: 20px;
-    font-size: ${({ theme }) => theme.font.size.focus1};
+    font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus1};
   `,
   EachList: styled.div`
     cursor: pointer;
-    font-size: ${({ theme }) => theme.font.size.focus1};
+    font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.body2};
     height: fit-content;
     min-height: 52px;

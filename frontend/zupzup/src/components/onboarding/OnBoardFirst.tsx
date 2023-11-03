@@ -34,6 +34,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.display2};
     font-family: ${({ theme }) => theme.font.family.display2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
+    color: ${({ theme }) => theme.color.dark};
     line-height: 1.45;
   `,
   SubTitle: styled.div`

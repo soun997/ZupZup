@@ -70,6 +70,7 @@ const S = {
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
+    color: ${({ theme }) => theme.color.dark};
   `,
   Content: styled.div`
     padding: 0 20px 20px;

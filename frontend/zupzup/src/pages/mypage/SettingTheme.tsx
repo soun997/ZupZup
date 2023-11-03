@@ -1,16 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TopNavigation } from 'components';
 import { URL } from 'utils';
 import styled from 'styled-components';
+import { useAppSelector, useAppDispatch } from 'hooks';
+import { themeActions } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
 
-const Theme = () => {
+const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
+  const curTheme = useAppSelector(state => state.themeChanger.value);
+  const dispatch = useAppDispatch();
 
   const handleListClick = (index: number) => {
     setSelectedList(index);
+    if (index === 0) {
+      dispatch(themeActions.toLight());
+    } else if (index === 1) {
+      dispatch(themeActions.toDark());
+    }
   };
+
+  useEffect(() => {
+    const initSettings = () => {
+      if (curTheme === 'light') {
+        setSelectedList(0);
+        return;
+      }
+      if (curTheme === 'dark') {
+        setSelectedList(1);
+        return;
+      }
+      setSelectedList(2);
+    };
+    initSettings();
+  }, []);
 
   const listData = ['밝은 모드', '어두운 모드', '시스템 설정과 같이'];
   return (
@@ -66,4 +90,4 @@ const S = {
   `,
 };
 
-export default Theme;
+export default SettingTheme;

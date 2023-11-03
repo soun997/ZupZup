@@ -13,3 +13,5 @@ export {
   deleteCookie,
   deleteAllCookies,
 } from './useAuth';
+export * from './store/useStore';
+export * from './store/themeSlice';

@@ -100,6 +100,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.display1};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.display1};
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   SubText: styled.div`
@@ -113,7 +114,7 @@ const S = {
 
   SubTitle: styled.div`
     margin-top: 40px;
-    color: ${({ theme }) => theme.color.gray2};
+    color: ${({ theme }) => theme.color.dark};
     font-size: ${({ theme }) => theme.font.size.body1};
     font-family: ${({ theme }) => theme.font.family.focus2};
     font-weight: ${({ theme }) => theme.font.weight.body2};

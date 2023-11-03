@@ -82,6 +82,7 @@ const S = {
     flex-direction: column;
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
+    color: ${({ theme }) => theme.color.dark};
   `,
   Image: styled.img`
     margin: 20px 0 50px;

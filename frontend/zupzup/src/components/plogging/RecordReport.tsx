@@ -54,6 +54,7 @@ const S = {
     .eachVal {
       font-size: ${({ theme }) => theme.font.size.focus1};
       font-family: ${({ theme }) => theme.font.family.focus1};
+      color: ${({ theme }) => theme.color.dark};
     }
   `,
 };

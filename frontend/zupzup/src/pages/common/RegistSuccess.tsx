@@ -41,6 +41,7 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+    color: ${({ theme }) => theme.color.dark};
   `,
   TitleFrame: styled.div`
     margin-top: 75px;
@@ -51,6 +52,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.display1};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.display1};
+    color: ${({ theme }) => theme.color.dark};
   `,
   SubTitle: styled.div`
     margin-top: 10px;

@@ -85,10 +85,11 @@ const S = {
         ? 'url("/assets/character/egloo-crop.jpg")'
         : 'url("/assets/character/egloo-crop-night.jpg")'};
     background-size: cover;
+    color: ${({ theme }) => theme.color.dark};
   `,
   Title: styled.div<StyleProps>`
     color: ${({ theme, $daytime }) =>
-      $daytime ? '#01302D' : theme.color.white};
+      $daytime ? '#01302D' : theme.color.dark};
     font-size: ${({ theme }) => theme.font.size.display1};
     font-family: ${({ theme }) => theme.font.family.title};
     line-height: 30px;
@@ -117,7 +118,7 @@ const S = {
   `,
   SubInfo: styled.div<StyleProps>`
     color: ${({ theme, $daytime }) =>
-      $daytime ? '#01302D' : theme.color.white};
+      $daytime ? '#01302D' : theme.color.dark};
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.focus2};
   `,

@@ -31,7 +31,7 @@ const S = {
     border-radius: 8px;
     background-color: ${({ theme, color }) =>
       color ? color : theme.color.main};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     margin: 42px 28px 0;
     padding: 8px 16px;
     pointer-events: auto;

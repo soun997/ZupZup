@@ -47,7 +47,7 @@ const S = {
     text-align: center;
     font-family: ${({ theme }) => theme.font.family.title};
     font-size: ${({ theme }) => theme.font.size.title};
-    color: ${({ theme }) => theme.color.white};
+    color: #fff;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     z-index: 1;
     animation: ${FadeIn} 2s;

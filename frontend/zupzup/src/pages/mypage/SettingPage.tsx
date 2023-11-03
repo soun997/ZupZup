@@ -99,6 +99,7 @@ const S = {
     align-self: stretch;
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   SvgWrapper: styled.div`
@@ -116,6 +117,7 @@ const S = {
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    color: ${({ theme }) => theme.color.dark};
 
     & .textInfo {
       display: flex;

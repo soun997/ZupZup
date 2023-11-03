@@ -89,6 +89,7 @@ const S = {
       margin-left: 0.3rem;
       font-size: ${({ theme }) => theme.font.size.focus2};
       font-family: ${({ theme }) => theme.font.family.body2};
+      color: ${({ theme }) => theme.color.dark};
     }
 
     & input[type='radio'] {
@@ -121,6 +122,7 @@ const S = {
     font-weight: ${({ theme }) => theme.font.weight.body2};
     font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.focus2};
+    color: ${({ theme }) => theme.color.dark};
     margin-bottom: 12px;
   `,
 };
@@ -137,6 +139,7 @@ const Input = styled.input`
   align-self: stretch;
   border: none;
   background-color: ${({ theme }) => theme.color.background};
+  color: ${({ theme }) => theme.color.dark};
 
   &::placeholder {
     font-size: 14px;

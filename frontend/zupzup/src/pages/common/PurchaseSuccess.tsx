@@ -18,8 +18,13 @@ const PurchaseSuccess = () => {
       />
       <S.BottomFrame>
         <ConfirmButton
-          text="마이페이지로 이동"
+          text="상점으로 이동"
           onClick={() => navigate(utils.URL.MYPAGE.HOME)}
+        />
+        <ConfirmButton
+          text="마이페이지로 이동"
+          color="#a0a0a0"
+          onClick={() => navigate(utils.URL.MYPAGE.SHOP)}
         />
       </S.BottomFrame>
     </S.Wrap>
@@ -63,6 +68,10 @@ const S = {
     bottom: 0;
     width: 100%;
     margin: auto 0 50px 0;
+    gap: 12px;
+    & div {
+      margin: 0 auto;
+    }
   `,
 
   GIF: styled.img`

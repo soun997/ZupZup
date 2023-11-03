@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ import static com.twoez.zupzup.support.docs.ApiDocumentUtils.getDocumentResponse
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +37,7 @@ public class ItemControllerTest extends RestDocsTest {
 
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            items.add(ItemFixture.DEFAULT.getItem("아이템" +" "+i));
+            items.add(ItemFixture.DEFAULT.getItem((long) i, "아이템" +" "+i));
         }
 
 
@@ -55,6 +58,39 @@ public class ItemControllerTest extends RestDocsTest {
                                 "item-list",
                                 getDocumentRequest(),
                                 getDocumentResponse()
+                        )
+                );
+    }
+
+    @Test
+    @DisplayName("아이템의 상세정보를 조회한다.")
+    void itemDetails() throws Exception{
+
+        Item item = ItemFixture.DEFAULT.getItem(1L, "조회 아이템");
+
+        given(
+                itemQueryService.search(1L)
+        ).willReturn(item);
+
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/items/{itemId}", 1L)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+
+        perform.andExpect(status().isOk());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "item-detail",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                pathParameters(
+                                        parameterWithName("itemId")
+                                                .description("아이템 ID")
+                                )
                         )
                 );
     }

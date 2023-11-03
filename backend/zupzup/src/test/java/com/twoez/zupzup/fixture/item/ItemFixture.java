@@ -42,7 +42,7 @@ public enum ItemFixture {
         this.isDeleted = isDeleted;
     }
 
-    public Item getItem(String name){
+    public Item getItem(Long id, String name){
         return Item.builder()
                 .id(id)
                 .name(name)

@@ -20,3 +20,15 @@ include::{snippets}/item-list/http-request.adoc[]
 === Response
 
 include::{snippets}/item-list/http-response.adoc[]
+
+
+== 아이템 상세 조회
+
+=== Request
+
+include::{snippets}/item-detail/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/item-detail/http-response.adoc[]

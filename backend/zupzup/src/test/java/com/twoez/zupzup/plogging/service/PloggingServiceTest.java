@@ -3,9 +3,7 @@ package com.twoez.zupzup.plogging.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import com.twoez.zupzup.plogging.domain.Plogger;
 import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,31 +17,27 @@ public class PloggingServiceTest {
     @Mock PloggingRedisRepository ploggingRedisRepository;
     @InjectMocks PloggingService ploggingService;
 
-    private final String TOTAL_PLOGGER = "total_plogger";
-
     @Test
     @DisplayName("현재 플로거를 1명 증가시킨다.")
     void increaseTotalPloggerTest() {
-        Plogger plogger = new Plogger(TOTAL_PLOGGER, 1L);
 
-        given(ploggingRedisRepository.findById(TOTAL_PLOGGER)).willReturn(Optional.of(plogger));
-        given(ploggingRedisRepository.save(plogger)).willReturn(plogger);
+        Long total = 0L;
+        given(ploggingRedisRepository.increase()).willReturn(total + 1L);
 
-        Plogger result = ploggingService.increaseTotalPlogger();
+        Long result = ploggingService.increaseTotalPlogger();
 
-        assertThat(result.getTotal()).isEqualTo(2L);
+        assertThat(result).isEqualTo(1L);
     }
 
     @Test
     @DisplayName("현재 플로거를 1명 감소시킨다.")
     void decreaseTotalPloggerTest() {
-        Plogger plogger = new Plogger(TOTAL_PLOGGER, 1L);
 
-        given(ploggingRedisRepository.findById(TOTAL_PLOGGER)).willReturn(Optional.of(plogger));
-        given(ploggingRedisRepository.save(plogger)).willReturn(plogger);
+        Long total = 1L;
+        given(ploggingRedisRepository.decrease()).willReturn(total - 1L);
 
-        Plogger result = ploggingService.decreaseTotalPlogger();
+        Long result = ploggingService.decreaseTotalPlogger();
 
-        assertThat(result.getTotal()).isEqualTo(0L);
+        assertThat(result).isEqualTo(0L);
     }
 }

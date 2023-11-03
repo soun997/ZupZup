@@ -17,32 +17,41 @@ public class PloggingRedisRepository {
 
     private final KeyChain keyChain;
 
-    private final Long DEFAULT = 0L;
-
     public Long increase() {
 
-        return redisTemplate.opsForValue().increment(
-                keyChain.getKey(PloggingRedisRepository.class));
+        return clamp(redisTemplate.opsForValue()
+                .increment(keyChain.getKey(PloggingRedisRepository.class)));
     }
 
     public Long decrease() {
 
-        return redisTemplate.opsForValue().increment(
-                keyChain.getKey(PloggingRedisRepository.class));
+        return clamp(redisTemplate.opsForValue()
+                .decrement(keyChain.getKey(PloggingRedisRepository.class)));
     }
 
     public Long findTotalPlogger() {
         return Optional.ofNullable(redisTemplate.opsForValue().get(
                         keyChain.getKey(PloggingRedisRepository.class)))
                 .map(total -> JsonConverter.toObject(total, Long.class))
-                .orElseGet(this::init);
+                .orElse(0L);
     }
 
-    private Long init() {
+    public Long clamp(Long origin) {
 
-        redisTemplate.opsForValue().set(
-                keyChain.getKey(PloggingRedisRepository.class), String.valueOf(DEFAULT));
+        if (origin < 0) {
+            redisTemplate.opsForValue().set(
+                    keyChain.getKey(PloggingRedisRepository.class),
+                    String.valueOf(0L));
+            return 0L;
+        }
 
-        return DEFAULT;
+        if (origin > Long.MAX_VALUE - 1) {
+            redisTemplate.opsForValue().set(
+                    keyChain.getKey(PloggingRedisRepository.class),
+                    String.valueOf(Long.MAX_VALUE - 1));
+            return Long.MAX_VALUE - 1;
+        }
+
+        return origin;
     }
 }

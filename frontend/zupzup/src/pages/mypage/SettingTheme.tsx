@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from 'hooks';
 import { toDark, toLight, toSystem } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
-import { setTheme } from 'hooks/useTheme';
+import * as useCookie from 'hooks';
 
 const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
@@ -17,13 +17,13 @@ const SettingTheme = () => {
     setSelectedList(index);
     if (index === 0) {
       dispatch(toLight());
-      setTheme(THEME.LIGHT);
+      useCookie.setTheme(THEME.LIGHT);
     } else if (index === 1) {
       dispatch(toDark());
-      setTheme(THEME.DARK);
+      useCookie.setTheme(THEME.DARK);
     } else if (index === 2) {
       dispatch(toSystem());
-      setTheme(THEME.SYSTEM);
+      useCookie.setTheme(THEME.SYSTEM);
     }
   };
 

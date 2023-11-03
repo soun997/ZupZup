@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-//! import * as useAuth from 'hooks';
 import * as utils from 'utils';
 import {
   TopNavigation,
@@ -9,15 +8,27 @@ import {
   RegistInfoFrame,
   RegistInfoCheckBox,
 } from 'components';
-//! import { RegistInfo } from 'types/ProfileInfo';
-//! import { MemberApi } from 'api';
+import { RegistInfo } from 'types/ProfileInfo';
+import { MemberApi } from 'api';
+import {
+  setAccessToken,
+  setRefreshToken,
+  useAppDispatch,
+  useAppSelector,
+} from 'hooks';
 
 const RegistInfo = () => {
   const { state } = useLocation();
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const inputRefForBirthYear = useRef<HTMLInputElement>(null);
   const [gender, setGender] = useState<string>(utils.GENDER.MALE);
+
+  const memberId = useAppSelector(state => state.auth.memberId);
+  useEffect(() => {
+    console.log(`init, ${memberId}`);
+  }, []);
+
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   const handleSelectChange = (value: string) => {
@@ -47,31 +58,30 @@ const RegistInfo = () => {
       inputRefForBirthYear.current &&
       inputCheck(inputRefForBirthYear.current?.value)
     ) {
-      navigate(utils.URL.RESULT.REGIST);
-    }
-  };
-
-  //!이거 밑에꺼 나중에 넣어야됨! (api 연결되면..)
-  /*
-      const postData: RegistInfo = {
-        height: state.height,
-        weight: state.weight,
-        gender,
-        birthYear: Number(inputRefForBirthYear.current.value),
-        memberId: useAuth.getCookie(utils.AUTH.MEMBER_ID),
-      };
-
       try {
+        const postData: RegistInfo = {
+          height: Number(state.height),
+          weight: Number(state.weight),
+          gender: gender === utils.GENDER.MALE ? 'M' : 'F',
+          birthYear: Number(inputRefForBirthYear.current.value),
+          memberId: Number(memberId),
+        };
+        console.log(postData);
         const res = await MemberApi.registInfo(postData);
+        console.log(res);
         const data = res.data.results;
-        useAuth.setAccessToken(data.accessToken);
-        useAuth.setRefreshToken(data.refreshToken);
-        navigate(utils.URL.RESULT.REGIST);
+        console.log('postData ', postData);
+        console.log(data);
 
-      }catch (error) {
+        dispatch(setAccessToken(data.accessToken));
+        dispatch(setRefreshToken(data.refreshToken));
+        navigate(utils.URL.RESULT.REGIST);
+      } catch (error) {
         console.error('가입정보 전송 에러:', error);
       }
-  */
+      // navigate(utils.URL.RESULT.REGIST);
+    }
+  };
 
   return (
     <RegistInfoFrame.Wrap>

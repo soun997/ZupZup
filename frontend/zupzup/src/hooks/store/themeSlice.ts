@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './useStore';
 import { THEME } from 'utils';
-import { getCookie } from 'hooks';
+// import { getCookie } from 'hooks';
+import { getCookie } from '../useCookie';
 
 const isDayTime = () => {
   const day = new Date();

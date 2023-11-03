@@ -41,7 +41,7 @@ public class JwtValidator {
     }
 
     public String getIdTokenFromAuthToken(String authToken) {
-        Jws<Claims> validatedClaims = validateAuthorizationToken(authToken);
+        Jws<Claims> validatedClaims = validateAuthToken(authToken);
 
         Object idToken = validatedClaims.getBody().get("idToken");
         Assertion.with(idToken)
@@ -54,7 +54,7 @@ public class JwtValidator {
         return (String) idToken;
     }
 
-    private Jws<Claims> validateAuthorizationToken(String authorizationToken) {
+    private Jws<Claims> validateAuthToken(String authorizationToken) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -119,5 +119,24 @@ public class JwtValidator {
                                         HttpExceptionCode.MEMBER_ID_NOT_FOUND_IN_ACCESS_TOKEN));
 
         return Long.valueOf(memberId);
+    }
+
+    private Jws<Claims> validateAuthorizationToken(String authorizationToken) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(authorizationToken);
+        } catch (ExpiredJwtException e) {
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION);
+        } catch (MalformedJwtException e) {
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_MALFORMED);
+        } catch (UnsupportedJwtException e) {
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_UNSUPPORTED);
+        } catch (Exception e) {
+            log.warn("처리되지 않은 Exception 발생");
+            e.printStackTrace();
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_NOT_FOUND);
+        }
     }
 }

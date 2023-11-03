@@ -2,7 +2,7 @@ package com.twoez.zupzup.config.security.filter;
 
 
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationHeaderException;
-import com.twoez.zupzup.config.security.exception.InvalidJwtException;
+import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenException;
 import com.twoez.zupzup.config.security.jwt.JwtValidator;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.util.Assertion;
@@ -93,6 +93,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void validateRefreshToken(Long memberId) {
         Assertion.with(memberId)
                 .setValidation(memberService::hasValidRefreshToken)
-                .validateOrThrow(() -> new InvalidJwtException(HttpExceptionCode.REFRESH_TOKEN_EXPIRED_EXCEPTION));
+                .validateOrThrow(() -> new InvalidAuthorizationTokenException(
+                        HttpExceptionCode.AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION));
     }
 }

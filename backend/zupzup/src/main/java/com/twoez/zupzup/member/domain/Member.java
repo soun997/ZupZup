@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.List;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -79,6 +80,13 @@ public class Member extends BaseTime {
         this.coin = coin;
         this.role = role;
         this.isDeleted = isDeleted;
+    }
+
+    public boolean hasHealthInfo() {
+        return Objects.nonNull(gender)
+                && Objects.nonNull(birthYear)
+                && Objects.nonNull(height)
+                && Objects.nonNull(weight);
     }
 
     public void updateHealthInfo(Integer birthYear, Gender gender, Integer height, Integer weight) {

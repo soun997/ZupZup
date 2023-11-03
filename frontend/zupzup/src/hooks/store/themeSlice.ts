@@ -1,10 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './useStore';
+import { THEME } from 'utils';
+import { getCookie } from 'hooks';
+
+const isDayTime = () => {
+  const day = new Date();
+  const hour = day.getHours();
+
+  if (hour >= 6 && hour < 18) {
+    return 'light';
+  }
+  return 'dark';
+};
+
+const getInitTheme = () => {
+  if (!getCookie(THEME.KEY)) {
+    return 'light';
+  }
+  if (getCookie(THEME.KEY) === THEME.SYSTEM) {
+    return isDayTime();
+  }
+  return getCookie(THEME.KEY);
+};
 
 export const themeSlice = createSlice({
   name: 'themeChanger',
   initialState: {
-    value: 'light',
+    value: getInitTheme(),
   },
   reducers: {
     toDark: state => {
@@ -14,10 +36,7 @@ export const themeSlice = createSlice({
       state.value = 'light';
     },
     toSystem: state => {
-      state.value =
-        new Date().getHours() >= 6 && new Date().getHours() < 18
-          ? 'light'
-          : 'dark';
+      state.value = isDayTime();
     },
   },
 });

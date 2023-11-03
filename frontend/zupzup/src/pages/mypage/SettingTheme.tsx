@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { TopNavigation } from 'components';
-import { URL } from 'utils';
+import { THEME, URL } from 'utils';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { toDark, toLight, toSystem } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
+import { setTheme } from 'hooks/useTheme';
 
 const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
@@ -16,10 +17,13 @@ const SettingTheme = () => {
     setSelectedList(index);
     if (index === 0) {
       dispatch(toLight());
+      setTheme(THEME.LIGHT);
     } else if (index === 1) {
       dispatch(toDark());
+      setTheme(THEME.DARK);
     } else if (index === 2) {
       dispatch(toSystem());
+      setTheme(THEME.SYSTEM);
     }
   };
 

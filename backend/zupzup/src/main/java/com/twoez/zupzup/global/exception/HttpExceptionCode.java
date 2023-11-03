@@ -18,6 +18,7 @@ public enum HttpExceptionCode {
             HttpStatus.UNAUTHORIZED, "ERR_AUTH_003", "Authorization Header가 유효하지 않습니다."),
     MEMBER_ID_NOT_FOUND_IN_ACCESS_TOKEN(
             HttpStatus.UNAUTHORIZED, "ERR_AUTH_004", "memberId가 Token에 존재하지 않습니다."),
+    REFRESH_TOKEN_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "ERR_AUTH_005", "Refresh Token이 만료되었거나 존재하지 않습니다."),
 
     OAUTH_PROVIDER_NOT_FOUND(
             HttpStatus.BAD_REQUEST, "ERR_OAUTH_001", "Oauth Provider 가 존재하지 않습니다."),

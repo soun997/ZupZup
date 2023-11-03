@@ -3,6 +3,7 @@ package com.twoez.zupzup.member.service;
 
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
+import com.twoez.zupzup.config.security.jwt.RefreshToken;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.member.controller.dto.MemberHealthRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
@@ -10,6 +11,7 @@ import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
 import com.twoez.zupzup.member.repository.MemberSpringDataRepository;
+import com.twoez.zupzup.member.repository.redis.RefreshTokenRedisRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ public class MemberService {
     private final JwtProvider jwtProvider;
     private final MemberQueryRepository memberQueryRepository;
     private final MemberSpringDataRepository memberSpringDataRepository;
+    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
 
     public Member save(AuthUser authUser) {
         return memberSpringDataRepository.save(authUser.toNewMember());
@@ -34,12 +37,25 @@ public class MemberService {
     }
 
     public AuthorizationToken issueAuthorizationToken(Member member) {
+        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(member.getId());
+        saveRefreshToken(member.getId(), authorizationToken);
         return jwtProvider.createAuthorizationToken(member.getId());
     }
 
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
         Member member = findById(memberId);
-        return jwtProvider.createAuthorizationToken(member.getId());
+        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(member.getId());
+        saveRefreshToken(memberId, authorizationToken);
+        return authorizationToken;
+    }
+
+    private void saveRefreshToken(Long memberId, AuthorizationToken authorizationToken) {
+        refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
+    }
+
+    public boolean hasValidRefreshToken(Long memberId) {
+        return refreshTokenRedisRepository.findRefreshTokenByMemberId(String.valueOf(memberId))
+                .isPresent();
     }
 
     @Transactional

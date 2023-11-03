@@ -3,7 +3,10 @@ package com.twoez.zupzup.config.security.filter;
 
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationHeaderException;
 import com.twoez.zupzup.config.security.jwt.JwtValidator;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
+import com.twoez.zupzup.global.response.ErrorResponse;
 import com.twoez.zupzup.global.util.Assertion;
+import com.twoez.zupzup.global.util.ExceptionResponseWriter;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.domain.mapper.LoginUserMapper;
 import com.twoez.zupzup.member.service.MemberService;
@@ -49,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .ifPresent(
                         (bearerToken) -> {
                             String token = validateBearerToken(bearerToken);
-                            setAuthenticationInSecurityContext(token);
+                            setAuthenticationInSecurityContext(token, response);
                         });
 
         doFilter(request, response, filterChain);
@@ -71,8 +74,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return StringUtils.hasText(bearerToken) && bearerToken.startsWith(GRANT_TYPE_BEARER);
     }
 
-    private void setAuthenticationInSecurityContext(String token) {
+    private void setAuthenticationInSecurityContext(String token, HttpServletResponse response) {
+        // accessToken의 유효성 검증 + subject인 memberId 가져오기
         Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
+
+        // 해당 memberId의 refresh이 있는지 검증
+        validateRefreshToken(memberIdInAccessToken, response);
 
         // TODO : 예외 write
         LoginUser loginUser =
@@ -82,5 +89,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .setAuthentication(
                         new UsernamePasswordAuthenticationToken(
                                 loginUser, "", loginUser.getAuthorities()));
+    }
+
+    private void validateRefreshToken(Long memberId, HttpServletResponse response) {
+        Assertion.with(memberId)
+                .setValidation(memberService::hasValidRefreshToken)
+                .validateOrExecute(() -> {
+                    log.info("memberId {} refreshToken Expired", memberId);
+                    HttpExceptionCode refreshTokenExpiredCode = HttpExceptionCode.REFRESH_TOKEN_EXPIRED_EXCEPTION;
+                    try {
+                        ExceptionResponseWriter.writeException(
+                                response,
+                                refreshTokenExpiredCode.getHttpStatus(),
+                                ErrorResponse.from(refreshTokenExpiredCode)
+                        );
+                    } catch (IOException e) {
+                        log.info(
+                                "Exception occur while writing exception response - refresh token expired");
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 }

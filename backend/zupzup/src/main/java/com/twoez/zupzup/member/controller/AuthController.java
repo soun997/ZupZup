@@ -40,7 +40,7 @@ public class AuthController {
         Optional<Member> memberOptional = memberService.findMemberByOauth(authUser);
 
         AuthResponse authResponse;
-        if (memberOptional.isPresent()) {
+        if (memberOptional.isPresent() && memberOptional.get().hasHealthInfo()) {
             Member member = memberOptional.get();
             AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
             authResponse = AuthResponse.from(authorizationToken, member.getId());

@@ -47,7 +47,9 @@ public enum HttpExceptionCode {
 
     PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
 
-    ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다.");
+    ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다."),
+
+    REDIS_PARSING_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_REDIS_001", "Redis 객체를 Json 형태로 변환하지 못했습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

@@ -66,6 +66,7 @@ public class SecurityConfig {
                                 request.requestMatchers(
                                                 new MvcRequestMatcher(introspector, "login/**"),
                                                 new MvcRequestMatcher(introspector, "api/v1/auth"),
+                                                // TODO : api 문서 permit 하기
                                                 new MvcRequestMatcher(
                                                         introspector, "api/v1/members/health"))
                                         .permitAll()

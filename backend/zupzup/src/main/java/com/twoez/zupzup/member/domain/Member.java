@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.attoparser.prettyhtml.PrettyHtmlMarkupHandler;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -98,5 +99,10 @@ public class Member extends BaseTime {
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         return role.stream().map(Role::name).map(SimpleGrantedAuthority::new).toList();
+    }
+
+    public Long payCoin(Integer price) {
+        this.coin -= (long)price;
+        return this.coin;
     }
 }

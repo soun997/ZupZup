@@ -21,10 +21,13 @@ const RegistInfo = () => {
   const { state } = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const memberId = useAppSelector(state => state.auth.memberId);
+
   const inputRefForBirthYear = useRef<HTMLInputElement>(null);
   const [gender, setGender] = useState<string>(utils.GENDER.MALE);
 
-  const memberId = useAppSelector(state => state.auth.memberId);
+  const [birthValid, setBirthValid] = useState<boolean>(false);
+
   useEffect(() => {
     console.log(`init, ${memberId}`);
   }, []);
@@ -37,13 +40,17 @@ const RegistInfo = () => {
 
   const inputCheck = (birthYearInput: string | undefined) => {
     if (
-      state.height &&
-      state.weight &&
       birthYearInput &&
-      Number(birthYearInput) > 1900 &&
-      Number(birthYearInput) < 2024
+      Number(birthYearInput) >= 1900 &&
+      Number(birthYearInput) <= 2024
     ) {
-      return true;
+      setBirthValid(true);
+      if (state.height && state.weight) {
+        return true;
+      }
+    } else {
+      setBirthValid(false);
+      return false;
     }
     return false;
   };
@@ -92,10 +99,12 @@ const RegistInfo = () => {
       />
       <RegistInfoFrame.InputSection>
         <RegistInfoInput
-          holderText="예) 1990"
+          holderText="ex) 1990"
           inputRef={inputRefForBirthYear}
           onChange={handleInputChange}
           title="출생 연도"
+          validCheck={birthValid}
+          errorMessage={'1900 ~ 2024년 사이의 연도를 입력해주세요'}
         />
         <RegistInfoCheckBox
           title="성별"

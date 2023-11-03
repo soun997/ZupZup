@@ -55,10 +55,10 @@ instance.interceptors.request.use(
 
         originalRequest.headers[
           utils.AUTH.ACCESS_KEY
-        ] = `Bearer ${accessToken}`;
+        ] = `Bearer ${newAccessToken}`;
 
         // **새로운 토큰 발급 확인
-        // console.log(accessToken, refreshToken);
+        // console.log(newAccessToken, newRefreshToken);
 
         return axios(originalRequest);
       } catch (error) {

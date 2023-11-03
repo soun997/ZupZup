@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { TopNavigation } from 'components';
-import { URL } from 'utils';
+import { THEME, URL } from 'utils';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { themeActions } from 'hooks';
+import { toDark, toLight, toSystem } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
+import * as useCookie from 'hooks';
 
 const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
@@ -15,9 +16,14 @@ const SettingTheme = () => {
   const handleListClick = (index: number) => {
     setSelectedList(index);
     if (index === 0) {
-      dispatch(themeActions.toLight());
+      dispatch(toLight());
+      useCookie.setTheme(THEME.LIGHT);
     } else if (index === 1) {
-      dispatch(themeActions.toDark());
+      dispatch(toDark());
+      useCookie.setTheme(THEME.DARK);
+    } else if (index === 2) {
+      dispatch(toSystem());
+      useCookie.setTheme(THEME.SYSTEM);
     }
   };
 
@@ -36,7 +42,7 @@ const SettingTheme = () => {
     initSettings();
   }, []);
 
-  const listData = ['밝은 모드', '어두운 모드', '시스템 설정과 같이'];
+  const listData = ['밝은 모드', '어두운 모드', '현재 시간에 따라'];
   return (
     <S.Wrap>
       <TopNavigation
@@ -68,12 +74,12 @@ const S = {
   `,
   List: styled.div`
     margin: 20px;
-    font-size: ${({ theme }) => theme.font.size.focus1};
+    font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus1};
   `,
   EachList: styled.div`
     cursor: pointer;
-    font-size: ${({ theme }) => theme.font.size.focus1};
+    font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.body2};
     height: fit-content;
     min-height: 52px;

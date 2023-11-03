@@ -1,0 +1,21 @@
+= Character API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 사용자 캐릭터 조회
+
+=== Request
+
+include::{snippets}/character-details/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/character-details/http-response.adoc[]

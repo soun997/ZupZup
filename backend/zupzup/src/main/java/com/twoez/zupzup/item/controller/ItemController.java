@@ -1,4 +1,4 @@
-package com.twoez.zupzup.item.controller.dto;
+package com.twoez.zupzup.item.controller;
 
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.item.controller.dto.response.ItemListResponse;

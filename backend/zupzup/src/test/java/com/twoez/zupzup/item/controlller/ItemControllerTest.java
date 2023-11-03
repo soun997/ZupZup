@@ -1,13 +1,12 @@
 package com.twoez.zupzup.item.controlller;
 
 import com.twoez.zupzup.fixture.item.ItemFixture;
-import com.twoez.zupzup.item.controller.dto.ItemController;
+import com.twoez.zupzup.item.controller.ItemController;
 import com.twoez.zupzup.item.domain.Item;
 import com.twoez.zupzup.item.service.ItemQueryService;
 import com.twoez.zupzup.support.docs.RestDocsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;

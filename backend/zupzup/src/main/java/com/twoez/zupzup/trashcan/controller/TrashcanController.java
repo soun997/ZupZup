@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/trashcans")
+@RequestMapping("api/v1/trashcans")
 @RequiredArgsConstructor
 public class TrashcanController {
 

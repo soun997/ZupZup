@@ -163,10 +163,12 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.body3};
     line-height: ${({ theme }) => theme.font.lineheight.body3};
+    color: ${({ theme }) => theme.color.dark};
 
     & > svg {
       width: 25px;
       margin: 0 8px 0 0;
+      filter: ${({ theme }) => theme.color.darkFilter};
     }
   `,
   DownloadButton: styled.a`
@@ -178,10 +180,12 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.body3};
     line-height: ${({ theme }) => theme.font.lineheight.body3};
+    color: ${({ theme }) => theme.color.dark};
 
     & > svg {
       width: 25px;
       margin: 0 8px 0 0;
+      filter: ${({ theme }) => theme.color.darkFilter};
     }
   `,
 };

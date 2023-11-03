@@ -92,6 +92,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: ${({ theme }) => theme.color.dark};
     margin: 0 0 14px 0;
   `,
   PloggingDistanceBox: styled.div`
@@ -159,6 +160,7 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.focus2};
     font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.focus2};
+    color: #fff;
     pointer-events: auto;
 
     & > svg {

@@ -2,6 +2,7 @@ package com.twoez.zupzup.global.advice.common;
 
 
 import com.twoez.zupzup.global.advice.AdviceLoggingUtils;
+import com.twoez.zupzup.global.exception.common.RedisParsingException;
 import com.twoez.zupzup.global.exception.common.UnexpectedException;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.global.response.ErrorResponse;
@@ -18,6 +19,13 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(UnexpectedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<ErrorResponse> unexpected(UnexpectedException exception) {
+        AdviceLoggingUtils.exceptionLog(exception);
+        return ApiResponse.internalServerError(ErrorResponse.from(exception.getExceptionCode()));
+    }
+
+    @ExceptionHandler(RedisParsingException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<ErrorResponse> redisParsing(RedisParsingException exception) {
         AdviceLoggingUtils.exceptionLog(exception);
         return ApiResponse.internalServerError(ErrorResponse.from(exception.getExceptionCode()));
     }

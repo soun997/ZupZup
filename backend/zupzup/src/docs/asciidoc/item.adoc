@@ -1,0 +1,22 @@
+= Item API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 모든 아이템 조회
+
+=== Request
+
+include::{snippets}/item-list/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/item-list/http-response.adoc[]

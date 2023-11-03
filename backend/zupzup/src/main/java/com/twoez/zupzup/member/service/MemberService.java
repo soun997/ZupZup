@@ -53,6 +53,10 @@ public class MemberService {
         refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
     }
 
+    public void logout(Long memberId) {
+        refreshTokenRedisRepository.deleteRefreshTokenByMemberId(String.valueOf(memberId));
+    }
+
     public boolean hasValidRefreshToken(Long memberId) {
         return refreshTokenRedisRepository.findRefreshTokenByMemberId(String.valueOf(memberId))
                 .isPresent();

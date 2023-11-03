@@ -39,11 +39,17 @@ public class AuthController {
         // 새로운 회원이라면 isNewMember->false 로 응답한다.
         Optional<Member> memberOptional = memberService.findMemberByOauth(authUser);
 
+        // TODO : 코드리뷰 받은 대로 리펙토링
         AuthResponse authResponse;
-        if (memberOptional.isPresent() && memberOptional.get().hasHealthInfo()) {
+        if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
-            authResponse = AuthResponse.from(authorizationToken, member.getId());
+            if ( memberOptional.get().hasHealthInfo() ) {
+                AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
+                authResponse = AuthResponse.from(authorizationToken, member.getId());
+            } else {
+                log.info("User registered but he or she did not write his/her health info");
+                authResponse = AuthResponse.unregisteredUser(member.getId());
+            }
         } else {
             Member member = memberService.save(authUser);
             authResponse = AuthResponse.unregisteredUser(member.getId());

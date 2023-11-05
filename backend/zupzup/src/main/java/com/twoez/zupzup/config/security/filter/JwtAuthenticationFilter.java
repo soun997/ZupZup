@@ -78,9 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // accessToken의 유효성 검증 + subject인 memberId 가져오기
         Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
 
-        // TODO : BlackList 검증
-        memberService.hasValidRefreshToken(memberIdInAccessToken);
-
+        // TODO : BlackList 검증 for Block request after logout
 
         // TODO : 예외 write
         LoginUser loginUser =

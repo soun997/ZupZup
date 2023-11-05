@@ -32,10 +32,12 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         } catch (ApplicationException e) {
             logRequestInfo(request);
             log.info("[ERROR - security filter] {}", e.getExceptionCode().getMessage());
+            e.printStackTrace();
             ExceptionResponseWriter.writeException(response, e.getExceptionCode());
         } catch (Exception e) {
             logRequestInfo(request);
             log.info("[ERROR - security filter] {}", e.getMessage());
+            e.printStackTrace();
             ExceptionResponseWriter.writeException(response, e.getMessage());
         }
     }

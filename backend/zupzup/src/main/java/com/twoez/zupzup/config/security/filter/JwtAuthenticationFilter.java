@@ -6,6 +6,7 @@ import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenExcep
 import com.twoez.zupzup.config.security.jwt.JwtValidator;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.util.Assertion;
+import com.twoez.zupzup.global.util.AuthorizationTokenUtils;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.domain.mapper.LoginUserMapper;
 import com.twoez.zupzup.member.service.MemberService;
@@ -29,7 +30,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String GRANT_TYPE_BEARER = "Bearer ";
 
     private final JwtValidator jwtValidator;
     private final MemberService memberService;
@@ -63,22 +63,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String validateBearerToken(String bearerToken) {
-        Assertion.with(bearerToken)
-                .setValidation(this::isValidBearerToken)
-                .validateOrThrow(InvalidAuthorizationHeaderException::new);
-        return bearerToken.substring(GRANT_TYPE_BEARER.length());
-    }
+        try {
+            AuthorizationTokenUtils.validateBearerToken(bearerToken);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidAuthorizationHeaderException();
+        }
 
-    private boolean isValidBearerToken(String bearerToken) {
-        return StringUtils.hasText(bearerToken) && bearerToken.startsWith(GRANT_TYPE_BEARER);
+        return AuthorizationTokenUtils.getTokenFromAuthorizationHeader(
+                bearerToken, AuthorizationTokenUtils.GRANT_TYPE_BEARER
+        );
     }
 
     private void setAuthenticationInSecurityContext(String token, HttpServletResponse response) {
         // accessToken의 유효성 검증 + subject인 memberId 가져오기
         Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
 
-        // 해당 memberId의 refresh이 있는지 검증
-        validateRefreshToken(memberIdInAccessToken);
+        // TODO : BlackList 검증
+        memberService.hasValidRefreshToken(memberIdInAccessToken);
+
 
         // TODO : 예외 write
         LoginUser loginUser =

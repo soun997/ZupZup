@@ -50,6 +50,8 @@ public class JwtProvider {
         return new AuthorizationToken(accessToken, refreshToken, GRANT_TYPE);
     }
 
+
+    // TODO : 토큰의 종류를 구분할 수 있도록 수정하기
     private String generateToken(Long memberId, Integer validationSecond) {
         Instant expiredTime = Instant.now().plus(validationSecond, ChronoUnit.SECONDS);
         return Jwts.builder()

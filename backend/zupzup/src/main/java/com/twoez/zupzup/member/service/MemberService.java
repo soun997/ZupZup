@@ -48,7 +48,17 @@ public class MemberService {
         refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
     }
 
+    // TODO : Transaction 처리
+    public AuthorizationToken reIssueAuthorizationToken(Long memberId) {
+        removeRefreshTokenByMemberId(memberId);
+        return issueAuthorizationToken(memberId);
+    }
+
     public void logout(Long memberId) {
+        removeRefreshTokenByMemberId(memberId);
+    }
+
+    private void removeRefreshTokenByMemberId(Long memberId) {
         RefreshToken refreshToken = refreshTokenRedisRepository
                 .findRefreshTokenByMemberId(String.valueOf(memberId))
                 .orElseThrow(() -> new InvalidAuthorizationTokenException(

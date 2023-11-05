@@ -1,6 +1,7 @@
 package com.twoez.zupzup.member.service;
 
 
+import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenException;
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
 import com.twoez.zupzup.config.security.jwt.RefreshToken;
@@ -37,14 +38,16 @@ public class MemberService {
     }
 
     public AuthorizationToken issueAuthorizationToken(Member member) {
-        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(member.getId());
+        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(
+                member.getId());
         saveRefreshToken(member.getId(), authorizationToken);
         return jwtProvider.createAuthorizationToken(member.getId());
     }
 
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
         Member member = findById(memberId);
-        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(member.getId());
+        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(
+                member.getId());
         saveRefreshToken(memberId, authorizationToken);
         return authorizationToken;
     }
@@ -54,7 +57,12 @@ public class MemberService {
     }
 
     public void logout(Long memberId) {
-        refreshTokenRedisRepository.deleteRefreshTokenByMemberId(String.valueOf(memberId));
+        RefreshToken refreshToken = refreshTokenRedisRepository
+                .findRefreshTokenByMemberId(String.valueOf(memberId))
+                .orElseThrow(() -> new InvalidAuthorizationTokenException(
+                        HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
+
+        refreshTokenRedisRepository.delete(refreshToken);
     }
 
     public boolean hasValidRefreshToken(Long memberId) {

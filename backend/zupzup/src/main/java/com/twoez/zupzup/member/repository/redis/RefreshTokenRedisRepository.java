@@ -6,6 +6,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface RefreshTokenRedisRepository extends CrudRepository<RefreshToken, String> {
     Optional<RefreshToken> findRefreshTokenByMemberId(String memberId);
-
-    void deleteRefreshTokenByMemberId(String memberId);
 }

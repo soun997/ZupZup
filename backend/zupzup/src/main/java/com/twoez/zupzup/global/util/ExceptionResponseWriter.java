@@ -34,4 +34,12 @@ public class ExceptionResponseWriter<T> {
         ErrorResponse errorResponse = ErrorResponse.from(httpExceptionCode);
         writeException(response, httpStatus, errorResponse);
     }
+
+    public static <T> void writeException(
+            HttpServletResponse response, String errorMessage)
+            throws IOException {
+        HttpExceptionCode exceptionCode = HttpExceptionCode.INTERNAL_SERVER_EXCEPTION;
+        ErrorResponse errorResponse = ErrorResponse.from(exceptionCode, errorMessage);
+        writeException(response, exceptionCode.getHttpStatus(), errorResponse);
+    }
 }

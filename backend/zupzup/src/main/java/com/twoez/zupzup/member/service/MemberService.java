@@ -37,17 +37,9 @@ public class MemberService {
         return memberQueryRepository.findByOauth(authUser.getOauth());
     }
 
-    public AuthorizationToken issueAuthorizationToken(Member member) {
-        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(
-                member.getId());
-        saveRefreshToken(member.getId(), authorizationToken);
-        return jwtProvider.createAuthorizationToken(member.getId());
-    }
-
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
-        Member member = findById(memberId);
         AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(
-                member.getId());
+                memberId);
         saveRefreshToken(memberId, authorizationToken);
         return authorizationToken;
     }
@@ -87,4 +79,9 @@ public class MemberService {
                 .findMemberByIsDeletedIsFalseAndIdEquals(memberId)
                 .orElseThrow(() -> new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
     }
+
+    public Member validateMember(Long memberId) {
+        return findById(memberId);
+    }
+
 }

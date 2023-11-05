@@ -6,7 +6,7 @@ import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
 import com.twoez.zupzup.config.security.jwt.RefreshToken;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
-import com.twoez.zupzup.member.controller.dto.MemberHealthRequest;
+import com.twoez.zupzup.member.controller.dto.RegisterMemberRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
@@ -71,14 +71,14 @@ public class MemberService {
     }
 
     @Transactional
-    public void modifyMemberHealth(MemberHealthRequest memberHealthRequest) {
-        Long memberId = memberHealthRequest.memberId();
+    public void modifyMemberHealth(RegisterMemberRequest registerMemberRequest) {
+        Long memberId = registerMemberRequest.memberId();
         Member member = findById(memberId);
         member.updateHealthInfo(
-                memberHealthRequest.birthYear(),
-                memberHealthRequest.gender(),
-                memberHealthRequest.height(),
-                memberHealthRequest.weight());
+                registerMemberRequest.birthYear(),
+                registerMemberRequest.gender(),
+                registerMemberRequest.height(),
+                registerMemberRequest.weight());
     }
 
     public Member findById(Long memberId) {

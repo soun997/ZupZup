@@ -4,7 +4,7 @@ package com.twoez.zupzup.member.controller;
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.MemberHealthCreateResponse;
-import com.twoez.zupzup.member.controller.dto.MemberHealthRequest;
+import com.twoez.zupzup.member.controller.dto.RegisterMemberRequest;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +27,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PutMapping("/health")
-    public ApiResponse<MemberHealthCreateResponse> memberHealthModify(
-            @RequestBody MemberHealthRequest memberHealthCreateRequest) {
-        log.info("memberHealthModify called!!");
-        log.info("request : {}", memberHealthCreateRequest);
-        Long requestedMemberId = memberHealthCreateRequest.memberId();
-        memberService.modifyMemberHealth(memberHealthCreateRequest);
+    public ApiResponse<MemberHealthCreateResponse> register(
+            @RequestBody RegisterMemberRequest registerMemberRequest) {
+        log.info("register called!!");
+        log.info("request : {}", registerMemberRequest);
+        Long requestedMemberId = registerMemberRequest.memberId();
+        memberService.modifyMemberHealth(registerMemberRequest);
+        memberService.validateMember(requestedMemberId);
         AuthorizationToken authorizationToken =
                 memberService.issueAuthorizationToken(requestedMemberId);
 

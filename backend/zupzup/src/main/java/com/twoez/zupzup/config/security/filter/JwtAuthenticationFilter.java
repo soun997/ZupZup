@@ -75,7 +75,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationInSecurityContext(String token, HttpServletResponse response) {
-        // TODO : refresh 요청일 경우 만료에 대한 검증은 하지 않음
+        // TODO 1 : refresh 요청일 경우 만료에 대한 검증은 하지 않음, 대신 RefreshToken이 있는지 검증을 해야함
+        // TODO 2 : refresh 요청일 경우 LoginUser가 아니므로 추가 Principle 구현하기
 
         // accessToken의 유효성 검증 + subject인 memberId 가져오기
         Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);

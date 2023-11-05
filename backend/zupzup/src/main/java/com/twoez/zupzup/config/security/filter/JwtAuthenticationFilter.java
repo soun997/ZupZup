@@ -75,6 +75,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationInSecurityContext(String token, HttpServletResponse response) {
+        // TODO : refresh 요청일 경우 만료에 대한 검증은 하지 않음
+
         // accessToken의 유효성 검증 + subject인 memberId 가져오기
         Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
 
@@ -90,6 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 loginUser, "", loginUser.getAuthorities()));
     }
 
+    // TODO : 이 로직은 수정해서 AuthController로 보내야함
     private void validateRefreshToken(Long memberId) {
         Assertion.with(memberId)
                 .setValidation(memberService::hasValidRefreshToken)

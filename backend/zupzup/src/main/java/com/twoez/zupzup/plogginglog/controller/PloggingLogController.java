@@ -66,6 +66,7 @@ public class PloggingLogController {
             @AuthenticationPrincipal LoginUser loginUser) {
 
         return ApiResponse.created(
-                PloggingLogAddResponse.from(ploggingLogService.add(request, loginUser.getMemberId())));
+                PloggingLogAddResponse.from(
+                        ploggingLogService.add(request, loginUser.getMemberId())));
     }
 }

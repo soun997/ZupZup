@@ -40,7 +40,7 @@ public class LoginUser implements OAuth2User, RequestUser {
     }
 
     @Override
-    public Long memberId() {
+    public Long getMemberId() {
         return member.getId();
     }
 }

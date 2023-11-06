@@ -43,7 +43,7 @@ public class MemberController {
 
     @PostMapping("/logout")
     public ApiResponse<String> logout(@AuthenticationPrincipal LoginUser loginUser) {
-        memberService.logout(loginUser.memberId());
+        memberService.logout(loginUser.getMemberId());
         return ApiResponse.status(HttpStatus.OK).build();
     }
 

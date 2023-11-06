@@ -26,7 +26,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PutMapping("/health")
+    @PutMapping("/register")
     public ApiResponse<MemberHealthCreateResponse> register(
             @RequestBody RegisterMemberRequest registerMemberRequest) {
         log.info("register called!!");
@@ -43,7 +43,7 @@ public class MemberController {
 
     @PostMapping("/logout")
     public ApiResponse<String> logout(@AuthenticationPrincipal LoginUser loginUser) {
-        memberService.logout(loginUser.getMemberId());
+        memberService.logout(loginUser.memberId());
         return ApiResponse.status(HttpStatus.OK).build();
     }
 

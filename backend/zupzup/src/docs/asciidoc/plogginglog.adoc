@@ -10,6 +10,18 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
+== 특정 월의 플로깅 기록 조회
+
+=== Request
+
+include::{snippets}/plogginglog-by-month/http-request.adoc[]
+
+include::{snippets}/plogginglog-by-month/query-parameters.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-by-month/http-response.adoc[]
+
 == 기간 내의 플로깅 기록 조회
 
 === Request

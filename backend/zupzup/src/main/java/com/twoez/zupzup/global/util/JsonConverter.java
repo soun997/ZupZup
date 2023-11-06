@@ -1,9 +1,9 @@
 package com.twoez.zupzup.global.util;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twoez.zupzup.global.exception.common.RedisParsingException;
-
 
 public class JsonConverter {
 
@@ -22,8 +22,7 @@ public class JsonConverter {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw new RedisParsingException(
-                    String.format("Cannot convert %s to Json", value));
+            throw new RedisParsingException(String.format("Cannot convert %s to Json", value));
         }
     }
 }

@@ -18,6 +18,10 @@ public class PloggingLogQueryService {
 
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
 
+    public List<PloggingLog> searchInMonth(LocalDate date, Long memberId) {
+        return ploggingLogQueryRepository.findByMonth(date, memberId);
+    }
+
     public List<PloggingLog> searchInPeriod(
             LocalDateTime startDate, LocalDateTime endDate, Long memberId) {
         return ploggingLogQueryRepository.findByBetweenStartDateAndEndDate(

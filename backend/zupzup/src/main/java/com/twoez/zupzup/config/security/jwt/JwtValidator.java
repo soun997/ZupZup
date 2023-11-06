@@ -129,15 +129,15 @@ public class JwtValidator {
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(authorizationToken);
-        } catch (ExpiredJwtException e) {
-            log.info("ExpiredJwtException");
-            throw new ExpiredAuthorizationTokenException();
         } catch (MalformedJwtException e) {
             log.info("MalformedJwtException");
             throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_MALFORMED);
         } catch (UnsupportedJwtException e) {
             log.info("UnsupportedJwtException");
             throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_UNSUPPORTED);
+        } catch (ExpiredJwtException e) {
+            log.info("ExpiredJwtException");
+            throw new ExpiredAuthorizationTokenException();
         } catch (Exception e) {
             log.warn("처리되지 않은 Exception 발생");
             e.printStackTrace();

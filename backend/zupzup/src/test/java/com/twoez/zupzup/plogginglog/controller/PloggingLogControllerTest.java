@@ -46,8 +46,32 @@ class PloggingLogControllerTest extends RestDocsTest {
     }
 
     @Test
+    @DisplayName("특정 월의 플로깅 기록을 조회한다.")
+    void ploggingLogByMonth() throws Exception {
+        LocalDate date = LocalDate.of(2023, 10, 1);
+        given(ploggingLogQueryService.searchInMonthDistinct(any(LocalDate.class), any(Long.class)))
+                .willReturn(List.of(date));
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/months")
+                                .queryParam("date", date.toString())
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isOk());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-by-month",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                queryParameters(parameterWithName("date").description("조회 월"))));
+    }
+
+    @Test
     @DisplayName("특정 기간의 플로깅 기록을 조회한다.")
-    void floggingLogByStartDateAndEndDate() throws Exception {
+    void ploggingLogByStartDateAndEndDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
@@ -82,7 +106,7 @@ class PloggingLogControllerTest extends RestDocsTest {
 
     @Test
     @DisplayName("특정 일의 플로깅 기록을 조회한다.")
-    void floggingLogByDate() throws Exception {
+    void ploggingLogByDate() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
@@ -108,7 +132,7 @@ class PloggingLogControllerTest extends RestDocsTest {
 
     @Test
     @DisplayName("최근 플로깅 기록을 조회한다.")
-    void recentFloggingLog() throws Exception {
+    void recentPloggingLog() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);

@@ -13,7 +13,7 @@ const MemberApis = {
     }),
   logout: () => instance.post(`${MEMBER_URL}/logout`),
   registInfo: (healthData: RegistInfo) =>
-    instance.put(`${MEMBER_URL}/health`, healthData),
+    instance.put(`${MEMBER_URL}/register`, healthData),
   getProfileInfo: () => instance.get(`${MEMBER_URL}/profiles`),
   getCharacterInfo: () => instance.get(`${MEMBER_URL}/profiles/characters`),
   getPloggingInfo: () => instance.get(`${MEMBER_URL}/profiles/total-ploggings`),

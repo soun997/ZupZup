@@ -40,7 +40,8 @@ public class MemberController {
     }
 
     @GetMapping("/profile")
-    public ApiResponse<MemberProfileResponse> memberProfileDetails(@AuthenticationPrincipal LoginUser loginUser) {
+    public ApiResponse<MemberProfileResponse> memberProfileDetails(
+            @AuthenticationPrincipal LoginUser loginUser) {
 
         return ApiResponse.ok(MemberProfileResponse.of(loginUser.getMember()));
     }

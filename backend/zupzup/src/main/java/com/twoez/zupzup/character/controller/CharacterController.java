@@ -22,8 +22,6 @@ public class CharacterController {
     public ApiResponse<CharacterDetailsResponse> characterDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
 
-        return ApiResponse.ok(
-                CharacterDetailsResponse.of(
-                        characterQueryService.search(loginUser)));
+        return ApiResponse.ok(CharacterDetailsResponse.of(characterQueryService.search(loginUser)));
     }
 }

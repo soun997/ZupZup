@@ -43,8 +43,9 @@ public class AuthController {
         AuthResponse authResponse;
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            if ( memberOptional.get().hasHealthInfo() ) {
-                AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
+            if (memberOptional.get().hasHealthInfo()) {
+                AuthorizationToken authorizationToken =
+                        memberService.issueAuthorizationToken(member);
                 authResponse = AuthResponse.from(authorizationToken, member.getId());
             } else {
                 log.info("User registered but he or she did not write his/her health info");

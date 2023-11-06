@@ -5,6 +5,7 @@ import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogAddResponse;
+import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogCalendarResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
@@ -29,6 +30,17 @@ public class PloggingLogController {
 
     private final PloggingLogQueryService ploggingLogQueryService;
     private final PloggingLogService ploggingLogService;
+
+    @GetMapping("/months")
+    public ApiResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
+            @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
+        return ApiResponse.ok(
+                ploggingLogQueryService.searchInMonth(date, loginUser.getMemberId()).stream()
+                        .map(ploggingLog -> ploggingLog.getStartDateTime().toLocalDate())
+                        .distinct()
+                        .map(PloggingLogCalendarResponse::new)
+                        .toList());
+    }
 
     @GetMapping("/period")
     public ApiResponse<List<PloggingLogListResponse>> ploggingListByPeriod(

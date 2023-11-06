@@ -1,5 +1,6 @@
 package com.twoez.zupzup.fixture.character;
 
+
 import com.twoez.zupzup.character.domain.Character;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.member.domain.Member;
@@ -7,13 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum CharacterFixture {
-
-    DEFAULT(
-            1L,
-            3,
-            300,
-            false,
-            MemberFixture.DEFAULT.getMember());
+    DEFAULT(1L, 3, 300, false, MemberFixture.DEFAULT.getMember());
 
     private Long id;
     private Integer level;
@@ -21,12 +16,7 @@ public enum CharacterFixture {
     private Boolean isDeleted;
     private Member member;
 
-    CharacterFixture(
-            Long id,
-            Integer level,
-            Integer exp,
-            Boolean isDeleted,
-            Member member) {
+    CharacterFixture(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
         this.id = id;
         this.level = level;
         this.exp = exp;

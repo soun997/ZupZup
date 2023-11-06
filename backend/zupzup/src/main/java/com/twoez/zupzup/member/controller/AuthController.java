@@ -1,19 +1,20 @@
 package com.twoez.zupzup.member.controller;
 
 
+import com.twoez.zupzup.config.security.jwt.AuthRequestUser;
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
+import com.twoez.zupzup.config.security.jwt.ExpiredTokenUser;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.AuthRequest;
 import com.twoez.zupzup.member.controller.dto.AuthResponse;
+import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
-import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.service.IdTokenService;
 import com.twoez.zupzup.member.service.MemberService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,12 +64,13 @@ public class AuthController {
 
     @PostMapping("re-issue")
     public ApiResponse<AuthResponse> reIssueAuthorizationToken(
-            @AuthenticationPrincipal LoginUser loginUser
+            @AuthRequestUser ExpiredTokenUser expiredTokenUser,
+            @RequestBody @Validated ReissueTokenRequest reissueTokenRequest
     ) {
-        log.info("[AuthController] memberId : {} - AuthorizationToken 재발급", loginUser.getMemberId());
-        Long memberId = loginUser.getMemberId();
+        log.info("[AuthController] memberId : {} - AuthorizationToken 재발급", expiredTokenUser.memberId());
+        Long memberId = expiredTokenUser.memberId();
         AuthorizationToken authorizationToken = memberService.reIssueAuthorizationToken(
-                memberId);
+                memberId, reissueTokenRequest);
         return ApiResponse.ok(AuthResponse.from(authorizationToken, memberId));
     }
 }

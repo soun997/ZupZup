@@ -45,7 +45,9 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
+        return web -> web.ignoring().requestMatchers(
+                new AntPathRequestMatcher("/h2-console/**"),
+                new AntPathRequestMatcher("/favicon.ico"));
     }
 
     @Bean
@@ -63,9 +65,11 @@ public class SecurityConfig {
                         request ->
                                 request.requestMatchers(
                                                 new MvcRequestMatcher(introspector, "login/**"),
+                                                new MvcRequestMatcher(introspector, "error"),
                                                 new MvcRequestMatcher(introspector, "api/v1/auth"),
                                                 new MvcRequestMatcher(
-                                                        introspector, "api/v1/members/health"))
+                                                        introspector, "api/v1/members/health"),
+                                                new MvcRequestMatcher(introspector, "api/v1/docs/api"))
                                         .permitAll()
                                         .requestMatchers(
                                                 new MvcRequestMatcher(introspector, "api/**"))

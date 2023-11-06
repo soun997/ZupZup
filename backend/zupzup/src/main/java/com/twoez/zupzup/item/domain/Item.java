@@ -1,5 +1,6 @@
 package com.twoez.zupzup.item.domain;
 
+
 import com.twoez.zupzup.global.audit.BaseTime;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -43,8 +44,7 @@ public class Item extends BaseTime {
             Integer exp,
             Integer price,
             String itemImgUrl,
-            Boolean isDeleted
-    ){
+            Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -53,6 +53,4 @@ public class Item extends BaseTime {
         this.itemImgUrl = itemImgUrl;
         this.isDeleted = isDeleted;
     }
-
 }
-

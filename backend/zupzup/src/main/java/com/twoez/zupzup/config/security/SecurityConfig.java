@@ -72,6 +72,7 @@ public class SecurityConfig {
                                                 new MvcRequestMatcher(introspector, "login/**"),
                                                 new MvcRequestMatcher(introspector, "error"),
                                                 new MvcRequestMatcher(introspector, "api/v1/auth"),
+                                                new MvcRequestMatcher(introspector, "actuator/**"),
                                                 new MvcRequestMatcher(
                                                         introspector, "api/v1/members/register"),
                                                 new MvcRequestMatcher(

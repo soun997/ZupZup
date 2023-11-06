@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -52,6 +53,7 @@ public class PloggingLog extends BaseTime {
     private String routeImageUrl;
 
     @Column(nullable = false)
+    @ColumnDefault("false")
     private Boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)

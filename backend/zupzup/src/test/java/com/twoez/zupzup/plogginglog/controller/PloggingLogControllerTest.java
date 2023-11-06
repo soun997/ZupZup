@@ -15,9 +15,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
+import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import com.twoez.zupzup.support.docs.RestDocsTest;
@@ -157,10 +159,19 @@ class PloggingLogControllerTest extends RestDocsTest {
     @DisplayName("플로깅 종료 시 해당 플로깅에 대한 기록을 저장한다.")
     void ploggingLogAddTest() throws Exception {
 
-        PloggingLogRequest request = PloggingLogFixture.DEFAULT.getPloggingLogRequest();
+        PloggingLogRequest request =
+                new PloggingLogRequest(
+                        10,
+                        LocalDateTime.of(2023, 10, 30, 0, 0),
+                        LocalDateTime.of(2023, 10, 30, 2, 0),
+                        7200,
+                        600,
+                        50,
+                        200,
+                        "https://image.com");
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Member.class)))
                 .willReturn(ploggingLog);
 
         ResultActions perform =
@@ -175,5 +186,24 @@ class PloggingLogControllerTest extends RestDocsTest {
 
         perform.andDo(print())
                 .andDo(document("plogginglog-add", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("사용자는 플로깅 기록 집계를 조회할 수 있다.")
+    void totalPloggingLogDetailsTest() throws Exception {
+
+        TotalPloggingLog totalPloggingLog = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        given(ploggingLogQueryService.searchTotalPloggingLog(any(Member.class)))
+                .willReturn(totalPloggingLog);
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/total").contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isOk())
+                .andExpect(jsonPath("$.results.totalDistance").value(100L))
+                .andExpect(jsonPath("$.results.totalCount").value(10L));
+        perform.andDo(print())
+                .andDo(document("plogginglog-total", getDocumentRequest(), getDocumentResponse()));
     }
 }

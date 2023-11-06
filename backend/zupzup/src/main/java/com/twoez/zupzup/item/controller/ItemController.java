@@ -36,7 +36,7 @@ public class ItemController {
                         itemQueryService.search(itemId)));
     }
 
-    @PostMapping("/buy")
+    @PatchMapping("/buy")
     public ApiResponse<ItemBuyResponse> itemBuy(
             @RequestParam Long itemId,
             @AuthenticationPrincipal LoginUser loginUser){

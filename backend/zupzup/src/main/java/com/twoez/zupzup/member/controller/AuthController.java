@@ -46,7 +46,6 @@ public class AuthController {
         AuthResponse authResponse;
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            // TODO : member로 바꾸기
             if (memberOptional.get().hasHealthInfo()) {
                 AuthorizationToken authorizationToken =
                         memberService.issueAuthorizationToken(member.getId());

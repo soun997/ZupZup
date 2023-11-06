@@ -1,7 +1,6 @@
 package com.twoez.zupzup.plogging.service;
 
 
-import com.twoez.zupzup.plogging.domain.Plogger;
 import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,33 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class PloggingService {
 
-    private final PloggingRedisRepository ploggerRedisRepository;
-    private static final String TOTAL_PLOGGER = "total_plogger";
+    private final PloggingRedisRepository ploggingRedisRepository;
 
-    @Transactional
-    public Plogger increaseTotalPlogger() {
+    public Long increaseTotalPlogger() {
 
-        return ploggerRedisRepository.save(
-                ploggerRedisRepository
-                        .findById(TOTAL_PLOGGER)
-                        .map(Plogger::increase)
-                        .orElse(new Plogger(TOTAL_PLOGGER, 1L)));
+        return ploggingRedisRepository.increase();
     }
 
-    @Transactional
-    public Plogger decreaseTotalPlogger() {
+    public Long decreaseTotalPlogger() {
 
-        return ploggerRedisRepository.save(
-                ploggerRedisRepository
-                        .findById(TOTAL_PLOGGER)
-                        .map(Plogger::decrease)
-                        .orElse(new Plogger(TOTAL_PLOGGER, 0L)));
+        return ploggingRedisRepository.decrease();
     }
 
-    public Plogger searchTotalPlogger() {
+    public Long searchTotalPlogger() {
 
-        return ploggerRedisRepository
-                .findById(TOTAL_PLOGGER)
-                .orElse(new Plogger(TOTAL_PLOGGER, 0L));
+        return ploggingRedisRepository.findTotalPlogger();
     }
 }

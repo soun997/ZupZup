@@ -30,6 +30,22 @@ class PloggingLogQueryRepositoryTest extends IntegrationTestSupport {
     }
 
     @Test
+    @DisplayName("특정 월의 플로깅 로그들을 조회한다.")
+    void searchInMonth() {
+        LocalDateTime now = LocalDateTime.now();
+        ploggingLogRepository.save(
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member));
+
+        List<PloggingLog> ploggingLogs =
+                ploggingLogQueryRepository.findByMonth(now.toLocalDate(), member.getId());
+
+        assertThat(ploggingLogs).hasSize(1);
+        assertThat(ploggingLogs.get(0).getStartDateTime().getYear()).isEqualTo(now.getYear());
+        assertThat(ploggingLogs.get(0).getStartDateTime().getMonthValue())
+                .isEqualTo(now.getMonthValue());
+    }
+
+    @Test
     @DisplayName("기간 내의 플로깅 로그들을 조회한다.")
     void searchInPeriod() {
         LocalDateTime now = LocalDateTime.now();

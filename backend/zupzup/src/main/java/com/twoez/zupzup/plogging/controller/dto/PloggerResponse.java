@@ -1,12 +1,9 @@
 package com.twoez.zupzup.plogging.controller.dto;
 
-
-import com.twoez.zupzup.plogging.domain.Plogger;
-
 public record PloggerResponse(Long totalPlogger) {
 
-    public static PloggerResponse from(Plogger plogger) {
+    public static PloggerResponse from(Long totalPlogger) {
 
-        return new PloggerResponse(plogger.getTotal());
+        return new PloggerResponse(totalPlogger);
     }
 }

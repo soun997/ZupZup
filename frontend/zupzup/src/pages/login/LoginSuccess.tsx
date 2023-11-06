@@ -1,15 +1,21 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MemberApi } from 'api';
-import * as useAuth from 'hooks';
 import * as utils from 'utils';
 import { LoadingAnimation } from 'components';
 import styled from 'styled-components';
+import {
+  setAccessToken,
+  setMemberId,
+  setRefreshToken,
+  useAppDispatch,
+} from 'hooks';
 
 const LoginSuccess = () => {
   const navigate = useNavigate();
 
   const params = new URLSearchParams(window.location.search);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const auth = async () => {
@@ -19,20 +25,21 @@ const LoginSuccess = () => {
       };
 
       try {
-        const res = await MemberApi.login(token.authToken!, token.provider!);
+        console.log('token >: ', token);
 
+        const res = await MemberApi.login(token.authToken!, token.provider!);
         const data = res.data.results;
         console.log('login data >: ', data);
 
-        useAuth.setMemberId(data.memberId);
+        dispatch(setMemberId(data.memberId));
 
         if (data.isNewMember) {
           navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL);
         } else {
           const accessToken = data.accessToken;
           const refreshToken = data.refreshToken;
-          useAuth.setAccessToken(accessToken);
-          useAuth.setRefreshToken(refreshToken);
+          dispatch(setAccessToken(accessToken));
+          dispatch(setRefreshToken(refreshToken));
           navigate(utils.URL.PLOGGING.LOBBY);
         }
       } catch (err) {

@@ -4,6 +4,7 @@ package com.twoez.zupzup.member.controller;
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.MemberHealthCreateResponse;
+import com.twoez.zupzup.member.controller.dto.MemberProfileResponse;
 import com.twoez.zupzup.member.controller.dto.RegisterMemberRequest;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.service.MemberService;
@@ -47,6 +48,14 @@ public class MemberController {
         return ApiResponse.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/profile")
+    public ApiResponse<MemberProfileResponse> memberProfileDetails(
+            @AuthenticationPrincipal LoginUser loginUser) {
+
+        return ApiResponse.ok(MemberProfileResponse.of(loginUser.getMember()));
+    }
+
+    // 테스트 api
     @GetMapping("/test")
     public ApiResponse<String> testtest(@AuthenticationPrincipal LoginUser loginUser) {
         log.info("test called!!");

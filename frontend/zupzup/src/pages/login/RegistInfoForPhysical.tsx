@@ -15,6 +15,9 @@ const RegistInfo = () => {
   const inputRefForWeight = useRef<HTMLInputElement>(null);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
+  const [heightValid, setHeightValid] = useState<boolean>(false);
+  const [weightValid, setWeightValid] = useState<boolean>(false);
+
   const inputCheck = (
     heightInput: string | undefined,
     weightInput: string | undefined,
@@ -34,6 +37,17 @@ const RegistInfo = () => {
   const handleInputChange = () => {
     const heightInput = inputRefForHeight.current?.value;
     const weightInput = inputRefForWeight.current?.value;
+
+    if (heightInput && Number(heightInput) > 100 && Number(heightInput) < 200) {
+      setHeightValid(true);
+    } else {
+      setHeightValid(false);
+    }
+    if (weightInput && Number(weightInput) > 10 && Number(weightInput) < 200) {
+      setWeightValid(true);
+    } else {
+      setWeightValid(false);
+    }
     setNextButtonDisabled(!inputCheck(heightInput, weightInput));
   };
 
@@ -65,12 +79,16 @@ const RegistInfo = () => {
           inputRef={inputRefForHeight}
           onChange={handleInputChange}
           title="키 (cm)"
+          validCheck={heightValid}
+          errorMessage={'101 ~ 199cm 사이의 키를 입력해주세요'}
         />
         <RegistInfoInput
           holderText="예) 70"
           inputRef={inputRefForWeight}
           onChange={handleInputChange}
           title="몸무게 (kg)"
+          validCheck={weightValid}
+          errorMessage={'11 ~ 199kg 사이의 몸무게를 입력해주세요'}
         />
       </RegistInfoFrame.InputSection>
       <RegistInfoFrame.BottomSection>

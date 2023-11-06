@@ -31,6 +31,21 @@ class PloggingLogQueryServiceTest {
     Member member = MemberFixture.DEFAULT.getMember();
 
     @Test
+    @DisplayName("특정 월의 플로깅 로그들을 가져온다.")
+    void searchInMonth() {
+        LocalDateTime now = LocalDateTime.now();
+        PloggingLog ploggingLog =
+                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now.plusDays(2), member);
+        given(ploggingLogQueryRepository.findByMonth(any(LocalDate.class), any(Long.class)))
+                .willReturn(List.of(ploggingLog));
+
+        List<PloggingLog> ploggingLogs =
+                ploggingLogQueryService.searchInMonth(now.toLocalDate(), member.getId());
+
+        assertThat(ploggingLogs).containsExactly(ploggingLog);
+    }
+
+    @Test
     @DisplayName("기간 내의 플로깅 로그들을 가져온다.")
     void searchInPeriod() {
         LocalDateTime now = LocalDateTime.now();

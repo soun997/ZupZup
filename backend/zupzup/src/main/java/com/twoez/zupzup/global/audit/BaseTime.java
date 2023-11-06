@@ -21,7 +21,7 @@ public class BaseTime {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @LastModifiedDate private LocalDateTime modifiedAt;
+    @LastModifiedDate private LocalDateTime modifiedAt = LocalDateTime.now();
 }

@@ -64,3 +64,10 @@ export const AUTH = {
   MEMBER_ID: 'member-id',
   NICKNAME: 'nickname',
 };
+
+export const THEME = {
+  KEY: 'theme',
+  LIGHT: 'light',
+  DARK: 'dark',
+  SYSTEM: 'system',
+};

@@ -14,7 +14,9 @@ const CharacterInfo = () => {
     <S.Wrap>
       <TopNavigation />
       <S.Content>
-        <S.Image src="/assets/character/penguin-message.png"></S.Image>
+        <S.Image
+          src={`${import.meta.env.VITE_S3_URL}/character/penguin-message.png`}
+        ></S.Image>
         <S.TextContent>
           안녕하세요, {'투이지'}님<br />
           저는 {characterName}이에요. <br />

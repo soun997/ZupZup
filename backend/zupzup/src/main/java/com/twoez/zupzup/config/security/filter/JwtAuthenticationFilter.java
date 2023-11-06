@@ -1,9 +1,12 @@
 package com.twoez.zupzup.config.security.filter;
 
 
+import com.twoez.zupzup.config.security.exception.ExpiredAuthorizationTokenException;
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationHeaderException;
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenException;
+import com.twoez.zupzup.config.security.jwt.ExpiredTokenUser;
 import com.twoez.zupzup.config.security.jwt.JwtValidator;
+import com.twoez.zupzup.config.security.user.RequestUser;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.util.Assertion;
 import com.twoez.zupzup.global.util.AuthorizationTokenUtils;
@@ -15,13 +18,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
@@ -30,6 +33,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String RE_ISSUE_TOKEN_URI = "/api/v1/auth/re-issue";
 
     private final JwtValidator jwtValidator;
     private final MemberService memberService;
@@ -51,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .ifPresent(
                         (bearerToken) -> {
                             String token = validateBearerToken(bearerToken);
-                            setAuthenticationInSecurityContext(token, response);
+                            setAuthenticationInSecurityContext(request, token);
                         });
 
         doFilter(request, response, filterChain);
@@ -74,23 +78,48 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         );
     }
 
-    private void setAuthenticationInSecurityContext(String token, HttpServletResponse response) {
-        // TODO 1 : refresh 요청일 경우 만료에 대한 검증은 하지 않음, 대신 RefreshToken이 있는지 검증을 해야함
-        // TODO 2 : refresh 요청일 경우 LoginUser가 아니므로 추가 Principle 구현하기
-
-        // accessToken의 유효성 검증 + subject인 memberId 가져오기
-        Long memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
+    private void setAuthenticationInSecurityContext(HttpServletRequest request, String token) {
 
         // TODO : BlackList 검증 for Block request after logout
 
         // TODO : 예외 write
-        LoginUser loginUser =
-                loginUserMapper.toLoginUser(memberService.findById(memberIdInAccessToken));
+        RequestUser requestUser = getRequestUserFromToken(request, token);
 
         SecurityContextHolder.getContext()
-                .setAuthentication(
-                        new UsernamePasswordAuthenticationToken(
-                                loginUser, "", loginUser.getAuthorities()));
+                .setAuthentication(convertToAuthenticationToken(request, requestUser));
+    }
+
+    private UsernamePasswordAuthenticationToken convertToAuthenticationToken(HttpServletRequest request, RequestUser requestUser) {
+        String requestUri = request.getRequestURI();
+        if (requestUri.equals(RE_ISSUE_TOKEN_URI)) {
+            return new UsernamePasswordAuthenticationToken(requestUser, "", new ArrayList<>());
+        }
+        LoginUser loginUser = (LoginUser) requestUser;
+        return new UsernamePasswordAuthenticationToken(
+                loginUser, "", loginUser.getAuthorities());
+    }
+
+    /**
+     * accessToken을 받아 RequestUser를 반환합니다. 만약 accessToken이 만료되지 않은 유효한 Token이라면 LoginUser를 반환하고
+     * 만료된 토큰이고 토큰 재발급 요청이라면 ExpiredTokenUser를 반환합니다.
+     * @param request
+     * @param token accessToken
+     * @return
+     */
+    private RequestUser getRequestUserFromToken(HttpServletRequest request, String token) {
+        String requestUri = request.getRequestURI();
+        Long memberIdInAccessToken;
+
+        try {
+            memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
+            return loginUserMapper.toLoginUser(memberService.findById(memberIdInAccessToken));
+        } catch (ExpiredAuthorizationTokenException e) {
+            if (requestUri.equals(RE_ISSUE_TOKEN_URI)) {
+                memberIdInAccessToken = HttpRequestUtils.getRequestMemberIdFromHeader(request);
+                return new ExpiredTokenUser(memberIdInAccessToken);
+            }
+            throw e;
+        }
     }
 
     // TODO : 이 로직은 수정해서 AuthController로 보내야함

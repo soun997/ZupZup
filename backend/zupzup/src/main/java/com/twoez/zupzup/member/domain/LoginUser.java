@@ -1,6 +1,7 @@
 package com.twoez.zupzup.member.domain;
 
 
+import com.twoez.zupzup.config.security.user.RequestUser;
 import java.util.Collection;
 import java.util.Map;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
-public class LoginUser implements OAuth2User {
+public class LoginUser implements OAuth2User, RequestUser {
 
     private final Member member;
     private final Map<String, Object> attributes;
@@ -38,7 +39,8 @@ public class LoginUser implements OAuth2User {
         return member.getId().toString();
     }
 
-    public Long getMemberId() {
+    @Override
+    public Long memberId() {
         return member.getId();
     }
 }

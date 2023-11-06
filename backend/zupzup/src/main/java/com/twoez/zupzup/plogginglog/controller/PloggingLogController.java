@@ -8,6 +8,7 @@ import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogAddRespon
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogCalendarResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
+import com.twoez.zupzup.plogginglog.controller.dto.response.TotalPloggingLogDetailsResponse;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import java.time.LocalDate;
@@ -79,6 +80,15 @@ public class PloggingLogController {
 
         return ApiResponse.created(
                 PloggingLogAddResponse.from(
-                        ploggingLogService.add(request, loginUser.getMemberId())));
+                        ploggingLogService.add(request, loginUser.getMember())));
+    }
+
+    @GetMapping("/total")
+    public ApiResponse<TotalPloggingLogDetailsResponse> totalPloggingLogDetails(
+            @AuthenticationPrincipal LoginUser loginUser) {
+
+        return ApiResponse.ok(
+                TotalPloggingLogDetailsResponse.from(
+                        ploggingLogQueryService.searchTotalPloggingLog(loginUser.getMember())));
     }
 }

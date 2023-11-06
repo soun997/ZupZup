@@ -1,6 +1,7 @@
 package com.twoez.zupzup.config.security.jwt;
 
 
+import com.twoez.zupzup.config.security.exception.ExpiredAuthorizationTokenException;
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenException;
 import com.twoez.zupzup.config.security.exception.InvalidIdTokenException;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
@@ -108,7 +109,7 @@ public class JwtValidator {
         return keyFactory.generatePublic(keySpec);
     }
 
-    public Long getMemberIdFromAccessToken(String accessToken) {
+    public Long getMemberIdFromAccessToken(String accessToken) throws ExpiredAuthorizationTokenException {
         Jws<Claims> validatedClaims = validateAuthorizationToken(accessToken);
         String memberId = validatedClaims.getBody().getSubject();
         Assertion.with(memberId)
@@ -121,7 +122,7 @@ public class JwtValidator {
         return Long.valueOf(memberId);
     }
 
-    private Jws<Claims> validateAuthorizationToken(String authorizationToken) {
+    private Jws<Claims> validateAuthorizationToken(String authorizationToken) throws ExpiredAuthorizationTokenException {
         log.info("validateAuthorizationToken");
         try {
             return Jwts.parserBuilder()
@@ -130,7 +131,7 @@ public class JwtValidator {
                     .parseClaimsJws(authorizationToken);
         } catch (ExpiredJwtException e) {
             log.info("ExpiredJwtException");
-            throw new InvalidAuthorizationTokenException(HttpExceptionCode.AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION);
+            throw new ExpiredAuthorizationTokenException();
         } catch (MalformedJwtException e) {
             log.info("MalformedJwtException");
             throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_MALFORMED);

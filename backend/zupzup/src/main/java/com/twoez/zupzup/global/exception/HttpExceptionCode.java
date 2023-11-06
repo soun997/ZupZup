@@ -53,7 +53,9 @@ public enum HttpExceptionCode {
 
     REDIS_PARSING_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_REDIS_001", "Redis 객체를 Json 형태로 변환하지 못했습니다."),
 
-    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_ITEM_001", "아이템을 찾을 수 없습니다.");
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_ITEM_001", "아이템을 찾을 수 없습니다."),
+
+    COIN_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "ERR_ITEM_002", "코인이 충분하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

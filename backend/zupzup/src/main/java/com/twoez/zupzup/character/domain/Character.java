@@ -48,4 +48,16 @@ public class Character extends BaseTime {
         this.isDeleted = isDeleted;
         this.member = member;
     }
+
+    public void addExp(Integer itemExp) {
+        this.exp += itemExp;
+        if(this.level == 10 && this.exp >= 100){
+            this.exp = 100;
+            return;
+        }
+        if(this.exp >= 100){
+            this.level++;
+            this.exp -=100;
+        }
+    }
 }

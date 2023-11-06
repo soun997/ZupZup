@@ -1,6 +1,7 @@
 package com.twoez.zupzup.item.controller;
 
 import com.twoez.zupzup.global.response.ApiResponse;
+import com.twoez.zupzup.item.controller.dto.response.ItemBuyResponse;
 import com.twoez.zupzup.item.controller.dto.response.ItemListResponse;
 import com.twoez.zupzup.item.controller.dto.response.ItemResponse;
 import com.twoez.zupzup.item.service.ItemQueryService;
@@ -36,11 +37,12 @@ public class ItemController {
     }
 
     @PostMapping("/buy")
-    public ApiResponse<?> itemBuy(
+    public ApiResponse<ItemBuyResponse> itemBuy(
             @RequestParam Long itemId,
             @AuthenticationPrincipal LoginUser loginUser){
-        itemService.buy(itemId, loginUser.getMemberId());
-        return ApiResponse.ok().build();
+        return ApiResponse.ok(
+                ItemBuyResponse.from(itemService.buy(itemId, loginUser.getMemberId()))
+        );
     }
 
 }

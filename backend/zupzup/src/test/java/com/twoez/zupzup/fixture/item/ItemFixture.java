@@ -1,21 +1,10 @@
 package com.twoez.zupzup.fixture.item;
 
+
 import com.twoez.zupzup.item.domain.Item;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 public enum ItemFixture {
-    DEFAULT(
-            1L,
-            "아이템",
-            "아이템 설명",
-            10,
-            1000,
-            "https://image.com",
-            false
-    );
+    DEFAULT(1L, "아이템", "아이템 설명", 10, 30, "https://image.com", false);
 
     private Long id;
     private String name;
@@ -25,14 +14,14 @@ public enum ItemFixture {
     private String itemImgUrl;
     private Boolean isDeleted;
 
-    ItemFixture(Long id,
-                String name,
-                String description,
-                Integer exp,
-                Integer price,
-                String itemImgUrl,
-                Boolean isDeleted
-    ){
+    ItemFixture(
+            Long id,
+            String name,
+            String description,
+            Integer exp,
+            Integer price,
+            String itemImgUrl,
+            Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -42,7 +31,7 @@ public enum ItemFixture {
         this.isDeleted = isDeleted;
     }
 
-    public Item getItem(Long id, String name){
+    public Item getItem(Long id, String name) {
         return Item.builder()
                 .id(id)
                 .name(name)
@@ -54,4 +43,15 @@ public enum ItemFixture {
                 .build();
     }
 
+    public Item getItem(Long id, String name, Integer exp, Integer price) {
+        return Item.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .exp(exp)
+                .price(price)
+                .itemImgUrl(itemImgUrl)
+                .isDeleted(isDeleted)
+                .build();
+    }
 }

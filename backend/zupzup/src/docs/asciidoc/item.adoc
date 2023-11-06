@@ -32,3 +32,42 @@ include::{snippets}/item-detail/http-request.adoc[]
 === Response
 
 include::{snippets}/item-detail/http-response.adoc[]
+
+
+== 아이템 구매
+
+=== Request
+
+include::{snippets}/item-buy/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/item-buy/http-response.adoc[]
+
+
+
+
+= Item Exception
+
+== 아이템 존재하지 않음
+
+=== Request
+
+include::{snippets}/item-buy-search-fail/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/item-buy-search-fail/http-response.adoc[]
+
+== 아이템 구매 실패
+
+=== Request
+
+include::{snippets}/item-buy-fail/http-request.adoc[]
+
+
+=== Response
+
+include::{snippets}/item-buy-fail/http-response.adoc[]

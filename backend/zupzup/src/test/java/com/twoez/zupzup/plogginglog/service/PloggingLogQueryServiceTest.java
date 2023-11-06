@@ -10,7 +10,9 @@ import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
+import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class PloggingLogQueryServiceTest {
 
     @Mock PloggingLogQueryRepository ploggingLogQueryRepository;
+    @Mock TotalPloggingLogRepository totalPloggingLogRepository;
     @InjectMocks PloggingLogQueryService ploggingLogQueryService;
 
     Member member = MemberFixture.DEFAULT.getMember();
@@ -102,5 +105,23 @@ class PloggingLogQueryServiceTest {
 
         assertThatThrownBy(() -> ploggingLogQueryService.searchRecentLog(member.getId()))
                 .isInstanceOf(PloggingLogNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("조회할 플로깅 기록 집계가 없다면 새로 생성한다.")
+    void totalPloggingLogInitTest() {
+
+        given(totalPloggingLogRepository.findByMemberId(member.getId()))
+                .willReturn(Optional.empty());
+        given(totalPloggingLogRepository.save(any(TotalPloggingLog.class)))
+                .willReturn(TotalPloggingLog.init(member));
+
+        TotalPloggingLog result = ploggingLogQueryService.searchTotalPloggingLog(member);
+
+        assertThat(result.getTotalCount()).isZero();
+        assertThat(result.getTotalDistance()).isZero();
+        assertThat(result.getTotalDurationTime()).isZero();
+        assertThat(result.getTotalCalories()).isZero();
+        assertThat(result.getTotalGatheredTrash()).isZero();
     }
 }

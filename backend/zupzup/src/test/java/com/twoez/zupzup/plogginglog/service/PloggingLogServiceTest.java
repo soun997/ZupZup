@@ -4,11 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
-import com.twoez.zupzup.member.repository.MemberRepository;
+import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
+import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
+import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -22,11 +26,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
-    @Mock MemberRepository memberRepository;
+    @Mock TotalPloggingLogRepository totalPloggingLogRepository;
     @InjectMocks PloggingLogService ploggingLogService;
 
     @Test
-    @DisplayName("플로깅 기록을 저장한다.")
+    @DisplayName("플로깅 기록을 저장하고, 기록 집계도 갱신한다.")
     void addPloggingLogTest() {
         PloggingLogRequest request =
                 new PloggingLogRequest(
@@ -39,13 +43,18 @@ public class PloggingLogServiceTest {
                         200,
                         "https://image.com");
 
+        Member member = MemberFixture.DEFAULT.getMember();
+        TotalPloggingLog originTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        TotalPloggingLog updatedTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+        given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(updatedTotal));
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
-        given(memberRepository.findById(any(Long.class)))
-                .willReturn(Optional.of(ploggingLog.getMember()));
 
-        PloggingLog result = ploggingLogService.add(request, 1L);
+        PloggingLog result = ploggingLogService.add(request, member);
 
         assertThat(result).isEqualTo(ploggingLog);
+        assertThat(updatedTotal.getTotalDistance())
+                .isEqualTo(originTotal.getTotalDistance() + request.distance());
     }
 }

@@ -31,6 +31,7 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
         log.info("request : {}", request);
         log.info("response: {}", response);
         arg2.printStackTrace();
+        log.info("stackTrace over");
         HttpExceptionCode authenticationExceptionCode =
                 HttpExceptionCode.SECURITY_AUTHENTICATION_EXCEPTION;
 

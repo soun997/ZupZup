@@ -18,8 +18,7 @@ public class CharacterQueryRepository extends QuerydslRepositorySupport {
 
         return Optional.ofNullable(
                 selectFrom(character)
-                        .where(character.member.id.eq(id)
-                                .and(character.isDeleted.isFalse()))
+                        .where(character.member.id.eq(id).and(character.isDeleted.isFalse()))
                         .fetchOne());
     }
 }

@@ -31,18 +31,13 @@ public class CharacterControllerTest extends RestDocsTest {
 
         Character character = CharacterFixture.DEFAULT.getCharacter();
 
-        given(characterQueryService.search(any(LoginUser.class)))
-                .willReturn(character);
+        given(characterQueryService.search(any(LoginUser.class))).willReturn(character);
 
-        ResultActions perform = mockMvc.perform(
-                get("/api/v1/characters"));
+        ResultActions perform = mockMvc.perform(get("/api/v1/characters"));
 
         perform.andExpect(status().isOk());
 
         perform.andDo(print())
-                .andDo(document(
-                        "character-details",
-                        getDocumentRequest(),
-                        getDocumentResponse()));
+                .andDo(document("character-details", getDocumentRequest(), getDocumentResponse()));
     }
 }

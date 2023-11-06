@@ -25,16 +25,17 @@ public class MemberControllerTest extends RestDocsTest {
     @DisplayName("사용자는 본인의 프로필을 조회할 수 있다.")
     void memberProfileDetailsTest() throws Exception {
 
-        ResultActions perform = mockMvc.perform(
-                        get("/api/v1/members/profile")
-                                .contentType(MediaType.APPLICATION_JSON));
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/members/profile").contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk());
 
         perform.andDo(print())
-                .andDo(document(
-                        "member-profile-details",
-                        getDocumentRequest(),
-                        getDocumentResponse()));
+                .andDo(
+                        document(
+                                "member-profile-details",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 }

@@ -2,6 +2,8 @@ package com.twoez.zupzup.plogginglog.repository;
 
 import static com.twoez.zupzup.plogginglog.domain.QPloggingLog.ploggingLog;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.twoez.zupzup.global.querydsl.QuerydslRepositorySupport;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDate;
@@ -35,23 +37,35 @@ public class PloggingLogQueryRepository extends QuerydslRepositorySupport {
                 .fetch();
     }
 
+    public List<PloggingLog> findByMonth(LocalDate date, Long memberId) {
+        return findByMonthQuery(date, memberId).fetch();
+    }
+
     public List<PloggingLog> findByDate(LocalDate date, Long memberId) {
+        return findByMonthQuery(date, memberId).where(eqDay(date)).fetch();
+    }
+
+    private JPAQuery<PloggingLog> findByMonthQuery(LocalDate date, Long memberId) {
         return selectFrom(ploggingLog)
                 .leftJoin(ploggingLog.member)
                 .fetchJoin()
-                .where(
-                        ploggingLog
-                                .member
-                                .id
-                                .eq(memberId)
-                                .and(ploggingLog.startDateTime.year().eq(date.getYear()))
-                                .and(ploggingLog.startDateTime.month().eq(date.getMonthValue()))
-                                .and(
-                                        ploggingLog
-                                                .startDateTime
-                                                .dayOfMonth()
-                                                .eq(date.getDayOfMonth())))
-                .fetch();
+                .where(ploggingLog.member.id.eq(memberId).and(eqYear(date)).and(eqMonth(date)));
+    }
+
+    private static BooleanExpression eqDay(LocalDate date) {
+        return ploggingLog.startDateTime.dayOfMonth().eq(date.getDayOfMonth());
+    }
+
+    private static BooleanExpression eqMonth(LocalDate date) {
+        return ploggingLog.startDateTime.month().eq(date.getMonthValue());
+    }
+
+    private static BooleanExpression eqYear(LocalDate date) {
+        return ploggingLog.startDateTime.year().eq(date.getYear());
+    }
+
+    private static BooleanExpression eqMemberId(Long memberId) {
+        return ploggingLog.member.id.eq(memberId);
     }
 
     public Optional<PloggingLog> findOneOrderByDateDesc(Long memberId) {
@@ -59,7 +73,7 @@ public class PloggingLogQueryRepository extends QuerydslRepositorySupport {
                 selectFrom(ploggingLog)
                         .leftJoin(ploggingLog.member)
                         .fetchJoin()
-                        .where(ploggingLog.member.id.eq(memberId))
+                        .where(eqMemberId(memberId))
                         .orderBy(ploggingLog.startDateTime.desc())
                         .limit(1)
                         .fetchOne());

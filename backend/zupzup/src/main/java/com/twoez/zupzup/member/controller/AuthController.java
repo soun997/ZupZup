@@ -1,10 +1,13 @@
 package com.twoez.zupzup.member.controller;
 
 
+import com.twoez.zupzup.config.security.jwt.AuthRequestUser;
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
+import com.twoez.zupzup.config.security.jwt.ExpiredTokenUser;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.controller.dto.AuthRequest;
 import com.twoez.zupzup.member.controller.dto.AuthResponse;
+import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.service.IdTokenService;
@@ -43,8 +46,9 @@ public class AuthController {
         AuthResponse authResponse;
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            if ( memberOptional.get().hasHealthInfo() ) {
-                AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member);
+            if (memberOptional.get().hasHealthInfo()) {
+                AuthorizationToken authorizationToken =
+                        memberService.issueAuthorizationToken(member.getId());
                 authResponse = AuthResponse.from(authorizationToken, member.getId());
             } else {
                 log.info("User registered but he or she did not write his/her health info");
@@ -56,5 +60,18 @@ public class AuthController {
         }
 
         return ApiResponse.ok(authResponse);
+    }
+
+    @PostMapping("re-issue")
+    public ApiResponse<AuthResponse> reIssueAuthorizationToken(
+            @AuthRequestUser ExpiredTokenUser expiredTokenUser,
+            @RequestBody @Validated ReissueTokenRequest reissueTokenRequest) {
+        log.info(
+                "[AuthController] memberId : {} - AuthorizationToken 재발급",
+                expiredTokenUser.getMemberId());
+        Long memberId = expiredTokenUser.getMemberId();
+        AuthorizationToken authorizationToken =
+                memberService.reIssueAuthorizationToken(memberId, reissueTokenRequest);
+        return ApiResponse.ok(AuthResponse.from(authorizationToken, memberId));
     }
 }

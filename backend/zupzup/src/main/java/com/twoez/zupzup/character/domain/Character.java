@@ -36,12 +36,7 @@ public class Character extends BaseTime {
     private Member member;
 
     @Builder
-    public Character(
-            Long id,
-            Integer level,
-            Integer exp,
-            Boolean isDeleted,
-            Member member) {
+    public Character(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
         this.id = id;
         this.level = level;
         this.exp = exp;

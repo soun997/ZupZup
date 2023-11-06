@@ -7,9 +7,11 @@ import com.twoez.zupzup.config.security.jwt.JwtProvider;
 import com.twoez.zupzup.config.security.jwt.RefreshToken;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.util.Assertion;
+import com.twoez.zupzup.member.controller.dto.MemberHealthModifyRequest;
 import com.twoez.zupzup.member.controller.dto.MemberHealthRegisterRequest;
 import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
+import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
@@ -95,13 +97,28 @@ public class MemberService {
 
     @Transactional
     public void modifyMemberHealth(MemberHealthRegisterRequest memberHealthRegisterRequest) {
-        Long memberId = memberHealthRegisterRequest.memberId();
-        Member member = findById(memberId);
-        member.updateHealthInfo(
+        modifyHealth(
+                memberHealthRegisterRequest.memberId(),
                 memberHealthRegisterRequest.birthYear(),
                 memberHealthRegisterRequest.gender(),
                 memberHealthRegisterRequest.height(),
                 memberHealthRegisterRequest.weight());
+    }
+
+    @Transactional
+    public void modifyMemberHealth(
+            Long memberId, MemberHealthModifyRequest memberHealthRegisterRequest) {
+        modifyHealth(
+                memberId,
+                memberHealthRegisterRequest.birthYear(),
+                memberHealthRegisterRequest.gender(),
+                memberHealthRegisterRequest.height(),
+                memberHealthRegisterRequest.weight());
+    }
+
+    private void modifyHealth(
+            Long memberId, Integer birthYear, Gender gender, Integer height, Integer weight) {
+        findById(memberId).updateHealthInfo(birthYear, gender, height, weight);
     }
 
     public Member findById(Long memberId) {

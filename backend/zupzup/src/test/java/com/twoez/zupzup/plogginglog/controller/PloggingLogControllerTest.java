@@ -50,16 +50,14 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("특정 월의 플로깅 기록을 조회한다.")
     void ploggingLogByMonth() throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        PloggingLog ploggingLog =
-                PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
-        given(ploggingLogQueryService.searchInMonth(any(LocalDate.class), any(Long.class)))
-                .willReturn(List.of(ploggingLog));
+        LocalDate date = LocalDate.of(2023, 10, 1);
+        given(ploggingLogQueryService.searchInMonthDistinct(any(LocalDate.class), any(Long.class)))
+                .willReturn(List.of(date));
 
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/plogging-logs/months")
-                                .queryParam("date", LocalDate.of(2023, 10, 1).toString())
+                                .queryParam("date", date.toString())
                                 .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk());

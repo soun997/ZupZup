@@ -1,6 +1,7 @@
 package com.twoez.zupzup.config.security.jwt;
 
 
+import com.twoez.zupzup.config.security.exception.ExpiredAuthorizationTokenException;
 import com.twoez.zupzup.config.security.exception.InvalidAuthorizationTokenException;
 import com.twoez.zupzup.config.security.exception.InvalidIdTokenException;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
@@ -41,7 +42,7 @@ public class JwtValidator {
     }
 
     public String getIdTokenFromAuthToken(String authToken) {
-        Jws<Claims> validatedClaims = validateAuthorizationToken(authToken);
+        Jws<Claims> validatedClaims = validateAuthToken(authToken);
 
         Object idToken = validatedClaims.getBody().get("idToken");
         Assertion.with(idToken)
@@ -54,7 +55,7 @@ public class JwtValidator {
         return (String) idToken;
     }
 
-    private Jws<Claims> validateAuthorizationToken(String authorizationToken) {
+    private Jws<Claims> validateAuthToken(String authorizationToken) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -108,7 +109,8 @@ public class JwtValidator {
         return keyFactory.generatePublic(keySpec);
     }
 
-    public Long getMemberIdFromAccessToken(String accessToken) {
+    public Long getMemberIdFromAccessToken(String accessToken)
+            throws ExpiredAuthorizationTokenException {
         Jws<Claims> validatedClaims = validateAuthorizationToken(accessToken);
         String memberId = validatedClaims.getBody().getSubject();
         Assertion.with(memberId)
@@ -119,5 +121,29 @@ public class JwtValidator {
                                         HttpExceptionCode.MEMBER_ID_NOT_FOUND_IN_ACCESS_TOKEN));
 
         return Long.valueOf(memberId);
+    }
+
+    private Jws<Claims> validateAuthorizationToken(String authorizationToken)
+            throws ExpiredAuthorizationTokenException {
+        log.info("validateAuthorizationToken");
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(authorizationToken);
+        } catch (MalformedJwtException e) {
+            log.info("MalformedJwtException");
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_MALFORMED);
+        } catch (UnsupportedJwtException e) {
+            log.info("UnsupportedJwtException");
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_UNSUPPORTED);
+        } catch (ExpiredJwtException e) {
+            log.info("ExpiredJwtException");
+            throw new ExpiredAuthorizationTokenException();
+        } catch (Exception e) {
+            log.warn("처리되지 않은 Exception 발생");
+            e.printStackTrace();
+            throw new InvalidAuthorizationTokenException(HttpExceptionCode.JWT_NOT_FOUND);
+        }
     }
 }

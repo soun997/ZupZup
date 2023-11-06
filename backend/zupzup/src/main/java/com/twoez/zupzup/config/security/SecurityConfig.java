@@ -1,6 +1,7 @@
 package com.twoez.zupzup.config.security;
 
 
+import com.twoez.zupzup.config.security.filter.ExceptionHandlerFilter;
 import com.twoez.zupzup.config.security.filter.JwtAuthenticationFilter;
 import com.twoez.zupzup.config.security.handler.DefaultAccessDeniedHandler;
 import com.twoez.zupzup.config.security.handler.DefaultAuthenticationEntryPoint;
@@ -39,6 +40,7 @@ public class SecurityConfig {
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Value("${client.url}")
     private String clientUrl;
@@ -52,6 +54,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/favicon.ico"));
     }
 
+    // TODO : 없는 경로로 요청왔을 때 Exception Handling?? 로그를 찍어야 함
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity httpSecurity, HandlerMappingIntrospector introspector) throws Exception {
@@ -70,7 +73,7 @@ public class SecurityConfig {
                                                 new MvcRequestMatcher(introspector, "error"),
                                                 new MvcRequestMatcher(introspector, "api/v1/auth"),
                                                 new MvcRequestMatcher(
-                                                        introspector, "api/v1/members/health"),
+                                                        introspector, "api/v1/members/register"),
                                                 new MvcRequestMatcher(
                                                         introspector, "api/v1/docs/api"))
                                         .permitAll()
@@ -94,6 +97,7 @@ public class SecurityConfig {
                 .sessionManagement(
                         config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class)
                 .build();
     }
 

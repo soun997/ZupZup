@@ -36,9 +36,9 @@ public class PloggingLogController {
     public ApiResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
         return ApiResponse.ok(
-                ploggingLogQueryService.searchInMonth(date, loginUser.getMemberId()).stream()
-                        .map(ploggingLog -> ploggingLog.getStartDateTime().toLocalDate())
-                        .distinct()
+                ploggingLogQueryService
+                        .searchInMonthDistinct(date, loginUser.getMemberId())
+                        .stream()
                         .map(PloggingLogCalendarResponse::new)
                         .toList());
     }

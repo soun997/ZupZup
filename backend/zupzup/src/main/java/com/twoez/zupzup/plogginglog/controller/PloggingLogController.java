@@ -37,7 +37,7 @@ public class PloggingLogController {
             @AuthenticationPrincipal LoginUser loginUser) {
         return ApiResponse.ok(
                 ploggingLogQueryService
-                        .searchInPeriod(startDate, endDate, loginUser.getMemberId())
+                        .searchInPeriod(startDate, endDate, loginUser.memberId())
                         .stream()
                         .map(PloggingLogListResponse::from)
                         .toList());
@@ -47,7 +47,7 @@ public class PloggingLogController {
     public ApiResponse<List<PloggingLogListResponse>> ploggingListByDay(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
         return ApiResponse.ok(
-                ploggingLogQueryService.searchByDate(date, loginUser.getMemberId()).stream()
+                ploggingLogQueryService.searchByDate(date, loginUser.memberId()).stream()
                         .map(PloggingLogListResponse::from)
                         .toList());
     }
@@ -57,7 +57,7 @@ public class PloggingLogController {
             @AuthenticationPrincipal LoginUser loginUser) {
         return ApiResponse.ok(
                 RecentPloggingLogResponse.from(
-                        ploggingLogQueryService.searchRecentLog(loginUser.getMemberId())));
+                        ploggingLogQueryService.searchRecentLog(loginUser.memberId())));
     }
 
     @PostMapping
@@ -67,6 +67,6 @@ public class PloggingLogController {
 
         return ApiResponse.created(
                 PloggingLogAddResponse.from(
-                        ploggingLogService.add(request, loginUser.getMemberId())));
+                        ploggingLogService.add(request, loginUser.memberId())));
     }
 }

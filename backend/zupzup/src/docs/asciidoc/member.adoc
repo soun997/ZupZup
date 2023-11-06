@@ -19,3 +19,24 @@ include::{snippets}/member-profile-details/http-request.adoc[]
 === Response
 
 include::{snippets}/member-profile-details/http-response.adoc[]
+
+
+== 사용자 헬스 정보 조회
+
+=== Request
+
+include::{snippets}/member-health-details/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/member-health-details/http-response.adoc[]
+
+== 사용자 헬스 정보 수정
+
+=== Request
+
+include::{snippets}/member-health-modify/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/member-health-modify/http-response.adoc[]

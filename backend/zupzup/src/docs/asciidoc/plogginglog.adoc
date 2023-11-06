@@ -89,3 +89,13 @@ include::{snippets}/route-add/path-parameters.adoc[]
 === Response
 
 include::{snippets}/route-details/http-response.adoc[]
+
+== 플로깅 집계 조회
+
+=== Request
+
+include::{snippets}/plogginglog-total/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-total/http-response.adoc[]

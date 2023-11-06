@@ -3,7 +3,6 @@ package com.twoez.zupzup.fixture.plogginglog;
 
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import java.time.LocalDateTime;
 
@@ -88,18 +87,5 @@ public enum PloggingLogFixture {
                 .isDeleted(isDeleted)
                 .member(member)
                 .build();
-    }
-
-    public PloggingLogRequest getPloggingLogRequest() {
-
-        return new PloggingLogRequest(
-                distance,
-                startDateTime,
-                endDateTime,
-                durationTime,
-                calories,
-                gatheredTrash,
-                coin,
-                routeImageUrl);
     }
 }

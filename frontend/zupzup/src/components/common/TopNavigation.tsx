@@ -51,6 +51,9 @@ const S = {
     align-items: center;
     gap: 4px;
     flex-shrink: 0;
+    & svg {
+      filter: ${({ theme }) => theme.color.darkFilter};
+    }
   `,
   MiddleSection: styled.div`
     display: flex;
@@ -64,6 +67,14 @@ const S = {
   RightSection: styled.div`
     cursor: pointer;
     min-width: 40px;
+    display: flex;
+    & span {
+      margin-top: 3px;
+      color: ${({ theme }) => theme.color.dark};
+    }
+    & svg {
+      filter: ${({ theme }) => theme.color.darkFilter};
+    }
   `,
 };
 

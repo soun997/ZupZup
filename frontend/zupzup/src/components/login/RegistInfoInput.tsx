@@ -2,12 +2,16 @@ import styled from 'styled-components';
 
 import { ChangeEvent, RefObject, useState } from 'react';
 import { GENDER } from 'utils';
+import SuccessSvg from 'assets/icons/success-check.svg?react';
+import ErrorSvg from 'assets/icons/error-check.svg?react';
 
 interface RegistInfoInputProps {
   title: string;
   holderText: string;
   inputRef: RefObject<HTMLInputElement>;
+  validCheck: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  errorMessage: string;
 }
 
 interface RegistInfoSelectBoxProps {
@@ -21,11 +25,24 @@ const RegistInfoInput = ({
   holderText,
   inputRef,
   onChange,
+  validCheck,
+  errorMessage,
 }: RegistInfoInputProps) => {
   return (
     <S.InputBox>
       <S.Title>{title}</S.Title>
       <Input placeholder={holderText} ref={inputRef} onChange={onChange} />
+      {validCheck ? (
+        <CorrectCheck>
+          <SuccessSvg />
+          확인되었습니다
+        </CorrectCheck>
+      ) : (
+        <ErrorCheck>
+          <ErrorSvg />
+          {errorMessage}
+        </ErrorCheck>
+      )}
     </S.InputBox>
   );
 };
@@ -153,6 +170,29 @@ const Input = styled.input`
     border-radius: 0px;
     border-bottom: 1px solid ${({ theme }) => theme.color.main};
   }
+`;
+
+const CorrectCheck = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.color.main};
+  gap: 5px;
+  font-size: 13px;
+  padding: 10px 5px 10px;
+  border: none;
+  width: fit-content;
+  font-family: ${({ theme }) => theme.font.family.body2};
+`;
+const ErrorCheck = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.color.warning};
+  gap: 5px;
+  font-size: 13px;
+  padding: 10px 5px 10px;
+  border: none;
+  width: fit-content;
+  font-family: ${({ theme }) => theme.font.family.body2};
 `;
 
 export { RegistInfoInput, RegistInfoCheckBox };

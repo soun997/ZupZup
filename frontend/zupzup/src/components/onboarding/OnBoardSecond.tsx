@@ -13,7 +13,9 @@ const OnBoardSecond = () => {
           AI를 통해 인식된 쓰레기 결과에 따라 코인이 부여돼요
         </S.SubTitle>
       </S.TitleFrame>
-      <S.Image src="/assets/character/penguin-trash.png" />
+      <S.Image
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-trash.png`}
+      />
     </S.Wrap>
   );
 };

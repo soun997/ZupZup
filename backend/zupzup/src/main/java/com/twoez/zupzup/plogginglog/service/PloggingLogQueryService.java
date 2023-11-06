@@ -18,8 +18,11 @@ public class PloggingLogQueryService {
 
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
 
-    public List<PloggingLog> searchInMonth(LocalDate date, Long memberId) {
-        return ploggingLogQueryRepository.findByMonth(date, memberId);
+    public List<LocalDate> searchInMonthDistinct(LocalDate date, Long memberId) {
+        return ploggingLogQueryRepository.findByMonth(date, memberId).stream()
+                .map(ploggingLog -> ploggingLog.getStartDateTime().toLocalDate())
+                .distinct()
+                .toList();
     }
 
     public List<PloggingLog> searchInPeriod(

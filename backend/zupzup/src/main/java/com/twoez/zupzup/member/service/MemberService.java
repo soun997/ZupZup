@@ -40,8 +40,7 @@ public class MemberService {
     }
 
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
-        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(
-                memberId);
+        AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(memberId);
         saveRefreshToken(memberId, authorizationToken);
         return authorizationToken;
     }
@@ -51,17 +50,22 @@ public class MemberService {
     }
 
     // TODO : Transaction 처리
-    public AuthorizationToken reIssueAuthorizationToken(Long memberId,
-            ReissueTokenRequest reissueTokenRequest) {
-        RefreshToken refreshToken = refreshTokenRedisRepository
-                .findRefreshTokenByMemberId(String.valueOf(memberId))
-                .orElseThrow(() -> new InvalidAuthorizationTokenException(
-                        HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
+    public AuthorizationToken reIssueAuthorizationToken(
+            Long memberId, ReissueTokenRequest reissueTokenRequest) {
+        RefreshToken refreshToken =
+                refreshTokenRedisRepository
+                        .findRefreshTokenByMemberId(String.valueOf(memberId))
+                        .orElseThrow(
+                                () ->
+                                        new InvalidAuthorizationTokenException(
+                                                HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
 
         Assertion.with(refreshToken)
                 .setValidation((token) -> token.isSameToken(reissueTokenRequest.refreshToken()))
-                .validateOrThrow(() -> new InvalidAuthorizationTokenException(
-                        HttpExceptionCode.INVALID_REFRESH_TOKEN));
+                .validateOrThrow(
+                        () ->
+                                new InvalidAuthorizationTokenException(
+                                        HttpExceptionCode.INVALID_REFRESH_TOKEN));
 
         refreshTokenRedisRepository.delete(refreshToken);
         return issueAuthorizationToken(memberId);
@@ -72,16 +76,20 @@ public class MemberService {
     }
 
     private void removeRefreshTokenByMemberId(Long memberId) {
-        RefreshToken refreshToken = refreshTokenRedisRepository
-                .findRefreshTokenByMemberId(String.valueOf(memberId))
-                .orElseThrow(() -> new InvalidAuthorizationTokenException(
-                        HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
+        RefreshToken refreshToken =
+                refreshTokenRedisRepository
+                        .findRefreshTokenByMemberId(String.valueOf(memberId))
+                        .orElseThrow(
+                                () ->
+                                        new InvalidAuthorizationTokenException(
+                                                HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
 
         refreshTokenRedisRepository.delete(refreshToken);
     }
 
     public boolean hasValidRefreshToken(Long memberId) {
-        return refreshTokenRedisRepository.findRefreshTokenByMemberId(String.valueOf(memberId))
+        return refreshTokenRedisRepository
+                .findRefreshTokenByMemberId(String.valueOf(memberId))
                 .isPresent();
     }
 
@@ -106,5 +114,4 @@ public class MemberService {
     public Member validateMember(Long memberId) {
         return findById(memberId);
     }
-
 }

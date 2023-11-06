@@ -1,5 +1,6 @@
 package com.twoez.zupzup.global.util;
 
+
 import org.springframework.util.StringUtils;
 
 public class AuthorizationTokenUtils {
@@ -9,7 +10,8 @@ public class AuthorizationTokenUtils {
         return StringUtils.hasText(bearerToken) && bearerToken.startsWith(GRANT_TYPE_BEARER);
     }
 
-    public static String getTokenFromAuthorizationHeader(String authorizationHeader, String grantType) {
+    public static String getTokenFromAuthorizationHeader(
+            String authorizationHeader, String grantType) {
         return authorizationHeader.substring(grantType.length());
     }
 
@@ -17,6 +19,5 @@ public class AuthorizationTokenUtils {
         Assertion.with(bearerToken)
                 .setValidation(AuthorizationTokenUtils::isValidBearerToken)
                 .validateOrThrow(() -> new IllegalArgumentException("유효한 Bearer 토큰이 아닙니다."));
-
     }
 }

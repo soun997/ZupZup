@@ -1,16 +1,13 @@
 package com.twoez.zupzup.config.security.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.twoez.zupzup.global.exception.ApplicationException;
-import com.twoez.zupzup.global.util.AuthorizationTokenUtils;
 import com.twoez.zupzup.global.util.ExceptionResponseWriter;
-import com.twoez.zupzup.global.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,8 +17,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         try {
             // 이후 필터들에서 발생한 예외를 잡아서 처리한다.
             filterChain.doFilter(request, response);

@@ -109,7 +109,8 @@ public class JwtValidator {
         return keyFactory.generatePublic(keySpec);
     }
 
-    public Long getMemberIdFromAccessToken(String accessToken) throws ExpiredAuthorizationTokenException {
+    public Long getMemberIdFromAccessToken(String accessToken)
+            throws ExpiredAuthorizationTokenException {
         Jws<Claims> validatedClaims = validateAuthorizationToken(accessToken);
         String memberId = validatedClaims.getBody().getSubject();
         Assertion.with(memberId)
@@ -122,7 +123,8 @@ public class JwtValidator {
         return Long.valueOf(memberId);
     }
 
-    private Jws<Claims> validateAuthorizationToken(String authorizationToken) throws ExpiredAuthorizationTokenException {
+    private Jws<Claims> validateAuthorizationToken(String authorizationToken)
+            throws ExpiredAuthorizationTokenException {
         log.info("validateAuthorizationToken");
         try {
             return Jwts.parserBuilder()

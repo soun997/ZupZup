@@ -74,8 +74,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         return AuthorizationTokenUtils.getTokenFromAuthorizationHeader(
-                bearerToken, AuthorizationTokenUtils.GRANT_TYPE_BEARER
-        );
+                bearerToken, AuthorizationTokenUtils.GRANT_TYPE_BEARER);
     }
 
     private void setAuthenticationInSecurityContext(HttpServletRequest request, String token) {
@@ -89,19 +88,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .setAuthentication(convertToAuthenticationToken(request, requestUser));
     }
 
-    private UsernamePasswordAuthenticationToken convertToAuthenticationToken(HttpServletRequest request, RequestUser requestUser) {
+    private UsernamePasswordAuthenticationToken convertToAuthenticationToken(
+            HttpServletRequest request, RequestUser requestUser) {
         String requestUri = request.getRequestURI();
         if (requestUri.equals(RE_ISSUE_TOKEN_URI)) {
             return new UsernamePasswordAuthenticationToken(requestUser, "", new ArrayList<>());
         }
         LoginUser loginUser = (LoginUser) requestUser;
-        return new UsernamePasswordAuthenticationToken(
-                loginUser, "", loginUser.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(loginUser, "", loginUser.getAuthorities());
     }
 
     /**
-     * accessToken을 받아 RequestUser를 반환합니다. 만약 accessToken이 만료되지 않은 유효한 Token이라면 LoginUser를 반환하고
-     * 만료된 토큰이고 토큰 재발급 요청이라면 ExpiredTokenUser를 반환합니다.
+     * accessToken을 받아 RequestUser를 반환합니다. 만약 accessToken이 만료되지 않은 유효한 Token이라면 LoginUser를 반환하고 만료된
+     * 토큰이고 토큰 재발급 요청이라면 ExpiredTokenUser를 반환합니다.
+     *
      * @param request
      * @param token accessToken
      * @return
@@ -126,7 +126,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void validateRefreshToken(Long memberId) {
         Assertion.with(memberId)
                 .setValidation(memberService::hasValidRefreshToken)
-                .validateOrThrow(() -> new InvalidAuthorizationTokenException(
-                        HttpExceptionCode.AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION));
+                .validateOrThrow(
+                        () ->
+                                new InvalidAuthorizationTokenException(
+                                        HttpExceptionCode.AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION));
     }
 }

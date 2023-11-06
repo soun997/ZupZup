@@ -47,9 +47,11 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(
-                new AntPathRequestMatcher("/h2-console/**"),
-                new AntPathRequestMatcher("/favicon.ico"));
+        return web ->
+                web.ignoring()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/h2-console/**"),
+                                new AntPathRequestMatcher("/favicon.ico"));
     }
 
     // TODO : 없는 경로로 요청왔을 때 Exception Handling?? 로그를 찍어야 함
@@ -72,7 +74,8 @@ public class SecurityConfig {
                                                 new MvcRequestMatcher(introspector, "api/v1/auth"),
                                                 new MvcRequestMatcher(
                                                         introspector, "api/v1/members/register"),
-                                                new MvcRequestMatcher(introspector, "api/v1/docs/api"))
+                                                new MvcRequestMatcher(
+                                                        introspector, "api/v1/docs/api"))
                                         .permitAll()
                                         .requestMatchers(
                                                 new MvcRequestMatcher(introspector, "api/**"))

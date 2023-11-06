@@ -1,13 +1,14 @@
 package com.twoez.zupzup.global.util;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Base64;
 
 /**
- * Jwt로부터 Header와 Payload를 가져옵니다. 주의) 검증없이 값만 읽어오는 것이므로 token의 출처에 대해 주의하셔야 합니다.
- * dependency - jackson
+ * Jwt로부터 Header와 Payload를 가져옵니다. 주의) 검증없이 값만 읽어오는 것이므로 token의 출처에 대해 주의하셔야 합니다. dependency -
+ * jackson
  */
 public class JwtUtils {
 
@@ -46,6 +47,4 @@ public class JwtUtils {
     private static String getDecodedContent(String jwt, int contentIndex) {
         return new String(Base64.getDecoder().decode(jwt.split(DELIMITER_REGEX)[contentIndex]));
     }
-
-
 }

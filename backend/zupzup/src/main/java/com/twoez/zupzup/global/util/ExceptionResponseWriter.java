@@ -28,15 +28,13 @@ public class ExceptionResponseWriter<T> {
     }
 
     public static <T> void writeException(
-            HttpServletResponse response, HttpExceptionCode httpExceptionCode)
-            throws IOException {
+            HttpServletResponse response, HttpExceptionCode httpExceptionCode) throws IOException {
         HttpStatus httpStatus = httpExceptionCode.getHttpStatus();
         ErrorResponse errorResponse = ErrorResponse.from(httpExceptionCode);
         writeException(response, httpStatus, errorResponse);
     }
 
-    public static <T> void writeException(
-            HttpServletResponse response, String errorMessage)
+    public static <T> void writeException(HttpServletResponse response, String errorMessage)
             throws IOException {
         HttpExceptionCode exceptionCode = HttpExceptionCode.INTERNAL_SERVER_EXCEPTION;
         ErrorResponse errorResponse = ErrorResponse.from(exceptionCode, errorMessage);

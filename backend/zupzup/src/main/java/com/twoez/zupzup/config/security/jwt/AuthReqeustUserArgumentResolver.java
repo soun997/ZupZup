@@ -1,5 +1,6 @@
 package com.twoez.zupzup.config.security.jwt;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
@@ -18,14 +19,18 @@ public class AuthReqeustUserArgumentResolver implements HandlerMethodArgumentRes
     public boolean supportsParameter(MethodParameter parameter) {
         boolean isRequestUserAnnotation =
                 parameter.getParameterAnnotation(AuthRequestUser.class) != null;
-        boolean isExpiredTokenUserClass = ExpiredTokenUser.class.equals(
-                parameter.getParameterType());
+        boolean isExpiredTokenUserClass =
+                ExpiredTokenUser.class.equals(parameter.getParameterType());
         return isRequestUserAnnotation && isExpiredTokenUserClass;
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(
+            MethodParameter parameter,
+            ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest,
+            WebDataBinderFactory binderFactory)
+            throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getPrincipal();
     }

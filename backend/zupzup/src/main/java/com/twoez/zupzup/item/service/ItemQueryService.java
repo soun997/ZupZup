@@ -1,12 +1,12 @@
 package com.twoez.zupzup.item.service;
 
+
 import com.twoez.zupzup.item.domain.Item;
 import com.twoez.zupzup.item.repository.ItemRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

@@ -47,8 +47,9 @@ public class AuthController {
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
             // TODO : member로 바꾸기
-            if ( memberOptional.get().hasHealthInfo() ) {
-                AuthorizationToken authorizationToken = memberService.issueAuthorizationToken(member.getId());
+            if (memberOptional.get().hasHealthInfo()) {
+                AuthorizationToken authorizationToken =
+                        memberService.issueAuthorizationToken(member.getId());
                 authResponse = AuthResponse.from(authorizationToken, member.getId());
             } else {
                 log.info("User registered but he or she did not write his/her health info");
@@ -65,12 +66,13 @@ public class AuthController {
     @PostMapping("re-issue")
     public ApiResponse<AuthResponse> reIssueAuthorizationToken(
             @AuthRequestUser ExpiredTokenUser expiredTokenUser,
-            @RequestBody @Validated ReissueTokenRequest reissueTokenRequest
-    ) {
-        log.info("[AuthController] memberId : {} - AuthorizationToken 재발급", expiredTokenUser.memberId());
-        Long memberId = expiredTokenUser.memberId();
-        AuthorizationToken authorizationToken = memberService.reIssueAuthorizationToken(
-                memberId, reissueTokenRequest);
+            @RequestBody @Validated ReissueTokenRequest reissueTokenRequest) {
+        log.info(
+                "[AuthController] memberId : {} - AuthorizationToken 재발급",
+                expiredTokenUser.getMemberId());
+        Long memberId = expiredTokenUser.getMemberId();
+        AuthorizationToken authorizationToken =
+                memberService.reIssueAuthorizationToken(memberId, reissueTokenRequest);
         return ApiResponse.ok(AuthResponse.from(authorizationToken, memberId));
     }
 }

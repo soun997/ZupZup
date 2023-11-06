@@ -43,8 +43,7 @@ public class RouteServiceTest {
 
         routeService.addRoute(request, 1L);
 
-        then(routeRepository).should(times(1))
-                .save(any(Route.class));
+        then(routeRepository).should(times(1)).save(any(Route.class));
     }
 
     @Test

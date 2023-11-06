@@ -46,7 +46,7 @@ public class Character extends BaseTime {
 
     public void addExp(Integer itemExp) {
         this.exp += itemExp;
-        if(isMaxLevelAndMaxExp()){
+        if (isMaxLevelAndMaxExp()) {
             this.exp = 100;
             return;
         }
@@ -54,9 +54,9 @@ public class Character extends BaseTime {
     }
 
     private void levelUp() {
-        if(isExpMax()){
+        if (isExpMax()) {
             this.level++;
-            this.exp -=100;
+            this.exp -= 100;
         }
     }
 

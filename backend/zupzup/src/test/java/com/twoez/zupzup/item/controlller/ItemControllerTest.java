@@ -159,5 +159,4 @@ class ItemControllerTest extends RestDocsTest {
                                 queryParameters(
                                         parameterWithName("itemId").description("아이템 아이디"))));
     }
-
 }

@@ -6,7 +6,9 @@ import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
 import com.twoez.zupzup.config.security.jwt.JwtProvider;
 import com.twoez.zupzup.config.security.jwt.RefreshToken;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
+import com.twoez.zupzup.global.util.Assertion;
 import com.twoez.zupzup.member.controller.dto.RegisterMemberRequest;
+import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
@@ -49,8 +51,19 @@ public class MemberService {
     }
 
     // TODO : Transaction 처리
-    public AuthorizationToken reIssueAuthorizationToken(Long memberId) {
-        removeRefreshTokenByMemberId(memberId);
+    public AuthorizationToken reIssueAuthorizationToken(Long memberId,
+            ReissueTokenRequest reissueTokenRequest) {
+        RefreshToken refreshToken = refreshTokenRedisRepository
+                .findRefreshTokenByMemberId(String.valueOf(memberId))
+                .orElseThrow(() -> new InvalidAuthorizationTokenException(
+                        HttpExceptionCode.REFRESH_TOKEN_NOT_FOUND));
+
+        Assertion.with(refreshToken)
+                .setValidation((token) -> token.isSameToken(reissueTokenRequest.refreshToken()))
+                .validateOrThrow(() -> new InvalidAuthorizationTokenException(
+                        HttpExceptionCode.INVALID_REFRESH_TOKEN));
+
+        refreshTokenRedisRepository.delete(refreshToken);
         return issueAuthorizationToken(memberId);
     }
 

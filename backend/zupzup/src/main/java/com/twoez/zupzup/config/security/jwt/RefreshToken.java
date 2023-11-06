@@ -23,4 +23,8 @@ public class RefreshToken {
         return new RefreshToken(null, String.valueOf(memberId), authorizationToken.getRefreshToken());
     }
 
+    public boolean isSameToken(String refreshToken) {
+        return this.token.equals(refreshToken);
+    }
+
 }

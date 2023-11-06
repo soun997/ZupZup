@@ -36,9 +36,10 @@ instance.interceptors.request.use(
     ) {
       // console.log('access-token 만료됐어');
       try {
-        const response = await axios.post(`${BASE_URL}/auth/refresh`, {
-          refreshToken,
-        });
+        const response = await reissueTokens(
+          String(refreshToken),
+          String(accessToken),
+        );
 
         // console.log('이전 access : ', getAccessToken());
         // console.log('이전 refresh : ', getRefreshToken());
@@ -48,8 +49,8 @@ instance.interceptors.request.use(
         const newRefreshToken = response.data.results.refreshToken;
         // console.log('이후 access : ', accessToken);
         // console.log('이후 refresh : ', refreshToken);
-        // **access token 을 다시 setting 하고 origin request 를 재요청
 
+        // **access token 을 다시 setting 하고 origin request 를 재요청
         dispatch(setAccessToken(newAccessToken));
         dispatch(setRefreshToken(newRefreshToken));
 
@@ -83,5 +84,18 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+async function reissueTokens(oldRefreshToken: string, oldAccessToken: string) {
+  return await axios.post(
+    `${BASE_URL}/members/re-issue`,
+    { refreshToken: oldRefreshToken },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'access-token': `Bearer ${oldAccessToken}`,
+      },
+    },
+  );
+}
 
 export default instance;

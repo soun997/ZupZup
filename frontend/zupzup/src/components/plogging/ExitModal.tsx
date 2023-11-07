@@ -1,17 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import * as utils from 'utils';
 
 import XSvg from 'assets/icons/x.svg?react';
 
 interface Props {
   setExitOn: (exitOn: boolean) => void;
+  exitPlogging: () => void;
 }
 
-const ExitModal = ({ setExitOn }: Props) => {
-  const navigate = useNavigate();
-
+const ExitModal = ({ setExitOn, exitPlogging }: Props) => {
   return (
     <S.Wrap>
       <S.ModalBox>
@@ -21,9 +17,7 @@ const ExitModal = ({ setExitOn }: Props) => {
           </S.CancelButton>
         </S.Header>
         <S.MessageBox>정말 종료하시겠습니까?</S.MessageBox>
-        <S.ExitButton onClick={() => navigate(utils.URL.PLOGGING.REPORT)}>
-          종료하기
-        </S.ExitButton>
+        <S.ExitButton onClick={() => exitPlogging()}>종료하기</S.ExitButton>
       </S.ModalBox>
     </S.Wrap>
   );

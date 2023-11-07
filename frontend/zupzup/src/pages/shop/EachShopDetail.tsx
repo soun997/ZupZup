@@ -36,7 +36,7 @@ const EachShopDetail = () => {
       const response = await ItemApis.buyItem(foodDetail!.id);
       const data = response.data.results.coin;
       dispatch(setCoin(data));
-      navigate(utils.URL.MYPAGE.PURCHASE);
+      navigate(utils.URL.MYPAGE.PURCHASE, { state: foodDetail?.exp });
     } catch (error) {
       console.error('Error purchase item:', error);
     }

@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as utils from 'utils';
@@ -6,6 +7,8 @@ import * as utils from 'utils';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import DownloadSvg from 'assets/icons/download.svg?react';
 import ShareSvg from 'assets/icons/share.svg?react';
+import CONSOLE from 'utils/ColorConsoles';
+import TrashPage from 'pages/trash/TrashPage';
 
 interface Props {
   cameraRef: React.RefObject<HTMLVideoElement>;
@@ -13,11 +16,15 @@ interface Props {
 }
 
 const CaptureResult = ({ cameraRef, setCapture }: Props) => {
+  CONSOLE.reRender('CaptureResult rendered!!');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [captureFile, setCaptureFile] = useState<File>();
+  const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
+    useState<Boolean>(false);
+  const navigate = useNavigate();
 
   const dataURLtoBlob = (dataURL: string) => {
     const byteString = atob(dataURL.split(',')[1]);
@@ -89,8 +96,21 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
     capture();
   }, []);
 
+  useEffect(() => {
+    CONSOLE.useEffectIn('captureFile');
+    if (captureFile) {
+      CONSOLE.info('captureFile saved in memory');
+      console.log(captureFile);
+    }
+  }, [captureFile]);
+
+  function requestAnalyze() {
+    setHasUserRequestAnalyze(true);
+  }
+
   return (
     <S.Wrap>
+      {hasUserRequestAnalyze && <TrashPage captureFile={captureFile}/>}
       <S.Header>
         <S.PrevButton onClick={() => setCapture(false)}>
           <AngleLeftSvg />
@@ -103,6 +123,7 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
         <S.ShareButton ref={shareRef} onClick={() => shareImage()}>
           <ShareSvg /> 공유하기
         </S.ShareButton>
+        <S.AnalyzeButton onClick={requestAnalyze}>분석하기</S.AnalyzeButton>
         <S.DownloadButton ref={downloadRef} onClick={() => downloadImage()}>
           <DownloadSvg /> 이미지 저장
         </S.DownloadButton>
@@ -155,6 +176,23 @@ const S = {
     padding: 15px;
   `,
   ShareButton: styled.button`
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: transparent;
+    text-align: center;
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.body3};
+    line-height: ${({ theme }) => theme.font.lineheight.body3};
+    color: ${({ theme }) => theme.color.dark};
+
+    & > svg {
+      width: 25px;
+      margin: 0 8px 0 0;
+      filter: ${({ theme }) => theme.color.darkFilter};
+    }
+  `,
+  AnalyzeButton: styled.button`
     display: flex;
     align-items: center;
     border-radius: 4px;

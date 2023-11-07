@@ -12,7 +12,11 @@ import CONSOLE from 'utils/ColorConsoles';
 import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
 
-const TrashPage = () => {
+interface Props {
+  captureFile: File | undefined;
+}
+
+const TrashPage = ({ captureFile }: Props) => {
   CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
   const MODEL_URI = '/model/model.json';
@@ -29,7 +33,17 @@ const TrashPage = () => {
 
   function loadImage() {
     const image = new Image();
-    image.src = '/public/sampleTrashImage/sample01.jpg';
+    // image.src = '/public/sampleTrashImage/sample01.jpg';
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.result) {
+        image.src = fileReader.result as string;
+      } else {
+        CONSOLE.error('캡처 파일 읽기 실패...');
+      }
+    };
+
+    fileReader.readAsDataURL(captureFile as File);
     const context = canvasRef.current?.getContext('2d');
     console.log(context);
 
@@ -72,7 +86,8 @@ const TrashPage = () => {
     }
 
     CONSOLE.useEffectIn('Trash init');
-		loadImage();
+    console.log(captureFile);
+    loadImage();
     load();
   }, []);
 

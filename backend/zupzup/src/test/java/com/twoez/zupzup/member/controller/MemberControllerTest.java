@@ -5,8 +5,7 @@ import static com.twoez.zupzup.support.docs.ApiDocumentUtils.getDocumentResponse
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,6 +68,21 @@ class MemberControllerTest extends RestDocsTest {
                 .andDo(document("member-register", getDocumentRequest(),getDocumentResponse()));
     }
 
+
+    @Test
+    @DisplayName("사용자는 로그아웃 할 수 있다.")
+    void logoutTest() throws Exception {
+        Member member = MemberFixture.DEFAULT.getMember();
+
+        ResultActions perfrom =
+                mockMvc.perform(
+                        post("/api/v1/members/logout"));
+
+        perfrom.andExpect(status().isOk());
+
+        perfrom.andDo(print())
+                .andDo(document("logout", getDocumentRequest(),getDocumentResponse()));
+    }
 
 
     @Test

@@ -53,3 +53,13 @@ include::{snippets}/member-health-modify/http-request.adoc[]
 === Response
 
 include::{snippets}/member-health-modify/http-response.adoc[]
+
+== 사용자 로그아웃
+
+=== Request
+
+include::{snippets}/logout/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/logout/http-response.adoc[]

@@ -17,7 +17,7 @@ spring:
     mongodb:
       uri: ${MONGO_URI}
       database: ${MONGO_DATABASE}
-      authentication-database: admin
+      authentication-database: zupzup
   security:
     oauth2:
       client:

@@ -33,7 +33,7 @@ const LoginSuccess = () => {
         console.log('login data >: ', data);
 
         dispatch(setMemberId(data.memberId));
-        dispatch(setMemberName(data.name));
+        dispatch(setMemberName(data.memberName));
 
         if (data.isNewMember) {
           navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL);

@@ -11,6 +11,10 @@ const Opinion = () => {
 
   const handleNavigate = async () => {
     try {
+      if (value.trim().length === 0) {
+        alert('내용을 입력해주세요');
+        return;
+      }
       await FeedbackApi.postFeedback(value);
       navigate(utils.URL.RESULT.OPINION);
     } catch (error) {

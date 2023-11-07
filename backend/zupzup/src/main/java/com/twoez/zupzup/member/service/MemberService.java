@@ -17,6 +17,10 @@ import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
 import com.twoez.zupzup.member.repository.MemberSpringDataRepository;
 import com.twoez.zupzup.member.repository.redis.RefreshTokenRedisRepository;
+import com.twoez.zupzup.pet.domain.Pet;
+import com.twoez.zupzup.pet.repository.PetRepository;
+import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
+import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +36,16 @@ public class MemberService {
     private final MemberQueryRepository memberQueryRepository;
     private final MemberSpringDataRepository memberSpringDataRepository;
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+    private final PetRepository petRepository;
+    private final TotalPloggingLogRepository totalPloggingLogRepository;
 
     public Member save(AuthUser authUser) {
-        return memberSpringDataRepository.save(authUser.toNewMember());
+
+        Member member = memberSpringDataRepository.save(authUser.toNewMember());
+        petRepository.save(Pet.init(member));
+        totalPloggingLogRepository.save(TotalPloggingLog.init(member));
+
+        return member;
     }
 
     public Optional<Member> findMemberByOauth(AuthUser authUser) {

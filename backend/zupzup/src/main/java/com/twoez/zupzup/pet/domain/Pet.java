@@ -50,6 +50,11 @@ public class Pet extends BaseTime {
         this.member = member;
     }
 
+    public static Pet init(Member member) {
+
+        return Pet.builder().level(1).exp(0).isDeleted(false).member(member).build();
+    }
+
     public void addExp(Integer itemExp) {
         this.exp += itemExp;
         if (isMaxLevelAndMaxExp()) {

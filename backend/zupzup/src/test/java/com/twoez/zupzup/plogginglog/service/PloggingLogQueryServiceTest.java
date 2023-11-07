@@ -8,9 +8,9 @@ import static org.mockito.BDDMockito.given;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
-import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDate;
@@ -114,20 +114,13 @@ class PloggingLogQueryServiceTest {
     }
 
     @Test
-    @DisplayName("조회할 플로깅 기록 집계가 없다면 새로 생성한다.")
+    @DisplayName("조회할 플로깅 기록 집계가 없다면 오류가 발생한다.")
     void totalPloggingLogInitTest() {
 
         given(totalPloggingLogRepository.findByMemberId(member.getId()))
                 .willReturn(Optional.empty());
-        given(totalPloggingLogRepository.save(any(TotalPloggingLog.class)))
-                .willReturn(TotalPloggingLog.init(member));
 
-        TotalPloggingLog result = ploggingLogQueryService.searchTotalPloggingLog(member);
-
-        assertThat(result.getTotalCount()).isZero();
-        assertThat(result.getTotalDistance()).isZero();
-        assertThat(result.getTotalDurationTime()).isZero();
-        assertThat(result.getTotalCalories()).isZero();
-        assertThat(result.getTotalGatheredTrash()).isZero();
+        assertThatThrownBy(() -> ploggingLogQueryService.searchTotalPloggingLog(member))
+                .isInstanceOf(TotalPloggingLogNotFoundException.class);
     }
 }

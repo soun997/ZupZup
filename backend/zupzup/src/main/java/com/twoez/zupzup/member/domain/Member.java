@@ -2,6 +2,8 @@ package com.twoez.zupzup.member.domain;
 
 
 import com.twoez.zupzup.global.audit.BaseTime;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
+import com.twoez.zupzup.global.exception.item.CoinNotEnoughException;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
@@ -98,5 +100,22 @@ public class Member extends BaseTime {
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         return role.stream().map(Role::name).map(SimpleGrantedAuthority::new).toList();
+    }
+
+    public Long buyItem(Long itemPrice) {
+        validateBoughtItem(itemPrice);
+        this.coin -= itemPrice;
+
+        return this.coin;
+    }
+
+    private void validateBoughtItem(Long itemPrice) {
+        if (isPriceGreaterThan(itemPrice)) {
+            throw new CoinNotEnoughException(HttpExceptionCode.COIN_NOT_ENOUGH);
+        }
+    }
+
+    private boolean isPriceGreaterThan(Long itemPrice) {
+        return itemPrice > this.coin;
     }
 }

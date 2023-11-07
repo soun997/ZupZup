@@ -61,6 +61,8 @@ public enum HttpExceptionCode {
 
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_ITEM_001", "아이템을 찾을 수 없습니다."),
 
+    COIN_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "ERR_ITEM_002", "코인이 충분하지 않습니다."),
+
     HEALTH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_HEALTH_001", "멤버의 헬스 정보를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;

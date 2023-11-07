@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum CharacterFixture {
-    DEFAULT(1L, 3, 300, false, MemberFixture.DEFAULT.getMember());
+    DEFAULT(1L, 1, 50, false, MemberFixture.DEFAULT.getMember());
 
     private Long id;
     private Integer level;

@@ -6,17 +6,8 @@ import { Navigation, ProgressBar, MyPageNav, KeyFrameList } from 'components';
 import { CharacterInfo, ProfileInfo } from 'types/ProfileInfo';
 import BoardSvg from 'assets/icons/clipboard.svg?react';
 import { useAppSelector } from 'hooks';
-
-const profileInfo: ProfileInfo = {
-  name: '줍줍',
-  coin: 320,
-  createdAt: '2023-10-12',
-};
-
-const characterInfo: CharacterInfo = {
-  level: 1,
-  exp: 160,
-};
+import { MemberApi } from 'api';
+import { Loading } from 'pages';
 
 const calculateDaysPassed = (inputDate: string): number => {
   const inputDateObj = new Date(inputDate);
@@ -32,23 +23,42 @@ const MyPage = () => {
   const navigate = useNavigate();
   const curTheme = useAppSelector(state => state.themeChanger.value);
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
-  console.log(
-    `${import.meta.env.VITE_S3_URL}/character/penguin-lv${
-      characterInfo.level
-    }.png`,
-  );
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo>();
+  const [characterInfo, setCharacterInfo] = useState<CharacterInfo>();
+
+  const fetchMyPageInfo = async () => {
+    try {
+      const profileResponse = await MemberApi.getProfileInfo();
+      const characterResponse = await MemberApi.getCharacterInfo();
+      const profile: ProfileInfo = profileResponse.data.results;
+      const character: CharacterInfo = characterResponse.data.results;
+
+      setProfileInfo(profile);
+      setCharacterInfo(character);
+    } catch (error) {
+      console.error('Error fetching profile info:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyPageInfo();
+  }, []);
+
   useEffect(() => {
     if (curTheme === 'light') {
       setIsDaytime(true);
     } else {
       setIsDaytime(false);
     }
-  }, []);
+  }, [curTheme]);
 
+  if (!profileInfo || !characterInfo) {
+    return <Loading />;
+  }
   return (
     <S.Wrap $daytime={isDaytime}>
       <S.Content>
-        <MyPageNav coin={320} />
+        <MyPageNav coin={profileInfo.coin} />
         <S.Title $daytime={isDaytime}>
           {profileInfo.name}님과 함께한지 <br />
           {calculateDaysPassed(profileInfo.createdAt)} 일째
@@ -57,7 +67,7 @@ const MyPage = () => {
           <S.SubInfo $daytime={isDaytime}>
             레벨 {characterInfo.level + 1} 까지
           </S.SubInfo>
-          <ProgressBar score={characterInfo.exp} total={200} />
+          <ProgressBar score={characterInfo.exp} total={100} />
         </S.Level>
         <S.Report $daytime={isDaytime}>
           <BoardSvg onClick={() => navigate(URL.MYPAGE.REPORT)} />

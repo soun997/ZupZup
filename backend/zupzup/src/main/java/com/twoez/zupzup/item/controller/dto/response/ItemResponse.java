@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record ItemResponse(
-        Long id, String name, String description, Integer exp, Integer price, String itemImgUrl) {
+        Long id, String name, String description, Integer exp, Long price, String itemImgUrl) {
     public static ItemResponse from(Item item) {
         return ItemResponse.builder()
                 .id(item.getId())

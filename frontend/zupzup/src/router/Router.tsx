@@ -102,6 +102,10 @@ const Router = () => {
             path={utils.URL.ONBORDING.WORKING}
             element={<pages.Working />}
           ></Route>
+          <Route
+            path={utils.URL.TRASH.HOME}
+            element={<pages.TrashHome />}
+          ></Route>
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

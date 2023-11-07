@@ -24,3 +24,5 @@ export interface RegistInfo {
   birthYear: number;
   memberId: number;
 }
+
+export type HealthInfo = Omit<RegistInfo, 'memberId'>;

@@ -14,9 +14,10 @@ import styled from 'styled-components';
 
 interface Props {
   captureFile: File | undefined;
+  setHasUserRequestAnalyze: (hasUserRequestAnalyze: boolean) => void;
 }
 
-const TrashPage = ({ captureFile }: Props) => {
+const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
   CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
   const MODEL_URI = '/model/model.json';
@@ -158,12 +159,12 @@ const TrashPage = ({ captureFile }: Props) => {
   }, [isLoaded]);
 
   return (
-    <div>
+    <S.Wrap>
       <h1>TrashPage 입니다.</h1>
       <S.TrashImage>
         <canvas ref={canvasRef} width="350" height="250"></canvas>
       </S.TrashImage>
-    </div>
+    </S.Wrap>
   );
 };
 
@@ -171,6 +172,17 @@ const S = {
   TrashImage: styled.div`
     width: 800px;
     height: 600px;
+  `,
+  Wrap: styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: ${({ theme }) => theme.color.background};
+    z-index: 400;
   `,
 };
 

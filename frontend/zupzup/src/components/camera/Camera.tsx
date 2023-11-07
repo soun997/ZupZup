@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { CaptureResult } from 'components';
 
 import XSvg from 'assets/icons/x.svg?react';
+import TrashPage from 'pages/trash/TrashPage';
+import CONSOLE from 'utils/ColorConsoles';
 
 interface Props {
   setCameraOn: (cameraOn: boolean) => void;
@@ -12,6 +14,11 @@ interface Props {
 const Camera = ({ setCameraOn }: Props) => {
   const cameraRef = useRef<HTMLVideoElement>(null);
   const [capture, setCapture] = useState<boolean>(false);
+  const hasUserRequestAnalyzeState = useState<Boolean>(false);
+  const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
+    hasUserRequestAnalyzeState;
+  const captureFileState = useState<File>();
+  const [captureFile, setCaptureFile] = captureFileState;
 
   useEffect(() => {
     const enableCamera = async () => {
@@ -44,10 +51,29 @@ const Camera = ({ setCameraOn }: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    CONSOLE.useEffectIn('captureFile');
+    if (captureFile && !capture) {
+      CONSOLE.info('capturefile 존재, capture false');
+      setHasUserRequestAnalyze(true);
+    }
+  }, [capture]);
+
   return (
     <S.Wrap>
       {capture && (
-        <CaptureResult cameraRef={cameraRef} setCapture={setCapture} />
+        <CaptureResult
+          cameraRef={cameraRef}
+          setCapture={setCapture}
+          captureFileState={captureFileState}
+          hasUserRequestAnalyzeState={hasUserRequestAnalyzeState}
+        />
+      )}
+      {hasUserRequestAnalyze && (
+        <TrashPage
+          captureFile={captureFile}
+          setHasUserRequestAnalyze={setHasUserRequestAnalyze}
+        />
       )}
       <S.Header>
         <S.CancelButton onClick={() => setCameraOn(false)}>

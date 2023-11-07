@@ -13,17 +13,30 @@ import TrashPage from 'pages/trash/TrashPage';
 interface Props {
   cameraRef: React.RefObject<HTMLVideoElement>;
   setCapture: (capture: boolean) => void;
+  captureFileState: [
+    File | undefined,
+    React.Dispatch<React.SetStateAction<File | undefined>>,
+  ];
+  hasUserRequestAnalyzeState: [
+    Boolean,
+    React.Dispatch<React.SetStateAction<Boolean>>,
+  ];
 }
 
-const CaptureResult = ({ cameraRef, setCapture }: Props) => {
+const CaptureResult = ({
+  cameraRef,
+  setCapture,
+  captureFileState,
+  hasUserRequestAnalyzeState,
+}: Props) => {
   CONSOLE.reRender('CaptureResult rendered!!');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
-  const [captureFile, setCaptureFile] = useState<File>();
+  const [captureFile, setCaptureFile] = captureFileState;
   const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
-    useState<Boolean>(false);
+    hasUserRequestAnalyzeState;
   const navigate = useNavigate();
 
   const dataURLtoBlob = (dataURL: string) => {
@@ -105,12 +118,17 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
   }, [captureFile]);
 
   function requestAnalyze() {
-    setHasUserRequestAnalyze(true);
+    setCapture(false);
   }
 
   return (
     <S.Wrap>
-      {hasUserRequestAnalyze && <TrashPage captureFile={captureFile}/>}
+      {hasUserRequestAnalyze && (
+        <TrashPage
+          captureFile={captureFile}
+          setHasUserRequestAnalyze={setHasUserRequestAnalyze}
+        />
+      )}
       <S.Header>
         <S.PrevButton onClick={() => setCapture(false)}>
           <AngleLeftSvg />

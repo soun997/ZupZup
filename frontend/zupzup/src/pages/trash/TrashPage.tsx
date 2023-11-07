@@ -6,21 +6,19 @@ import {
   Tensor,
   dispose,
 } from '@tensorflow/tfjs';
-import { Console } from 'console';
 import { useState, useEffect, useRef } from 'react';
 import { GraphModel } from '@tensorflow/tfjs-converter';
 import CONSOLE from 'utils/ColorConsoles';
 import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
-import { CanvasElementContainer } from 'html2canvas/dist/types/dom/replaced-elements/canvas-element-container';
 
 const TrashPage = () => {
+  CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
   const MODEL_URI = '/model/model.json';
   const MODEL_NAME_MAP_URI = '/model/name_map.json';
   const TRASH_IMAGE_ID = 'trash';
 
-  // const [tsInstance, setTsInstance] = useState();
   const [model, setModel] = useState<GraphModel<string | io.IOHandler> | null>(
     null,
   );
@@ -32,17 +30,15 @@ const TrashPage = () => {
   function loadImage() {
     const image = new Image();
     image.src = '/public/sampleTrashImage/sample01.jpg';
-    canvasRef.current.width = image.width;
-    canvasRef.current.height = image.height;
-    image.width = 800;
-    image.height = 600;
     const context = canvasRef.current?.getContext('2d');
+    console.log(context);
 
     image.onload = () => {
+      CONSOLE.info('image loaded');
       context?.drawImage(image, 0, 0, 300, 250);
+      image.id = TRASH_IMAGE_ID;
+      setTrashImg(image);
     };
-    image.id = TRASH_IMAGE_ID;
-    setTrashImg(image);
   }
 
   // 기존 trash-ai 함수의 load 기능
@@ -68,29 +64,33 @@ const TrashPage = () => {
         model = await loadGraphModel(MODEL_URI);
         CONSOLE.ok('[ts load] 2. load model from file complete');
         console.log(model);
-        model.save(INDEXED_DB_NAME); // save to indexedDB
+        model.save(INDEXED_DB_NAME); // save to indexedDB (비동기)
       }
 
       setModel(model);
       setNameMap(nameMap);
-      loadImage();
     }
 
     CONSOLE.useEffectIn('Trash init');
+		loadImage();
     load();
   }, []);
 
   useEffect(() => {
     CONSOLE.useEffectIn('model & nameMap');
+    CONSOLE.brown(`is model Loaded ? ${model !== null}`);
+    CONSOLE.brown(`is nameMap Loaded ? ${nameMap !== null}`);
+    CONSOLE.brown(`is image Loaded ? ${trashImg.id === TRASH_IMAGE_ID}`);
     if (model && nameMap && trashImg.id === TRASH_IMAGE_ID) {
       CONSOLE.info('model & nameMap & trashImg all loaded');
       setIsLoaded(true);
     }
-  }, [model, nameMap]);
+  }, [model, nameMap, trashImg]);
 
   useEffect(() => {
+    CONSOLE.useEffectIn('isLoaded');
     async function processTrashImage() {
-      CONSOLE.useEffectIn('isLoaded');
+      CONSOLE.info('processTrashImage Start');
       const [modelWidth, modelHeight] = model!.inputs![0].shape!.slice(1, 3);
       const input = tidy(() => {
         return imgts
@@ -136,7 +136,10 @@ const TrashPage = () => {
         console.info(`${i} - label : ${label} (score ${score})`);
       }
     }
-    processTrashImage();
+    if (isLoaded) {
+      CONSOLE.info('isLoaded -> true');
+      processTrashImage();
+    }
   }, [isLoaded]);
 
   return (

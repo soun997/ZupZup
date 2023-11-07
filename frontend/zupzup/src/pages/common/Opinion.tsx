@@ -87,6 +87,7 @@ const S = {
     resize: none;
     background-color: ${({ theme }) => theme.color.gray4};
     font-family: ${({ theme }) => theme.font.family.body2};
+    font-size: ${({ theme }) => theme.font.size.body3};
     color: ${({ theme }) => theme.color.dark};
     &:focus {
       outline: none;

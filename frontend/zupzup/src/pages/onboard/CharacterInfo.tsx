@@ -160,7 +160,9 @@ const S = {
       padding: 10px 30px;
       border-radius: 4px;
       background-color: ${({ theme }) => theme.color.main};
-      color: ${({ theme }) => theme.color.white};
+      color: #fff;
+      font-family: ${({ theme }) => theme.font.family.focus2};
+      font-size: ${({ theme }) => theme.font.size.body2};
     }
   `,
 };

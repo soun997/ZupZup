@@ -21,7 +21,6 @@ import com.twoez.zupzup.member.service.MemberService;
 import com.twoez.zupzup.support.docs.RestDocsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -36,21 +35,16 @@ class MemberControllerTest extends RestDocsTest {
     @Test
     @DisplayName("사용자는 회원가입하고 헬스정보를 등록할 수 있다.")
     void registerTest() throws Exception {
-        MemberHealthRegisterRequest request
-                = new MemberHealthRegisterRequest(
-                        1L,
-                        2000,
-                        Gender.M,
-                        180,
-                        80);
+        MemberHealthRegisterRequest request =
+                new MemberHealthRegisterRequest(1L, 2000, Gender.M, 180, 80);
 
         Member member = MemberFixture.DEFAULT.getMember();
-        AuthorizationToken authorizationToken = AuthorizationTokenFixture.DEFAULT.getAuthorizationToken();
+        AuthorizationToken authorizationToken =
+                AuthorizationTokenFixture.DEFAULT.getAuthorizationToken();
 
         given(memberService.issueAuthorizationToken(any(Long.class)))
                 .willReturn(authorizationToken);
-        given(memberService.findById(any(Long.class)))
-                .willReturn(member);
+        given(memberService.findById(any(Long.class))).willReturn(member);
 
         ResultActions perfrom =
                 mockMvc.perform(
@@ -65,25 +59,21 @@ class MemberControllerTest extends RestDocsTest {
                 .andExpect(jsonPath("$.results.refreshToken").value("REFRESHTOKEN"));
 
         perfrom.andDo(print())
-                .andDo(document("member-register", getDocumentRequest(),getDocumentResponse()));
+                .andDo(document("member-register", getDocumentRequest(), getDocumentResponse()));
     }
-
 
     @Test
     @DisplayName("사용자는 로그아웃 할 수 있다.")
     void logoutTest() throws Exception {
         Member member = MemberFixture.DEFAULT.getMember();
 
-        ResultActions perfrom =
-                mockMvc.perform(
-                        post("/api/v1/members/logout"));
+        ResultActions perfrom = mockMvc.perform(post("/api/v1/members/logout"));
 
         perfrom.andExpect(status().isOk());
 
         perfrom.andDo(print())
-                .andDo(document("logout", getDocumentRequest(),getDocumentResponse()));
+                .andDo(document("logout", getDocumentRequest(), getDocumentResponse()));
     }
-
 
     @Test
     @DisplayName("사용자는 본인의 프로필을 조회할 수 있다.")

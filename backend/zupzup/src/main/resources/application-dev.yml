@@ -17,7 +17,7 @@ spring:
       database: ${MONGO_DATABASE}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
-      authentication-database: zupzup
+      authentication-database: zupzup, admin
   security:
     oauth2:
       client:

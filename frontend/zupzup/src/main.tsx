@@ -9,6 +9,8 @@ import * as hooks from 'hooks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Loading } from 'pages';
+import { PersistGate } from 'redux-persist/integration/react';
+import persistStore from 'redux-persist/es/persistStore';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,14 +20,17 @@ const queryClient = new QueryClient({
   },
 });
 
+const persistor = persistStore(hooks.store);
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <Provider store={hooks.store}>
-    <Suspense fallback={<Loading />}>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </Suspense>
+    <PersistGate loading={null} persistor={persistor}>
+      <Suspense fallback={<Loading />}>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </Suspense>
+    </PersistGate>
   </Provider>,
   // </React.StrictMode>,
 );

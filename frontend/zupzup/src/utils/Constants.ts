@@ -59,7 +59,7 @@ export const GENDER = {
 export const IMAGE_MIME_TYPE = 'image/jpeg';
 
 export const AUTH = {
-  ACCESS_KEY: 'access-token',
+  ACCESS_KEY: 'Authorization',
   REFRESH_KEY: 'refresh-token',
   MEMBER_ID: 'member-id',
   NICKNAME: 'nickname',

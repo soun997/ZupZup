@@ -16,7 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
+import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -174,7 +177,7 @@ class PloggingLogControllerTest extends RestDocsTest {
                         "https://image.com");
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Member.class)))
+        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
                 .willReturn(ploggingLog);
 
         ResultActions perform =
@@ -189,6 +192,74 @@ class PloggingLogControllerTest extends RestDocsTest {
 
         perform.andDo(print())
                 .andDo(document("plogginglog-add", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 저장 예외 - 멤버 조회 오류")
+    void ploggingLogAddMemberFailTest() throws Exception {
+
+        PloggingLogRequest request =
+                new PloggingLogRequest(
+                        10,
+                        LocalDateTime.of(2023, 10, 30, 0, 0),
+                        LocalDateTime.of(2023, 10, 30, 2, 0),
+                        7200,
+                        600,
+                        50,
+                        200,
+                        "https://image.com");
+
+        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+                .willThrow(new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
+
+        ResultActions perform =
+                mockMvc.perform(
+                        post("/api/v1/plogging-logs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(request)));
+
+        perform.andExpect(status().isNotFound());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-add-fail-member",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 저장 예외 - 플로깅 기록 집계 조회 오류")
+    void ploggingLogAddTotalFailTest() throws Exception {
+
+        PloggingLogRequest request =
+                new PloggingLogRequest(
+                        10,
+                        LocalDateTime.of(2023, 10, 30, 0, 0),
+                        LocalDateTime.of(2023, 10, 30, 2, 0),
+                        7200,
+                        600,
+                        50,
+                        200,
+                        "https://image.com");
+
+        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+                .willThrow(new TotalPloggingLogNotFoundException());
+
+        ResultActions perform =
+                mockMvc.perform(
+                        post("/api/v1/plogging-logs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(request)));
+
+        perform.andExpect(status().isNotFound());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-add-fail-total",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -208,5 +279,25 @@ class PloggingLogControllerTest extends RestDocsTest {
                 .andExpect(jsonPath("$.results.totalCount").value(10L));
         perform.andDo(print())
                 .andDo(document("plogginglog-total", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 집계 조회 실패.")
+    void totalPloggingLogDetailsFailTest() throws Exception {
+
+        given(ploggingLogQueryService.searchTotalPloggingLog(any(Member.class)))
+                .willThrow(new TotalPloggingLogNotFoundException());
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/total").contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isNotFound());
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-total-fail",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 }

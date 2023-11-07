@@ -106,7 +106,7 @@ public class PloggingLogController {
 
         return ApiResponse.created(
                 PloggingLogAddResponse.from(
-                        ploggingLogService.add(request, loginUser.getMember())));
+                        ploggingLogService.add(request, loginUser.getMember().getId())));
     }
 
     @GetMapping("/total")

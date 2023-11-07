@@ -1,35 +1,64 @@
 import { Coin, ConfirmButton, FoodDetailPage, TopNavigation } from 'components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { FoodDetail } from 'types/Food';
 import * as utils from 'utils';
-import axios from 'api/apiController';
+import { ItemApis } from 'api';
+import { Loading } from 'pages';
+import { setCoin, store } from 'hooks';
+import { useDispatch } from 'react-redux';
 
-const FoodDetail: FoodDetail = {
-  id: 2,
-  image: `https://zupzup-assets.s3.ap-northeast-2.amazonaws.com/food/소시지.png`,
-  name: '햄버거',
-  coin: 4,
-  exp: 3,
-};
 const EachShopDetail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
+  const coin = store.getState().auth.coin;
+
+  const [foodDetail, setFoodDetail] = useState<FoodDetail>();
+
+  const fetchFoodDetail = async () => {
+    try {
+      const response = await ItemApis.getEachItem(Number(id));
+      const data = response.data.results;
+      setFoodDetail(data);
+    } catch (error) {
+      console.error('Error fetching detail info:', error);
+    }
+  };
+
+  const purchaseItem = async () => {
+    if (coin < foodDetail!.price) {
+      alert('구매 불가능 합니다');
+      return;
+    }
+    try {
+      const response = await ItemApis.buyItem(foodDetail!.id);
+      const data = response.data.results.coin;
+      dispatch(setCoin(data));
+      navigate(utils.URL.MYPAGE.PURCHASE);
+    } catch (error) {
+      console.error('Error purchase item:', error);
+    }
+  };
 
   useEffect(() => {
-    axios.get(`/${id}`);
-  }, [id]);
+    fetchFoodDetail();
+  }, []);
+
+  if (!foodDetail) {
+    return <Loading />;
+  }
 
   return (
     <S.Wrap>
-      <TopNavigation rightComponent={<Coin coin={320} />} />
+      <TopNavigation rightComponent={<Coin coin={coin} />} />
       <S.TitleFrame>
         <S.MainTitle>상점</S.MainTitle>
         <S.SubTitle>캐릭터의 성장을 위한 아이템을 구매해보세요!</S.SubTitle>
       </S.TitleFrame>
       <S.Content>
-        <FoodDetailPage foodDetail={FoodDetail} />
+        <FoodDetailPage foodDetail={foodDetail} />
         <S.ButtonSection>
           <ConfirmButton
             text="다시 선택하기"
@@ -37,8 +66,9 @@ const EachShopDetail = () => {
             onClick={() => navigate(utils.URL.MYPAGE.SHOP)}
           />
           <ConfirmButton
-            text="구입하기"
-            onClick={() => navigate(utils.URL.MYPAGE.PURCHASE)}
+            text={coin >= foodDetail.id ? '구입하기' : '구매 불가'}
+            onClick={purchaseItem}
+            color={coin >= foodDetail.id ? '#00C4B8' : '#a0a0a0'}
           />
         </S.ButtonSection>
       </S.Content>

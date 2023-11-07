@@ -5,7 +5,7 @@ import { URL } from 'utils';
 import { Navigation, ProgressBar, MyPageNav, KeyFrameList } from 'components';
 import { CharacterInfo, ProfileInfo } from 'types/ProfileInfo';
 import BoardSvg from 'assets/icons/clipboard.svg?react';
-import { useAppSelector } from 'hooks';
+import { setCoin, useAppDispatch, useAppSelector } from 'hooks';
 import { MemberApi } from 'api';
 import { Loading } from 'pages';
 
@@ -21,6 +21,7 @@ const calculateDaysPassed = (inputDate: string): number => {
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const curTheme = useAppSelector(state => state.themeChanger.value);
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>();
@@ -35,6 +36,7 @@ const MyPage = () => {
 
       setProfileInfo(profile);
       setCharacterInfo(character);
+      dispatch(setCoin(profile.coin));
     } catch (error) {
       console.error('Error fetching profile info:', error);
     }

@@ -1,12 +1,14 @@
 export interface Food {
   id: number;
-  image: string;
+  name: string;
+  itemImgUrl: string;
 }
 
 export interface FoodDetail {
   id: number;
-  image: string;
   name: string;
-  coin: number;
+  description: string;
   exp: number;
+  price: number;
+  itemImgUrl: string;
 }

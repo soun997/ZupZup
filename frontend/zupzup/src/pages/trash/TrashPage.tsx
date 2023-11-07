@@ -11,6 +11,7 @@ import { GraphModel } from '@tensorflow/tfjs-converter';
 import CONSOLE from 'utils/ColorConsoles';
 import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
+import { Loading } from 'pages';
 
 interface Props {
   captureFile: File | undefined;
@@ -30,6 +31,7 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
   const [nameMap, setNameMap] = useState(null);
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
+  const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
   const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
   function loadImage() {
@@ -117,6 +119,12 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
           .div(255.0)
           .expandDims(0);
       });
+
+      const context = canvasRef.current.getContext('2d');
+      (context as CanvasRenderingContext2D).strokeStyle = 'yellow';
+      (context as CanvasRenderingContext2D).font = '20px Arial';
+      (context as CanvasRenderingContext2D).fillStyle = 'white';
+
       const res: Tensor[] = (await model!.executeAsync(input)) as Tensor[];
       const [boxes, scores, classes, valid_detections] = res;
       const boxes_data = boxes.dataSync();
@@ -132,25 +140,23 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
       dispose(res);
 
       console.info('Classify Result');
+      const canvas = canvasRef.current;
+
       for (let i = 0; i < valid_detections_data; ++i) {
-        // let [x1, y1, x2, y2] = boxes_data.slice(i * 4, (i + 1) * 4);
-        // x1 *= canvas.width;
-        // x2 *= canvas.width;
-        // y1 *= canvas.height;
-        // y2 *= canvas.height;
+        let [x1, y1, x2, y2] = boxes_data.slice(i * 4, (i + 1) * 4);
+        x1 *= canvas.width;
+        x2 *= canvas.width;
+        y1 *= canvas.height;
+        y2 *= canvas.height;
         const score = scores_data[i].toFixed(2);
         const label = nameMap![classes_data[i]];
-        // const meta = new Rect({
-        //   area: new Bound({ x1, y1, x2, y2 }),
-        //   score,
-        //   label,
-        //   is_tf: true,
-        // });
-        // if (!meta.tooSmall()) {
-        //   jarr.push(meta);
-        // }
+        context?.strokeRect(x1, y1, x2 - x1, y2 - y1);
+
+        context?.fillText(label, x1, y1);
+
         console.info(`${i} - label : ${label} (score ${score})`);
       }
+      setIsProcessingComplete(true);
     }
     if (isLoaded) {
       CONSOLE.info('isLoaded -> true');
@@ -161,9 +167,13 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
   return (
     <S.Wrap>
       <h1>TrashPage 입니다.</h1>
-      <S.TrashImage>
-        <canvas ref={canvasRef} width="350" height="250"></canvas>
-      </S.TrashImage>
+      {isLoaded ? (
+        <S.TrashImage>
+          <canvas ref={canvasRef} width="350" height="250"></canvas>
+        </S.TrashImage>
+      ) : (
+        <Loading />
+      )}
     </S.Wrap>
   );
 };

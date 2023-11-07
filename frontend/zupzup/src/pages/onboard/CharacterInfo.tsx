@@ -2,8 +2,9 @@ import { TopNavigation } from 'components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import styled from 'styled-components';
+import { store } from 'hooks';
 
-const characterName = '로귄';
+const characterName = '펭깅';
 const CharacterInfo = () => {
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const CharacterInfo = () => {
           src={`${import.meta.env.VITE_S3_URL}/character/penguin-message.png`}
         ></S.Image>
         <S.TextContent>
-          안녕하세요, {'투이지'}님<br />
+          안녕하세요, {store.getState().auth.name}님<br />
           저는 {characterName}이에요. <br />
           아래 과정을 거치면 제가 쑥쑥 자란답니다 🌱
         </S.TextContent>

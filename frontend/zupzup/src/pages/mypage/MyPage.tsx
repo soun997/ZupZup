@@ -62,7 +62,7 @@ const MyPage = () => {
       <S.Content>
         <MyPageNav coin={profileInfo.coin} />
         <S.Title $daytime={isDaytime}>
-          {profileInfo.name}님과 함께한지 <br />
+          펭깅이와 함께한지 <br />
           {calculateDaysPassed(profileInfo.createdAt)} 일째
         </S.Title>
         <S.Level>

@@ -34,6 +34,7 @@ export { default as RegistInfoFrame } from './login/RegistInfoFrame';
 export { default as PloggingMemo } from './mypage/PloggingMemo';
 export { default as MyPageNav } from './mypage/MyPageNav';
 export { default as SettingComponent } from './mypage/SettingComponent';
+export { default as ModifProfileInfo } from './mypage/ModifProfileInfo';
 
 export { default as Coin } from './shop/Coin';
 export { default as DrawerCarousel } from './shop/DrawerCarousel';

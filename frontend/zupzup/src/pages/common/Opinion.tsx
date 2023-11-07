@@ -26,7 +26,7 @@ const Opinion = () => {
     <S.Wrap>
       <TopNavigation />
       <S.TitleFrame>
-        <S.MainTitle>로귄이에게 하고 싶은 말이 있나요 ?</S.MainTitle>
+        <S.MainTitle>펭깅이에게 하고 싶은 말이 있나요 ?</S.MainTitle>
         <S.SubTitle>
           주신 의견은 한글자도 빼놓지 않고 꼼꼼히 읽어볼게요!
         </S.SubTitle>

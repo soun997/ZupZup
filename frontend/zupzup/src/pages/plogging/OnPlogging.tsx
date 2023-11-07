@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -11,8 +12,10 @@ import {
 } from 'components';
 
 import { useGeolocation, useStopWatch, useDistance } from 'hooks';
+import * as utils from 'utils';
 
 const OnPlogging = () => {
+  const navigate = useNavigate();
   const location = useGeolocation();
   const stopwatch = useStopWatch();
   const [exitOn, setExitOn] = useState<boolean>(false);
@@ -21,6 +24,10 @@ const OnPlogging = () => {
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
   const LOCATIONS_KEY = 'locations';
+
+  const exitPlogging = () => {
+    navigate(utils.URL.PLOGGING.REPORT);
+  };
 
   useEffect(() => {
     const recordLocation = () => {
@@ -64,7 +71,9 @@ const OnPlogging = () => {
 
   return (
     <S.Wrap>
-      {exitOn && <ExitModal setExitOn={setExitOn} />}
+      {exitOn && (
+        <ExitModal setExitOn={setExitOn} exitPlogging={exitPlogging} />
+      )}
       {cameraOn && <Camera setCameraOn={setCameraOn} />}
       <OnPloggingHeader exitOn={exitOn} setExitOn={setExitOn} />
       {ploggingInfoOn && (

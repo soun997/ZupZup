@@ -22,7 +22,11 @@ const MyPageNav = ({ coin }: Props) => {
       </S.LeftSection>
       <S.RightSection>
         <MoreInfoSvg onClick={() => navigate(utils.URL.ONBORDING.CHARACTER)} />
-        <ShopSvg onClick={() => navigate(utils.URL.MYPAGE.SHOP)} />
+        <ShopSvg
+          onClick={() => {
+            navigate(utils.URL.MYPAGE.SHOP);
+          }}
+        />
         <SettingSvg onClick={() => navigate(utils.URL.SETTING.HOME)} />
       </S.RightSection>
     </S.Wrap>

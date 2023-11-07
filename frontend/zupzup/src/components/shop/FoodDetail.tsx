@@ -5,12 +5,12 @@ import CoinSvg from 'assets/icons/coin.svg?react';
 const FoodDetail = ({ foodDetail }: { foodDetail: FoodDetail }) => {
   return (
     <S.Wrap>
-      <S.Image src={foodDetail.image} />
+      <S.Image src={foodDetail.itemImgUrl} />
       <S.Title>{foodDetail.name}</S.Title>
-      <S.Content>지금까지 이런 소시지는 없었다. 이것은..더보기</S.Content>
+      <S.Content>{foodDetail.description}</S.Content>
       <S.Body>능력치 : 캐릭터의 성장도 + {foodDetail.exp}</S.Body>
       <S.SubTitle>
-        <CoinSvg /> {foodDetail.coin} 코인
+        <CoinSvg /> {foodDetail.price} 코인
       </S.SubTitle>
     </S.Wrap>
   );

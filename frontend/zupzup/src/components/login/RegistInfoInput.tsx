@@ -110,6 +110,7 @@ const S = {
     }
 
     & input[type='radio'] {
+      width: 1.5rem;
       height: 1.5rem;
       aspect-ratio: 1;
       border: calc(1.5rem / 8) solid ${({ theme }) => theme.color.gray3};
@@ -145,6 +146,9 @@ const S = {
 };
 
 const Input = styled.input`
+  font-weight: ${({ theme }) => theme.font.weight.body3};
+  font-size: ${({ theme }) => theme.font.size.body3};
+  font-family: ${({ theme }) => theme.font.family.body2};
   display: flex;
   align-items: center;
   justify-content: center;

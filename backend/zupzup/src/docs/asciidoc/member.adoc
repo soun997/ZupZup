@@ -10,6 +10,19 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
+
+== 사용자 회원가입 후 헬스정보 등록
+
+=== Request
+
+include::{snippets}/member-register/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/member-register/http-response.adoc[]
+
+
+
 == 사용자 프로필 조회
 
 === Request

@@ -4,8 +4,7 @@ import {
   setRefreshToken,
   deleteAllAuth,
   useAppDispatch,
-  accessToken,
-  refreshToken,
+  store,
 } from 'hooks';
 import * as utils from 'utils';
 
@@ -21,12 +20,17 @@ const instance = axios.create({
 // Request 🧑
 instance.interceptors.request.use(
   config => {
+    const accessToken = store.getState().auth.accessToken;
+    console.log(store.getState());
     if (accessToken) {
       config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`;
     }
     return config;
   },
   async function (error) {
+    const accessToken = store.getState().auth.accessToken;
+    const refreshToken = store.getState().auth.refreshToken;
+
     const originalRequest = error.config;
     const dispatch = useAppDispatch();
     // 401 에러면 refresh token 보내기
@@ -92,7 +96,7 @@ async function reissueTokens(oldRefreshToken: string, oldAccessToken: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'access-token': `Bearer ${oldAccessToken}`,
+        Authorization: `Bearer ${oldAccessToken}`,
       },
     },
   );

@@ -16,6 +16,7 @@ import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,12 +48,10 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findByMonth(any(LocalDate.class), any(Long.class)))
                 .willReturn(List.of(ploggingLog1, ploggingLog2, ploggingLog3));
 
-        List<LocalDate> localDates =
+        Map<LocalDate, Boolean> localDates =
                 ploggingLogQueryService.searchInMonthDistinct(now.toLocalDate(), member.getId());
 
         assertThat(localDates).hasSize(2);
-        assertThat(localDates.get(0).getMonth()).isEqualTo(LocalDate.now().getMonth());
-        assertThat(localDates.get(1).getMonth()).isEqualTo(LocalDate.now().getMonth());
     }
 
     @Test

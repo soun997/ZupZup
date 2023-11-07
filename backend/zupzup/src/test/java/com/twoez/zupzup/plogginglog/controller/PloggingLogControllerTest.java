@@ -26,6 +26,7 @@ import com.twoez.zupzup.support.docs.RestDocsTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,14 +51,16 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("특정 월의 플로깅 기록을 조회한다.")
     void ploggingLogByMonth() throws Exception {
-        LocalDate date = LocalDate.of(2023, 10, 1);
+        LocalDate date1 = LocalDate.of(2023, 10, 1);
+        LocalDate date2 = LocalDate.of(2023, 10, 3);
+        LocalDate date3 = LocalDate.of(2023, 10, 6);
         given(ploggingLogQueryService.searchInMonthDistinct(any(LocalDate.class), any(Long.class)))
-                .willReturn(List.of(date));
+                .willReturn(Map.of(date1, true, date2, true, date3, true));
 
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/plogging-logs/months")
-                                .queryParam("date", date.toString())
+                                .queryParam("date", LocalDate.of(2023, 10, 1).toString())
                                 .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk());

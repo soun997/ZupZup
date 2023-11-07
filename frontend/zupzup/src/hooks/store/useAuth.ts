@@ -4,7 +4,7 @@ import { RootState } from './useStore';
 const initAuth = {
   accessToken: null,
   refreshToken: null,
-  nickname: null,
+  name: null,
   memberId: null,
 };
 
@@ -18,8 +18,8 @@ export const authSlice = createSlice({
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload;
     },
-    setNickname: (state, action) => {
-      state.nickname = action.payload;
+    setMemberName: (state, action) => {
+      state.name = action.payload;
     },
     setMemberId: (state, action) => {
       state.memberId = action.payload;
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
 export const {
   setAccessToken,
   setRefreshToken,
-  setNickname,
+  setMemberName,
   setMemberId,
   deleteAllAuth,
 } = authSlice.actions;
@@ -41,6 +41,6 @@ export const {
 export const accessToken = (state: RootState) => state.auth.accessToken;
 export const refreshToken = (state: RootState) => state.auth.refreshToken;
 export const memberId = (state: RootState) => state.auth.memberId;
-export const nickname = (state: RootState) => state.auth.nickname;
+export const name = (state: RootState) => state.auth.name;
 
 export default authSlice.reducer;

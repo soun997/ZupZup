@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {
   setAccessToken,
   setMemberId,
+  setMemberName,
   setRefreshToken,
   useAppDispatch,
 } from 'hooks';
@@ -32,6 +33,7 @@ const LoginSuccess = () => {
         console.log('login data >: ', data);
 
         dispatch(setMemberId(data.memberId));
+        dispatch(setMemberName(data.name));
 
         if (data.isNewMember) {
           navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL);

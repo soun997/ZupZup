@@ -3,12 +3,8 @@ package com.twoez.zupzup.plogginglog.controller;
 
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.member.domain.LoginUser;
-import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
-import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogAddResponse;
-import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogCalendarResponse;
-import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
-import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
-import com.twoez.zupzup.plogginglog.controller.dto.response.TotalPloggingLogDetailsResponse;
+import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
+import com.twoez.zupzup.plogginglog.controller.dto.response.*;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import java.time.LocalDate;
@@ -100,12 +96,12 @@ public class PloggingLogController {
     }
 
     @PostMapping
-    public ApiResponse<PloggingLogAddResponse> ploggingLogAdd(
-            @Validated @RequestBody PloggingLogRequest request,
+    public ApiResponse<LogAddResponse> ploggingLogAdd(
+            @Validated @RequestBody LogRequest request,
             @AuthenticationPrincipal LoginUser loginUser) {
 
         return ApiResponse.created(
-                PloggingLogAddResponse.from(
+                LogAddResponse.from(
                         ploggingLogService.add(request, loginUser.getMember().getId())));
     }
 

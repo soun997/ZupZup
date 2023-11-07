@@ -1,7 +1,7 @@
-package com.twoez.zupzup.trash.domain;
+package com.twoez.zupzup.plogginglog.domain;
+
 
 import com.twoez.zupzup.global.audit.BaseTime;
-import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,10 +34,10 @@ public class Trash extends BaseTime {
     private Integer normal;
 
     @Column(nullable = false)
-    private Integer styroform;
+    private Integer styrofoam;
 
     @Column(nullable = false)
-    private Integer alnuminium;
+    private Integer aluminium;
 
     @Column(nullable = false)
     private Integer clothes;
@@ -52,7 +52,6 @@ public class Trash extends BaseTime {
     @JoinColumn(name = "plogging_log_id")
     private PloggingLog ploggingLog;
 
-
     @Builder
     public Trash(
             Long id,
@@ -61,24 +60,23 @@ public class Trash extends BaseTime {
             Integer can,
             Integer glass,
             Integer normal,
-            Integer styroform,
-            Integer alnuminium,
+            Integer styrofoam,
+            Integer aluminium,
             Integer clothes,
             Integer battery,
             Boolean isDeleted,
-            PloggingLog ploggingLog ){
+            PloggingLog ploggingLog) {
         this.id = id;
         this.plastic = plastic;
         this.cigarette = cigarette;
         this.can = can;
         this.glass = glass;
         this.normal = normal;
-        this.styroform = styroform;
-        this.alnuminium = alnuminium;
+        this.styrofoam = styrofoam;
+        this.aluminium = aluminium;
         this.clothes = clothes;
         this.battery = battery;
         this.isDeleted = isDeleted;
         this.ploggingLog = ploggingLog;
     }
-
 }

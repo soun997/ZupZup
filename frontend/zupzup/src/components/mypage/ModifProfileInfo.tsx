@@ -73,6 +73,7 @@ const ModalContent = styled.div`
 
   & input {
     border: none;
+    border-bottom: 1px solid ${({ theme }) => theme.color.main};
     width: 100%;
     height: 30px;
     margin-top: 14px;

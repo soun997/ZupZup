@@ -30,12 +30,24 @@ const ProfileSettingPage = () => {
 
     switch (title) {
       case '출생연도':
+        if ((info as number) < 1900 || (info as number) > 2023) {
+          alert('출생연도는 1900년부터 2023년 사이만 입력가능해요');
+          break;
+        }
         newHealthInfo.birthYear = info as number;
         break;
       case '키':
+        if ((info as number) < 100 || (info as number) > 200) {
+          alert('키는 100cm 부터 200cm 까지 입력가능해요');
+          break;
+        }
         newHealthInfo.height = info as number;
         break;
       case '몸무게':
+        if ((info as number) < 10 || (info as number) > 200) {
+          alert('몸무게는 10kg 부터 200kg 까지 입력가능해요');
+          break;
+        }
         newHealthInfo.weight = info as number;
         break;
       default:
@@ -57,7 +69,7 @@ const ProfileSettingPage = () => {
       const data = response.data.results;
       setHealthInfo(data);
     } catch (error) {
-      console.error('Error fetching report info:', error);
+      console.error('Error fetching health info:', error);
     }
   };
 

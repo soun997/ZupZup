@@ -102,6 +102,10 @@ public class Member extends BaseTime {
         return role.stream().map(Role::name).map(SimpleGrantedAuthority::new).toList();
     }
 
+    public void updateCoins(Integer coin) {
+        this.coin += coin;
+    }
+
     public Long buyItem(Long itemPrice) {
         validateBoughtItem(itemPrice);
         this.coin -= itemPrice;

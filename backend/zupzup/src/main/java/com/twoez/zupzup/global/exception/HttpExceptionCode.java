@@ -55,7 +55,7 @@ public enum HttpExceptionCode {
     ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다."),
 
     TOTAL_PLOGGING_LOG_NOT_FOUND(
-            HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_003", "플로깅 기록 집계를 찾을 수 없습니다."),
+            HttpStatus.NOT_FOUND, "ERR_TOTAL_PLOGGING_LOG_001", "플로깅 기록 집계를 찾을 수 없습니다."),
 
     PET_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PET_001", "해당 Member의 펫를 찾을 수 없습니다."),
 

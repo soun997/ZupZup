@@ -1,14 +1,14 @@
 package com.twoez.zupzup.item.service;
 
 
-import com.twoez.zupzup.character.repository.CharacterQueryRepository;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
-import com.twoez.zupzup.global.exception.character.CharacterNotFoundException;
 import com.twoez.zupzup.global.exception.item.ItemNotFoundException;
+import com.twoez.zupzup.global.exception.pet.PetNotFoundException;
 import com.twoez.zupzup.item.domain.Item;
 import com.twoez.zupzup.item.repository.ItemRepository;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberRepository;
+import com.twoez.zupzup.pet.repository.PetQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
-    private final CharacterQueryRepository characterQueryRepository;
+    private final PetQueryRepository petQueryRepository;
 
     public Long buy(Long itemId, Long memberId) {
         Item item = itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
@@ -32,13 +32,13 @@ public class ItemService {
         return memberRepository
                 .findById(memberId)
                 .orElseThrow(() -> new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND))
-                .buyItem(Long.valueOf(item.getPrice()));
+                .buyItem(item.getPrice());
     }
 
     private void updateExperience(Long memberId, Item item) {
-        characterQueryRepository
+        petQueryRepository
                 .findByMemberId(memberId)
-                .orElseThrow(CharacterNotFoundException::new)
+                .orElseThrow(PetNotFoundException::new)
                 .addExp(item.getExp());
     }
 }

@@ -28,7 +28,7 @@ public class Item extends BaseTime {
     private Integer exp;
 
     @Column(nullable = false)
-    private Integer price;
+    private Long price;
 
     @Column(nullable = false)
     private String itemImgUrl;
@@ -42,7 +42,7 @@ public class Item extends BaseTime {
             String name,
             String description,
             Integer exp,
-            Integer price,
+            Long price,
             String itemImgUrl,
             Boolean isDeleted) {
         this.id = id;

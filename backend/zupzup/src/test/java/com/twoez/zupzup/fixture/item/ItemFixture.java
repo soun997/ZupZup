@@ -4,13 +4,13 @@ package com.twoez.zupzup.fixture.item;
 import com.twoez.zupzup.item.domain.Item;
 
 public enum ItemFixture {
-    DEFAULT(1L, "아이템", "아이템 설명", 10, 30, "https://image.com", false);
+    DEFAULT(1L, "아이템", "아이템 설명", 10, 30L, "https://image.com", false);
 
     private Long id;
     private String name;
     private String description;
     private Integer exp;
-    private Integer price;
+    private Long price;
     private String itemImgUrl;
     private Boolean isDeleted;
 
@@ -19,7 +19,7 @@ public enum ItemFixture {
             String name,
             String description,
             Integer exp,
-            Integer price,
+            Long price,
             String itemImgUrl,
             Boolean isDeleted) {
         this.id = id;
@@ -43,7 +43,7 @@ public enum ItemFixture {
                 .build();
     }
 
-    public Item getItem(Long id, String name, Integer exp, Integer price) {
+    public Item getItem(Long id, String name, Integer exp, Long price) {
         return Item.builder()
                 .id(id)
                 .name(name)

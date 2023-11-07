@@ -1,4 +1,4 @@
-package com.twoez.zupzup.character.domain;
+package com.twoez.zupzup.pet.domain;
 
 
 import com.twoez.zupzup.global.audit.BaseTime;
@@ -20,11 +20,11 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Character extends BaseTime {
+public class Pet extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "character_id")
+    @Column(name = "pet_id")
     private Long id;
 
     @Column(nullable = false)
@@ -42,7 +42,7 @@ public class Character extends BaseTime {
     private Member member;
 
     @Builder
-    public Character(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
+    public Pet(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
         this.id = id;
         this.level = level;
         this.exp = exp;

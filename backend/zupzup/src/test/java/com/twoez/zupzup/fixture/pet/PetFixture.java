@@ -1,13 +1,13 @@
-package com.twoez.zupzup.fixture.character;
+package com.twoez.zupzup.fixture.pet;
 
 
-import com.twoez.zupzup.character.domain.Character;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.pet.domain.Pet;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public enum CharacterFixture {
+public enum PetFixture {
     DEFAULT(1L, 1, 50, false, MemberFixture.DEFAULT.getMember());
 
     private Long id;
@@ -16,7 +16,7 @@ public enum CharacterFixture {
     private Boolean isDeleted;
     private Member member;
 
-    CharacterFixture(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
+    PetFixture(Long id, Integer level, Integer exp, Boolean isDeleted, Member member) {
         this.id = id;
         this.level = level;
         this.exp = exp;
@@ -24,8 +24,8 @@ public enum CharacterFixture {
         this.member = member;
     }
 
-    public Character getCharacter() {
-        return Character.builder()
+    public Pet getCharacter() {
+        return Pet.builder()
                 .id(id)
                 .level(level)
                 .exp(exp)

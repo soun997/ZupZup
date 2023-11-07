@@ -1,4 +1,4 @@
-= Character API
+= Pet API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -10,7 +10,7 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-== 사용자 캐릭터 조회
+== 사용자 펫 조회
 
 === Request
 

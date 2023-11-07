@@ -20,7 +20,7 @@ public enum HttpExceptionCode {
             HttpStatus.UNAUTHORIZED, "ERR_AUTH_004", "memberId가 Token에 존재하지 않습니다."),
     AUTHORIZATION_TOKEN_EXPIRED_EXCEPTION(
             HttpStatus.UNAUTHORIZED, "ERR_AUTH_005", "Access 또는 Refresh 토큰의 기한이 만료되었습니다."),
-    REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_006", "RefreshToken이 존재하지 않습니다"),
+    REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_006", "RefreshToken이 존재하지 않습니다."),
     INVALID_REFRESH_TOKEN(
             HttpStatus.BAD_REQUEST, "ERR_AUTH_007", "해당 Member에게 발급된 RefreshToken이 아닙니다."),
 
@@ -54,7 +54,7 @@ public enum HttpExceptionCode {
 
     ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다."),
 
-    CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_CHARACTER_001", "해당 Member의 캐릭터를 찾을 수 없습니다."),
+    PET_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PET_001", "해당 Member의 펫를 찾을 수 없습니다."),
 
     REDIS_PARSING_EXCEPTION(
             HttpStatus.INTERNAL_SERVER_ERROR, "ERR_REDIS_001", "Redis 객체를 Json 형태로 변환하지 못했습니다."),

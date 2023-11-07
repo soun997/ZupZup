@@ -2,14 +2,9 @@ import styled from 'styled-components';
 import { TotalPloggingInfo } from 'types/ProfileInfo';
 import { PloggingMemo, TopNavigation } from 'components';
 import { URL } from 'utils';
-
-const ploggingInfo: TotalPloggingInfo = {
-  totalCalorie: 330, //cal
-  totalCount: 1,
-  totalTime: 7200, //초
-  totalDistance: 1, //미터
-  totalGatheredTrash: 20,
-};
+import { RecordApis } from 'api';
+import { useEffect, useState } from 'react';
+import { Loading } from 'pages';
 
 const trashInfos = [
   { name: '플라스틱', count: 3 },
@@ -20,6 +15,24 @@ const trashInfos = [
 ];
 
 const MyPloggingReport = () => {
+  const [ploggingInfo, setPloggingInfo] = useState<TotalPloggingInfo>();
+  const fetchMyReport = async () => {
+    try {
+      const response = await RecordApis.getMyPloggingInfo();
+      const data = response.data.results;
+      setPloggingInfo(data);
+    } catch (error) {
+      console.error('Error fetching report info:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyReport();
+  }, []);
+
+  if (!ploggingInfo) {
+    return <Loading />;
+  }
   return (
     <S.Wrap>
       <TopNavigation

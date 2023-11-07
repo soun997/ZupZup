@@ -14,7 +14,7 @@ const calculateDaysPassed = (inputDate: string): number => {
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - inputDateObj.getTime();
 
-  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + 1;
 
   return daysPassed;
 };

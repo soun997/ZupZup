@@ -13,7 +13,9 @@ import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -36,11 +38,35 @@ public class PloggingLogController {
     public ApiResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
         return ApiResponse.ok(
-                ploggingLogQueryService
-                        .searchInMonthDistinct(date, loginUser.getMemberId())
-                        .stream()
-                        .map(PloggingLogCalendarResponse::new)
-                        .toList());
+                convertToCalendarResponse(
+                        ploggingLogQueryService.searchInMonthDistinct(
+                                date, loginUser.getMemberId()),
+                        date));
+    }
+
+    private List<PloggingLogCalendarResponse> convertToCalendarResponse(
+            Map<LocalDate, Boolean> dates, LocalDate date) {
+        LocalDate startDate = getFirstDateOfMonth(date);
+        LocalDate endDate = getFirstDateOfNextMonth(startDate);
+
+        return startDate
+                .datesUntil(endDate)
+                .map(
+                        d -> {
+                            if (dates.containsKey(d)) {
+                                return new PloggingLogCalendarResponse(d, true);
+                            }
+                            return new PloggingLogCalendarResponse(d, false);
+                        })
+                .toList();
+    }
+
+    private static LocalDate getFirstDateOfMonth(LocalDate date) {
+        return LocalDate.of(date.getYear(), date.getMonth(), 1);
+    }
+
+    private static LocalDate getFirstDateOfNextMonth(LocalDate startDate) {
+        return startDate.plusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
     }
 
     @GetMapping("/period")

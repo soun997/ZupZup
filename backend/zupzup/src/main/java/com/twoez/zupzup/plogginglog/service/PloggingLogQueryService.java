@@ -11,6 +11,8 @@ import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +25,11 @@ public class PloggingLogQueryService {
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
 
-    public List<LocalDate> searchInMonthDistinct(LocalDate date, Long memberId) {
+    public Map<LocalDate, Boolean> searchInMonthDistinct(LocalDate date, Long memberId) {
         return ploggingLogQueryRepository.findByMonth(date, memberId).stream()
                 .map(ploggingLog -> ploggingLog.getStartDateTime().toLocalDate())
                 .distinct()
-                .toList();
+                .collect(Collectors.toMap(e -> e, e -> true));
     }
 
     public List<PloggingLog> searchInPeriod(

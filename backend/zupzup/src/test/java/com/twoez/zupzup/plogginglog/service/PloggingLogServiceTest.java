@@ -8,6 +8,7 @@ import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -27,31 +28,73 @@ public class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;
+    @Mock MemberRepository memberRepository;
     @InjectMocks PloggingLogService ploggingLogService;
 
+    PloggingLogRequest request =
+            new PloggingLogRequest(
+                    10,
+                    LocalDateTime.of(2023, 10, 30, 0, 0),
+                    LocalDateTime.of(2023, 10, 30, 2, 0),
+                    7200,
+                    600,
+                    50,
+                    200,
+                    "https://image.com");
+
     @Test
-    @DisplayName("플로깅 기록을 저장하고, 기록 집계도 갱신한다.")
+    @DisplayName("플로깅 기록을 저장한다.")
     void addPloggingLogTest() {
-        PloggingLogRequest request =
-                new PloggingLogRequest(
-                        10,
-                        LocalDateTime.of(2023, 10, 30, 0, 0),
-                        LocalDateTime.of(2023, 10, 30, 2, 0),
-                        7200,
-                        600,
-                        50,
-                        200,
-                        "https://image.com");
+
+        Member member = MemberFixture.DEFAULT.getMember();
+        TotalPloggingLog total = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(member));
+        given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(total));
+        given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+
+        PloggingLog result = ploggingLogService.add(request, any(Long.class));
+
+        assertThat(result).isEqualTo(ploggingLog);
+    }
+
+    @Test
+    @DisplayName("플로깅 기록을 저장할 때, 사용자 보유 코인을 증가시킨다.")
+    void updateMemberCoinTest() {
+
+        Member originMember = MemberFixture.DEFAULT.getMember();
+        Member updatedMember = MemberFixture.DEFAULT.getMember();
+        TotalPloggingLog total = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(updatedMember));
+        given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(total));
+        given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+
+        PloggingLog result = ploggingLogService.add(request, any(Long.class));
+
+        assertThat(result).isEqualTo(ploggingLog);
+        assertThat(updatedMember.getCoin()).isEqualTo(originMember.getCoin() + request.coin());
+    }
+
+    @Test
+    @DisplayName("플로깅 기록을 저장할 때, 플로깅 기록 집계 테이블을 갱신한다.")
+    void updateTotalPloggingLogTest() {
 
         Member member = MemberFixture.DEFAULT.getMember();
         TotalPloggingLog originTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         TotalPloggingLog updatedTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(member));
         given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
                 .willReturn(Optional.of(updatedTotal));
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
 
-        PloggingLog result = ploggingLogService.add(request, member);
+        PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
         assertThat(result).isEqualTo(ploggingLog);
         assertThat(updatedTotal.getTotalDistance())

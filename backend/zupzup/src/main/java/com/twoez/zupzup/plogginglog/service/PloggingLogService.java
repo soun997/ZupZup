@@ -1,6 +1,7 @@
 package com.twoez.zupzup.plogginglog.service;
 
 
+import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
@@ -26,10 +27,7 @@ public class PloggingLogService {
         TotalPloggingLog totalPloggingLog =
                 totalPloggingLogRepository
                         .findByMemberId(member.getId())
-                        .orElseGet(
-                                () ->
-                                        totalPloggingLogRepository.save(
-                                                TotalPloggingLog.init(member)));
+                        .orElseThrow(TotalPloggingLogNotFoundException::new);
 
         totalPloggingLog.update(
                 request.distance(),

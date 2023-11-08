@@ -9,13 +9,17 @@ import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.repository.MemberRepository;
+import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
+import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import com.twoez.zupzup.plogginglog.repository.TrashRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,14 +28,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PloggingLogServiceTest {
+ -class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;
     @Mock MemberRepository memberRepository;
+    @Mock TrashRepository trashRepository;
     @InjectMocks PloggingLogService ploggingLogService;
 
-    PloggingLogRequest request =
+    PloggingLogRequest ploggingLogRequest =
             new PloggingLogRequest(
                     10,
                     LocalDateTime.of(2023, 10, 30, 0, 0),
@@ -41,6 +46,12 @@ public class PloggingLogServiceTest {
                     50,
                     200,
                     "https://image.com");
+    TrashRequest trashRequest =
+            new TrashRequest(
+                    1,2,3,4,5,6,7,8,9 );
+
+    LogRequest request =
+            new LogRequest(ploggingLogRequest, trashRequest);
 
     @Test
     @DisplayName("플로깅 기록을 저장한다.")
@@ -77,7 +88,7 @@ public class PloggingLogServiceTest {
         PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
         assertThat(result).isEqualTo(ploggingLog);
-        assertThat(updatedMember.getCoin()).isEqualTo(originMember.getCoin() + request.coin());
+        assertThat(updatedMember.getCoin()).isEqualTo(originMember.getCoin() + request.ploggingLogRequest().coin());
     }
 
     @Test
@@ -98,6 +109,6 @@ public class PloggingLogServiceTest {
 
         assertThat(result).isEqualTo(ploggingLog);
         assertThat(updatedTotal.getTotalDistance())
-                .isEqualTo(originTotal.getTotalDistance() + request.distance());
+                .isEqualTo(originTotal.getTotalDistance() + request.ploggingLogRequest().distance());
     }
 }

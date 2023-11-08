@@ -20,7 +20,9 @@ import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
+import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
+import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
@@ -165,7 +167,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     @DisplayName("플로깅 종료 시 해당 플로깅에 대한 기록을 저장한다.")
     void ploggingLogAddTest() throws Exception {
 
-        PloggingLogRequest request =
+        PloggingLogRequest ploggingLogRequest =
                 new PloggingLogRequest(
                         10,
                         LocalDateTime.of(2023, 10, 30, 0, 0),
@@ -175,9 +177,18 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
+        TrashRequest trashRequest =
+                new TrashRequest(
+                        1,2,3,4,5,6,7,8,9 );
+
+        LogRequest request =
+                new LogRequest(ploggingLogRequest, trashRequest);
+
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+
+
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
                 .willReturn(ploggingLog);
 
         ResultActions perform =
@@ -198,7 +209,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     @DisplayName("플로깅 기록 저장 예외 - 멤버 조회 오류")
     void ploggingLogAddMemberFailTest() throws Exception {
 
-        PloggingLogRequest request =
+        PloggingLogRequest ploggingLogRequest =
                 new PloggingLogRequest(
                         10,
                         LocalDateTime.of(2023, 10, 30, 0, 0),
@@ -208,8 +219,16 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
+        TrashRequest trashRequest =
+                new TrashRequest(
+                        1,2,3,4,5,6,7,8,9 );
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+        LogRequest request =
+                new LogRequest(ploggingLogRequest, trashRequest);
+
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
                 .willThrow(new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
 
         ResultActions perform =
@@ -232,7 +251,7 @@ class PloggingLogControllerTest extends RestDocsTest {
     @DisplayName("플로깅 기록 저장 예외 - 플로깅 기록 집계 조회 오류")
     void ploggingLogAddTotalFailTest() throws Exception {
 
-        PloggingLogRequest request =
+        PloggingLogRequest ploggingLogRequest =
                 new PloggingLogRequest(
                         10,
                         LocalDateTime.of(2023, 10, 30, 0, 0),
@@ -242,8 +261,16 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
+        TrashRequest trashRequest =
+                new TrashRequest(
+                        1,2,3,4,5,6,7,8,9 );
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Long.class)))
+        LogRequest request =
+                new LogRequest(ploggingLogRequest, trashRequest);
+
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
                 .willThrow(new TotalPloggingLogNotFoundException());
 
         ResultActions perform =

@@ -1,8 +1,7 @@
 package com.twoez.zupzup.plogginglog.service;
 
 
-import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -12,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,10 +42,8 @@ public class PloggingLogQueryService {
         return ploggingLogQueryRepository.findByDate(date, memberId);
     }
 
-    public PloggingLog searchRecentLog(Long memberId) {
-        return ploggingLogQueryRepository
-                .findOneOrderByDateDesc(memberId)
-                .orElseThrow(PloggingLogNotFoundException::new);
+    public Optional<PloggingLog> searchRecentLog(Long memberId) {
+        return ploggingLogQueryRepository.findOneOrderByDateDesc(memberId);
     }
 
     public TotalPloggingLog searchTotalPloggingLog(Member member) {

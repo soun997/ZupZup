@@ -9,6 +9,7 @@ import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogCalendarR
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.TotalPloggingLogDetailsResponse;
+import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -94,9 +96,10 @@ public class PloggingLogController {
     @GetMapping("/recent")
     public ApiResponse<RecentPloggingLogResponse> recentPloggingLogDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
-        return ApiResponse.ok(
-                RecentPloggingLogResponse.from(
-                        ploggingLogQueryService.searchRecentLog(loginUser.getMemberId())));
+        Optional<PloggingLog> ploggingLogOptional =
+                ploggingLogQueryService.searchRecentLog(loginUser.getMemberId());
+        if (!ploggingLogOptional.isPresent()) return ApiResponse.noContent().build();
+        return ApiResponse.ok(RecentPloggingLogResponse.from(ploggingLogOptional.get()));
     }
 
     @PostMapping

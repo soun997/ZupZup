@@ -1,7 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { TrashInfo } from 'types';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
+
+import TrashMarkerSvg from 'assets/icons/trash_can.svg?react';
 
 interface Location {
   lat: number;
@@ -19,6 +22,8 @@ interface Props {
   location: Location;
   fixCenter: boolean;
   setFixCenter: (fixCenter: boolean) => void;
+  trashs: Array<TrashInfo>;
+  trashOn: boolean;
 }
 
 const PloggingMap = ({
@@ -28,6 +33,8 @@ const PloggingMap = ({
   location,
   fixCenter,
   setFixCenter,
+  trashs,
+  trashOn,
 }: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
@@ -127,6 +134,33 @@ const PloggingMap = ({
       updateMapCenter();
     }
   }, [location]);
+
+  useEffect(() => {
+    const updateTrashMarkers = () => {
+      if (!tmap) {
+        return;
+      }
+
+      [...trashs].forEach(
+        trash =>
+          new window.Tmapv3.Marker({
+            position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
+            icon: '/assets/images/trash_can.png',
+            iconSize: new window.Tmapv3.Size(40, 40),
+            map: tmap,
+          }),
+      );
+    };
+
+    if (trashOn) {
+      updateTrashMarkers();
+    } else {
+      initMap({
+        lat: location.lat,
+        lng: location.lng,
+      });
+    }
+  }, [trashs, trashOn]);
 
   return (
     <S.Wrap>

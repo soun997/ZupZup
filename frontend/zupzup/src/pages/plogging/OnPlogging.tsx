@@ -13,6 +13,8 @@ import {
 
 import { useGeolocation, useStopWatch, useDistance } from 'hooks';
 import * as utils from 'utils';
+import { TrashApis } from 'api';
+import { TrashInfo } from 'types';
 
 const OnPlogging = () => {
   const navigate = useNavigate();
@@ -21,12 +23,34 @@ const OnPlogging = () => {
   const [exitOn, setExitOn] = useState<boolean>(false);
   const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState<boolean>(false);
+  const [trashOn, setTrashOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
+  const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
   const LOCATIONS_KEY = 'locations';
 
   const exitPlogging = () => {
     navigate(utils.URL.PLOGGING.REPORT);
+  };
+
+  const getTrashInfo = async (trashStatus: boolean) => {
+    if (trashStatus && location.loaded) {
+      const trashcanRequest = {
+        currentLatitude: location.coordinates!.lat,
+        currentLongitude: location.coordinates!.lng,
+      };
+
+      try {
+        const response = await TrashApis.getTrashCans(trashcanRequest);
+        setTrashs(response.data.results);
+        console.log(response.data.results);
+        setTrashOn(trashStatus);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setTrashOn(trashStatus);
+    }
   };
 
   useEffect(() => {
@@ -92,6 +116,8 @@ const OnPlogging = () => {
         setPloggingInfoOn={setPloggingInfoOn}
         cameraOn={cameraOn}
         setCameraOn={setCameraOn}
+        trashOn={trashOn}
+        getTrashInfo={getTrashInfo}
         fixCenter={fixCenter}
         setFixCenter={setFixCenter}
       />
@@ -107,6 +133,8 @@ const OnPlogging = () => {
           }}
           fixCenter={fixCenter}
           setFixCenter={setFixCenter}
+          trashs={trashs}
+          trashOn={trashOn}
         />
       )}
     </S.Wrap>

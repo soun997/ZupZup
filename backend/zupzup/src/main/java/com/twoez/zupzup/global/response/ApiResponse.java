@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
  * @author WonHo Seo
  * @version 1.0
  */
+@Deprecated
 public record ApiResponse<T>(int status, T results) {
 
     public record ApiResponseBuilder(HttpStatus status) {

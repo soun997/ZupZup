@@ -1,4 +1,4 @@
-package com.twoez.zupzup.global.exception.flogginglog;
+package com.twoez.zupzup.global.exception.plogginglog;
 
 
 import com.twoez.zupzup.global.exception.ApplicationException;

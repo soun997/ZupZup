@@ -17,7 +17,7 @@ public class TrashcanController {
 
     private final TrashcanQueryService trashcanQueryService;
 
-    @GetMapping
+    @PostMapping
     public ApiResponse<List<TrashcanListResponse>> findByLocation(
             @Validated @RequestBody TrashcanListRequest request) {
         return ApiResponse.ok(

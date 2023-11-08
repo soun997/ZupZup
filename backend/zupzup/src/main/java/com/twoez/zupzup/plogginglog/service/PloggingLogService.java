@@ -36,28 +36,36 @@ public class PloggingLogService {
                         .findById(memberId)
                         .orElseThrow(() -> new MemberQueryException(MEMBER_NOT_FOUND));
 
-        PloggingLogRequest ploggingLogRequest = request.ploggingLogRequest();
+        PloggingLog ploggingLog = ploggingLogSave(request, member);
 
-        PloggingLog ploggingLog = ploggingLogRepository.save(ploggingLogRequest.toEntity(member));
+        trashSave(request, ploggingLog);
 
-        TrashRequest trashRequest = request.trashRequest();
+        member.updateCoins(ploggingLog.getCoin());
 
-        // 쓰레기 저장
-        trashRepository.save(trashRequest.toEntity(ploggingLog));
+        totalPloggingLogUpdate(memberId, ploggingLog);
 
-        member.updateCoins(ploggingLogRequest.coin());
+        return ploggingLog;
+    }
 
+    private void totalPloggingLogUpdate(Long memberId, PloggingLog ploggingLog) {
         // TotalPlogginLog가 있으면 가져오고, 없으면 새로 생성
         TotalPloggingLog totalPloggingLog =
                 totalPloggingLogRepository
                         .findByMemberId(memberId)
                         .orElseThrow(TotalPloggingLogNotFoundException::new);
-        totalPloggingLog.update(
-                ploggingLogRequest.distance(),
-                ploggingLogRequest.durationTime(),
-                ploggingLogRequest.calories(),
-                ploggingLogRequest.gatheredTrash());
 
-        return ploggingLog;
+        totalPloggingLog.update(
+                ploggingLog.getDistance(),
+                ploggingLog.getDurationTime(),
+                ploggingLog.getCalories(),
+                ploggingLog.getGatheredTrash());
+    }
+
+    private void trashSave(LogRequest request, PloggingLog ploggingLog) {
+        trashRepository.save(request.trashRequest().toEntity(ploggingLog));
+    }
+
+    private PloggingLog ploggingLogSave(LogRequest request, Member member) {
+        return ploggingLogRepository.save(request.ploggingLogRequest().toEntity(member));
     }
 }

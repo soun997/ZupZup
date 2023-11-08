@@ -9,6 +9,7 @@ import DownloadSvg from 'assets/icons/download.svg?react';
 import ShareSvg from 'assets/icons/share.svg?react';
 import CONSOLE from 'utils/ColorConsoles';
 import TrashPage from 'pages/trash/TrashPage';
+import { canvasToFile } from 'utils/CanvasUtils';
 
 interface Props {
   cameraRef: React.RefObject<HTMLVideoElement>;
@@ -38,17 +39,6 @@ const CaptureResult = ({
   const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
     hasUserRequestAnalyzeState;
   const navigate = useNavigate();
-
-  const dataURLtoBlob = (dataURL: string) => {
-    const byteString = atob(dataURL.split(',')[1]);
-    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: mimeString });
-  };
 
   const downloadImage = () => {
     const downloadButton = downloadRef.current;
@@ -96,10 +86,7 @@ const CaptureResult = ({
           .getContext('2d')!
           .drawImage(camera, 0, 0, canvas.width, canvas.height);
 
-        const blob = dataURLtoBlob(canvas.toDataURL(utils.IMAGE_MIME_TYPE));
-        const file = new File([blob], `captured_image.jpg`, {
-          type: utils.IMAGE_MIME_TYPE,
-        });
+        const file = canvasToFile(`captured_image.jpg`, canvas);
 
         setCaptureFile(file);
         setIsCapturing(false);

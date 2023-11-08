@@ -1,29 +1,25 @@
-import { useFormatTime } from 'hooks';
+import { store, useFormatTime } from 'hooks';
 import styled from 'styled-components';
-import { RecordInfo } from 'types/PloggingReport';
 
-interface Props {
-  record: RecordInfo;
-}
-
-const RecordReport = ({ record }: Props) => {
+const RecordReport = () => {
+  const data = store.getState().plogging;
   return (
     <S.ContentFrame>
       <S.EachFrame>
         <div className="eachName">소요시간</div>
-        <div className="eachVal">{useFormatTime.formatTime(record.time)} </div>
+        <div className="eachVal">{useFormatTime.formatTime(data.time!)} </div>
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">획득한 코인</div>
-        <div className="eachVal">{record.coin} 원</div>
+        <div className="eachVal">{data.coin!} 원</div>
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">이동 거리</div>
-        <div className="eachVal">{record.distance} km</div>
+        <div className="eachVal">{data.distance!} km</div>
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">소모 칼로리</div>
-        <div className="eachVal">{record.calories} kcal</div>
+        <div className="eachVal">{data.calories!} kcal</div>
       </S.EachFrame>
     </S.ContentFrame>
   );

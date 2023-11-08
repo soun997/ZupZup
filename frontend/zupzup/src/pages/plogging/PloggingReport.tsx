@@ -3,25 +3,21 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
-import { PloggingReport } from 'types/PloggingReport';
 import SaveSvg from 'assets/icons/save.svg?react';
-import { useCapture } from 'hooks';
+import { store, useAppDispatch, useCapture } from 'hooks';
 import PloggingDone from 'components/plogging/PloggingDone';
-
-const ploggingReport: PloggingReport = {
-  image: '../../../assets/images/route.png',
-  record: {
-    time: 7814,
-    calories: 600,
-    distance: 3000,
-    coin: 40,
-  },
-};
+import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
 const PloggingReport = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { handleCaptureClick, captureRef } = useCapture();
   const [showLoading, setLoading] = useState(true);
+
+  const handleDonePlogging = () => {
+    dispatch(deleteAllPlogging());
+    navigate(utils.URL.MYPAGE.HOME);
+  };
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -49,10 +45,10 @@ const PloggingReport = () => {
         <S.SubText>플로깅 기록을 확인해주세요</S.SubText>
 
         <S.SubTitle>나의 이동 경로</S.SubTitle>
-        <S.Image src={ploggingReport.image} />
+        <S.Image src={store.getState().plogging.routeImageUrl!} />
 
         <S.SubTitle>기록</S.SubTitle>
-        <RecordReport record={ploggingReport.record}></RecordReport>
+        <RecordReport />
 
         <S.SaveImage onClick={handleCaptureClick}>
           <SaveSvg />
@@ -60,10 +56,7 @@ const PloggingReport = () => {
         </S.SaveImage>
       </S.Content>
       <S.BottomFrame>
-        <ConfirmButton
-          text="마이페이지로 이동"
-          onClick={() => navigate(utils.URL.MYPAGE.HOME)}
-        />
+        <ConfirmButton text="마이페이지로 이동" onClick={handleDonePlogging} />
       </S.BottomFrame>
     </S.Wrap>
   );

@@ -16,8 +16,7 @@ const calculateDaysPassed = (inputDate: string): number => {
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - inputDateObj.getTime();
 
-  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + 1;
-
+  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
   return daysPassed;
 };
 
@@ -34,7 +33,7 @@ const RecentRecord = () => {
         setRecentRecord(null);
       } else {
         setRecentRecord(data);
-        setRecentDay(calculateDaysPassed(data.endDate));
+        setRecentDay(calculateDaysPassed(data.endDateTime));
       }
     } catch (e) {
       console.error(e);
@@ -52,7 +51,7 @@ const RecentRecord = () => {
           <>
             <S.RecordInfo>{recentDay}일 전</S.RecordInfo>&nbsp;|&nbsp;
             <S.RecordInfo>
-              {(recentRecord.distance / 1000).toFixed(1)} km
+              {(recentRecord.distance / 1000).toFixed(2)} km
             </S.RecordInfo>
           </>
         ) : (

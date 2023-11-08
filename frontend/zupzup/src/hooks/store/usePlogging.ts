@@ -6,6 +6,9 @@ const initPlogging = {
   id: null,
   gatheredTrash: 0,
   coin: 0,
+  calories: 0,
+  distance: 0,
+  time: null,
   routeImageUrl: null,
   trashDetail: {
     plastic: 0,
@@ -50,7 +53,16 @@ export const ploggingSlice = createSlice({
     setRouteImage: (state, action) => {
       state.routeImageUrl = action.payload;
     },
-    deleteAllAuth: state => {
+    setTime: (state, action) => {
+      state.time = action.payload;
+    },
+    setDistance: (state, action) => {
+      state.distance = action.payload;
+    },
+    setCalories: (state, action) => {
+      state.calories = action.payload;
+    },
+    deleteAllPlogging: state => {
       Object.assign(state, initPlogging);
     },
   },
@@ -64,7 +76,10 @@ export const {
   setCoin,
   setTrashDetail,
   setRouteImage,
-  deleteAllAuth,
+  setCalories,
+  setDistance,
+  setTime,
+  deleteAllPlogging,
 } = ploggingSlice.actions;
 
 export default ploggingSlice.reducer;

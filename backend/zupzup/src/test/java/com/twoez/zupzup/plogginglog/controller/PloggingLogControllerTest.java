@@ -166,7 +166,6 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("최근 플로깅 기록이 없다")
     void recentPloggingLogNoContent() throws Exception {
-        LocalDateTime now = LocalDateTime.now();
         Optional<PloggingLog> ploggingLogOptional = Optional.empty();
         given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLogOptional);
 

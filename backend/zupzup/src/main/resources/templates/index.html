@@ -836,8 +836,8 @@ Content-Length: 243
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-07T16:03:54.5792387",
-    "endDateTime" : "2023-11-07T16:03:54.5792387",
+    "startDateTime" : "2023-11-08T13:43:52.7016118",
+    "endDateTime" : "2023-11-08T13:43:52.7016118",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -890,8 +890,8 @@ Content-Length: 243
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-07T16:03:54.6407552",
-    "endDateTime" : "2023-11-07T16:03:54.6407552",
+    "startDateTime" : "2023-11-08T13:43:52.8189188",
+    "endDateTime" : "2023-11-08T13:43:52.8189188",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -926,8 +926,8 @@ Content-Length: 195
 {
   "status" : 200,
   "results" : {
-    "startDateTime" : "2023-11-07T16:03:54.6224446",
-    "endDateTime" : "2023-11-07T16:03:54.6224446",
+    "startDateTime" : "2023-11-08T13:43:52.7880598",
+    "endDateTime" : "2023-11-08T13:43:52.7880598",
     "distance" : 10,
     "calories" : 600
   }
@@ -946,18 +946,31 @@ Content-Length: 195
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/plogging-logs HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 240
+Content-Length: 495
 Host: k9a202.p.ssafy.io:8080
 
 {
-  "distance" : 10,
-  "startDateTime" : "2023-10-30T00:00:00",
-  "endDateTime" : "2023-10-30T02:00:00",
-  "durationTime" : 7200,
-  "calories" : 600,
-  "gatheredTrash" : 50,
-  "coin" : 200,
-  "routeImageUrl" : "https://image.com"
+  "ploggingLogRequest" : {
+    "distance" : 10,
+    "startDateTime" : "2023-10-30T00:00:00",
+    "endDateTime" : "2023-10-30T02:00:00",
+    "durationTime" : 7200,
+    "calories" : 600,
+    "gatheredTrash" : 50,
+    "coin" : 200,
+    "routeImageUrl" : "https://image.com"
+  },
+  "trashRequest" : {
+    "plastic" : 1,
+    "cigarette" : 2,
+    "can" : 3,
+    "glass" : 4,
+    "normal" : 5,
+    "styrofoam" : 6,
+    "aluminium" : 7,
+    "clothes" : 8,
+    "battery" : 9
+  }
 }</code></pre>
 </div>
 </div>
@@ -1509,12 +1522,12 @@ Content-Length: 936
         "unsorted" : true
       },
       "offset" : 0,
-      "paged" : true,
-      "unpaged" : false
+      "unpaged" : false,
+      "paged" : true
     },
+    "last" : true,
     "totalPages" : 1,
     "totalElements" : 5,
-    "last" : true,
     "size" : 5,
     "number" : 0,
     "sort" : {
@@ -1614,7 +1627,7 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 156
+Content-Length: 155
 
 {
   "status" : 200,
@@ -1622,7 +1635,7 @@ Content-Length: 156
     "memberId" : 1,
     "name" : "mock",
     "coin" : 100,
-    "createdAt" : "2023-11-07T16:03:53.2047524"
+    "createdAt" : "2023-11-08T13:43:50.422308"
   }
 }</code></pre>
 </div>

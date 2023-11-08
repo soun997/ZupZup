@@ -2,7 +2,7 @@ package com.twoez.zupzup.plogginglog.service;
 
 import static com.twoez.zupzup.global.exception.HttpExceptionCode.MEMBER_NOT_FOUND;
 
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberRepository;

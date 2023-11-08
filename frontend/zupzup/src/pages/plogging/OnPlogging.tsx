@@ -11,21 +11,62 @@ import {
   Camera,
 } from 'components';
 
-import { useGeolocation, useStopWatch, useDistance } from 'hooks';
+import {
+  useGeolocation,
+  useStopWatch,
+  useDistance,
+  store,
+  calculateCalories,
+  useAppDispatch,
+} from 'hooks';
 import * as utils from 'utils';
+import { PloggingApis, RecordApis } from 'api';
+import { PloggingLogRequest, TrashRequest } from 'types';
+import { format } from 'date-fns';
+import {
+  setCalories,
+  setDistance,
+  setEndDateTime,
+  setTime,
+} from 'hooks/store/usePlogging';
 
 const OnPlogging = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location = useGeolocation();
   const stopwatch = useStopWatch();
   const [exitOn, setExitOn] = useState<boolean>(false);
-  const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
+  const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(true);
   const [cameraOn, setCameraOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
+  const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
   const LOCATIONS_KEY = 'locations';
 
-  const exitPlogging = () => {
+  const exitPlogging = async () => {
+    dispatch(setEndDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
+    dispatch(setCalories(onCalories));
+    dispatch(setDistance(totalDistance));
+    dispatch(setTime(stopwatch));
+
+    const ploggingData: PloggingLogRequest = {
+      calories: onCalories,
+      startDateTime: store.getState().plogging.startDateTime!,
+      endDateTime: store.getState().plogging.endDateTime!,
+      distance: totalDistance,
+      durationTime: stopwatch,
+      coin: store.getState().plogging.coin,
+      gatheredTrash: store.getState().plogging.gatheredTrash,
+      routeImageUrl: 'assets/images/route.png',
+    };
+
+    const trashData: TrashRequest = store.getState().plogging.trashDetail;
+    console.log(ploggingData, trashData);
+    await RecordApis.postPloggingLog({
+      ploggingLogRequest: ploggingData,
+      trashRequest: trashData,
+    });
+    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 
@@ -54,6 +95,9 @@ const OnPlogging = () => {
 
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
+
+        const calorie = calculateCalories();
+        setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
       }
@@ -80,6 +124,7 @@ const OnPlogging = () => {
         <PloggingInfo
           time={stopwatch}
           distance={totalDistance}
+          calorie={onCalories}
           exitOn={exitOn}
           setExitOn={setExitOn}
           setPloggingInfoOn={setPloggingInfoOn}

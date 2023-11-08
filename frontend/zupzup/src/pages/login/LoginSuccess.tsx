@@ -6,9 +6,13 @@ import { LoadingAnimation } from 'components';
 import styled from 'styled-components';
 import {
   setAccessToken,
+  setBirthYear,
+  setGender,
+  setHeight,
   setMemberId,
   setMemberName,
   setRefreshToken,
+  setWeight,
   useAppDispatch,
 } from 'hooks';
 
@@ -42,6 +46,14 @@ const LoginSuccess = () => {
           const refreshToken = data.refreshToken;
           dispatch(setAccessToken(accessToken));
           dispatch(setRefreshToken(refreshToken));
+
+          const response = await MemberApi.getHealthInfo();
+          const healthData = response.data.results;
+          dispatch(setBirthYear(healthData.birthYear));
+          dispatch(setGender(healthData.gender));
+          dispatch(setHeight(healthData.height));
+          dispatch(setWeight(healthData.weight));
+
           navigate(utils.URL.PLOGGING.LOBBY);
         }
       } catch (err) {

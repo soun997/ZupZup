@@ -7,6 +7,10 @@ const initAuth = {
   name: null,
   memberId: null,
   coin: 0,
+  birthYear: null,
+  gender: 'M',
+  height: null,
+  weight: null,
 };
 
 export const authSlice = createSlice({
@@ -31,6 +35,18 @@ export const authSlice = createSlice({
     setCoin: (state, action) => {
       state.coin = action.payload;
     },
+    setBirthYear: (state, action) => {
+      state.birthYear = action.payload;
+    },
+    setGender: (state, action) => {
+      state.gender = action.payload;
+    },
+    setHeight: (state, action) => {
+      state.height = action.payload;
+    },
+    setWeight: (state, action) => {
+      state.weight = action.payload;
+    },
   },
 });
 
@@ -41,6 +57,10 @@ export const {
   setMemberId,
   deleteAllAuth,
   setCoin,
+  setBirthYear,
+  setGender,
+  setHeight,
+  setWeight,
 } = authSlice.actions;
 
 export const accessToken = (state: RootState) => state.auth.accessToken;

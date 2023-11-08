@@ -16,8 +16,8 @@ const formatDateTimePeriod = (
 
   const timeDifference = (end.getTime() - start.getTime()) / 1000;
   const seconds = timeDifference % 60;
-  const minutes = (timeDifference / 60) % 60;
-  const hours = timeDifference / 3600;
+  const minutes = parseInt(((timeDifference / 60) % 60).toString());
+  const hours = parseInt((timeDifference / 3600).toString());
 
   let result = '';
   if (hours > 0) {

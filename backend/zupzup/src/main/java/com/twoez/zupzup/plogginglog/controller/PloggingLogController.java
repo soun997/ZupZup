@@ -98,8 +98,7 @@ public class PloggingLogController {
             @AuthenticationPrincipal LoginUser loginUser) {
         Optional<PloggingLog> ploggingLogOptional =
                 ploggingLogQueryService.searchRecentLog(loginUser.getMemberId());
-        if (!ploggingLogOptional.isPresent()) return ApiResponse.noContent().build();
-        return ApiResponse.ok(RecentPloggingLogResponse.from(ploggingLogOptional.get()));
+        return ploggingLogOptional.map(ploggingLog -> ApiResponse.ok(RecentPloggingLogResponse.from(ploggingLog))).orElseGet(() -> ApiResponse.noContent().build());
     }
 
     @PostMapping

@@ -12,8 +12,8 @@ export interface CharacterInfo {
 export interface TotalPloggingInfo {
   totalCount: number;
   totalDistance: number;
-  totalTime: number;
-  totalCalorie: number;
+  totalDurationTime: number;
+  totalCalories: number;
   totalGatheredTrash: number;
 }
 

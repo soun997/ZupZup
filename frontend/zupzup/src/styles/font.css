@@ -1,38 +1,14 @@
 @font-face {
   font-family: 'AppleSDGothicNeo';
-  src: url('../assets/fonts/AppleSDGothicNeoR.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoT';
-  src: url('../assets/fonts/AppleSDGothicNeoT.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoL';
-  src: url('../assets/fonts/AppleSDGothicNeoL.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoM';
-  src: url('../assets/fonts/AppleSDGothicNeoM.ttf');
+  src: url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
 }
 @font-face {
   font-family: 'AppleSDGothicNeoR';
-  src: url('../assets/fonts/AppleSDGothicNeoR.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoSB';
-  src: url('../assets/fonts/AppleSDGothicNeoSB.ttf');
+  src: url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
 }
 @font-face {
   font-family: 'AppleSDGothicNeoB';
-  src: url('../assets/fonts/AppleSDGothicNeoB.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoEB';
-  src: url('../assets/fonts/AppleSDGothicNeoEB.ttf');
-}
-@font-face {
-  font-family: 'AppleSDGothicNeoH';
-  src: url('../assets/fonts/AppleSDGothicNeoH.ttf');
+  src: url('../assets/fonts/AppleSDGothicNeoB.woff2') format('woff2');
 }
 @font-face {
   font-family: 'yg-jalnan';

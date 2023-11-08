@@ -46,6 +46,7 @@ public class PloggingLogQueryRepository extends QuerydslRepositorySupport {
     }
 
     private JPAQuery<PloggingLog> findByMonthQuery(LocalDate date, Long memberId) {
+        
         return selectFrom(ploggingLog)
                 .leftJoin(ploggingLog.member)
                 .fetchJoin()

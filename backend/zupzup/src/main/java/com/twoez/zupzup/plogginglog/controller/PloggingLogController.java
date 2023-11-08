@@ -1,7 +1,9 @@
 package com.twoez.zupzup.plogginglog.controller;
 
 
+import com.twoez.zupzup.global.response.ApiContent;
 import com.twoez.zupzup.global.response.ApiResponse;
+import com.twoez.zupzup.global.response.HttpResponse;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogAddResponse;
@@ -17,6 +19,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.resource.HttpResource;
 
 @RestController
 @RequestMapping("api/v1/plogging-logs")
@@ -35,13 +39,12 @@ public class PloggingLogController {
     private final PloggingLogService ploggingLogService;
 
     @GetMapping("/months")
-    public ApiResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
+    public HttpResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
-        return ApiResponse.ok(
-                convertToCalendarResponse(
-                        ploggingLogQueryService.searchInMonthDistinct(
-                                date, loginUser.getMemberId()),
-                        date));
+        return HttpResponse.okBuild(convertToCalendarResponse(
+                ploggingLogQueryService.searchInMonthDistinct(
+                        date, loginUser.getMemberId()),
+                date));
     }
 
     private List<PloggingLogCalendarResponse> convertToCalendarResponse(
@@ -70,11 +73,11 @@ public class PloggingLogController {
     }
 
     @GetMapping("/period")
-    public ApiResponse<List<PloggingLogListResponse>> ploggingListByPeriod(
+    public HttpResponse<List<PloggingLogListResponse>> ploggingListByPeriod(
             @RequestParam LocalDateTime startDate,
             @RequestParam LocalDateTime endDate,
             @AuthenticationPrincipal LoginUser loginUser) {
-        return ApiResponse.ok(
+        return HttpResponse.okBuild(
                 ploggingLogQueryService
                         .searchInPeriod(startDate, endDate, loginUser.getMemberId())
                         .stream()
@@ -83,37 +86,37 @@ public class PloggingLogController {
     }
 
     @GetMapping("/days")
-    public ApiResponse<List<PloggingLogListResponse>> ploggingListByDay(
+    public HttpResponse<List<PloggingLogListResponse>> ploggingListByDay(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
-        return ApiResponse.ok(
+        return HttpResponse.okBuild(
                 ploggingLogQueryService.searchByDate(date, loginUser.getMemberId()).stream()
                         .map(PloggingLogListResponse::from)
                         .toList());
     }
 
     @GetMapping("/recent")
-    public ApiResponse<RecentPloggingLogResponse> recentPloggingLogDetails(
+    public HttpResponse<RecentPloggingLogResponse> recentPloggingLogDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
-        return ApiResponse.ok(
+        return HttpResponse.okBuild(
                 RecentPloggingLogResponse.from(
                         ploggingLogQueryService.searchRecentLog(loginUser.getMemberId())));
     }
 
     @PostMapping
-    public ApiResponse<PloggingLogAddResponse> ploggingLogAdd(
+    public HttpResponse<PloggingLogAddResponse> ploggingLogAdd(
             @Validated @RequestBody PloggingLogRequest request,
             @AuthenticationPrincipal LoginUser loginUser) {
 
-        return ApiResponse.created(
+        return HttpResponse.createdBuild(
                 PloggingLogAddResponse.from(
                         ploggingLogService.add(request, loginUser.getMember().getId())));
     }
 
     @GetMapping("/total")
-    public ApiResponse<TotalPloggingLogDetailsResponse> totalPloggingLogDetails(
+    public HttpResponse<TotalPloggingLogDetailsResponse> totalPloggingLogDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
 
-        return ApiResponse.ok(
+        return HttpResponse.okBuild(
                 TotalPloggingLogDetailsResponse.from(
                         ploggingLogQueryService.searchTotalPloggingLog(loginUser.getMember())));
     }

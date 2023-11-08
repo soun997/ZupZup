@@ -17,7 +17,7 @@ import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;

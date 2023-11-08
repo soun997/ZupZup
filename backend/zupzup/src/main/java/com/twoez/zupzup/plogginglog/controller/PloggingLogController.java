@@ -1,8 +1,6 @@
 package com.twoez.zupzup.plogginglog.controller;
 
 
-import com.twoez.zupzup.global.response.ApiContent;
-import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.global.response.HttpResponse;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
@@ -11,7 +9,6 @@ import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogCalendarR
 import com.twoez.zupzup.plogginglog.controller.dto.response.PloggingLogListResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.RecentPloggingLogResponse;
 import com.twoez.zupzup.plogginglog.controller.dto.response.TotalPloggingLogDetailsResponse;
-import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import java.time.LocalDate;
@@ -19,9 +16,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.resource.HttpResource;
 
 @RestController
 @RequestMapping("api/v1/plogging-logs")
@@ -43,10 +37,11 @@ public class PloggingLogController {
     @GetMapping("/months")
     public HttpResponse<List<PloggingLogCalendarResponse>> ploggingStatusInMonth(
             @RequestParam LocalDate date, @AuthenticationPrincipal LoginUser loginUser) {
-        return HttpResponse.okBuild(convertToCalendarResponse(
-                ploggingLogQueryService.searchInMonthDistinct(
-                        date, loginUser.getMemberId()),
-                date));
+        return HttpResponse.okBuild(
+                convertToCalendarResponse(
+                        ploggingLogQueryService.searchInMonthDistinct(
+                                date, loginUser.getMemberId()),
+                        date));
     }
 
     private List<PloggingLogCalendarResponse> convertToCalendarResponse(
@@ -99,18 +94,21 @@ public class PloggingLogController {
     @GetMapping("/recent")
     public HttpResponse<RecentPloggingLogResponse> recentPloggingLogDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
-        return ploggingLogQueryService.searchRecentLog(loginUser.getMemberId())
-                .map(ploggingLog -> HttpResponse.okBuild(RecentPloggingLogResponse.from(ploggingLog)))
+        return ploggingLogQueryService
+                .searchRecentLog(loginUser.getMemberId())
+                .map(
+                        ploggingLog ->
+                                HttpResponse.okBuild(RecentPloggingLogResponse.from(ploggingLog)))
                 .orElseGet(() -> HttpResponse.noContentBuilder().build());
     }
 
     @PostMapping
-    public HttpResponse<PloggingLogAddResponse> ploggingLogAdd(
-            @Validated @RequestBody PloggingLogRequest request,
+    public HttpResponse<LogAddResponse> ploggingLogAdd(
+            @Validated @RequestBody LogRequest request,
             @AuthenticationPrincipal LoginUser loginUser) {
 
         return HttpResponse.createdBuild(
-                PloggingLogAddResponse.from(
+                LogAddResponse.from(
                         ploggingLogService.add(request, loginUser.getMember().getId())));
     }
 

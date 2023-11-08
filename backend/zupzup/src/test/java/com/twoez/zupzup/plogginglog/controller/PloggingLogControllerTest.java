@@ -191,7 +191,7 @@ class PloggingLogControllerTest extends RestDocsTest {
                         get("/api/v1/plogging-logs/recent")
                                 .contentType(MediaType.APPLICATION_JSON));
 
-        perform.andExpect(status().isOk()).andExpect(jsonPath("$.status").value(204));
+        perform.andExpect(status().isNoContent());
 
         perform.andDo(print())
                 .andDo(

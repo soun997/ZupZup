@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TopNavigation } from 'components';
 import { THEME, URL } from 'utils';
 import styled from 'styled-components';
-import { useAppSelector, useAppDispatch } from 'hooks';
+import { useAppDispatch } from 'hooks';
 import { toDark, toLight, toSystem } from 'hooks';
 
 import CheckSvg from 'assets/icons/check.svg?react';
@@ -10,7 +10,7 @@ import * as useCookie from 'hooks';
 
 const SettingTheme = () => {
   const [selectedList, setSelectedList] = useState<number>(0);
-  const curTheme = useAppSelector(state => state.themeChanger.value);
+  const curTheme = useCookie.getCookie(THEME.KEY);
   const dispatch = useAppDispatch();
 
   const handleListClick = (index: number) => {

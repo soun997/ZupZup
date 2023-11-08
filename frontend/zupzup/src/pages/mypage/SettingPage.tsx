@@ -4,14 +4,12 @@ import * as utils from 'utils';
 import NextArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Navigation, TopNavigation } from 'components';
 import SettingComponent from 'components/mypage/SettingComponent';
-import { deleteAllAuth, useAppDispatch } from 'hooks';
+import { deleteAllAuth, store, useAppDispatch } from 'hooks';
 
-const profileInfo = {
-  nickname: '줍줍',
-};
 const Setting = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const name = store.getState().auth.name;
 
   return (
     <S.Wrap>
@@ -25,7 +23,7 @@ const Setting = () => {
           <S.SubTitle>
             <S.MyInfo onClick={() => navigate(utils.URL.SETTING.PROFILE)}>
               <div className="textInfo">
-                <div className="nickname">{profileInfo.nickname} 님</div>
+                <div className="nickname">{name} 님</div>
                 <div className="modify">내 정보 수정하기</div>
               </div>
               <S.SvgWrapper>

@@ -9,7 +9,7 @@ const OnBoarding = () => {
   return (
     <S.Wrap>
       <S.Title>줍줍</S.Title>
-      <S.Background src="assets/images/park_main.png" />
+      {/* <S.Background src={`${import.meta.env.VITE_S3_URL}/background-3.png`} /> */}
     </S.Wrap>
   );
 };
@@ -32,21 +32,16 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(
-      180deg,
-      #fff 0%,
-      #fff 0.01%,
-      #fff 14.69%,
-      #b8f2e8 48.54%,
-      #2cd5fb 99.41%
-    );
+
+    background-image: url(${import.meta.env.VITE_S3_URL}/background-3.png);
+    background-size: cover;
   `,
   Title: styled.div`
-    margin-top: 200px;
-    transform: translateY(150px);
+    margin-top: 160px;
+    /* transform: translateY(150px); */
     text-align: center;
     font-family: ${({ theme }) => theme.font.family.title};
-    font-size: ${({ theme }) => theme.font.size.title};
+    font-size: 80px;
     color: #fff;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     z-index: 1;

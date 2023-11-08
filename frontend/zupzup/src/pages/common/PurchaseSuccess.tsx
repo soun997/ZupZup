@@ -1,19 +1,22 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton } from 'components';
 
 const PurchaseSuccess = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   return (
     <S.Wrap>
       <S.TitleFrame>
         <S.MainTitle>음~ 맛있는 식사였다고 하네요</S.MainTitle>
-        <S.SubTitle>줍줍님의 성장도가 +3 증가하였어요 🎉</S.SubTitle>
+        <S.SubTitle>줍줍님의 성장도가 +{state} 증가하였어요 🎉</S.SubTitle>
       </S.TitleFrame>
       <S.GIF
-        src={`${import.meta.env.VITE_S3_URL}/character/after-eating.gif`}
+        src={`${
+          import.meta.env.VITE_S3_URL
+        }/character/after-eating-removebg.gif`}
         alt="eating..."
       />
       <S.BottomFrame>
@@ -75,7 +78,7 @@ const S = {
   `,
 
   GIF: styled.img`
-    width: 90%;
+    width: 95%;
     margin: 150px auto 0;
   `,
 };

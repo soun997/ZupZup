@@ -2,24 +2,38 @@ import styled from 'styled-components';
 import { TotalPloggingInfo } from 'types/ProfileInfo';
 import { PloggingMemo, TopNavigation } from 'components';
 import { URL } from 'utils';
-
-const ploggingInfo: TotalPloggingInfo = {
-  totalCalorie: 330, //cal
-  totalCount: 1,
-  totalTime: 7200, //초
-  totalDistance: 1, //미터
-  totalGatheredTrash: 20,
-};
+import { RecordApis } from 'api';
+import { useEffect, useState } from 'react';
+import { Loading } from 'pages';
+import ErrorSvg from 'assets/icons/error-check.svg?react';
 
 const trashInfos = [
-  { name: '플라스틱', count: 3 },
-  { name: '담배꽁초', count: 5 },
-  { name: '일반 쓰레기', count: 5 },
-  { name: '음식물 쓰레기', count: 5 },
-  { name: '유리조각', count: 2 },
+  { name: '플라스틱', count: 0 },
+  { name: '담배꽁초', count: 0 },
+  { name: '일반 쓰레기', count: 0 },
+  { name: '음식물 쓰레기', count: 0 },
+  { name: '유리조각', count: 0 },
 ];
 
 const MyPloggingReport = () => {
+  const [ploggingInfo, setPloggingInfo] = useState<TotalPloggingInfo>();
+  const fetchMyReport = async () => {
+    try {
+      const response = await RecordApis.getMyPloggingInfo();
+      const data = response.data.results;
+      setPloggingInfo(data);
+    } catch (error) {
+      console.error('Error fetching report info:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyReport();
+  }, []);
+
+  if (!ploggingInfo) {
+    return <Loading />;
+  }
   return (
     <S.Wrap>
       <TopNavigation
@@ -58,6 +72,10 @@ const MyPloggingReport = () => {
         <div className="memoInfo">
           <PloggingMemo trashInfo={trashInfos} />
         </div>
+        <ErrorCheck>
+          <ErrorSvg />
+          {'서비스 준비중입니다'}
+        </ErrorCheck>
       </S.BoxFrame>
 
       <S.InfoBox>
@@ -170,5 +188,19 @@ const S = {
     }
   `,
 };
+
+const ErrorCheck = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  color: ${({ theme }) => theme.color.warning};
+  gap: 5px;
+  font-size: 12px;
+  border: none;
+  width: fit-content;
+  margin: -5px;
+  padding-right: 20px;
+  font-family: ${({ theme }) => theme.font.family.body2};
+`;
 
 export default MyPloggingReport;

@@ -6,7 +6,7 @@ const OnBoardThird = () => {
       <S.TitleFrame>
         <S.MainTitle>
           획득한 코인으로
-          <br /> 로귄이를 키워주세요
+          <br /> 펭깅이를 키워주세요
         </S.MainTitle>
         <S.SubTitle>상점을 통해 음식을 구매할 수 있어요</S.SubTitle>
       </S.TitleFrame>

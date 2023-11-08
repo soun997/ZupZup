@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface Props {
-  backgroundColor: string;
+  $backgroundColor: string;
   color: string;
 }
 
@@ -10,7 +10,7 @@ const SocialLoginButton = styled.button<Props>`
   width: 80%;
   height: 52px;
   padding: 8px 16px;
-  background-color: ${({ backgroundColor }: Props) => backgroundColor};
+  background-color: ${({ $backgroundColor }: Props) => $backgroundColor};
   font-family: ${({ theme }) => theme.font.family.focus2};
   font-size: 15px;
   border-radius: 8px;

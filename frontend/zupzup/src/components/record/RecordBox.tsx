@@ -33,11 +33,9 @@ const RecordBox = ({ ploggingInfo }: Props) => {
         <S.RecordInfoBox>
           <ClockSvg />
           <S.RecordInfo>
-            {(
-              useFormatDateTime.formatDateTimePeriod(
-                ploggingInfo.startDateTime,
-                ploggingInfo.endDateTime,
-              ),
+            {useFormatDateTime.formatDateTimePeriod(
+              ploggingInfo.startDateTime,
+              ploggingInfo.endDateTime,
             )}
           </S.RecordInfo>
         </S.RecordInfoBox>

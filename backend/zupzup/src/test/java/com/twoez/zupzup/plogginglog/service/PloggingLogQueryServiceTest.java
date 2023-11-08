@@ -97,11 +97,11 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
                 .willReturn(Optional.ofNullable(ploggingLog));
 
-        Optional<PloggingLog> findPloggingLog = ploggingLogQueryService.searchRecentLog(member.getId());
+        Optional<PloggingLog> findPloggingLog =
+                ploggingLogQueryService.searchRecentLog(member.getId());
 
         assertThat(findPloggingLog).contains(ploggingLog);
     }
-
 
     @Test
     @DisplayName("조회할 플로깅 기록 집계가 없다면 오류가 발생한다.")

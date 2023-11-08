@@ -11,7 +11,13 @@ import {
   Camera,
 } from 'components';
 
-import { useGeolocation, useStopWatch, useDistance, store } from 'hooks';
+import {
+  useGeolocation,
+  useStopWatch,
+  useDistance,
+  store,
+  calculateCalories,
+} from 'hooks';
 import * as utils from 'utils';
 import { PloggingApis } from 'api';
 import { PloggingLogRequest, TrashRequest } from 'types';
@@ -77,8 +83,8 @@ const OnPlogging = () => {
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
-        //!수정할 부분
-        setCalorie(200);
+        const calorie = calculateCalories();
+        setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
       }
@@ -105,6 +111,7 @@ const OnPlogging = () => {
         <PloggingInfo
           time={stopwatch}
           distance={totalDistance}
+          calorie={onCalories}
           exitOn={exitOn}
           setExitOn={setExitOn}
           setPloggingInfoOn={setPloggingInfoOn}

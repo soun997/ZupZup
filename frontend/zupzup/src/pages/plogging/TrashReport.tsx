@@ -1,22 +1,38 @@
 import styled from 'styled-components';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoinReport, ConfirmButton, TopNavigation } from 'components';
 import * as utils from 'utils';
-import { TrashReport } from 'types/Trash';
+import { TrashAnalyzeReport } from 'types/Trash';
+import CONSOLE from 'utils/ColorConsoles';
 
-const trashReport: TrashReport = {
-  image: '../../../assets/images/trash-image.png',
-  coin: [
-    { name: '플라스틱', value: 12 },
-    { name: '담배꽁초', value: 5 },
-    { name: '일반쓰레기', value: 20 },
-    { name: '기타', value: 2 },
-  ],
-  totalCoin: 39,
-};
+// const trashReport: TrashAnalyzeReport = {
+//   image: '../../../assets/images/trash-image.png',
+//   coin: [
+//     { name: '플라스틱', value: 12 },
+//     { name: '담배꽁초', value: 5 },
+//     { name: '일반쓰레기', value: 20 },
+//     { name: '기타', value: 2 },
+//   ],
+//   totalCoin: 39,
+// };
 
-const TrashReport = () => {
+const TrashReport = (trashReport: TrashAnalyzeReport) => {
   const navigate = useNavigate();
+  const trashAnalyzeImageRef =
+    useRef() as React.MutableRefObject<HTMLImageElement>;
+
+  useEffect(() => {
+    // read trash analyze image file
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.result) {
+        trashAnalyzeImageRef.current.src = fileReader.result as string;
+      } else {
+        CONSOLE.error('캡처 파일 읽기 실패...');
+      }
+    };
+  }, []);
 
   return (
     <S.Wrap>
@@ -26,9 +42,9 @@ const TrashReport = () => {
           <S.MainTitle>쓰레기 이미지 분석 결과입니다</S.MainTitle>
           <S.SubTitle>인식이 안되었을 경우 재촬영 해주세요</S.SubTitle>
         </S.TitleFrame>
-        <S.Image src={trashReport.image} />
+        <S.Image ref={trashAnalyzeImageRef} />
         <CoinReport
-          coins={trashReport.coin}
+          trashDetail={trashReport.trashDetail}
           totalCoin={trashReport.totalCoin}
         ></CoinReport>
       </S.Content>

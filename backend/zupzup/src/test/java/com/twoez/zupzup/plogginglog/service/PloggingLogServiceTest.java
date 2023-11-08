@@ -28,7 +28,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
- -class PloggingLogServiceTest {
+ class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;

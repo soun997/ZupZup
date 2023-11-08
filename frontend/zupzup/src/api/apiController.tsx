@@ -32,6 +32,8 @@ instance.interceptors.request.use(
 
     const originalRequest = error.config;
     const dispatch = useAppDispatch();
+
+    console.error(error);
     // 401 에러면 refresh token 보내기
     if (
       error?.response?.data?.status === 401 &&

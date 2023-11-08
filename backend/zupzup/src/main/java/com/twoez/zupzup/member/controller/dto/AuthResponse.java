@@ -7,7 +7,11 @@ import lombok.Builder;
 
 @Builder
 public record AuthResponse(
-        boolean isNewMember, String accessToken, String refreshToken, Long memberId, String memberName) {
+        boolean isNewMember,
+        String accessToken,
+        String refreshToken,
+        Long memberId,
+        String memberName) {
 
     public static AuthResponse from(AuthorizationToken authorizationToken, Member member) {
         return AuthResponse.builder()

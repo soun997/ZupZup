@@ -17,7 +17,7 @@ import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -144,7 +145,8 @@ class PloggingLogControllerTest extends RestDocsTest {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
-        given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLog);
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class)))
+                .willReturn(Optional.of(ploggingLog));
 
         ResultActions perform =
                 mockMvc.perform(
@@ -157,6 +159,28 @@ class PloggingLogControllerTest extends RestDocsTest {
                 .andDo(
                         document(
                                 "plogginglog-by-recent",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("최근 플로깅 기록이 없다")
+    void recentPloggingLogNoContent() throws Exception {
+        Optional<PloggingLog> ploggingLogOptional = Optional.empty();
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class)))
+                .willReturn(ploggingLogOptional);
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/recent")
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isOk()).andExpect(jsonPath("$.status").value(204));
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-by-recent-no-content",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }

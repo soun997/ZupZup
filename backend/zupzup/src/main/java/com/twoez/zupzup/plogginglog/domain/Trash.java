@@ -37,13 +37,28 @@ public class Trash extends BaseTime {
     private Integer styrofoam;
 
     @Column(nullable = false)
-    private Integer aluminium;
+    private Integer metal;
 
     @Column(nullable = false)
     private Integer clothes;
 
     @Column(nullable = false)
     private Integer battery;
+
+    @Column(nullable = false)
+    private Integer paper;
+
+    @Column(nullable = false)
+    private Integer vinyl;
+
+    @Column(nullable = false)
+    private Integer mixed;
+
+    @Column(nullable = false)
+    private Integer food;
+
+    @Column(nullable = false)
+    private Integer etc;
 
     @Column(nullable = false)
     private Boolean isDeleted;
@@ -61,9 +76,14 @@ public class Trash extends BaseTime {
             Integer glass,
             Integer normal,
             Integer styrofoam,
-            Integer aluminium,
+            Integer metal,
             Integer clothes,
             Integer battery,
+            Integer vinyl,
+            Integer paper,
+            Integer mixed,
+            Integer food,
+            Integer etc,
             Boolean isDeleted,
             PloggingLog ploggingLog) {
         this.id = id;
@@ -73,9 +93,14 @@ public class Trash extends BaseTime {
         this.glass = glass;
         this.normal = normal;
         this.styrofoam = styrofoam;
-        this.aluminium = aluminium;
+        this.metal = metal;
         this.clothes = clothes;
         this.battery = battery;
+        this.vinyl = vinyl;
+        this.paper = paper;
+        this.mixed = mixed;
+        this.food = food;
+        this.etc = etc;
         this.isDeleted = isDeleted;
         this.ploggingLog = ploggingLog;
     }

@@ -49,6 +49,20 @@ class PloggingLogControllerTest extends RestDocsTest {
     @MockBean PloggingLogService ploggingLogService;
     Member member;
 
+    PloggingLogRequest ploggingLogRequest =
+            new PloggingLogRequest(
+                    10,
+                    LocalDateTime.of(2023, 10, 30, 0, 0),
+                    LocalDateTime.of(2023, 10, 30, 2, 0),
+                    7200,
+                    600,
+                    50,
+                    200,
+                    "https://image.com");
+    TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+
+    LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
+
     @BeforeEach
     void initObjects() {
         this.member = MemberFixture.DEFAULT.getMember();
@@ -191,20 +205,6 @@ class PloggingLogControllerTest extends RestDocsTest {
     @DisplayName("플로깅 종료 시 해당 플로깅에 대한 기록을 저장한다.")
     void ploggingLogAddTest() throws Exception {
 
-        PloggingLogRequest ploggingLogRequest =
-                new PloggingLogRequest(
-                        10,
-                        LocalDateTime.of(2023, 10, 30, 0, 0),
-                        LocalDateTime.of(2023, 10, 30, 2, 0),
-                        7200,
-                        600,
-                        50,
-                        200,
-                        "https://image.com");
-        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
-
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
         given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
@@ -227,20 +227,6 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("플로깅 기록 저장 예외 - 멤버 조회 오류")
     void ploggingLogAddMemberFailTest() throws Exception {
-
-        PloggingLogRequest ploggingLogRequest =
-                new PloggingLogRequest(
-                        10,
-                        LocalDateTime.of(2023, 10, 30, 0, 0),
-                        LocalDateTime.of(2023, 10, 30, 2, 0),
-                        7200,
-                        600,
-                        50,
-                        200,
-                        "https://image.com");
-        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
 
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
@@ -266,21 +252,6 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("플로깅 기록 저장 예외 - 플로깅 기록 집계 조회 오류")
     void ploggingLogAddTotalFailTest() throws Exception {
-
-        PloggingLogRequest ploggingLogRequest =
-                new PloggingLogRequest(
-                        10,
-                        LocalDateTime.of(2023, 10, 30, 0, 0),
-                        LocalDateTime.of(2023, 10, 30, 2, 0),
-                        7200,
-                        600,
-                        50,
-                        200,
-                        "https://image.com");
-        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
-
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
         given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))

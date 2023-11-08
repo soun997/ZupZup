@@ -13,8 +13,13 @@ public record TrashRequest(
         @NotNull @Min(0) Integer glass,
         @NotNull @Min(0) Integer normal,
         @NotNull @Min(0) Integer styrofoam,
-        @NotNull @Min(0) Integer aluminium,
+        @NotNull @Min(0) Integer metal,
         @NotNull @Min(0) Integer clothes,
+        @NotNull @Min(0) Integer paper,
+        @NotNull @Min(0) Integer vinyl,
+        @NotNull @Min(0) Integer mixed,
+        @NotNull @Min(0) Integer food,
+        @NotNull @Min(0) Integer etc,
         @NotNull @Min(0) Integer battery) {
 
     public Trash toEntity(PloggingLog ploggingLog) {
@@ -25,9 +30,14 @@ public record TrashRequest(
                 .glass(glass)
                 .normal(normal)
                 .styrofoam(styrofoam)
-                .aluminium(aluminium)
+                .metal(metal)
                 .clothes(clothes)
                 .battery(battery)
+                .paper(paper)
+                .vinyl(vinyl)
+                .mixed(mixed)
+                .food(food)
+                .etc(etc)
                 .isDeleted(false)
                 .ploggingLog(ploggingLog)
                 .build();

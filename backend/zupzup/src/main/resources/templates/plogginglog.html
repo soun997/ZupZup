@@ -471,43 +471,49 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_4">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_기록_저장">플로깅 기록 저장</a>
+<li><a href="#_최근_플로깅_기록_없을_시_조회">최근 플로깅 기록 없을 시 조회</a>
 <ul class="sectlevel2">
 <li><a href="#_request_5">Request</a></li>
 <li><a href="#_response_5">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_기록_저장_실패_멤버_조회_오류">플로깅 기록 저장 실패 - 멤버 조회 오류</a>
+<li><a href="#_플로깅_기록_저장">플로깅 기록 저장</a>
 <ul class="sectlevel2">
+<li><a href="#_request_6">Request</a></li>
 <li><a href="#_response_6">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_기록_저장_실패_플로깅_기록_집계_조회_오류">플로깅 기록 저장 실패 - 플로깅 기록 집계 조회 오류</a>
+<li><a href="#_플로깅_기록_저장_실패_멤버_조회_오류">플로깅 기록 저장 실패 - 멤버 조회 오류</a>
 <ul class="sectlevel2">
 <li><a href="#_response_7">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_경로_저장">플로깅 경로 저장</a>
+<li><a href="#_플로깅_기록_저장_실패_플로깅_기록_집계_조회_오류">플로깅 기록 저장 실패 - 플로깅 기록 집계 조회 오류</a>
 <ul class="sectlevel2">
-<li><a href="#_request_6">Request</a></li>
 <li><a href="#_response_8">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_경로_조회">플로깅 경로 조회</a>
+<li><a href="#_플로깅_경로_저장">플로깅 경로 저장</a>
 <ul class="sectlevel2">
 <li><a href="#_request_7">Request</a></li>
 <li><a href="#_response_9">Response</a></li>
 </ul>
 </li>
-<li><a href="#_플로깅_집계_조회">플로깅 집계 조회</a>
+<li><a href="#_플로깅_경로_조회">플로깅 경로 조회</a>
 <ul class="sectlevel2">
 <li><a href="#_request_8">Request</a></li>
 <li><a href="#_response_10">Response</a></li>
 </ul>
 </li>
+<li><a href="#_플로깅_집계_조회">플로깅 집계 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_request_9">Request</a></li>
+<li><a href="#_response_11">Response</a></li>
+</ul>
+</li>
 <li><a href="#_플로깅_집계_조회_실패">플로깅 집계 조회 실패</a>
 <ul class="sectlevel2">
-<li><a href="#_response_11">Response</a></li>
+<li><a href="#_response_12">Response</a></li>
 </ul>
 </li>
 </ul>
@@ -701,8 +707,8 @@ Content-Length: 243
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-08T13:43:52.7016118",
-    "endDateTime" : "2023-11-08T13:43:52.7016118",
+    "startDateTime" : "2023-11-08T15:57:40.0067542",
+    "endDateTime" : "2023-11-08T15:57:40.0067542",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -755,8 +761,8 @@ Content-Length: 243
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-08T13:43:52.8189188",
-    "endDateTime" : "2023-11-08T13:43:52.8189188",
+    "startDateTime" : "2023-11-08T15:57:40.1021582",
+    "endDateTime" : "2023-11-08T15:57:40.1021582",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -791,8 +797,8 @@ Content-Length: 195
 {
   "status" : 200,
   "results" : {
-    "startDateTime" : "2023-11-08T13:43:52.7880598",
-    "endDateTime" : "2023-11-08T13:43:52.7880598",
+    "startDateTime" : "2023-11-08T15:57:40.0727067",
+    "endDateTime" : "2023-11-08T15:57:40.0727067",
     "distance" : 10,
     "calories" : 600
   }
@@ -803,15 +809,45 @@ Content-Length: 195
 </div>
 </div>
 <div class="sect1">
-<h2 id="_플로깅_기록_저장"><a class="link" href="#_플로깅_기록_저장">플로깅 기록 저장</a></h2>
+<h2 id="_최근_플로깅_기록_없을_시_조회"><a class="link" href="#_최근_플로깅_기록_없을_시_조회">최근 플로깅 기록 없을 시 조회</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_request_5"><a class="link" href="#_request_5">Request</a></h3>
 <div class="listingblock">
 <div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/recent HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: k9a202.p.ssafy.io:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_5"><a class="link" href="#_response_5">Response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 43
+
+{
+  "status" : 204,
+  "results" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_플로깅_기록_저장"><a class="link" href="#_플로깅_기록_저장">플로깅 기록 저장</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request_6"><a class="link" href="#_request_6">Request</a></h3>
+<div class="listingblock">
+<div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/plogging-logs HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 495
+Content-Length: 583
 Host: k9a202.p.ssafy.io:8080
 
 {
@@ -832,16 +868,21 @@ Host: k9a202.p.ssafy.io:8080
     "glass" : 4,
     "normal" : 5,
     "styrofoam" : 6,
-    "aluminium" : 7,
+    "metal" : 7,
     "clothes" : 8,
-    "battery" : 9
+    "paper" : 9,
+    "vinyl" : 10,
+    "mixed" : 11,
+    "food" : 12,
+    "etc" : 13,
+    "battery" : 14
   }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response_5"><a class="link" href="#_response_5">Response</a></h3>
+<h3 id="_response_6"><a class="link" href="#_response_6">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -863,7 +904,7 @@ Content-Length: 59
 <h2 id="_플로깅_기록_저장_실패_멤버_조회_오류"><a class="link" href="#_플로깅_기록_저장_실패_멤버_조회_오류">플로깅 기록 저장 실패 - 멤버 조회 오류</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_response_6"><a class="link" href="#_response_6">Response</a></h3>
+<h3 id="_response_7"><a class="link" href="#_response_7">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 404 Not Found
@@ -886,7 +927,7 @@ Content-Length: 146
 <h2 id="_플로깅_기록_저장_실패_플로깅_기록_집계_조회_오류"><a class="link" href="#_플로깅_기록_저장_실패_플로깅_기록_집계_조회_오류">플로깅 기록 저장 실패 - 플로깅 기록 집계 조회 오류</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_response_7"><a class="link" href="#_response_7">Response</a></h3>
+<h3 id="_response_8"><a class="link" href="#_response_8">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 404 Not Found
@@ -909,7 +950,7 @@ Content-Length: 165
 <h2 id="_플로깅_경로_저장"><a class="link" href="#_플로깅_경로_저장">플로깅 경로 저장</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_request_6"><a class="link" href="#_request_6">Request</a></h3>
+<h3 id="_request_7"><a class="link" href="#_request_7">Request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/routes/1 HTTP/1.1
@@ -973,7 +1014,7 @@ Host: k9a202.p.ssafy.io:8080
 </table>
 </div>
 <div class="sect2">
-<h3 id="_response_8"><a class="link" href="#_response_8">Response</a></h3>
+<h3 id="_response_9"><a class="link" href="#_response_9">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -993,7 +1034,7 @@ Content-Length: 43
 <h2 id="_플로깅_경로_조회"><a class="link" href="#_플로깅_경로_조회">플로깅 경로 조회</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_request_7"><a class="link" href="#_request_7">Request</a></h3>
+<h3 id="_request_8"><a class="link" href="#_request_8">Request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/routes/1 HTTP/1.1
@@ -1022,7 +1063,7 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_response_9"><a class="link" href="#_response_9">Response</a></h3>
+<h3 id="_response_10"><a class="link" href="#_response_10">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1074,7 +1115,7 @@ Content-Length: 628
 <h2 id="_플로깅_집계_조회"><a class="link" href="#_플로깅_집계_조회">플로깅 집계 조회</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_request_8"><a class="link" href="#_request_8">Request</a></h3>
+<h3 id="_request_9"><a class="link" href="#_request_9">Request</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/total HTTP/1.1
@@ -1084,7 +1125,7 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response_10"><a class="link" href="#_response_10">Response</a></h3>
+<h3 id="_response_11"><a class="link" href="#_response_11">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1110,7 +1151,7 @@ Content-Length: 192
 <h2 id="_플로깅_집계_조회_실패"><a class="link" href="#_플로깅_집계_조회_실패">플로깅 집계 조회 실패</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_response_11"><a class="link" href="#_response_11">Response</a></h3>
+<h3 id="_response_12"><a class="link" href="#_response_12">Response</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 404 Not Found
@@ -1133,7 +1174,7 @@ Content-Length: 165
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-11-08 12:24:49 +0900
+Last updated 2023-11-08 14:29:15 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

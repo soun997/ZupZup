@@ -7,8 +7,7 @@ import static org.mockito.BDDMockito.given;
 
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
-import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
@@ -98,20 +97,11 @@ class PloggingLogQueryServiceTest {
         given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
                 .willReturn(Optional.ofNullable(ploggingLog));
 
-        PloggingLog findPloggingLog = ploggingLogQueryService.searchRecentLog(member.getId());
+        Optional<PloggingLog> findPloggingLog = ploggingLogQueryService.searchRecentLog(member.getId());
 
-        assertThat(findPloggingLog).isEqualTo(ploggingLog);
+        assertThat(findPloggingLog).contains(ploggingLog);
     }
 
-    @Test
-    @DisplayName("최근 플로깅 로그가 없으면 예외가 발생한다")
-    void ifNotExistsRecentPloggingLogThrowsPloggingNotFoundException() {
-        given(ploggingLogQueryRepository.findOneOrderByDateDesc(any(Long.class)))
-                .willReturn(Optional.empty());
-
-        assertThatThrownBy(() -> ploggingLogQueryService.searchRecentLog(member.getId()))
-                .isInstanceOf(PloggingLogNotFoundException.class);
-    }
 
     @Test
     @DisplayName("조회할 플로깅 기록 집계가 없다면 오류가 발생한다.")

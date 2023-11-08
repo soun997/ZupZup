@@ -30,6 +30,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -144,7 +146,7 @@ class PloggingLogControllerTest extends RestDocsTest {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
-        given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLog);
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(Optional.of(ploggingLog));
 
         ResultActions perform =
                 mockMvc.perform(
@@ -160,6 +162,30 @@ class PloggingLogControllerTest extends RestDocsTest {
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
+
+    @Test
+    @DisplayName("최근 플로깅 기록이 없다")
+    void recentPloggingLogNoContent() throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        Optional<PloggingLog> ploggingLogOptional = Optional.empty();
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLogOptional);
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/recent")
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(204));
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-by-recent-no-content",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
 
     @Test
     @DisplayName("플로깅 종료 시 해당 플로깅에 대한 기록을 저장한다.")

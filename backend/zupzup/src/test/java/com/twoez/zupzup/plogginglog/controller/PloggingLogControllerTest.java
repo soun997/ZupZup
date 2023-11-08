@@ -216,7 +216,7 @@ class PloggingLogControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 
-        perform.andExpect(status().isOk())
+        perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.status").value(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.results.id").value(1L));
 

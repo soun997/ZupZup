@@ -1,18 +1,35 @@
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
+import { PloggingApis } from 'api';
 
 const PloggingStartBackground = () => {
   const navigate = useNavigate();
+  const [nowPloggingUser, setNowPloggingUser] = useState<number>(0);
+
+  const fetchNowPloggingUser = async () => {
+    try {
+      const response = await PloggingApis.getNowPloggingUsers();
+      const data = response.data.results.totalPlogger;
+      setNowPloggingUser(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchNowPloggingUser();
+  }, []);
 
   return (
     <S.Wrap>
       <RecentRecord />
       <S.Header>
         <S.SubTitle>
-          현재 <S.CurrentMember>24</S.CurrentMember> 명이 플로깅 중이에요
+          현재 <S.CurrentMember>{nowPloggingUser}</S.CurrentMember> 명이 플로깅
+          중이에요
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>

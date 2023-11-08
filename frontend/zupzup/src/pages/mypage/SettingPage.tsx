@@ -5,11 +5,22 @@ import NextArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Navigation, TopNavigation } from 'components';
 import SettingComponent from 'components/mypage/SettingComponent';
 import { deleteAllAuth, store, useAppDispatch } from 'hooks';
+import { MemberApi } from 'api';
 
 const Setting = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const name = store.getState().auth.name;
+
+  const handleLogout = async () => {
+    try {
+      await MemberApi.logout();
+      dispatch(deleteAllAuth());
+      navigate(utils.URL.LOGIN.HOME);
+    } catch (error) {
+      console.error('logout error');
+    }
+  };
 
   return (
     <S.Wrap>
@@ -49,10 +60,7 @@ const Setting = () => {
           <SettingComponent
             text="로그아웃"
             svg={<></>}
-            onClick={() => {
-              dispatch(deleteAllAuth());
-              navigate(utils.URL.LOGIN.HOME);
-            }}
+            onClick={handleLogout}
           />
         </S.SettingSection>
 

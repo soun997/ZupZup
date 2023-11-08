@@ -8,7 +8,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 import com.twoez.zupzup.fixture.plogginglog.RouteFixture;
-import com.twoez.zupzup.global.exception.flogginglog.RouteNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.RouteNotFoundException;
 import com.twoez.zupzup.plogginglog.controller.dto.request.RouteAddRequest;
 import com.twoez.zupzup.plogginglog.domain.Location;
 import com.twoez.zupzup.plogginglog.domain.Route;

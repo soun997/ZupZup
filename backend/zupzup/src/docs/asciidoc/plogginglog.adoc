@@ -56,6 +56,17 @@ include::{snippets}/plogginglog-by-recent/http-request.adoc[]
 
 include::{snippets}/plogginglog-by-recent/http-response.adoc[]
 
+
+== 최근 플로깅 기록 없을 시 조회
+
+=== Request
+
+include::{snippets}/plogginglog-by-recent-no-content/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-by-recent-no-content/http-response.adoc[]
+
 == 플로깅 기록 저장
 
 === Request

@@ -72,6 +72,7 @@ public class AuthController {
         Long memberId = expiredTokenUser.getMemberId();
         AuthorizationToken authorizationToken =
                 memberService.reIssueAuthorizationToken(memberId, reissueTokenRequest);
-        return ApiResponse.ok(AuthResponse.from(authorizationToken, memberService.findById(memberId)));
+        return ApiResponse.ok(
+                AuthResponse.from(authorizationToken, memberService.findById(memberId)));
     }
 }

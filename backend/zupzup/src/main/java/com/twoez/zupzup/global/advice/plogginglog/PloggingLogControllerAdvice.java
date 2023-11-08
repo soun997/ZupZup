@@ -2,8 +2,8 @@ package com.twoez.zupzup.global.advice.plogginglog;
 
 
 import com.twoez.zupzup.global.advice.AdviceLoggingUtils;
-import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
-import com.twoez.zupzup.global.exception.flogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.PloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.global.response.ApiResponse;
 import com.twoez.zupzup.global.response.ErrorResponse;
 import com.twoez.zupzup.member.exception.MemberQueryException;

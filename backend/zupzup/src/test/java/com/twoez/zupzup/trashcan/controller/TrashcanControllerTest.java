@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,7 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(TrashcanController.class)
-public class TrashcanControllerTest extends RestDocsTest {
+class TrashcanControllerTest extends RestDocsTest {
 
     @MockBean TrashcanQueryService trashcanQueryService;
 
@@ -54,7 +55,7 @@ public class TrashcanControllerTest extends RestDocsTest {
 
         ResultActions perform =
                 mockMvc.perform(
-                        get("/api/v1/trashcans")
+                        post("/api/v1/trashcans")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 

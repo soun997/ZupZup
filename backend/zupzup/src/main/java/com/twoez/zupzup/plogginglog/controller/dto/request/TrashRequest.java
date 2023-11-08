@@ -28,6 +28,7 @@ public record TrashRequest(
                 .aluminium(aluminium)
                 .clothes(clothes)
                 .battery(battery)
+                .isDeleted(false)
                 .ploggingLog(ploggingLog)
                 .build();
     }

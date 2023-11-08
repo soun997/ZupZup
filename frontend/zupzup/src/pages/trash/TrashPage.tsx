@@ -12,17 +12,46 @@ import CONSOLE from 'utils/ColorConsoles';
 import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
 import { Loading } from 'pages';
+import { TrashDetail } from 'types/Trash';
+import { canvasToFile } from 'utils/CanvasUtils';
+import { TrashAnalyzeReport } from 'types/Trash';
 
 interface Props {
   captureFile: File | undefined;
   setHasUserRequestAnalyze: (hasUserRequestAnalyze: boolean) => void;
+  analyzeInfoeState: [
+    TrashAnalyzeReport | undefined,
+    React.Dispatch<React.SetStateAction<TrashAnalyzeReport | undefined>>,
+  ];
 }
 
-const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
+interface TrashTypeTable {
+  [key: number]: Trash;
+}
+
+interface Trash {
+  name: string;
+  class: string;
+  desc: string;
+  coin: number;
+}
+
+interface AnalyzeResult {
+  gatheredTrash: number;
+  totalCoin: number;
+  trashDetail: TrashDetail | undefined;
+}
+
+const TrashPage = ({
+  captureFile,
+  setHasUserRequestAnalyze,
+  analyzeInfoeState,
+}: Props) => {
   CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
   const MODEL_URI = '/model/model.json';
   const MODEL_NAME_MAP_URI = '/model/name_map.json';
+  const TRASH_TYPE_TABLE_URI = '/classify/trash_classification.json';
   const TRASH_IMAGE_ID = 'trash';
 
   const [model, setModel] = useState<GraphModel<string | io.IOHandler> | null>(
@@ -32,7 +61,10 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
   const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
+  const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
   const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
+
+  const [analyzeInfo, setAnaylzeInfo] = analyzeInfoeState;
 
   function loadImage() {
     const image = new Image();
@@ -84,8 +116,18 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
         model.save(INDEXED_DB_NAME); // save to indexedDB (비동기)
       }
 
+      CONSOLE.info('[ts load] 3. load trashTypeTable');
+      const trashTypeTableFromJson = await fetch(TRASH_TYPE_TABLE_URI)
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+        });
+      CONSOLE.ok('[ts load] 1. load name map complete');
+      console.log(trashTypeTableFromJson);
+
       setModel(model);
       setNameMap(nameMap);
+      setTrashTypeTable(trashTypeTableFromJson);
     }
 
     CONSOLE.useEffectIn('Trash init');
@@ -139,6 +181,14 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
       console.log('valid_detections', valid_detections_data);
       dispose(res);
 
+      const result = processAnalyzeResult(classes_data);
+      console.log(result);
+      const trashAnalyzeFile = canvasToFile(
+        'trash_analyze.jpg',
+        canvasRef.current,
+      );
+      // TODO : 분석 데이터 마저 저장하기
+
       console.info('Classify Result');
       const canvas = canvasRef.current;
 
@@ -157,12 +207,59 @@ const TrashPage = ({ captureFile, setHasUserRequestAnalyze }: Props) => {
         console.info(`${i} - label : ${label} (score ${score})`);
       }
       setIsProcessingComplete(true);
+
+      //
     }
     if (isLoaded) {
       CONSOLE.info('isLoaded -> true');
       processTrashImage();
     }
   }, [isLoaded]);
+
+  function processAnalyzeResult(
+    classData: Float32Array | Int32Array | Uint8Array,
+  ) {
+    let trashDetail: TrashDetail = {
+      plastic: 0,
+      cigarette: 0,
+      can: 0,
+      glass: 0,
+      paper: 0,
+      normal: 0,
+      styrofoam: 0,
+      metal: 0,
+      clothes: 0,
+      battery: 0,
+      vinyl: 0,
+      mixed: 0,
+      food: 0,
+      etc: 0,
+    };
+    const result: AnalyzeResult = {
+      gatheredTrash: 0,
+      totalCoin: 0,
+      trashDetail: trashDetail,
+    };
+
+    for (let i = 0; i < classData.length; i++) {
+      if (classData[i] === -1) {
+        break;
+      }
+      const type = (trashTypeTable as TrashTypeTable)[i].class;
+      result.trashDetail[type]++;
+      // TODO : 오류 수정하기
+      result.totalCoin += (trashTypeTable as TrashTypeTable)[i].coin;
+      result.gatheredTrash++;
+    }
+
+    return result;
+  }
+
+  useEffect(() => {
+    // 캡쳐한 이미지와 분석결과 TrashReport로 보내기
+    // 캡쳐한 이미지와 분석결과를 set으로 State에 저장
+    // hasUserRequestAnalyze 를 false로 수정
+  }, [isProcessingComplete]);
 
   return (
     <S.Wrap>

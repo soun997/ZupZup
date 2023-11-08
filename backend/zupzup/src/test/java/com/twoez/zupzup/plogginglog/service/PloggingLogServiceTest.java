@@ -16,10 +16,9 @@ import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
+import com.twoez.zupzup.plogginglog.repository.TrashRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import com.twoez.zupzup.plogginglog.repository.TrashRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
- class PloggingLogServiceTest {
+class PloggingLogServiceTest {
 
     @Mock PloggingLogRepository ploggingLogRepository;
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;
@@ -46,12 +45,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
                     50,
                     200,
                     "https://image.com");
-    TrashRequest trashRequest =
-            new TrashRequest(
-                    1,2,3,4,5,6,7,8,9 );
+    TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-    LogRequest request =
-            new LogRequest(ploggingLogRequest, trashRequest);
+    LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
 
     @Test
     @DisplayName("플로깅 기록을 저장한다.")
@@ -88,7 +84,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
         PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
         assertThat(result).isEqualTo(ploggingLog);
-        assertThat(updatedMember.getCoin()).isEqualTo(originMember.getCoin() + request.ploggingLogRequest().coin());
+        assertThat(updatedMember.getCoin())
+                .isEqualTo(originMember.getCoin() + request.ploggingLogRequest().coin());
     }
 
     @Test
@@ -109,6 +106,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
         assertThat(result).isEqualTo(ploggingLog);
         assertThat(updatedTotal.getTotalDistance())
-                .isEqualTo(originTotal.getTotalDistance() + request.ploggingLogRequest().distance());
+                .isEqualTo(
+                        originTotal.getTotalDistance() + request.ploggingLogRequest().distance());
     }
 }

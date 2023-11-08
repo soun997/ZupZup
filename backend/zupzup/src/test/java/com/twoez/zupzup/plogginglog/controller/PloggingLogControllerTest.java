@@ -177,16 +177,11 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
-        TrashRequest trashRequest =
-                new TrashRequest(
-                        1,2,3,4,5,6,7,8,9 );
+        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        LogRequest request =
-                new LogRequest(ploggingLogRequest, trashRequest);
+        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
 
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
-
-
 
         given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
                 .willReturn(ploggingLog);
@@ -219,12 +214,9 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
-        TrashRequest trashRequest =
-                new TrashRequest(
-                        1,2,3,4,5,6,7,8,9 );
+        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        LogRequest request =
-                new LogRequest(ploggingLogRequest, trashRequest);
+        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
 
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
@@ -261,12 +253,9 @@ class PloggingLogControllerTest extends RestDocsTest {
                         50,
                         200,
                         "https://image.com");
-        TrashRequest trashRequest =
-                new TrashRequest(
-                        1,2,3,4,5,6,7,8,9 );
+        TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        LogRequest request =
-                new LogRequest(ploggingLogRequest, trashRequest);
+        LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
 
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 

@@ -7,8 +7,6 @@ import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
-import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
-import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;

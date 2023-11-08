@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
@@ -21,11 +21,22 @@ const ploggingReport: PloggingReport = {
 const PloggingReport = () => {
   const navigate = useNavigate();
   const { handleCaptureClick, captureRef } = useCapture();
-  const [showLoading, setLoading] = useState<boolean>(true);
+  const [showLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
+  }, []);
 
   if (showLoading) {
-    return <PloggingDone setLoading={setLoading} />;
+    return <PloggingDone />;
   }
+
   return (
     <S.Wrap>
       <S.Content ref={captureRef}>

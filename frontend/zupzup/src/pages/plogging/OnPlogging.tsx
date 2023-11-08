@@ -11,8 +11,11 @@ import {
   Camera,
 } from 'components';
 
-import { useGeolocation, useStopWatch, useDistance } from 'hooks';
+import { useGeolocation, useStopWatch, useDistance, store } from 'hooks';
 import * as utils from 'utils';
+import { PloggingApis } from 'api';
+import { PloggingLogRequest, TrashRequest } from 'types';
+import { format } from 'date-fns';
 
 const OnPlogging = () => {
   const navigate = useNavigate();
@@ -22,10 +25,29 @@ const OnPlogging = () => {
   const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
+  const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
   const LOCATIONS_KEY = 'locations';
 
-  const exitPlogging = () => {
+  const exitPlogging = async () => {
+    const ploggingData: PloggingLogRequest = {
+      calories: onCalories,
+      startDateTime: store.getState().plogging.startDateTime!,
+      endDateTime: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss"),
+      distance: totalDistance,
+      durationTime: stopwatch,
+      coin: store.getState().plogging.coin,
+      gatheredTrash: store.getState().plogging.gatheredTrash,
+      routeImageUrl: 'assets/images/route.png',
+    };
+
+    const trashData: TrashRequest = store.getState().plogging.trashDetail;
+    console.log(ploggingData, trashData);
+    const response = await PloggingApis.postPloggingLog({
+      ploggingLogRequest: ploggingData,
+      trashRequest: trashData,
+    });
+    console.log(response);
     navigate(utils.URL.PLOGGING.REPORT);
   };
 
@@ -54,6 +76,9 @@ const OnPlogging = () => {
 
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
+
+        //!수정할 부분
+        setCalorie(200);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
       }

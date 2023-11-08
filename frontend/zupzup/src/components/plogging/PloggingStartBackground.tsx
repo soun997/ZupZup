@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { format } from 'date-fns';
 import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
 import { PloggingApis } from 'api';
+import { useAppDispatch } from 'hooks';
+import { setPloggingId, setStartDateTime } from 'hooks/store/usePlogging';
 
 const PloggingStartBackground = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [nowPloggingUser, setNowPloggingUser] = useState<number>(0);
 
   const fetchNowPloggingUser = async () => {
@@ -19,6 +23,14 @@ const PloggingStartBackground = () => {
       console.error(e);
     }
   };
+
+  const handleStartPlogging = async () => {
+    const response = await PloggingApis.startPlogging();
+    dispatch(setPloggingId(response.data.results.ploggingLogId));
+    dispatch(setStartDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
+    navigate(utils.URL.PLOGGING.ON);
+  };
+
   useEffect(() => {
     fetchNowPloggingUser();
   }, []);
@@ -33,10 +45,7 @@ const PloggingStartBackground = () => {
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
-      <ConfirmButton
-        text="플로깅 시작하기"
-        onClick={() => navigate(utils.URL.PLOGGING.ON)}
-      />
+      <ConfirmButton text="플로깅 시작하기" onClick={handleStartPlogging} />
     </S.Wrap>
   );
 };

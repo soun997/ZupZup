@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { useNavigate } from 'react-router-dom';
+import CONSOLE from 'utils/ColorConsoles';
+import { Loading } from 'pages';
 
 interface Props {
   trashDetail: TrashDetail;
@@ -36,6 +38,8 @@ interface TrashTableDetail {
 const COIN_TABLE_URI = '/classify/classify_type.json';
 
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
+  CONSOLE.reRender('CoinReport Component');
+  console.log(trashDetail);
   const navigate = useNavigate();
   const [coinTable, setCoinTable] = useState<TrashTable>();
 
@@ -48,6 +52,7 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
         });
       setCoinTable(coinTableFromJson);
     }
+    load();
   }, []);
 
   return (
@@ -60,16 +65,21 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
         </S.Caption>
       </S.TitleFrame>
       <S.ContentFrame>
-        {Object.keys(trashDetail)
-          .filter((type: string) => trashDetail[type] > 0)
-          .map((type, idx) => (
-            <S.EachFrame key={idx}>
-              <div className="eachName">{type}</div>
-              <div className="eachVal">
-                {trashDetail[type] * (coinTable as TrashTable)[type].coin} Coins
-              </div>
-            </S.EachFrame>
-          ))}
+        {coinTable ? (
+          Object.keys(trashDetail)
+            .filter((type: string) => trashDetail[type] > 0)
+            .map((type, idx) => (
+              <S.EachFrame key={idx}>
+                <div className="eachName">{type}</div>
+                <div className="eachVal">
+                  {trashDetail[type] * (coinTable as TrashTable)[type].coin}{' '}
+                  Coins
+                </div>
+              </S.EachFrame>
+            ))
+        ) : (
+          <Loading />
+        )}
       </S.ContentFrame>
       <S.ResultFrame>
         <S.Title>총 획득 코인</S.Title>

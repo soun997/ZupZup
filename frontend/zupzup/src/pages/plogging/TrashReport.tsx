@@ -6,33 +6,87 @@ import * as utils from 'utils';
 import { TrashAnalyzeReport } from 'types/Trash';
 import CONSOLE from 'utils/ColorConsoles';
 
-// const trashReport: TrashAnalyzeReport = {
-//   image: '../../../assets/images/trash-image.png',
-//   coin: [
-//     { name: '플라스틱', value: 12 },
-//     { name: '담배꽁초', value: 5 },
-//     { name: '일반쓰레기', value: 20 },
-//     { name: '기타', value: 2 },
-//   ],
-//   totalCoin: 39,
-// };
+interface Prop {
+  trashReport: TrashAnalyzeReport;
+}
 
-const TrashReport = (trashReport: TrashAnalyzeReport) => {
+const MODEL_NAME_MAP_URI = '/model/name_map.json';
+const TRASH_IMAGE_ID = 'trash';
+
+const TrashReport = ({ trashReport }: Prop) => {
+  CONSOLE.reRender('TrashReport rendered!!');
+  console.log(trashReport);
   const navigate = useNavigate();
-  const trashAnalyzeImageRef =
-    useRef() as React.MutableRefObject<HTMLImageElement>;
+  const trashAnalyzeCanvasRef =
+    useRef() as React.MutableRefObject<HTMLCanvasElement>;
+  const [nameMap, setNameMap] = useState(null);
+  const [isImageLoaded, setIsImageLoaded] = useState<Boolean>();
 
   useEffect(() => {
-    // read trash analyze image file
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      if (fileReader.result) {
-        trashAnalyzeImageRef.current.src = fileReader.result as string;
-      } else {
-        CONSOLE.error('캡처 파일 읽기 실패...');
-      }
-    };
+    async function load() {
+      CONSOLE.info('[TrashReport load] 1. load name map');
+      const nameMap = await fetch(MODEL_NAME_MAP_URI)
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+        });
+      CONSOLE.ok('[TrashReport load] 1. load name map complete');
+      console.log(nameMap);
+
+      CONSOLE.info('[TrashReport load] 2. read image');
+      const image = new Image();
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        if (fileReader.result) {
+          image.src = fileReader.result as string;
+          setIsImageLoaded(true);
+        } else {
+          CONSOLE.error('캡처 파일 읽기 실패...');
+        }
+      };
+
+      fileReader.readAsDataURL(trashReport.image as File);
+
+      const context = trashAnalyzeCanvasRef.current?.getContext('2d');
+      image.onload = () => {
+        CONSOLE.info('image loaded');
+        context?.drawImage(image, 0, 0, 300, 250);
+        image.id = TRASH_IMAGE_ID;
+      };
+
+      setNameMap(nameMap);
+    }
+    load();
   }, []);
+
+  useEffect(() => {
+    CONSOLE.useEffectIn('nameMap');
+    if (nameMap && isImageLoaded) {
+      const boxes = trashReport.classifyDetail.boxes;
+      const classes = trashReport.classifyDetail.classes;
+      const scores = trashReport.classifyDetail.scores;
+      const validDetection = trashReport.classifyDetail.validDetection;
+      const canvas = trashAnalyzeCanvasRef.current;
+      const context = canvas.getContext('2d');
+      context!.strokeStyle = 'yellow';
+      context!.font = '20px Arial';
+      context!.fillStyle = 'white';
+      for (let i = 0; i < validDetection; ++i) {
+        let [x1, y1, x2, y2] = boxes.slice(i * 4, (i + 1) * 4);
+        x1 *= canvas.width;
+        x2 *= canvas.width;
+        y1 *= canvas.height;
+        y2 *= canvas.height;
+        const score = scores[i].toFixed(2);
+        const label = nameMap![classes[i]];
+        context?.strokeRect(x1, y1, x2 - x1, y2 - y1);
+
+        context?.fillText(label, x1, y1);
+
+        console.info(`${i} - label : ${label} (score ${score})`);
+      }
+    }
+  }, [nameMap, isImageLoaded]);
 
   return (
     <S.Wrap>
@@ -42,7 +96,7 @@ const TrashReport = (trashReport: TrashAnalyzeReport) => {
           <S.MainTitle>쓰레기 이미지 분석 결과입니다</S.MainTitle>
           <S.SubTitle>인식이 안되었을 경우 재촬영 해주세요</S.SubTitle>
         </S.TitleFrame>
-        <S.Image ref={trashAnalyzeImageRef} />
+        <S.Canvas ref={trashAnalyzeCanvasRef} />
         <CoinReport
           trashDetail={trashReport.trashDetail}
           totalCoin={trashReport.totalCoin}
@@ -60,11 +114,15 @@ const TrashReport = (trashReport: TrashAnalyzeReport) => {
 
 const S = {
   Wrap: styled.div`
+    position: absolute;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100vh;
+    background-color: ${({ theme }) => theme.color.background};
+    z-index: 400;
   `,
 
   Content: styled.div`
@@ -77,6 +135,11 @@ const S = {
 
   Image: styled.img`
     width: 100%;
+    margin-top: 44px;
+  `,
+  Canvas: styled.canvas`
+    width: 100%;
+    height: 70%;
     margin-top: 44px;
   `,
 

@@ -13,7 +13,6 @@ import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
 import { Loading } from 'pages';
 import { TrashDetail } from 'types/Trash';
-import { canvasToFile } from 'utils/CanvasUtils';
 import { TrashAnalyzeReport } from 'types/Trash';
 
 interface Props {
@@ -23,6 +22,7 @@ interface Props {
     TrashAnalyzeReport | undefined,
     React.Dispatch<React.SetStateAction<TrashAnalyzeReport | undefined>>,
   ];
+  setIsProcessingComplete: (setIsProcessingComplete: boolean) => void;
 }
 
 interface TrashTypeTable {
@@ -46,6 +46,7 @@ const TrashPage = ({
   captureFile,
   setHasUserRequestAnalyze,
   analyzeInfoeState,
+  setIsProcessingComplete,
 }: Props) => {
   CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
@@ -60,7 +61,6 @@ const TrashPage = ({
   const [nameMap, setNameMap] = useState(null);
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
-  const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
   const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
@@ -68,7 +68,6 @@ const TrashPage = ({
 
   function loadImage() {
     const image = new Image();
-    // image.src = '/public/sampleTrashImage/sample01.jpg';
     const fileReader = new FileReader();
     fileReader.onload = () => {
       if (fileReader.result) {
@@ -79,12 +78,8 @@ const TrashPage = ({
     };
 
     fileReader.readAsDataURL(captureFile as File);
-    const context = canvasRef.current?.getContext('2d');
-    console.log(context);
 
     image.onload = () => {
-      CONSOLE.info('image loaded');
-      context?.drawImage(image, 0, 0, 300, 250);
       image.id = TRASH_IMAGE_ID;
       setTrashImg(image);
     };
@@ -124,6 +119,7 @@ const TrashPage = ({
         });
       CONSOLE.ok('[ts load] 1. load name map complete');
       console.log(trashTypeTableFromJson);
+      console.log(trashTypeTableFromJson[1].class);
 
       setModel(model);
       setNameMap(nameMap);
@@ -162,11 +158,6 @@ const TrashPage = ({
           .expandDims(0);
       });
 
-      const context = canvasRef.current.getContext('2d');
-      (context as CanvasRenderingContext2D).strokeStyle = 'yellow';
-      (context as CanvasRenderingContext2D).font = '20px Arial';
-      (context as CanvasRenderingContext2D).fillStyle = 'white';
-
       const res: Tensor[] = (await model!.executeAsync(input)) as Tensor[];
       const [boxes, scores, classes, valid_detections] = res;
       const boxes_data = boxes.dataSync();
@@ -183,36 +174,27 @@ const TrashPage = ({
 
       const result = processAnalyzeResult(classes_data);
       console.log(result);
-      const trashAnalyzeFile = canvasToFile(
-        'trash_analyze.jpg',
-        canvasRef.current,
-      );
+
       // TODO : 분석 데이터 마저 저장하기
-
-      console.info('Classify Result');
-      const canvas = canvasRef.current;
-
-      for (let i = 0; i < valid_detections_data; ++i) {
-        let [x1, y1, x2, y2] = boxes_data.slice(i * 4, (i + 1) * 4);
-        x1 *= canvas.width;
-        x2 *= canvas.width;
-        y1 *= canvas.height;
-        y2 *= canvas.height;
-        const score = scores_data[i].toFixed(2);
-        const label = nameMap![classes_data[i]];
-        context?.strokeRect(x1, y1, x2 - x1, y2 - y1);
-
-        context?.fillText(label, x1, y1);
-
-        console.info(`${i} - label : ${label} (score ${score})`);
-      }
-      setIsProcessingComplete(true);
-
-      //
+      setAnaylzeInfo(prevState => {
+        return {
+          ...prevState,
+          ...result,
+          image: captureFile,
+          classifyDetail: {
+            boxes: boxes_data,
+            scores: scores_data,
+            classes: classes_data,
+            validDetection: valid_detections_data,
+          },
+        } as TrashAnalyzeReport;
+      });
     }
-    if (isLoaded) {
+    if (isLoaded && trashTypeTable) {
       CONSOLE.info('isLoaded -> true');
+      console.log(trashTypeTable);
       processTrashImage();
+      setIsProcessingComplete(true);
     }
   }, [isLoaded]);
 
@@ -241,36 +223,29 @@ const TrashPage = ({
       trashDetail: trashDetail,
     };
 
+    CONSOLE.info('반복문 시작');
     for (let i = 0; i < classData.length; i++) {
+      console.log(`i:${i} --> ${classData[i]}`);
       if (classData[i] === -1) {
         break;
       }
-      const type = (trashTypeTable as TrashTypeTable)[i].class;
-      result.trashDetail[type]++;
+
+      // console.log(trashTypeTable![i]);
+      const type = trashTypeTable![i + 1].class;
+      console.log(result.trashDetail);
+      result.trashDetail![type]++;
       // TODO : 오류 수정하기
-      result.totalCoin += (trashTypeTable as TrashTypeTable)[i].coin;
+      result.totalCoin += trashTypeTable![i + 1].coin;
       result.gatheredTrash++;
     }
 
     return result;
   }
 
-  useEffect(() => {
-    // 캡쳐한 이미지와 분석결과 TrashReport로 보내기
-    // 캡쳐한 이미지와 분석결과를 set으로 State에 저장
-    // hasUserRequestAnalyze 를 false로 수정
-  }, [isProcessingComplete]);
-
   return (
     <S.Wrap>
       <h1>TrashPage 입니다.</h1>
-      {isLoaded ? (
-        <S.TrashImage>
-          <canvas ref={canvasRef} width="350" height="250"></canvas>
-        </S.TrashImage>
-      ) : (
-        <Loading />
-      )}
+      <Loading />
     </S.Wrap>
   );
 };

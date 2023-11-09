@@ -7,6 +7,7 @@ import XSvg from 'assets/icons/x.svg?react';
 import TrashPage from 'pages/trash/TrashPage';
 import CONSOLE from 'utils/ColorConsoles';
 import { TrashAnalyzeReport } from 'types/Trash';
+import { TrashReport } from 'pages';
 
 interface Props {
   setCameraOn: (cameraOn: boolean) => void;
@@ -23,6 +24,7 @@ const Camera = ({ setCameraOn }: Props) => {
   const analyzeInfoeState = useState<TrashAnalyzeReport>();
   const [analyzeInfo, setAnalyzeInfo] = analyzeInfoeState;
   const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<Boolean>();
+  const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
 
   useEffect(() => {
     const enableCamera = async () => {
@@ -64,12 +66,14 @@ const Camera = ({ setCameraOn }: Props) => {
   }, [capture]);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('hasUserRequestAnalyze');
-    if (!hasUserRequestAnalyze && analyzeInfo) {
-      CONSOLE.info('hasUserRequestAnalyze - false, analyzeInfo prepared!!');
+    CONSOLE.useEffectIn('isProcessingComplete');
+    if (isProcessingComplete && analyzeInfo) {
+      CONSOLE.info('ProcessingComplete, analyzeInfo prepared!!');
+      console.log(analyzeInfo);
+      setHasUserRequestAnalyze(false);
       setIsTrashReportPrepared(true);
     }
-  }, [hasUserRequestAnalyze]);
+  }, [isProcessingComplete, analyzeInfo]);
 
   return (
     <S.Wrap>
@@ -86,13 +90,11 @@ const Camera = ({ setCameraOn }: Props) => {
           captureFile={captureFile}
           setHasUserRequestAnalyze={setHasUserRequestAnalyze}
           analyzeInfoeState={analyzeInfoeState}
+          setIsProcessingComplete={setIsProcessingComplete}
         />
       )}
       {isTrashReportPrepared && (
-        <TrashPage
-          captureFile={captureFile}
-          setHasUserRequestAnalyze={setHasUserRequestAnalyze}
-        />
+        <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} />
       )}
       <S.Header>
         <S.CancelButton onClick={() => setCameraOn(false)}>

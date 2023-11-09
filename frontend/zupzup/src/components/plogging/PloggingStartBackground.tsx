@@ -40,8 +40,14 @@ const PloggingStartBackground = () => {
       <RecentRecord />
       <S.Header>
         <S.SubTitle>
-          현재 <S.CurrentMember>{nowPloggingUser}</S.CurrentMember> 명이 플로깅
-          중이에요
+          {nowPloggingUser === 0 ? (
+            <>첫 플로깅 유저가 되어보세요!</>
+          ) : (
+            <>
+              현재 <S.CurrentMember>{nowPloggingUser}</S.CurrentMember> 명이
+              플로깅 중이에요
+            </>
+          )}
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>

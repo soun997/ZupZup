@@ -20,7 +20,7 @@ const Record = ({ ploggingInfos }: Props) => {
             src={`${import.meta.env.VITE_S3_URL}/character/no-result.png`}
           />
           <S.NotExistsPloggingComment>
-            플로깅 기록이 없습니다.
+            플로깅 기록이 없어요
           </S.NotExistsPloggingComment>
         </S.NotExistsPlogging>
       )}
@@ -67,9 +67,13 @@ const S = {
     width: 60%;
   `,
   NotExistsPloggingComment: styled.div`
-    font-size: ${({ theme }) => theme.font.size.body2};
-    font-family: ${({ theme }) => theme.font.family.body2};
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.focus2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
     color: ${({ theme }) => theme.color.dark};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   `,
 };

@@ -6,6 +6,7 @@ import { RecordApis } from 'api';
 import { useEffect, useState } from 'react';
 import { Loading } from 'pages';
 import ErrorSvg from 'assets/icons/error-check.svg?react';
+import { useFormatTime } from 'hooks';
 
 const trashInfos = [
   { name: '플라스틱', count: 0 },
@@ -21,6 +22,7 @@ const MyPloggingReport = () => {
     try {
       const response = await RecordApis.getMyPloggingInfo();
       const data = response.data.results;
+      console.log(data);
       setPloggingInfo(data);
     } catch (error) {
       console.error('Error fetching report info:', error);
@@ -46,7 +48,8 @@ const MyPloggingReport = () => {
       />
       <S.BoxFrame>
         <div className="title">
-          그동안 {ploggingInfo.totalDistance / 1000} km 만큼 플로깅 했어요 👍
+          그동안 {(ploggingInfo.totalDistance / 1000).toFixed(2)} km 만큼 플로깅
+          했어요 👍
         </div>
         <S.BoxInfo>
           <S.EachBoxInfo>
@@ -55,12 +58,13 @@ const MyPloggingReport = () => {
           <S.EachBoxInfo>
             플로깅 시간
             <div className="tag">
-              {Math.floor(ploggingInfo.totalTime / 3600)} 시간
+              {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
+              {useFormatTime.formatTime(ploggingInfo.totalDurationTime)}
             </div>
           </S.EachBoxInfo>
           <S.EachBoxInfo $isLast={true}>
             소모 칼로리
-            <div className="tag">{ploggingInfo.totalCalorie} kcal</div>
+            <div className="tag">{ploggingInfo.totalCalories} kcal</div>
           </S.EachBoxInfo>
         </S.BoxInfo>
       </S.BoxFrame>

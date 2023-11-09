@@ -12,6 +12,17 @@ interface Props {
 const Camera = ({ setCameraOn }: Props) => {
   const cameraRef = useRef<HTMLVideoElement>(null);
   const [capture, setCapture] = useState<boolean>(false);
+  const disableCamera = () => {
+    if (cameraRef.current) {
+      const stream = cameraRef.current!.srcObject as MediaStream;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => {
+          track.stop();
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const enableCamera = async () => {
@@ -50,7 +61,12 @@ const Camera = ({ setCameraOn }: Props) => {
         <CaptureResult cameraRef={cameraRef} setCapture={setCapture} />
       )}
       <S.Header>
-        <S.CancelButton onClick={() => setCameraOn(false)}>
+        <S.CancelButton
+          onClick={() => {
+            disableCamera();
+            setCameraOn(false);
+          }}
+        >
           <XSvg />
         </S.CancelButton>
       </S.Header>

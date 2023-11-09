@@ -160,7 +160,7 @@ const OnPlogging = () => {
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
-        const calorie = calculateCalories();
+        const calorie = calculateCalories(stopwatch);
         setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(
@@ -171,7 +171,14 @@ const OnPlogging = () => {
     };
 
     recordLocation();
-  }, [location]);
+  }, [location, stopwatch]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem(utils.LOCATIONS_KEY);
+      localStorage.clear();
+    };
+  }, []);
 
   return (
     <S.Wrap>

@@ -38,7 +38,7 @@ const PloggingInfo = ({
           </S.PloggingDistanceBox>
           <S.PloggingCaloriesBox>
             플로깅으로&nbsp;
-            <S.PloggingCalories>{calorie.toFixed(0)} kcal</S.PloggingCalories>
+            <S.PloggingCalories>{calorie.toFixed(1)} kcal</S.PloggingCalories>
             &nbsp;가 소모되었습니다.
           </S.PloggingCaloriesBox>
         </S.PloggingState>
@@ -48,7 +48,7 @@ const PloggingInfo = ({
           <CameraSvg />
         </S.CameraButton>
         <S.BackToMapButton onClick={() => setPloggingInfoOn(false)}>
-          <SmallRunnerSvg /> 지도로 돌아가기
+          <SmallRunnerSvg /> 지도 확인하기
         </S.BackToMapButton>
       </S.UserAccess>
     </S.Wrap>
@@ -158,7 +158,7 @@ const S = {
     align-items: center;
     justify-content: center;
     width: 160px;
-    height: 34px;
+    height: 40px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};

@@ -157,7 +157,7 @@ const S = {
     align-items: center;
     justify-content: center;
     width: 160px;
-    height: 34px;
+    height: 40px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
     color: #fff;

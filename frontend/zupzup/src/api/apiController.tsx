@@ -33,11 +33,12 @@ instance.interceptors.request.use(
     const originalRequest = error.config;
     const dispatch = useAppDispatch();
 
-    console.error(error);
+    console.error('나 error 발생!!!! ', error);
     // 401 에러면 refresh token 보내기
     if (
-      error?.response?.data?.status === 401 &&
-      error?.response?.data?.error_code === 'ERR_AUTH_005'
+      (error?.response?.data?.status === 401 &&
+        error?.response?.data?.error_code === 'ERR_AUTH_005') ||
+      error?.response?.data?.status === 403
     ) {
       // console.log('access-token 만료됐어');
       try {

@@ -18,6 +18,7 @@ interface TmapOptions {
 
 interface Marker {
   setPosition: (LatLng) => void;
+  setMap: (map: Map) => void;
 }
 
 interface Polyline {

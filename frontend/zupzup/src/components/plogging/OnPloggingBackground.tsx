@@ -27,6 +27,7 @@ interface Props {
   getTrashInfo: (trashOn: boolean) => void;
   fixCenter: boolean;
   setFixCenter: (fixCenter: boolean) => void;
+  refreshTrashInfo: () => void;
 }
 
 const OnPloggingBackground = ({
@@ -39,6 +40,7 @@ const OnPloggingBackground = ({
   getTrashInfo,
   fixCenter,
   setFixCenter,
+  refreshTrashInfo,
 }: Props) => {
   return (
     <S.Wrap>
@@ -52,6 +54,7 @@ const OnPloggingBackground = ({
           <AimSvg />
         </S.AimButton>
         <S.RefreshButton
+          onClick={() => refreshTrashInfo()}
           $trashOn={trashOn}
           $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >

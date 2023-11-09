@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { TrashInfo } from 'types';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
 
-import TrashMarkerSvg from 'assets/icons/trash_can.svg?react';
-
 interface Location {
   lat: number;
   lng: number;
@@ -40,6 +38,7 @@ const PloggingMap = ({
   const [tmap, setTmap] = useState<TMap | null>(null);
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
   const [polyline, setPolyline] = useState<Polyline | null>(null);
+  const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
 
   const initMap = ({ lat, lng }: Location) => {
     const { Tmapv3 } = window;
@@ -140,8 +139,7 @@ const PloggingMap = ({
       if (!tmap) {
         return;
       }
-
-      [...trashs].forEach(
+      const markers = [...trashs].map(
         trash =>
           new window.Tmapv3.Marker({
             position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
@@ -150,15 +148,19 @@ const PloggingMap = ({
             map: tmap,
           }),
       );
+      setTrashMarkers([...markers]);
+    };
+
+    const removeTrashMarkers = () => {
+      trashMarkers.forEach(marker => {
+        marker.setMap(null);
+      });
     };
 
     if (trashOn) {
       updateTrashMarkers();
     } else {
-      initMap({
-        lat: location.lat,
-        lng: location.lng,
-      });
+      removeTrashMarkers();
     }
   }, [trashs, trashOn]);
 

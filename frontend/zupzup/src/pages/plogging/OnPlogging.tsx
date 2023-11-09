@@ -53,6 +53,11 @@ const OnPlogging = () => {
     }
   };
 
+  const refreshTrashInfo = () => {
+    getTrashInfo(false);
+    getTrashInfo(true);
+  };
+
   useEffect(() => {
     const recordLocation = () => {
       if (!location.loaded) {
@@ -76,7 +81,7 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5) {
+      if (distance >= 0.5 && distance <= 120) {
         setTotalDistance(totalDistance => totalDistance + distance);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
@@ -120,6 +125,7 @@ const OnPlogging = () => {
         getTrashInfo={getTrashInfo}
         fixCenter={fixCenter}
         setFixCenter={setFixCenter}
+        refreshTrashInfo={refreshTrashInfo}
       />
       {}
       {location.loaded && (

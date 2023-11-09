@@ -44,7 +44,6 @@ const OnPlogging = () => {
   const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
   const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
-  const LOCATIONS_KEY = 'locations';
 
   const exitPlogging = async () => {
     dispatch(setEndDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
@@ -107,10 +106,13 @@ const OnPlogging = () => {
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
       const locations = JSON.parse(
-        localStorage.getItem(LOCATIONS_KEY) as string,
+        localStorage.getItem(utils.LOCATIONS_KEY) as string,
       );
       if (!locations) {
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify([{ lat, lng }]));
+        localStorage.setItem(
+          utils.LOCATIONS_KEY,
+          JSON.stringify([{ lat, lng }]),
+        );
         return;
       }
 
@@ -127,7 +129,7 @@ const OnPlogging = () => {
         const calorie = calculateCalories(stopwatch);
         setCalorie(calorie);
         locations.push({ lat, lng });
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
+        localStorage.setItem(utils.LOCATIONS_KEY, JSON.stringify(locations));
       }
     };
 
@@ -136,7 +138,7 @@ const OnPlogging = () => {
 
   useEffect(() => {
     return () => {
-      localStorage.removeItem(LOCATIONS_KEY);
+      localStorage.removeItem(utils.LOCATIONS_KEY);
       localStorage.clear();
     };
   }, []);

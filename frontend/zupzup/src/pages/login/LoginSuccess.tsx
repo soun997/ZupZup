@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MemberApi } from 'api';
+import { MemberApi, PloggingApis } from 'api';
 import * as utils from 'utils';
 import { LoadingAnimation } from 'components';
 import styled from 'styled-components';
@@ -54,6 +54,10 @@ const LoginSuccess = () => {
           dispatch(setHeight(healthData.height));
           dispatch(setWeight(healthData.weight));
 
+          if (localStorage.getItem(utils.LOCATIONS_KEY)) {
+            await PloggingApis.stopPlogging();
+            localStorage.removeItem(utils.LOCATIONS_KEY);
+          }
           navigate(utils.URL.PLOGGING.LOBBY);
         }
       } catch (err) {

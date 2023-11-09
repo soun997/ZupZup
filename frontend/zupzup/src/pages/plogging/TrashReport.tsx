@@ -92,8 +92,9 @@ const TrashReport = ({ trashReport }: Prop) => {
 
         console.info(`${i} - label : ${label} (score ${score})`);
       }
+      saveTrashReport();
     }
-    saveTrashReport();
+
     // const trashDetail = useAppSelector(state => state.plogging.trashDetail);
     // console.log(trashDetail);
   }, [nameMap, isImageLoaded]);

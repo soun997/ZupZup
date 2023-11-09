@@ -44,7 +44,6 @@ const OnPlogging = () => {
   const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
   const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
-  const LOCATIONS_KEY = 'locations';
 
   const exitPlogging = async () => {
     dispatch(setEndDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
@@ -106,11 +105,48 @@ const OnPlogging = () => {
 
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
+
+      const maxLatitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MAX_LATITUDE,
+        JSON.stringify(Math.max(maxLatitude, lat)),
+      );
+      const minLatitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LATITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MIN_LATITUDE,
+        JSON.stringify(
+          Math.min(minLatitude ? minLatitude : Number.MAX_VALUE, lat),
+        ),
+      );
+      const maxLongitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LONGITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MAX_LONGITUDE,
+        JSON.stringify(Math.max(maxLongitude, lng)),
+      );
+      const minLongitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MIN_LONGITUDE,
+        JSON.stringify(
+          Math.min(minLongitude ? minLongitude : Number.MAX_VALUE, lng),
+        ),
+      );
+
       const locations = JSON.parse(
-        localStorage.getItem(LOCATIONS_KEY) as string,
+        localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
       );
       if (!locations) {
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify([{ lat, lng }]));
+        localStorage.setItem(
+          utils.COORDINATE.LOCATIONS_KEY,
+          JSON.stringify([{ lat, lng }]),
+        );
         return;
       }
 
@@ -121,25 +157,21 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5 && distance <= 120) {
+      if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
         const calorie = calculateCalories();
         setCalorie(calorie);
         locations.push({ lat, lng });
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
+        localStorage.setItem(
+          utils.COORDINATE.LOCATIONS_KEY,
+          JSON.stringify(locations),
+        );
       }
     };
 
     recordLocation();
   }, [location]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.removeItem(LOCATIONS_KEY);
-      localStorage.clear();
-    };
-  }, []);
 
   return (
     <S.Wrap>

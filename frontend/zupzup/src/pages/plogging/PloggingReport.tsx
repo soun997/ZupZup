@@ -1,16 +1,23 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport } from 'components';
 import SaveSvg from 'assets/icons/save.svg?react';
-import { store, useAppDispatch, useCapture } from 'hooks';
+import { useAppDispatch, useCapture } from 'hooks';
 import PloggingDone from 'components/plogging/PloggingDone';
 import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
+interface Location {
+  lat: number;
+  lng: number;
+}
+
 const PloggingReport = () => {
+  const mapRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const { handleCaptureClick, captureRef } = useCapture();
   const [showLoading, setLoading] = useState(true);
 
@@ -18,6 +25,63 @@ const PloggingReport = () => {
     dispatch(deleteAllPlogging());
     navigate(utils.URL.MYPAGE.HOME);
   };
+
+  useEffect(() => {
+    const initMap = () => {
+      const maxLat = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
+      );
+      const minLat = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LATITUDE) as string,
+      );
+      const maxLng = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LONGITUDE) as string,
+      );
+      const minLng = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
+      );
+
+      const lat = (maxLat + minLat) / 2.0;
+      const lng = (maxLng + minLng) / 2.0;
+      const { Tmapv3 } = window;
+      const latlng = new Tmapv3.LatLng(lat, lng);
+
+      if (mapRef.current) {
+        const mapContainer = mapRef.current;
+
+        const map = new Tmapv3.Map(mapContainer, {
+          center: latlng,
+          zoom: 17,
+          width: '100%',
+          height: '200px',
+        });
+
+        const locations = JSON.parse(
+          localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
+        );
+
+        if (!locations || locations.length < 1) {
+          return;
+        }
+
+        const paths = locations.map(
+          (location: Location) => new Tmapv3.LatLng(location.lat, location.lng),
+        );
+
+        new Tmapv3.Polyline({
+          path: paths,
+          strokeColor: '#dd00dd',
+          strokeWeight: 6,
+          direction: true,
+          map: map,
+        });
+        // setLoading(false);
+      }
+    };
+    if (mapRef.current) {
+      initMap();
+    }
+  }, [showLoading]);
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -45,7 +109,8 @@ const PloggingReport = () => {
         <S.SubText>플로깅 기록을 확인해주세요</S.SubText>
 
         <S.SubTitle>나의 이동 경로</S.SubTitle>
-        <S.Image src={store.getState().plogging.routeImageUrl!} />
+        <S.Map ref={mapRef}></S.Map>
+        {/* <S.Image src={store.getState().plogging.routeImageUrl!} /> */}
 
         <S.SubTitle>기록</S.SubTitle>
         <RecordReport />
@@ -83,6 +148,11 @@ const S = {
   Image: styled.img`
     width: 100%;
     margin-top: 22px;
+  `,
+  Map: styled.div`
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
   `,
 
   TitleFrame: styled.div`

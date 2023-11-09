@@ -14,6 +14,7 @@ interface TmapOptions {
   width: string;
   height: string;
   zoom: number;
+  bounds?: LatLngBounds;
 }
 
 interface Marker {
@@ -51,6 +52,8 @@ interface MarkerOptions {
 
 interface Size {}
 
+interface LatLngBounds {}
+
 export declare global {
   interface Window {
     Tmapv3: {
@@ -68,6 +71,9 @@ export declare global {
       };
       Size: {
         new (width: number, height: number): Size;
+      };
+      LatLngBounds: {
+        new (latlng: LatLng): LatLngBounds;
       };
     };
   }

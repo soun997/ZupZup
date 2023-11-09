@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import CoinSvg from 'assets/icons/coin.svg?react';
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
+import { store } from 'hooks';
 
 interface Props {
   exitOn: boolean;
@@ -18,7 +19,7 @@ const OnPloggingHeader = ({ exitOn, setExitOn }: Props) => {
       <S.CurrentState>
         <S.CurrentCoin>
           <CoinSvg />
-          15
+          {store.getState().plogging.coin}
         </S.CurrentCoin>
         <S.ExitButton onClick={() => setExitOn(true)} $modalOn={exitOn}>
           <SmallRunnerSvg /> 종료하기

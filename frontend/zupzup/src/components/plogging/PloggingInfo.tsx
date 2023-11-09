@@ -8,6 +8,7 @@ import CameraSvg from 'assets/icons/camera.svg?react';
 interface Props {
   time: number;
   distance: number;
+  calorie: number;
   exitOn: boolean;
   setExitOn: (exitOn: boolean) => void;
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
@@ -19,6 +20,7 @@ const PloggingInfo = ({
   distance,
   setPloggingInfoOn,
   setCameraOn,
+  calorie,
 }: Props) => {
   return (
     <S.Wrap>
@@ -29,11 +31,14 @@ const PloggingInfo = ({
         <S.PloggingState>
           <S.PloggingStateTitle>현재 플로깅 정보</S.PloggingStateTitle>
           <S.PloggingDistanceBox>
-            <S.PloggingDistance>{distance} m</S.PloggingDistance>&nbsp;째 플로깅
-            중입니다.
+            <S.PloggingDistance>
+              {(distance / 1000).toFixed(2)} km
+            </S.PloggingDistance>
+            &nbsp;째 플로깅 중입니다.
           </S.PloggingDistanceBox>
           <S.PloggingCaloriesBox>
-            플로깅으로&nbsp;<S.PloggingCalories>0 kcal</S.PloggingCalories>
+            플로깅으로&nbsp;
+            <S.PloggingCalories>{calorie.toFixed(0)} kcal</S.PloggingCalories>
             &nbsp;가 소모되었습니다.
           </S.PloggingCaloriesBox>
         </S.PloggingState>

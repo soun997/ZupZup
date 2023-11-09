@@ -4,10 +4,12 @@ import { themeSlice } from './themeSlice';
 import { authSlice } from './useAuth';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import { ploggingSlice } from './usePlogging';
 
 const reducers = combineReducers({
   themeChanger: themeSlice.reducer,
   auth: authSlice.reducer,
+  plogging: ploggingSlice.reducer,
 });
 
 const persistConfig = {

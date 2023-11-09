@@ -1,5 +1,6 @@
 package com.twoez.zupzup.global.response;
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.springframework.http.HttpStatus;
@@ -7,7 +8,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 /**
- *
  * @param <T>
  */
 @JsonInclude(Include.NON_NULL)

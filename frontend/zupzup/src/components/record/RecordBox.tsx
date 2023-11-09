@@ -26,7 +26,9 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       <S.PloggingRecords>
         <S.RecordInfoBox>
           <PathSvg />
-          <S.RecordInfo>{ploggingInfo.distance / 1000.0}km</S.RecordInfo>
+          <S.RecordInfo>
+            {(ploggingInfo.distance / 1000.0).toFixed(2)}km
+          </S.RecordInfo>
         </S.RecordInfoBox>
         <S.RecordInfoBox>
           <ClockSvg />

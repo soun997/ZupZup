@@ -124,7 +124,7 @@ const OnPlogging = () => {
       if (distance >= 0.5 && distance <= 120) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
-        const calorie = calculateCalories();
+        const calorie = calculateCalories(stopwatch);
         setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
@@ -132,7 +132,7 @@ const OnPlogging = () => {
     };
 
     recordLocation();
-  }, [location]);
+  }, [location, stopwatch]);
 
   useEffect(() => {
     return () => {

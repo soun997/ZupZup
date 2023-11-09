@@ -15,7 +15,7 @@ const RecordReport = () => {
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">이동 거리</div>
-        <div className="eachVal">{data.distance!.toFixed(2)} km</div>
+        <div className="eachVal">{(data.distance! / 1000).toFixed(2)} km</div>
       </S.EachFrame>
       <S.EachFrame>
         <div className="eachName">소모 칼로리</div>

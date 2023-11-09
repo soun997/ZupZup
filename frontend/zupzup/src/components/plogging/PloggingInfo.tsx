@@ -48,7 +48,7 @@ const PloggingInfo = ({
           <CameraSvg />
         </S.CameraButton>
         <S.BackToMapButton onClick={() => setPloggingInfoOn(false)}>
-          <SmallRunnerSvg /> 지도로 돌아가기
+          <SmallRunnerSvg /> 지도 확인하기
         </S.BackToMapButton>
       </S.UserAccess>
     </S.Wrap>
@@ -158,7 +158,7 @@ const S = {
     align-items: center;
     justify-content: center;
     width: 160px;
-    height: 34px;
+    height: 40px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
     color: ${({ theme }) => theme.color.white};

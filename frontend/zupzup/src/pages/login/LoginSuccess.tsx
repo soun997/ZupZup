@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MemberApi } from 'api';
+import { MemberApi, PloggingApis } from 'api';
 import * as utils from 'utils';
 import { LoadingAnimation } from 'components';
 import styled from 'styled-components';
 import {
   setAccessToken,
+  setBirthYear,
+  setGender,
+  setHeight,
   setMemberId,
+  setMemberName,
   setRefreshToken,
+  setWeight,
   useAppDispatch,
 } from 'hooks';
 
@@ -32,6 +37,7 @@ const LoginSuccess = () => {
         console.log('login data >: ', data);
 
         dispatch(setMemberId(data.memberId));
+        dispatch(setMemberName(data.memberName));
 
         if (data.isNewMember) {
           navigate(utils.URL.LOGIN.REGIST_INFO.PHYSICAL);
@@ -40,6 +46,18 @@ const LoginSuccess = () => {
           const refreshToken = data.refreshToken;
           dispatch(setAccessToken(accessToken));
           dispatch(setRefreshToken(refreshToken));
+
+          const response = await MemberApi.getHealthInfo();
+          const healthData = response.data.results;
+          dispatch(setBirthYear(healthData.birthYear));
+          dispatch(setGender(healthData.gender));
+          dispatch(setHeight(healthData.height));
+          dispatch(setWeight(healthData.weight));
+
+          if (localStorage.getItem(utils.LOCATIONS_KEY)) {
+            await PloggingApis.stopPlogging();
+            localStorage.removeItem(utils.LOCATIONS_KEY);
+          }
           navigate(utils.URL.PLOGGING.LOBBY);
         }
       } catch (err) {

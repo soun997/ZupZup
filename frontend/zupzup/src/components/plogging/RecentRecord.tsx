@@ -1,14 +1,62 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 import SmallClockSvg from 'assets/icons/smallclock.svg?react';
+import { RecordApis } from 'api';
+
+interface RecentRecord {
+  startDateTime: string;
+  endDateTime: string;
+  calories: number;
+  distance: number;
+}
+
+const calculateDaysPassed = (inputDate: string): number => {
+  const inputDateObj = new Date(inputDate);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - inputDateObj.getTime();
+
+  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  return daysPassed;
+};
 
 const RecentRecord = () => {
+  const [recentRecord, setRecentRecord] = useState<RecentRecord | null>(null);
+  const [recentDay, setRecentDay] = useState<number>(0);
+  const fetchNowPloggingUser = async () => {
+    try {
+      const response = await RecordApis.getPloggingLogByRecent();
+      const data = response.data.results;
+      console.log(data);
+
+      if (!data) {
+        setRecentRecord(null);
+      } else {
+        setRecentRecord(data);
+        setRecentDay(calculateDaysPassed(data.endDateTime));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchNowPloggingUser();
+  }, []);
+
   return (
     <S.Wrap>
       <S.RecordBox>
         <SmallClockSvg />
-        <S.RecordInfo>4일 전</S.RecordInfo>&nbsp;|&nbsp;
-        <S.RecordInfo>132 km</S.RecordInfo>
+        {recentRecord ? (
+          <>
+            <S.RecordInfo>{recentDay}일 전</S.RecordInfo>&nbsp;|&nbsp;
+            <S.RecordInfo>
+              {(recentRecord.distance / 1000).toFixed(2)} km
+            </S.RecordInfo>
+          </>
+        ) : (
+          <S.RecordInfo>최근 플로깅 기록이 없습니다</S.RecordInfo>
+        )}
       </S.RecordBox>
     </S.Wrap>
   );

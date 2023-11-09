@@ -22,7 +22,7 @@ const formatTimeByColons = (seconds: number): string => {
   const secondsString =
     remainingSeconds > 0
       ? `${remainingSeconds.toString().padStart(2, '0')}`
-      : '';
+      : '00';
 
   return `${hoursString}${minutesString}${secondsString}`;
 };

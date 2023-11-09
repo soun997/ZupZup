@@ -18,6 +18,7 @@ interface TmapOptions {
 
 interface Marker {
   setPosition: (LatLng) => void;
+  setMap: (map: Map) => void;
 }
 
 interface Polyline {
@@ -43,8 +44,12 @@ interface MapLocation {
 
 interface MarkerOptions {
   position: LatLng;
+  icon?: object | string;
+  iconSize?: object;
   map: Map;
 }
+
+interface Size {}
 
 export declare global {
   interface Window {
@@ -60,6 +65,9 @@ export declare global {
       };
       Polyline: {
         new (options: PolylineOptions): Polyline;
+      };
+      Size: {
+        new (width: number, height: number): Size;
       };
     };
   }

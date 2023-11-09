@@ -6,6 +6,8 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays } from 'date-fns';
 
 import { CalendarMonth } from 'components';
+import { RecordApis } from 'api';
+import { PloggingDayState } from 'types';
 
 import DownSvg from 'assets/icons/angle-down.svg?react';
 
@@ -14,60 +16,48 @@ interface CalendarProps {
   setSelectedDate: (date: Date | null) => void;
 }
 
+interface DotProps {
+  $exists: boolean;
+}
+
+interface PloggingState {
+  [key: string]: boolean;
+}
+
 const Calendar = (props: CalendarProps) => {
   const now = new Date();
   const [calendar, setCalendar] = useState<JSX.Element[]>();
+  const [ploggingStates, setPloggingStates] = useState<PloggingState>();
+
   const monthStart = startOfMonth(now);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
-
-  const handleChangeMode = () => {
-    initCalendar();
-    props.setSelectedDate(null);
-  };
 
   const selectDate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLElement;
     const dateValue = (target.firstChild as HTMLInputElement).value;
     const date = new Date(dateValue);
     props.setSelectedDate(date);
-    initWeekCalendar(date);
+    if (ploggingStates) {
+      initWeekCalendar(date);
+    }
   };
 
-  const initWeekCalendar = (date: Date) => {
-    const startDate = startOfWeek(date);
-    const row = [];
-    const days = [];
-    const dots = [];
-    let day = startDate;
-    for (let i = 0; i < 7; i++) {
-      days.push(
-        <S.Date
-          className={`${isSameMonth(now, day) ? 'active' : ''} ${
-            isSameDay(now, day) ? 'today' : ''
-          } ${isSameDay(date, day) ? 'selected' : ''}`}
-          key={day.getTime()}
-          onClick={e => selectDate(e)}
-        >
-          <input type="hidden" value={day.toISOString()} />
-          {isSameMonth(now, day) ? format(day, 'd') : ''}
-        </S.Date>,
+  const initPloggingStates = async () => {
+    try {
+      const response = await RecordApis.getPloggingLogByMonth(
+        format(now, 'yyyy-MM-dd'),
       );
 
-      if (isSameMonth(now, day)) {
-        dots.push(<S.Dot key={day.getTime()}></S.Dot>);
-      }
-
-      day = addDays(day, 1);
+      const states: PloggingState = {};
+      [...response.data.results].forEach((element: PloggingDayState) => {
+        states[element.date] = element.exists;
+      });
+      setPloggingStates(states);
+    } catch (err) {
+      console.log(err);
     }
-    row.push(
-      <S.Row key={day.getTime()}>
-        <S.Week>{days}</S.Week>
-        <S.Dots>{dots}</S.Dots>
-      </S.Row>,
-    );
-    setCalendar([...row]);
   };
 
   const initCalendar = () => {
@@ -91,9 +81,12 @@ const Calendar = (props: CalendarProps) => {
           </S.Date>,
         );
 
-        if (isSameMonth(now, day)) {
-          dots.push(<S.Dot key={day.getTime()}></S.Dot>);
-        }
+        dots.push(
+          <S.Dot
+            key={day.getTime()}
+            $exists={ploggingStates![format(day, 'yyyy-MM-dd')] ? true : false}
+          ></S.Dot>,
+        );
 
         day = addDays(day, 1);
       }
@@ -109,9 +102,60 @@ const Calendar = (props: CalendarProps) => {
     setCalendar([...rows]);
   };
 
+  const initWeekCalendar = (date: Date) => {
+    const startDate = startOfWeek(date);
+    const row = [];
+    const days = [];
+    const dots = [];
+    let day = startDate;
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <S.Date
+          className={`${isSameMonth(now, day) ? 'active' : ''} ${
+            isSameDay(now, day) ? 'today' : ''
+          } ${isSameDay(date, day) ? 'selected' : ''}`}
+          key={day.getTime()}
+          onClick={e => selectDate(e)}
+        >
+          <input type="hidden" value={day.toISOString()} />
+          {isSameMonth(now, day) ? format(day, 'd') : ''}
+        </S.Date>,
+      );
+
+      dots.push(
+        <S.Dot
+          key={day.getTime()}
+          $exists={ploggingStates![format(day, 'yyyy-MM-dd')] ? true : false}
+        ></S.Dot>,
+      );
+
+      day = addDays(day, 1);
+    }
+    row.push(
+      <S.Row key={day.getTime()}>
+        <S.Week>{days}</S.Week>
+        <S.Dots>{dots}</S.Dots>
+      </S.Row>,
+    );
+    setCalendar([...row]);
+  };
+
+  const handleChangeMode = () => {
+    if (ploggingStates) {
+      initCalendar();
+    }
+    props.setSelectedDate(null);
+  };
+
   useEffect(() => {
-    initCalendar();
+    initPloggingStates();
   }, []);
+
+  useEffect(() => {
+    if (ploggingStates) {
+      initCalendar();
+    }
+  }, [ploggingStates]);
 
   return (
     <S.Wrap>
@@ -221,14 +265,15 @@ const S = {
     justify-items: center;
     align-items: center;
   `,
-  Dot: styled.li`
+  Dot: styled.li<DotProps>`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background-color: ${({ theme }) => theme.color.sub2};
+    background-color: ${({ theme, $exists }) =>
+      $exists ? theme.color.sub2 : 'transparent'};
   `,
   StretchAccess: styled.div`
     display: flex;

@@ -16,8 +16,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
+import com.twoez.zupzup.global.exception.HttpExceptionCode;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.member.exception.MemberQueryException;
+import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
+import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
@@ -26,6 +31,8 @@ import com.twoez.zupzup.support.docs.RestDocsTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,6 +49,20 @@ class PloggingLogControllerTest extends RestDocsTest {
     @MockBean PloggingLogService ploggingLogService;
     Member member;
 
+    PloggingLogRequest ploggingLogRequest =
+            new PloggingLogRequest(
+                    10,
+                    LocalDateTime.of(2023, 10, 30, 0, 0),
+                    LocalDateTime.of(2023, 10, 30, 2, 0),
+                    7200,
+                    600,
+                    50,
+                    200,
+                    "https://image.com");
+    TrashRequest trashRequest = new TrashRequest(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+
+    LogRequest request = new LogRequest(ploggingLogRequest, trashRequest);
+
     @BeforeEach
     void initObjects() {
         this.member = MemberFixture.DEFAULT.getMember();
@@ -50,14 +71,16 @@ class PloggingLogControllerTest extends RestDocsTest {
     @Test
     @DisplayName("특정 월의 플로깅 기록을 조회한다.")
     void ploggingLogByMonth() throws Exception {
-        LocalDate date = LocalDate.of(2023, 10, 1);
+        LocalDate date1 = LocalDate.of(2023, 10, 1);
+        LocalDate date2 = LocalDate.of(2023, 10, 3);
+        LocalDate date3 = LocalDate.of(2023, 10, 6);
         given(ploggingLogQueryService.searchInMonthDistinct(any(LocalDate.class), any(Long.class)))
-                .willReturn(List.of(date));
+                .willReturn(Map.of(date1, true, date2, true, date3, true));
 
         ResultActions perform =
                 mockMvc.perform(
                         get("/api/v1/plogging-logs/months")
-                                .queryParam("date", date.toString())
+                                .queryParam("date", LocalDate.of(2023, 10, 1).toString())
                                 .contentType(MediaType.APPLICATION_JSON));
 
         perform.andExpect(status().isOk());
@@ -138,7 +161,8 @@ class PloggingLogControllerTest extends RestDocsTest {
         LocalDateTime now = LocalDateTime.now();
         PloggingLog ploggingLog =
                 PloggingLogFixture.DEFAULT.getPloggingLogWithPeriod(now, now, member);
-        given(ploggingLogQueryService.searchRecentLog(any(Long.class))).willReturn(ploggingLog);
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class)))
+                .willReturn(Optional.of(ploggingLog));
 
         ResultActions perform =
                 mockMvc.perform(
@@ -156,22 +180,34 @@ class PloggingLogControllerTest extends RestDocsTest {
     }
 
     @Test
+    @DisplayName("최근 플로깅 기록이 없다")
+    void recentPloggingLogNoContent() throws Exception {
+        Optional<PloggingLog> ploggingLogOptional = Optional.empty();
+        given(ploggingLogQueryService.searchRecentLog(any(Long.class)))
+                .willReturn(ploggingLogOptional);
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/recent")
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isNoContent());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-by-recent-no-content",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
     @DisplayName("플로깅 종료 시 해당 플로깅에 대한 기록을 저장한다.")
     void ploggingLogAddTest() throws Exception {
 
-        PloggingLogRequest request =
-                new PloggingLogRequest(
-                        10,
-                        LocalDateTime.of(2023, 10, 30, 0, 0),
-                        LocalDateTime.of(2023, 10, 30, 2, 0),
-                        7200,
-                        600,
-                        50,
-                        200,
-                        "https://image.com");
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
 
-        given(ploggingLogService.add(any(PloggingLogRequest.class), any(Member.class)))
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
                 .willReturn(ploggingLog);
 
         ResultActions perform =
@@ -180,12 +216,61 @@ class PloggingLogControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 
-        perform.andExpect(status().isOk())
+        perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.status").value(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.results.id").value(1L));
 
         perform.andDo(print())
                 .andDo(document("plogginglog-add", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 저장 예외 - 멤버 조회 오류")
+    void ploggingLogAddMemberFailTest() throws Exception {
+
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
+                .willThrow(new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
+
+        ResultActions perform =
+                mockMvc.perform(
+                        post("/api/v1/plogging-logs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(request)));
+
+        perform.andExpect(status().isNotFound());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-add-fail-member",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 저장 예외 - 플로깅 기록 집계 조회 오류")
+    void ploggingLogAddTotalFailTest() throws Exception {
+        PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        given(ploggingLogService.add(any(LogRequest.class), any(Long.class)))
+                .willThrow(new TotalPloggingLogNotFoundException());
+
+        ResultActions perform =
+                mockMvc.perform(
+                        post("/api/v1/plogging-logs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toJson(request)));
+
+        perform.andExpect(status().isNotFound());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-add-fail-total",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -205,5 +290,25 @@ class PloggingLogControllerTest extends RestDocsTest {
                 .andExpect(jsonPath("$.results.totalCount").value(10L));
         perform.andDo(print())
                 .andDo(document("plogginglog-total", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("플로깅 기록 집계 조회 실패.")
+    void totalPloggingLogDetailsFailTest() throws Exception {
+
+        given(ploggingLogQueryService.searchTotalPloggingLog(any(Member.class)))
+                .willThrow(new TotalPloggingLogNotFoundException());
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/total").contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isNotFound());
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "plogginglog-total-fail",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 }

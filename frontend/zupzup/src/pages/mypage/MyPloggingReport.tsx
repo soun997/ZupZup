@@ -2,24 +2,40 @@ import styled from 'styled-components';
 import { TotalPloggingInfo } from 'types/ProfileInfo';
 import { PloggingMemo, TopNavigation } from 'components';
 import { URL } from 'utils';
-
-const ploggingInfo: TotalPloggingInfo = {
-  totalCalorie: 330, //cal
-  totalCount: 1,
-  totalTime: 7200, //초
-  totalDistance: 1, //미터
-  totalGatheredTrash: 20,
-};
+import { RecordApis } from 'api';
+import { useEffect, useState } from 'react';
+import { Loading } from 'pages';
+import ErrorSvg from 'assets/icons/error-check.svg?react';
+import { useFormatTime } from 'hooks';
 
 const trashInfos = [
-  { name: '플라스틱', count: 3 },
-  { name: '담배꽁초', count: 5 },
-  { name: '일반 쓰레기', count: 5 },
-  { name: '음식물 쓰레기', count: 5 },
-  { name: '유리조각', count: 2 },
+  { name: '플라스틱', count: 0 },
+  { name: '담배꽁초', count: 0 },
+  { name: '일반 쓰레기', count: 0 },
+  { name: '음식물 쓰레기', count: 0 },
+  { name: '유리조각', count: 0 },
 ];
 
 const MyPloggingReport = () => {
+  const [ploggingInfo, setPloggingInfo] = useState<TotalPloggingInfo>();
+  const fetchMyReport = async () => {
+    try {
+      const response = await RecordApis.getMyPloggingInfo();
+      const data = response.data.results;
+      console.log(data);
+      setPloggingInfo(data);
+    } catch (error) {
+      console.error('Error fetching report info:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyReport();
+  }, []);
+
+  if (!ploggingInfo) {
+    return <Loading />;
+  }
   return (
     <S.Wrap>
       <TopNavigation
@@ -32,7 +48,8 @@ const MyPloggingReport = () => {
       />
       <S.BoxFrame>
         <div className="title">
-          그동안 {ploggingInfo.totalDistance / 1000} km 만큼 플로깅 했어요 👍
+          그동안 {(ploggingInfo.totalDistance / 1000).toFixed(2)} km 만큼 플로깅
+          했어요 👍
         </div>
         <S.BoxInfo>
           <S.EachBoxInfo>
@@ -41,12 +58,13 @@ const MyPloggingReport = () => {
           <S.EachBoxInfo>
             플로깅 시간
             <div className="tag">
-              {Math.floor(ploggingInfo.totalTime / 3600)} 시간
+              {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
+              {useFormatTime.formatTime(ploggingInfo.totalDurationTime)}
             </div>
           </S.EachBoxInfo>
           <S.EachBoxInfo $isLast={true}>
             소모 칼로리
-            <div className="tag">{ploggingInfo.totalCalorie} kcal</div>
+            <div className="tag">{ploggingInfo.totalCalories} kcal</div>
           </S.EachBoxInfo>
         </S.BoxInfo>
       </S.BoxFrame>
@@ -58,6 +76,10 @@ const MyPloggingReport = () => {
         <div className="memoInfo">
           <PloggingMemo trashInfo={trashInfos} />
         </div>
+        <ErrorCheck>
+          <ErrorSvg />
+          {'서비스 준비중입니다'}
+        </ErrorCheck>
       </S.BoxFrame>
 
       <S.InfoBox>
@@ -170,5 +192,19 @@ const S = {
     }
   `,
 };
+
+const ErrorCheck = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  color: ${({ theme }) => theme.color.warning};
+  gap: 5px;
+  font-size: 12px;
+  border: none;
+  width: fit-content;
+  margin: -5px;
+  padding-right: 20px;
+  font-family: ${({ theme }) => theme.font.family.body2};
+`;
 
 export default MyPloggingReport;

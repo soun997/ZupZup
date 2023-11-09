@@ -13,10 +13,12 @@ spring:
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
     mongodb:
-      uri: ${MONGO_URI}
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
       database: ${MONGO_DATABASE}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
+      authentication-database: zupzup, admin
   security:
     oauth2:
       client:

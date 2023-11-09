@@ -19,7 +19,7 @@ export const DrawerFrame: React.FC<DrawerFrameProps> = ({ foodList }) => {
         {foodList.map((food, index) => (
           <S.FoodContainer key={index}>
             <S.FoodImage
-              src={food.image}
+              src={food.itemImgUrl}
               onClick={() => handleClickOpen(food.id)}
             />
           </S.FoodContainer>

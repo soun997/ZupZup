@@ -1,15 +1,13 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 import { SocialLoginButton } from 'components';
-import { SOCIAL_KEY, URL } from 'utils';
+import { SOCIAL_KEY } from 'utils';
 
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
 import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
 
 const Login = () => {
-  const navigate = useNavigate();
   const handleSocialLogin = async (domain: string) => {
     window.location.href = `https://zupzup.shop/oauth2/authorization/${domain}`;
   };
@@ -18,11 +16,11 @@ const Login = () => {
     <S.Wrap>
       <S.LogoContainer>
         <S.Title>줍줍</S.Title>
-        <S.Image src="assets/images/park_main.png"></S.Image>
+        {/* <S.Image src="assets/images/park_main.png"></S.Image> */}
       </S.LogoContainer>
       <S.LoginButton>
         <SocialLoginButton
-          backgroundColor="#FAE100"
+          $backgroundColor="#FAE100"
           color="#371D1E"
           onClick={() => handleSocialLogin(SOCIAL_KEY.KAKAO)}
         >
@@ -30,16 +28,15 @@ const Login = () => {
           카카오톡으로 시작하기
         </SocialLoginButton>
         <SocialLoginButton
-          backgroundColor="#06BE34"
+          $backgroundColor="#06BE34"
           color="#FFFFFF"
-          onClick={() => navigate(URL.LOGIN.REGIST_INFO.PHYSICAL)}
-          // onClick={() => handleSocialLogin(SOCIAL_KEY.NAVER)}
+          onClick={() => handleSocialLogin(SOCIAL_KEY.NAVER)}
         >
           <NaverIcon />
           네이버로 시작하기
         </SocialLoginButton>
         <SocialLoginButton
-          backgroundColor="#FFFFFF"
+          $backgroundColor="#FFFFFF"
           color="#4E5968"
           onClick={() => handleSocialLogin(SOCIAL_KEY.GOOGLE)}
         >
@@ -58,19 +55,15 @@ const S = {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(
-      180deg,
-      #fff 0%,
-      #fff 0.01%,
-      #fff 14.69%,
-      #b8f2e8 48.54%,
-      #2cd5fb 99.41%
-    );
+
+    background-image: url(${import.meta.env.VITE_S3_URL}/background-3.png);
+    background-size: cover;
   `,
 
   LogoContainer: styled.div`
     display: flex;
     position: relative;
+    top: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -78,11 +71,11 @@ const S = {
   `,
 
   Title: styled.div`
-    margin-top: 200px;
-    transform: translateY(150px);
+    margin-top: -20px;
+    /* transform: translateY(150px); */
     text-align: center;
     font-family: ${({ theme }) => theme.font.family.title};
-    font-size: ${({ theme }) => theme.font.size.title};
+    font-size: 80px;
     color: #fff;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
     z-index: 1;

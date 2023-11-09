@@ -14,7 +14,7 @@ include::{docdir}/src/docs/asciidoc/trashcan.adoc[]
 
 include::{docdir}/src/docs/asciidoc/feedback.adoc[]
 
-include::{docdir}/src/docs/asciidoc/character.adoc[]
+include::{docdir}/src/docs/asciidoc/pet.adoc[]
 
 include::{docdir}/src/docs/asciidoc/member.adoc[]
 

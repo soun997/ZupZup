@@ -37,6 +37,6 @@ public class PetControllerTest extends RestDocsTest {
         perform.andExpect(status().isOk());
 
         perform.andDo(print())
-                .andDo(document("pets-details", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("pet-details", getDocumentRequest(), getDocumentResponse()));
     }
 }

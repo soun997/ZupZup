@@ -6,27 +6,42 @@ import PathSvg from 'assets/icons/path.svg?react';
 import DumbbellSvg from 'assets/icons/dumbbell.svg?react';
 import MoreSvg from 'assets/icons/more-horizontal.svg?react';
 import ArrowUpSvg from 'assets/icons/angle-up.svg?react';
+import { PloggingInfo } from 'types';
+import { useFormatDateTime } from 'hooks';
 
-const RecordBox = () => {
+interface Props {
+  ploggingInfo: PloggingInfo;
+}
+
+const RecordBox = ({ ploggingInfo }: Props) => {
   const [showImage, setShowImage] = useState<boolean>(false);
   const handleMoreInfo = () => {
     setShowImage(!showImage);
   };
   return (
     <S.Wrap>
-      <S.Header>2023.10.18 14:23</S.Header>
+      <S.Header>
+        {useFormatDateTime.formatDateTimeHour(ploggingInfo.startDateTime)}
+      </S.Header>
       <S.PloggingRecords>
         <S.RecordInfoBox>
           <PathSvg />
-          <S.RecordInfo>2.4km</S.RecordInfo>
+          <S.RecordInfo>
+            {(ploggingInfo.distance / 1000.0).toFixed(2)}km
+          </S.RecordInfo>
         </S.RecordInfoBox>
         <S.RecordInfoBox>
           <ClockSvg />
-          <S.RecordInfo>2시간 11분</S.RecordInfo>
+          <S.RecordInfo>
+            {useFormatDateTime.formatDateTimePeriod(
+              ploggingInfo.startDateTime,
+              ploggingInfo.endDateTime,
+            )}
+          </S.RecordInfo>
         </S.RecordInfoBox>
         <S.RecordInfoBox>
           <DumbbellSvg />
-          <S.RecordInfo>230Kcal</S.RecordInfo>
+          <S.RecordInfo>{ploggingInfo.calories}Kcal</S.RecordInfo>
         </S.RecordInfoBox>
       </S.PloggingRecords>
       {showImage ? (

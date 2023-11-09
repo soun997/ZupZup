@@ -42,7 +42,10 @@ public class MemberController {
                 memberService.issueAuthorizationToken(requestedMemberId);
 
         return ApiResponse.ok(
-                MemberHealthCreateResponse.from(authorizationToken, requestedMemberId));
+                MemberHealthCreateResponse.from(
+                        authorizationToken,
+                        requestedMemberId,
+                        memberService.findById(requestedMemberId).getName()));
     }
 
     @GetMapping("/health")

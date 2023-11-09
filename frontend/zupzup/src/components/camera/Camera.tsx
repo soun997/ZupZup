@@ -25,6 +25,17 @@ const Camera = ({ setCameraOn }: Props) => {
   const [analyzeInfo, setAnalyzeInfo] = analyzeInfoeState;
   const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<Boolean>();
   const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
+  const disableCamera = () => {
+    if (cameraRef.current) {
+      const stream = cameraRef.current!.srcObject as MediaStream;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => {
+          track.stop();
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const enableCamera = async () => {
@@ -97,7 +108,12 @@ const Camera = ({ setCameraOn }: Props) => {
         <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} />
       )}
       <S.Header>
-        <S.CancelButton onClick={() => setCameraOn(false)}>
+        <S.CancelButton
+          onClick={() => {
+            disableCamera();
+            setCameraOn(false);
+          }}
+        >
           <XSvg />
         </S.CancelButton>
       </S.Header>

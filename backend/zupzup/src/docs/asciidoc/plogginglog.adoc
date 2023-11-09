@@ -56,6 +56,17 @@ include::{snippets}/plogginglog-by-recent/http-request.adoc[]
 
 include::{snippets}/plogginglog-by-recent/http-response.adoc[]
 
+
+== 최근 플로깅 기록 없을 시 조회
+
+=== Request
+
+include::{snippets}/plogginglog-by-recent-no-content/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/plogginglog-by-recent-no-content/http-response.adoc[]
+
 == 플로깅 기록 저장
 
 === Request
@@ -65,6 +76,18 @@ include::{snippets}/plogginglog-add/http-request.adoc[]
 === Response
 
 include::{snippets}/plogginglog-add/http-response.adoc[]
+
+== 플로깅 기록 저장 실패 - 멤버 조회 오류
+
+=== Response
+
+include::{snippets}/plogginglog-add-fail-member/http-response.adoc[]
+
+== 플로깅 기록 저장 실패 - 플로깅 기록 집계 조회 오류
+
+=== Response
+
+include::{snippets}/plogginglog-add-fail-total/http-response.adoc[]
 
 == 플로깅 경로 저장
 
@@ -99,3 +122,9 @@ include::{snippets}/plogginglog-total/http-request.adoc[]
 === Response
 
 include::{snippets}/plogginglog-total/http-response.adoc[]
+
+== 플로깅 집계 조회 실패
+
+=== Response
+
+include::{snippets}/plogginglog-total-fail/http-response.adoc[]

@@ -1,7 +1,7 @@
 package com.twoez.zupzup.plogginglog.service;
 
 
-import com.twoez.zupzup.global.exception.flogginglog.PloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -10,6 +10,9 @@ import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +25,11 @@ public class PloggingLogQueryService {
     private final PloggingLogQueryRepository ploggingLogQueryRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
 
-    public List<LocalDate> searchInMonthDistinct(LocalDate date, Long memberId) {
+    public Map<LocalDate, Boolean> searchInMonthDistinct(LocalDate date, Long memberId) {
         return ploggingLogQueryRepository.findByMonth(date, memberId).stream()
                 .map(ploggingLog -> ploggingLog.getStartDateTime().toLocalDate())
                 .distinct()
-                .toList();
+                .collect(Collectors.toMap(e -> e, e -> true));
     }
 
     public List<PloggingLog> searchInPeriod(
@@ -39,16 +42,14 @@ public class PloggingLogQueryService {
         return ploggingLogQueryRepository.findByDate(date, memberId);
     }
 
-    public PloggingLog searchRecentLog(Long memberId) {
-        return ploggingLogQueryRepository
-                .findOneOrderByDateDesc(memberId)
-                .orElseThrow(PloggingLogNotFoundException::new);
+    public Optional<PloggingLog> searchRecentLog(Long memberId) {
+        return ploggingLogQueryRepository.findOneOrderByDateDesc(memberId);
     }
 
     public TotalPloggingLog searchTotalPloggingLog(Member member) {
 
         return totalPloggingLogRepository
                 .findByMemberId(member.getId())
-                .orElse(totalPloggingLogRepository.save(TotalPloggingLog.init(member)));
+                .orElseThrow(TotalPloggingLogNotFoundException::new);
     }
 }

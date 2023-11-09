@@ -49,7 +49,7 @@ public class AuthController {
             if (memberOptional.get().hasHealthInfo()) {
                 AuthorizationToken authorizationToken =
                         memberService.issueAuthorizationToken(member.getId());
-                authResponse = AuthResponse.from(authorizationToken, member.getId());
+                authResponse = AuthResponse.from(authorizationToken, member);
             } else {
                 log.info("User registered but he or she did not write his/her health info");
                 authResponse = AuthResponse.unregisteredUser(member.getId());
@@ -72,6 +72,7 @@ public class AuthController {
         Long memberId = expiredTokenUser.getMemberId();
         AuthorizationToken authorizationToken =
                 memberService.reIssueAuthorizationToken(memberId, reissueTokenRequest);
-        return ApiResponse.ok(AuthResponse.from(authorizationToken, memberId));
+        return ApiResponse.ok(
+                AuthResponse.from(authorizationToken, memberService.findById(memberId)));
     }
 }

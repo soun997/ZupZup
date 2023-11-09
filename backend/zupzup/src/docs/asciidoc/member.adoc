@@ -10,6 +10,74 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
+
+== 사용자 회원가입 후 헬스정보 등록
+
+=== Request
+
+include::{snippets}/member-register/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/member-register/http-response.adoc[]
+
+== 사용자 인가
+
+=== Request
+
+include::{snippets}/authroize-user/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/authroize-user/http-response.adoc[]
+
+=== Response - 사용자 인가 실패 `kid 찾지 못함`
+
+include::{snippets}/authroize-user-fail-kid-notfound/http-response.adoc[]
+
+=== Response - 사용자 인가 실패 `유효하지 않은 kid`
+
+include::{snippets}/authroize-user-fail-kid-invalid/http-response.adoc[]
+
+=== Response 사용자 인가 실패 `만료된 jwt`
+
+include::{snippets}/authroize-user-fail-jwt-expired/http-response.adoc[]
+
+=== Response 사용자 인가 실패 `손상된 jwt`
+
+include::{snippets}/authroize-user-fail-jwt-malformed/http-response.adoc[]
+
+=== Response 사용자 인가 실패 `지원되지 않는 jwt`
+
+include::{snippets}/authroize-user-fail-jwt-unsupported/http-response.adoc[]
+
+=== Response 사용자 인가 실패 `유효하지 않은 signature`
+
+include::{snippets}/authroize-user-fail-jwt-invalid-sig/http-response.adoc[]
+
+
+=== Response 사용자 인가 실패 `출처 불분명 jwt 오류`
+
+include::{snippets}/authroize-user-fail-jwt-all/http-response.adoc[]
+
+== 사용자 재인가
+
+=== Request
+
+include::{snippets}/reissue/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/reissue/http-response.adoc[]
+
+=== Response - 사용자 재인가 실패 `refresh token not found`
+
+include::{snippets}/reissue-fail-not-found/http-response.adoc[]
+
+=== Response - 사용자 재인가 실패 `refresh token invalid`
+
+include::{snippets}/reissue-fail-invalid/http-response.adoc[]
+
 == 사용자 프로필 조회
 
 === Request
@@ -40,3 +108,13 @@ include::{snippets}/member-health-modify/http-request.adoc[]
 === Response
 
 include::{snippets}/member-health-modify/http-response.adoc[]
+
+== 사용자 로그아웃
+
+=== Request
+
+include::{snippets}/logout/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/logout/http-response.adoc[]

@@ -21,7 +21,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     const accessToken = store.getState().auth.accessToken;
-    console.log(store.getState());
     if (accessToken) {
       config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`;
     }
@@ -33,10 +32,13 @@ instance.interceptors.request.use(
 
     const originalRequest = error.config;
     const dispatch = useAppDispatch();
+
+    console.error('나 error 발생!!!! ', error);
     // 401 에러면 refresh token 보내기
     if (
-      error?.response?.data?.status === 401 &&
-      error?.response?.data?.error_code === 'ERR_AUTH_005'
+      (error?.response?.data?.status === 401 &&
+        error?.response?.data?.error_code === 'ERR_AUTH_005') ||
+      error?.response?.data?.status === 403
     ) {
       // console.log('access-token 만료됐어');
       try {

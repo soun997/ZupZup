@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -10,17 +11,91 @@ import {
   Camera,
 } from 'components';
 
-import { useGeolocation, useStopWatch, useDistance } from 'hooks';
+import {
+  useGeolocation,
+  useStopWatch,
+  useDistance,
+  store,
+  calculateCalories,
+  useAppDispatch,
+} from 'hooks';
+import * as utils from 'utils';
+
+import { PloggingApis, RecordApis, TrashApis } from 'api';
+import { PloggingLogRequest, TrashRequest, TrashInfo } from 'types';
+import { format } from 'date-fns';
+import {
+  setCalories,
+  setDistance,
+  setEndDateTime,
+  setTime,
+} from 'hooks/store/usePlogging';
 
 const OnPlogging = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location = useGeolocation();
   const stopwatch = useStopWatch();
   const [exitOn, setExitOn] = useState<boolean>(false);
-  const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(false);
+  const [ploggingInfoOn, setPloggingInfoOn] = useState<boolean>(true);
   const [cameraOn, setCameraOn] = useState<boolean>(false);
+  const [trashOn, setTrashOn] = useState<boolean>(false);
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
+  const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
-  const LOCATIONS_KEY = 'locations';
+  const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
+
+  const exitPlogging = async () => {
+    dispatch(setEndDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
+    dispatch(setCalories(onCalories));
+    dispatch(setDistance(totalDistance));
+    dispatch(setTime(stopwatch));
+
+    const ploggingData: PloggingLogRequest = {
+      calories: onCalories,
+      startDateTime: store.getState().plogging.startDateTime!,
+      endDateTime: store.getState().plogging.endDateTime!,
+      distance: totalDistance,
+      durationTime: stopwatch,
+      coin: store.getState().plogging.coin,
+      gatheredTrash: store.getState().plogging.gatheredTrash,
+      routeImageUrl: 'assets/images/route.png',
+    };
+
+    const trashData: TrashRequest = store.getState().plogging.trashDetail;
+    console.log(ploggingData, trashData);
+    await RecordApis.postPloggingLog({
+      ploggingLogRequest: ploggingData,
+      trashRequest: trashData,
+    });
+    await PloggingApis.stopPlogging();
+    navigate(utils.URL.PLOGGING.REPORT);
+  };
+
+  const getTrashInfo = async (trashStatus: boolean) => {
+    if (trashStatus && location.loaded) {
+      const trashcanRequest = {
+        currentLatitude: location.coordinates!.lat,
+        currentLongitude: location.coordinates!.lng,
+      };
+
+      try {
+        const response = await TrashApis.getTrashCans(trashcanRequest);
+        setTrashs(response.data.results);
+        console.log(response.data.results);
+        setTrashOn(trashStatus);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setTrashOn(trashStatus);
+    }
+  };
+
+  const refreshTrashInfo = () => {
+    getTrashInfo(false);
+    getTrashInfo(true);
+  };
 
   useEffect(() => {
     const recordLocation = () => {
@@ -31,10 +106,13 @@ const OnPlogging = () => {
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
       const locations = JSON.parse(
-        localStorage.getItem(LOCATIONS_KEY) as string,
+        localStorage.getItem(utils.LOCATIONS_KEY) as string,
       );
       if (!locations) {
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify([{ lat, lng }]));
+        localStorage.setItem(
+          utils.LOCATIONS_KEY,
+          JSON.stringify([{ lat, lng }]),
+        );
         return;
       }
 
@@ -45,32 +123,38 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5) {
+      if (distance >= 0.5 && distance <= 120) {
         setTotalDistance(totalDistance => totalDistance + distance);
+
+        const calorie = calculateCalories(stopwatch);
+        setCalorie(calorie);
         locations.push({ lat, lng });
-        localStorage.setItem(LOCATIONS_KEY, JSON.stringify(locations));
+        localStorage.setItem(utils.LOCATIONS_KEY, JSON.stringify(locations));
       }
     };
 
     recordLocation();
-  }, [location]);
+  }, [location, stopwatch]);
 
   useEffect(() => {
     return () => {
-      localStorage.removeItem(LOCATIONS_KEY);
+      localStorage.removeItem(utils.LOCATIONS_KEY);
       localStorage.clear();
     };
   }, []);
 
   return (
     <S.Wrap>
-      {exitOn && <ExitModal setExitOn={setExitOn} />}
+      {exitOn && (
+        <ExitModal setExitOn={setExitOn} exitPlogging={exitPlogging} />
+      )}
       {cameraOn && <Camera setCameraOn={setCameraOn} />}
       <OnPloggingHeader exitOn={exitOn} setExitOn={setExitOn} />
       {ploggingInfoOn && (
         <PloggingInfo
           time={stopwatch}
           distance={totalDistance}
+          calorie={onCalories}
           exitOn={exitOn}
           setExitOn={setExitOn}
           setPloggingInfoOn={setPloggingInfoOn}
@@ -83,8 +167,11 @@ const OnPlogging = () => {
         setPloggingInfoOn={setPloggingInfoOn}
         cameraOn={cameraOn}
         setCameraOn={setCameraOn}
+        trashOn={trashOn}
+        getTrashInfo={getTrashInfo}
         fixCenter={fixCenter}
         setFixCenter={setFixCenter}
+        refreshTrashInfo={refreshTrashInfo}
       />
       {}
       {location.loaded && (
@@ -98,6 +185,8 @@ const OnPlogging = () => {
           }}
           fixCenter={fixCenter}
           setFixCenter={setFixCenter}
+          trashs={trashs}
+          trashOn={trashOn}
         />
       )}
     </S.Wrap>

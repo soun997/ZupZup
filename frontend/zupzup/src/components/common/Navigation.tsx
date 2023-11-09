@@ -69,7 +69,7 @@ const S = {
     }
 
     & > svg {
-      filter: ${({ theme }) => theme.color.darkFilter};
+      filter: ${({ theme }) => theme.color.white};
     }
   `,
   SideButton: styled.div`

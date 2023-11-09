@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { TrashInfo } from 'types';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
 
 interface Location {
@@ -19,6 +20,8 @@ interface Props {
   location: Location;
   fixCenter: boolean;
   setFixCenter: (fixCenter: boolean) => void;
+  trashs: Array<TrashInfo>;
+  trashOn: boolean;
 }
 
 const PloggingMap = ({
@@ -28,11 +31,14 @@ const PloggingMap = ({
   location,
   fixCenter,
   setFixCenter,
+  trashs,
+  trashOn,
 }: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
   const [polyline, setPolyline] = useState<Polyline | null>(null);
+  const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
 
   const initMap = ({ lat, lng }: Location) => {
     const { Tmapv3 } = window;
@@ -127,6 +133,36 @@ const PloggingMap = ({
       updateMapCenter();
     }
   }, [location]);
+
+  useEffect(() => {
+    const updateTrashMarkers = () => {
+      if (!tmap) {
+        return;
+      }
+      const markers = [...trashs].map(
+        trash =>
+          new window.Tmapv3.Marker({
+            position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
+            icon: '/assets/images/trash_can.png',
+            iconSize: new window.Tmapv3.Size(40, 40),
+            map: tmap,
+          }),
+      );
+      setTrashMarkers([...markers]);
+    };
+
+    const removeTrashMarkers = () => {
+      trashMarkers.forEach(marker => {
+        marker.setMap(null);
+      });
+    };
+
+    if (trashOn) {
+      updateTrashMarkers();
+    } else {
+      removeTrashMarkers();
+    }
+  }, [trashs, trashOn]);
 
   return (
     <S.Wrap>

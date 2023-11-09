@@ -38,7 +38,7 @@ const PloggingInfo = ({
           </S.PloggingDistanceBox>
           <S.PloggingCaloriesBox>
             플로깅으로&nbsp;
-            <S.PloggingCalories>{calorie.toFixed(0)} kcal</S.PloggingCalories>
+            <S.PloggingCalories>{calorie.toFixed(1)} kcal</S.PloggingCalories>
             &nbsp;가 소모되었습니다.
           </S.PloggingCaloriesBox>
         </S.PloggingState>

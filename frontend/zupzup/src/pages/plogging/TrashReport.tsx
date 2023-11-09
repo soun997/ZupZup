@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { CoinReport, ConfirmButton, TopNavigation } from 'components';
 import * as utils from 'utils';
 import { TrashAnalyzeReport } from 'types/Trash';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import {
+  setGatheredTrash,
+  setCoin,
+  setTrashDetail,
+} from 'hooks/store/usePlogging';
 import CONSOLE from 'utils/ColorConsoles';
 
 interface Prop {
@@ -17,6 +23,7 @@ const TrashReport = ({ trashReport }: Prop) => {
   CONSOLE.reRender('TrashReport rendered!!');
   console.log(trashReport);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const trashAnalyzeCanvasRef =
     useRef() as React.MutableRefObject<HTMLCanvasElement>;
   const [nameMap, setNameMap] = useState(null);
@@ -86,7 +93,16 @@ const TrashReport = ({ trashReport }: Prop) => {
         console.info(`${i} - label : ${label} (score ${score})`);
       }
     }
+    saveTrashReport();
+    // const trashDetail = useAppSelector(state => state.plogging.trashDetail);
+    // console.log(trashDetail);
   }, [nameMap, isImageLoaded]);
+
+  function saveTrashReport() {
+    dispatch(setGatheredTrash(trashReport.gatheredTrash));
+    dispatch(setCoin(trashReport.totalCoin));
+    dispatch(setTrashDetail(trashReport.trashDetail));
+  }
 
   return (
     <S.Wrap>

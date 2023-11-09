@@ -173,13 +173,6 @@ const OnPlogging = () => {
     recordLocation();
   }, [location, stopwatch]);
 
-  useEffect(() => {
-    return () => {
-      localStorage.removeItem(utils.LOCATIONS_KEY);
-      localStorage.clear();
-    };
-  }, []);
-
   return (
     <S.Wrap>
       {exitOn && (

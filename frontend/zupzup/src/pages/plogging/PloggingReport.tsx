@@ -30,30 +30,33 @@ const PloggingReport = () => {
     const initMap = () => {
       const maxLat = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
-      );
+      ) as number;
       const minLat = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MIN_LATITUDE) as string,
-      );
+      ) as number;
       const maxLng = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MAX_LONGITUDE) as string,
-      );
+      ) as number;
       const minLng = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
-      );
+      ) as number;
 
-      const lat = (maxLat + minLat) / 2.0;
-      const lng = (maxLng + minLng) / 2.0;
+      // const lat = (maxLat + minLat) / 2.0;
+      // const lng = (maxLng + minLng) / 2.0;
       const { Tmapv3 } = window;
-      const latlng = new Tmapv3.LatLng(lat, lng);
-
+      const latlngBounds = new Tmapv3.LatLngBounds(
+        new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
+      );
+      latlngBounds.extend(new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001));
+      console.log(latlngBounds);
       if (mapRef.current) {
         const mapContainer = mapRef.current;
 
         const map = new Tmapv3.Map(mapContainer, {
-          center: latlng,
           zoom: 17,
           width: '100%',
           height: '200px',
+          bounds: latlngBounds,
         });
 
         const locations = JSON.parse(
@@ -153,6 +156,7 @@ const S = {
     width: 100%;
     height: 300px;
     margin-top: 20px;
+    pointer-events: none;
   `,
 
   TitleFrame: styled.div`

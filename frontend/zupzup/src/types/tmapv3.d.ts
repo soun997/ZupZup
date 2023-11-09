@@ -10,7 +10,7 @@ interface TMap {
 }
 
 interface TmapOptions {
-  center: object;
+  center?: object;
   width: string;
   height: string;
   zoom: number;
@@ -52,7 +52,9 @@ interface MarkerOptions {
 
 interface Size {}
 
-interface LatLngBounds {}
+interface LatLngBounds {
+  extend: (latlng: LatLng) => void;
+}
 
 export declare global {
   interface Window {

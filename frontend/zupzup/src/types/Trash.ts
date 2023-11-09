@@ -3,24 +3,32 @@ export interface TrashAnalyzeReport {
   gatheredTrash: number;
   totalCoin: number;
   trashDetail: TrashDetail;
+  classifyDetail: classifyDetail;
+}
+
+export interface classifyDetail {
+  boxes: Float32Array | Int32Array | Uint8Array;
+  scores: Float32Array | Int32Array | Uint8Array;
+  classes: Float32Array | Int32Array | Uint8Array;
+  validDetection: number;
 }
 
 export interface TrashDetail {
-  [type: string] : number;
-  "plastic": number;
-  "cigarette": number;
-  "can": number;
-  "glass": number;
-  "paper": number;
-  "normal": number;
-  "styrofoam": number;
-  "metal": number;
-  "clothes": number;
-  "battery": number;
-  "vinyl": number;
-  "mixed": number;
-  "food": number;
-  "etc": number;
+  [type: string]: number;
+  plastic: number;
+  cigarette: number;
+  can: number;
+  glass: number;
+  paper: number;
+  normal: number;
+  styrofoam: number;
+  metal: number;
+  clothes: number;
+  battery: number;
+  vinyl: number;
+  mixed: number;
+  food: number;
+  etc: number;
 }
 
 export interface CoinInfo {

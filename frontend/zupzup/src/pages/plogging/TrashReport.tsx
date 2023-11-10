@@ -126,7 +126,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
           offsetY,
         );
         const score = scores[i].toFixed(2);
-        const label = trashTypeTable[classes[i]].class;
+        const label = trashTypeTable[classes[i]]["class-kor"];
         context?.strokeRect(
           convertedX1,
           convertedY1,

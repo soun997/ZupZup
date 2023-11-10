@@ -105,7 +105,7 @@ const Camera = ({ setCameraOn }: Props) => {
         />
       )}
       {isTrashReportPrepared && (
-        <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} />
+        <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} setCameraOn={setCameraOn} />
       )}
       <S.Header>
         <S.CancelButton

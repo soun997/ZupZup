@@ -1,25 +1,26 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CoinReport, ConfirmButton, TopNavigation } from 'components';
-import * as utils from 'utils';
+import { CoinReport, ConfirmButton } from 'components';
 import { TrashAnalyzeReport } from 'types/Trash';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch } from 'hooks';
 import {
   setGatheredTrash,
   setCoin,
   setTrashDetail,
 } from 'hooks/store/usePlogging';
+import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import CONSOLE from 'utils/ColorConsoles';
 
 interface Prop {
   trashReport: TrashAnalyzeReport;
+  setCameraOn: (cameraOn: boolean) => void;
 }
 
 const MODEL_NAME_MAP_URI = '/model/name_map.json';
 const TRASH_IMAGE_ID = 'trash';
 
-const TrashReport = ({ trashReport }: Prop) => {
+const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   CONSOLE.reRender('TrashReport rendered!!');
   console.log(trashReport);
   const navigate = useNavigate();
@@ -54,10 +55,17 @@ const TrashReport = ({ trashReport }: Prop) => {
 
       fileReader.readAsDataURL(trashReport.image as File);
 
-      const context = trashAnalyzeCanvasRef.current?.getContext('2d');
+      const canvas = trashAnalyzeCanvasRef.current;
+      const context = canvas?.getContext('2d');
       image.onload = () => {
         CONSOLE.info('image loaded');
-        context?.drawImage(image, 0, 0, 300, 250);
+        context?.drawImage(
+          image,
+          canvas.width / 20,
+          canvas.height / 20,
+          (canvas.width * 19) / 20,
+          (canvas.height * 19) / 20,
+        );
         image.id = TRASH_IMAGE_ID;
       };
 
@@ -77,7 +85,7 @@ const TrashReport = ({ trashReport }: Prop) => {
       const context = canvas.getContext('2d');
       context!.strokeStyle = 'yellow';
       context!.font = '20px Arial';
-      context!.fillStyle = 'white';
+      context!.fillStyle = 'yellow';
       for (let i = 0; i < validDetection; ++i) {
         let [x1, y1, x2, y2] = boxes.slice(i * 4, (i + 1) * 4);
         x1 *= canvas.width;
@@ -86,7 +94,7 @@ const TrashReport = ({ trashReport }: Prop) => {
         y2 *= canvas.height;
         const score = scores[i].toFixed(2);
         const label = nameMap![classes[i]];
-        context?.strokeRect(x1, y1, x2 - x1, y2 - y1);
+        context?.strokeRect(x2, y2, x1 - x2, y1 - y2);
 
         context?.fillText(label, x1, y1);
 
@@ -107,13 +115,19 @@ const TrashReport = ({ trashReport }: Prop) => {
 
   return (
     <S.Wrap>
-      <TopNavigation />
+      <S.Header>
+        <S.PrevButton onClick={() => setCameraOn(false)}>
+          <AngleLeftSvg />
+        </S.PrevButton>
+      </S.Header>
       <S.Content>
         <S.TitleFrame>
           <S.MainTitle>쓰레기 이미지 분석 결과입니다</S.MainTitle>
           <S.SubTitle>인식이 안되었을 경우 재촬영 해주세요</S.SubTitle>
         </S.TitleFrame>
-        <S.Canvas ref={trashAnalyzeCanvasRef} />
+        <S.CanvasContainer>
+          <S.Canvas ref={trashAnalyzeCanvasRef} />
+        </S.CanvasContainer>
         <CoinReport
           trashDetail={trashReport.trashDetail}
           totalCoin={trashReport.totalCoin}
@@ -122,7 +136,7 @@ const TrashReport = ({ trashReport }: Prop) => {
       <S.BottomFrame>
         <ConfirmButton
           text="플로깅으로 돌아가기"
-          onClick={() => navigate(utils.URL.PLOGGING.ON)}
+          onClick={() => setCameraOn(false)}
         />
       </S.BottomFrame>
     </S.Wrap>
@@ -154,12 +168,17 @@ const S = {
     width: 100%;
     margin-top: 44px;
   `,
-  Canvas: styled.canvas`
+  CanvasContainer: styled.div`
+    padding: 10%;
     width: 100%;
     height: 70%;
     margin-top: 44px;
+    overflow: visible;
   `,
-
+  Canvas: styled.canvas`
+    width: 100%;
+    height: 100%;
+  `,
   TitleFrame: styled.div`
     margin-top: 20px;
   `,
@@ -184,6 +203,16 @@ const S = {
     bottom: 0;
     width: 100%;
     margin: auto 0 50px 0;
+  `,
+  Header: styled.div`
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+  `,
+  PrevButton: styled.button`
+    background-color: transparent;
   `,
 };
 export default TrashReport;

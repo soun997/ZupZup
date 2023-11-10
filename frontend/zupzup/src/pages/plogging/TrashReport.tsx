@@ -20,6 +20,14 @@ interface Prop {
 const MODEL_NAME_MAP_URI = '/model/name_map.json';
 const TRASH_IMAGE_ID = 'trash';
 
+const CANVAS_SETTING = {
+  imageRate: 0.8,
+  rectColor: 'magenta',
+  textColor: 'magenta',
+  textFont: 'AppleSDGothicNeoB',
+  textFontSize: 15,
+};
+
 const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   CONSOLE.reRender('TrashReport rendered!!');
   console.log(trashReport);
@@ -61,10 +69,10 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
         CONSOLE.info('image loaded');
         context?.drawImage(
           image,
-          canvas.width / 20,
-          canvas.height / 20,
-          (canvas.width * 19) / 20,
-          (canvas.height * 19) / 20,
+          (canvas.width * (1 - CANVAS_SETTING.imageRate)) / 2,
+          (canvas.height * (1 - CANVAS_SETTING.imageRate)) / 2,
+          canvas.width * CANVAS_SETTING.imageRate,
+          canvas.height * CANVAS_SETTING.imageRate,
         );
         image.id = TRASH_IMAGE_ID;
       };
@@ -83,20 +91,48 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
       const validDetection = trashReport.classifyDetail.validDetection;
       const canvas = trashAnalyzeCanvasRef.current;
       const context = canvas.getContext('2d');
-      context!.strokeStyle = 'yellow';
-      context!.font = '20px Arial';
-      context!.fillStyle = 'yellow';
-      for (let i = 0; i < validDetection; ++i) {
+      context!.strokeStyle = CANVAS_SETTING.rectColor;
+      context!.font = `${CANVAS_SETTING.textFontSize}px ${CANVAS_SETTING.textFont}`;
+      context!.fillStyle = CANVAS_SETTING.textColor;
+      for (let i = 0; i < validDetection + 1; ++i) {
+        if (i === validDetection) {
+          context?.strokeRect(0, 0, 0, 0);
+          break;
+        }
         let [x1, y1, x2, y2] = boxes.slice(i * 4, (i + 1) * 4);
         x1 *= canvas.width;
         x2 *= canvas.width;
         y1 *= canvas.height;
         y2 *= canvas.height;
+        const rate = CANVAS_SETTING.imageRate;
+        const offsetX = canvas.width * ((1 - rate) / 2);
+        const offsetY = canvas.height * ((1 - rate) / 2);
+        const [convertedX1, convertedY1] = convertCoordinate(
+          x1,
+          y1,
+          rate,
+          offsetX,
+          offsetY,
+        );
+        const [convertedX2, convertedY2] = convertCoordinate(
+          x2,
+          y2,
+          rate,
+          offsetX,
+          offsetY,
+        );
+        console.log([x1, y1, x2, y2]);
+        console.log([convertedX1, convertedY1, convertedX2, convertedY2]);
         const score = scores[i].toFixed(2);
         const label = nameMap![classes[i]];
-        context?.strokeRect(x2, y2, x1 - x2, y1 - y2);
+        context?.strokeRect(
+          convertedX1,
+          convertedY1,
+          convertedX2 - convertedX1,
+          convertedY2 - convertedY1,
+        );
 
-        context?.fillText(label, x1, y1);
+        context?.fillText(label, convertedX1, convertedY1);
 
         console.info(`${i} - label : ${label} (score ${score})`);
       }
@@ -106,6 +142,18 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
     // const trashDetail = useAppSelector(state => state.plogging.trashDetail);
     // console.log(trashDetail);
   }, [nameMap, isImageLoaded]);
+
+  function convertCoordinate(
+    x: number,
+    y: number,
+    rate: number,
+    offsetX: number,
+    offsetY: number,
+  ): number[] {
+    const coorX = x * rate + offsetX;
+    const coorY = y * rate + offsetY;
+    return [coorX, coorY];
+  }
 
   function saveTrashReport() {
     dispatch(setGatheredTrash(trashReport.gatheredTrash));
@@ -169,7 +217,6 @@ const S = {
     margin-top: 44px;
   `,
   CanvasContainer: styled.div`
-    padding: 10%;
     width: 100%;
     height: 70%;
     margin-top: 44px;

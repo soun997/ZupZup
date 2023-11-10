@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport, PloggingDone } from 'components';
-import { useAppDispatch, useCapture } from 'hooks';
+import { store, useAppDispatch, useCapture } from 'hooks';
 import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
 import SaveSvg from 'assets/icons/save.svg?react';
+import uploadFile from 'hooks/useUpload';
+import { PloggingApis, RecordApis } from 'api';
+import { PloggingLogRequest, TrashRequest } from 'types';
 
 interface Location {
   lat: number;
@@ -39,8 +42,7 @@ const PloggingReport = () => {
   };
 
   useEffect(() => {
-    const initRoute = () => {
-      setLoading(true);
+    const initRoute = async () => {
       if (!canvasRef.current) {
         return;
       }
@@ -90,15 +92,51 @@ const PloggingReport = () => {
         context.lineTo(endX, endY);
         context.stroke();
       }
-      setLoading(false);
 
-      if (!showLoading) {
+      try {
         const blob = dataURLtoBlob(canvas.toDataURL(utils.IMAGE_MIME_TYPE));
-        const file = new File([blob], `route.jpg`, {
-          type: utils.IMAGE_MIME_TYPE,
-        });
+        const file = new File(
+          [blob],
+          `route${new Date()}-${store.getState().auth.memberId}.jpg`,
+          {
+            type: utils.IMAGE_MIME_TYPE,
+          },
+        );
         console.log(file);
+        const uploadedFileUrl = await uploadFile(
+          file,
+          file.name, // S3 내 파일 경로 및 이름
+        );
+
+        // 업로드 성공 시 결과 전달
+        console.log('amazon link', uploadedFileUrl);
+
+        const ploggingData: PloggingLogRequest = {
+          calories: store.getState().plogging.calories,
+          startDateTime: store.getState().plogging.startDateTime!,
+          endDateTime: store.getState().plogging.endDateTime!,
+          distance: store.getState().plogging.distance,
+          durationTime: store.getState().plogging.time!,
+          coin: store.getState().plogging.coin,
+          gatheredTrash: store.getState().plogging.gatheredTrash,
+          routeImageUrl: uploadedFileUrl,
+        };
+
+        const trashData: TrashRequest = store.getState().plogging.trashDetail;
+        console.log(ploggingData, trashData);
+        await RecordApis.postPloggingLog({
+          ploggingLogRequest: ploggingData,
+          trashRequest: trashData,
+        });
+        await PloggingApis.stopPlogging();
+        console.log('성공!!');
+      } catch (error) {
+        // 업로드 실패 시 오류 처리
+        console.error('파일 업로드 오류:', error);
       }
+      // if (!showLoading) {
+
+      // }
     };
 
     initRoute();

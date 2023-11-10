@@ -31,7 +31,15 @@ export default defineConfig({
   ],
   base: process.env.NODE_ENV === 'development' ? '/' : './',
 
-  define: { _global: {} },
+  define: {
+    global: {},
+  },
+  resolve: {
+    // https://github.com/aws-amplify/amplify-js/issues/9639
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
+  },
   build: {
     rollupOptions: {
       output: {

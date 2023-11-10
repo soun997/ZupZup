@@ -15,14 +15,13 @@ import {
   useGeolocation,
   useStopWatch,
   useDistance,
-  store,
   calculateCalories,
   useAppDispatch,
 } from 'hooks';
 import * as utils from 'utils';
 
-import { PloggingApis, RecordApis, TrashApis } from 'api';
-import { PloggingLogRequest, TrashRequest, TrashInfo } from 'types';
+import { TrashApis } from 'api';
+import { TrashInfo } from 'types';
 import { format } from 'date-fns';
 import {
   setCalories,
@@ -51,24 +50,6 @@ const OnPlogging = () => {
     dispatch(setDistance(totalDistance));
     dispatch(setTime(stopwatch));
 
-    const ploggingData: PloggingLogRequest = {
-      calories: onCalories,
-      startDateTime: store.getState().plogging.startDateTime!,
-      endDateTime: store.getState().plogging.endDateTime!,
-      distance: totalDistance,
-      durationTime: stopwatch,
-      coin: store.getState().plogging.coin,
-      gatheredTrash: store.getState().plogging.gatheredTrash,
-      routeImageUrl: 'assets/images/route.png',
-    };
-
-    const trashData: TrashRequest = store.getState().plogging.trashDetail;
-    console.log(ploggingData, trashData);
-    await RecordApis.postPloggingLog({
-      ploggingLogRequest: ploggingData,
-      trashRequest: trashData,
-    });
-    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 

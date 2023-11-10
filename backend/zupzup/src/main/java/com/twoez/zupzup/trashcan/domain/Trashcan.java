@@ -3,7 +3,6 @@ package com.twoez.zupzup.trashcan.domain;
 
 import com.twoez.zupzup.global.audit.BaseTime;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AccessLevel;

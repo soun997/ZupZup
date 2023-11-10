@@ -62,7 +62,6 @@ const MyPloggingReport = () => {
               {
                 useFormatTime
                   .formatTime(ploggingInfo.totalDurationTime)
-                  .split(' ')[0]
               }
             </div>
           </S.EachBoxInfo>

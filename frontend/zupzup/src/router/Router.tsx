@@ -9,7 +9,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path={utils.URL.MAIN.HOME} element={<Layout />}>
-          <Route path="/" element={<pages.LoginOnboard />} />
+          <Route path="/" element={<pages.Login />} />
           <Route
             path={utils.URL.CALENDAR.CALENDAR}
             element={<pages.PloggingRecord />}
@@ -98,7 +98,7 @@ const Router = () => {
             path={utils.URL.ONBORDING.WORKING}
             element={<pages.Working />}
           ></Route>
-          
+
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { useNavigate } from 'react-router-dom';
-import CONSOLE from 'utils/ColorConsoles';
 import { Loading } from 'pages';
 
 interface Props {
@@ -38,8 +37,6 @@ interface TrashTableDetail {
 const COIN_TABLE_URI = '/classify/classify_type.json';
 
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
-  CONSOLE.reRender('CoinReport Component');
-  console.log(trashDetail);
   const navigate = useNavigate();
   const [coinTable, setCoinTable] = useState<TrashTable>();
 

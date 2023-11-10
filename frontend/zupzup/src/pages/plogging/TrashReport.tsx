@@ -31,8 +31,6 @@ const CANVAS_SETTING = {
 };
 
 const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
-  CONSOLE.reRender('TrashReport rendered!!');
-  console.log(trashReport);
   const dispatch = useAppDispatch();
   const trashAnalyzeCanvasRef =
     useRef() as React.MutableRefObject<HTMLCanvasElement>;
@@ -43,24 +41,19 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   const savedPloggingRecord = store.getState().plogging;
   useEffect(() => {
     async function load() {
-      CONSOLE.info('[TrashReport load] 1. load name map');
       const nameMap = await fetch(MODEL_NAME_MAP_URI)
         .then(response => response.json())
         .catch(error => {
           console.log(error);
         });
-      CONSOLE.ok('[TrashReport load] 1. load name map complete');
-      console.log(nameMap);
 
-      CONSOLE.info('[ts load] 3. load trashTypeTable');
       const trashTypeTableFromJson = await fetch(TRASH_TYPE_TABLE_URI)
         .then(response => response.json())
         .catch(error => {
           console.log(error);
         });
-      CONSOLE.ok('[ts load] 3. load trashTypeTable complete');
 
-      CONSOLE.info('[TrashReport load] 2. read image');
+      CONSOLE.info('[TrashReport load] read image');
       const image = new Image();
       const fileReader = new FileReader();
       fileReader.onload = () => {
@@ -95,7 +88,6 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   }, []);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('nameMap');
     if (nameMap && trashTypeTable && isImageLoaded) {
       const boxes = trashReport.classifyDetail.boxes;
       const classes = trashReport.classifyDetail.classes;
@@ -133,8 +125,6 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
           offsetX,
           offsetY,
         );
-        console.log([x1, y1, x2, y2]);
-        console.log([convertedX1, convertedY1, convertedX2, convertedY2]);
         const score = scores[i].toFixed(2);
         const label = trashTypeTable[classes[i]].class;
         context?.strokeRect(
@@ -150,9 +140,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
       }
       saveTrashReport();
     }
-
-    // const trashDetail = useAppSelector(state => state.plogging.trashDetail);
-    // console.log(trashDetail);
+    
   }, [nameMap, trashTypeTable, isImageLoaded]);
 
   function convertCoordinate(

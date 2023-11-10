@@ -5,7 +5,6 @@ import { CaptureResult } from 'components';
 
 import XSvg from 'assets/icons/x.svg?react';
 import TrashPage from 'pages/trash/TrashPage';
-import CONSOLE from 'utils/ColorConsoles';
 import { TrashAnalyzeReport } from 'types/Trash';
 import { TrashReport } from 'pages';
 
@@ -69,18 +68,13 @@ const Camera = ({ setCameraOn }: Props) => {
   }, []);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('captureFile');
     if (captureFile && !capture) {
-      CONSOLE.info('capturefile 존재, capture false');
       setHasUserRequestAnalyze(true);
     }
   }, [capture]);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('isProcessingComplete');
     if (isProcessingComplete && analyzeInfo) {
-      CONSOLE.info('ProcessingComplete, analyzeInfo prepared!!');
-      console.log(analyzeInfo);
       setHasUserRequestAnalyze(false);
       setIsTrashReportPrepared(true);
     }

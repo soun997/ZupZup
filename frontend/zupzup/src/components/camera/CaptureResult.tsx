@@ -21,7 +21,6 @@ const CaptureResult = ({
   setCapture,
   captureFileState,
 }: Props) => {
-  CONSOLE.reRender('CaptureResult rendered!!');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
@@ -85,10 +84,8 @@ const CaptureResult = ({
   }, []);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('captureFile');
     if (captureFile) {
-      CONSOLE.info('captureFile saved in memory');
-      console.log(captureFile);
+      CONSOLE.info('trash captureFile saved in memory');
     }
   }, [captureFile]);
 

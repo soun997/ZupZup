@@ -36,7 +36,6 @@ const TrashPage = ({
   analyzeInfoState,
   setIsProcessingComplete,
 }: Props) => {
-  CONSOLE.reRender('TrashPage rendered!!');
   const INDEXED_DB_NAME = 'indexeddb://tf-model';
   const MODEL_URI = '/model/model.json';
   const MODEL_NAME_MAP_URI = '/model/name_map.json';
@@ -83,8 +82,6 @@ const TrashPage = ({
           console.log(error);
         });
       CONSOLE.ok('[ts load] 1. load name map complete');
-      console.log(nameMap);
-
       CONSOLE.info('[ts load] 2. load model');
       let model;
       try {
@@ -94,7 +91,6 @@ const TrashPage = ({
         CONSOLE.error('[ts load] 2. no model found from indexedDB');
         model = await loadGraphModel(MODEL_URI);
         CONSOLE.ok('[ts load] 2. load model from file complete');
-        console.log(model);
         model.save(INDEXED_DB_NAME); // save to indexedDB (비동기)
       }
 
@@ -104,36 +100,25 @@ const TrashPage = ({
         .catch(error => {
           console.log(error);
         });
-      CONSOLE.ok('[ts load] 1. load name map complete');
-      console.log(trashTypeTableFromJson);
-      console.log(trashTypeTableFromJson[1].class);
+      CONSOLE.ok('[ts load] 3. load trashTypeTable complete');
 
       setModel(model);
       setNameMap(nameMap);
       setTrashTypeTable(trashTypeTableFromJson);
     }
 
-    CONSOLE.useEffectIn('Trash init');
-    console.log(captureFile);
     loadImage();
     load();
   }, []);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('model & nameMap');
-    CONSOLE.brown(`is model Loaded ? ${model !== null}`);
-    CONSOLE.brown(`is nameMap Loaded ? ${nameMap !== null}`);
-    CONSOLE.brown(`is image Loaded ? ${trashImg.id === TRASH_IMAGE_ID}`);
     if (model && nameMap && trashImg.id === TRASH_IMAGE_ID) {
-      CONSOLE.info('model & nameMap & trashImg all loaded');
       setIsLoaded(true);
     }
   }, [model, nameMap, trashImg]);
 
   useEffect(() => {
-    CONSOLE.useEffectIn('isLoaded');
     async function processTrashImage() {
-      CONSOLE.info('processTrashImage Start');
       const [modelWidth, modelHeight] = model!.inputs![0].shape!.slice(1, 3);
       const input = tidy(() => {
         return imgts
@@ -152,15 +137,9 @@ const TrashPage = ({
       const classes_data = classes.dataSync();
       const valid_detections_data = valid_detections.dataSync()[0];
 
-      console.info('Analyze Result');
-      console.log('boxes', boxes_data);
-      console.log('scores', scores_data);
-      console.log('classes', classes_data);
-      console.log('valid_detections', valid_detections_data);
       dispose(res);
 
       const result = processAnalyzeResult(classes_data);
-      console.log(result);
 
       // TODO : 분석 데이터 마저 저장하기
       setAnaylzeInfo(prevState => {
@@ -178,8 +157,6 @@ const TrashPage = ({
       });
     }
     if (isLoaded && trashTypeTable) {
-      CONSOLE.info('isLoaded -> true');
-      console.log(trashTypeTable);
       processTrashImage();
       setIsProcessingComplete(true);
     }
@@ -210,18 +187,13 @@ const TrashPage = ({
       trashDetail: trashDetail,
     };
 
-    CONSOLE.info('반복문 시작');
     for (let i = 0; i < classData.length; i++) {
-      console.log(`i:${i} --> ${classData[i]}`);
       if (classData[i] === -1) {
         break;
       }
 
-      // console.log(trashTypeTable![i]);
       const type = trashTypeTable![classData[i]].class;
-      console.log(result.trashDetail);
       result.trashDetail![type]++;
-      // TODO : 오류 수정하기
       result.totalCoin += trashTypeTable![classData[i]].coin;
       result.gatheredTrash++;
     }
@@ -231,7 +203,6 @@ const TrashPage = ({
 
   return (
     <S.Wrap>
-      <h1>TrashPage 입니다.</h1>
       <Loading />
     </S.Wrap>
   );

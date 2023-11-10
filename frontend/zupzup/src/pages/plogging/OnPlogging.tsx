@@ -30,10 +30,8 @@ import {
   setEndDateTime,
   setTime,
 } from 'hooks/store/usePlogging';
-import CONSOLE from 'utils/ColorConsoles';
 
 const OnPlogging = () => {
-  CONSOLE.reRender('OnPlogging rendered!!');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useGeolocation();

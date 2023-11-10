@@ -41,3 +41,14 @@ export interface TrashInfo {
   longitude: number;
   trashcanType: string;
 }
+
+export interface TrashTypeTable {
+  [key: number]: Trash;
+}
+
+export interface Trash {
+  name: string;
+  class: string;
+  desc: string;
+  coin: number;
+}

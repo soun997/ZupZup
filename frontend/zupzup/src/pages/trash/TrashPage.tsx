@@ -13,7 +13,7 @@ import { io } from '@tensorflow/tfjs-core';
 import styled from 'styled-components';
 import { Loading } from 'pages';
 import { TrashDetail } from 'types/Trash';
-import { TrashAnalyzeReport } from 'types/Trash';
+import { TrashAnalyzeReport, TrashTypeTable } from 'types/Trash';
 
 interface Props {
   captureFile: File | undefined;
@@ -25,16 +25,6 @@ interface Props {
   setIsProcessingComplete: (setIsProcessingComplete: boolean) => void;
 }
 
-interface TrashTypeTable {
-  [key: number]: Trash;
-}
-
-interface Trash {
-  name: string;
-  class: string;
-  desc: string;
-  coin: number;
-}
 
 interface AnalyzeResult {
   gatheredTrash: number;

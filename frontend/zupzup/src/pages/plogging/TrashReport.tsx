@@ -11,7 +11,7 @@ import {
 } from 'hooks/store/usePlogging';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import { store } from 'hooks';
-import { TrashDetail } from 'types/Trash';
+import { TrashDetail, TrashTypeTable } from 'types/Trash';
 import CONSOLE from 'utils/ColorConsoles';
 
 interface Prop {
@@ -20,6 +20,7 @@ interface Prop {
 }
 
 const MODEL_NAME_MAP_URI = '/model/name_map.json';
+const TRASH_TYPE_TABLE_URI = '/classify/trash_classification.json';
 const TRASH_IMAGE_ID = 'trash';
 
 const CANVAS_SETTING = {
@@ -39,6 +40,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
     useRef() as React.MutableRefObject<HTMLCanvasElement>;
   const [nameMap, setNameMap] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState<Boolean>();
+  const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
 
   const savedPloggingRecord = store.getState().plogging;
   useEffect(() => {
@@ -51,6 +53,14 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
         });
       CONSOLE.ok('[TrashReport load] 1. load name map complete');
       console.log(nameMap);
+
+      CONSOLE.info('[ts load] 3. load trashTypeTable');
+      const trashTypeTableFromJson = await fetch(TRASH_TYPE_TABLE_URI)
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+        });
+      CONSOLE.ok('[ts load] 3. load trashTypeTable complete');
 
       CONSOLE.info('[TrashReport load] 2. read image');
       const image = new Image();
@@ -81,13 +91,14 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
       };
 
       setNameMap(nameMap);
+      setTrashTypeTable(trashTypeTableFromJson);
     }
     load();
   }, []);
 
   useEffect(() => {
     CONSOLE.useEffectIn('nameMap');
-    if (nameMap && isImageLoaded) {
+    if (nameMap && trashTypeTable && isImageLoaded) {
       const boxes = trashReport.classifyDetail.boxes;
       const classes = trashReport.classifyDetail.classes;
       const scores = trashReport.classifyDetail.scores;
@@ -127,7 +138,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
         console.log([x1, y1, x2, y2]);
         console.log([convertedX1, convertedY1, convertedX2, convertedY2]);
         const score = scores[i].toFixed(2);
-        const label = nameMap![classes[i]];
+        const label = trashTypeTable[classes[i]].class;
         context?.strokeRect(
           convertedX1,
           convertedY1,
@@ -144,7 +155,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
 
     // const trashDetail = useAppSelector(state => state.plogging.trashDetail);
     // console.log(trashDetail);
-  }, [nameMap, isImageLoaded]);
+  }, [nameMap, trashTypeTable, isImageLoaded]);
 
   function convertCoordinate(
     x: number,

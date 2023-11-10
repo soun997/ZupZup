@@ -117,7 +117,7 @@ public class MemberService {
         Assertion.with(memberRequestRegister)
                 .setValidation(Member::isNewMember)
                 .validateOrThrow(AlreadyRegisteredMemberException::new);
-        
+
         modifyHealth(
                 memberHealthRegisterRequest.memberId(),
                 memberHealthRegisterRequest.birthYear(),

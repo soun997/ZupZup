@@ -231,11 +231,11 @@ const TrashPage = ({
       }
 
       // console.log(trashTypeTable![i]);
-      const type = trashTypeTable![i + 1].class;
+      const type = trashTypeTable![classData[i]].class;
       console.log(result.trashDetail);
       result.trashDetail![type]++;
       // TODO : 오류 수정하기
-      result.totalCoin += trashTypeTable![i + 1].coin;
+      result.totalCoin += trashTypeTable![classData[i]].coin;
       result.gatheredTrash++;
     }
 

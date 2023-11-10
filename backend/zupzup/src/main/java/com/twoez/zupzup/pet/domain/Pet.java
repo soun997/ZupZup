@@ -52,7 +52,7 @@ public class Pet extends BaseTime {
 
     public static Pet init(Member member) {
 
-        return Pet.builder().level(0).exp(0).isDeleted(false).member(member).build();
+        return Pet.builder().level(1).exp(0).isDeleted(false).member(member).build();
     }
 
     public void addExp(Integer itemExp) {

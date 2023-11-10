@@ -126,7 +126,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
           offsetY,
         );
         const score = scores[i].toFixed(2);
-        const label = trashTypeTable[classes[i]]["class-kor"];
+        const label = trashTypeTable[classes[i]]['class-kor'];
         context?.strokeRect(
           convertedX1,
           convertedY1,
@@ -254,9 +254,9 @@ const S = {
   `,
   CanvasContainer: styled.div`
     width: 100%;
-    height: 200px;
+    height: 250px;
     /* height: 70%; */
-    margin-top: 20px;
+    margin-top: 30px;
     overflow: visible;
   `,
   Canvas: styled.canvas`

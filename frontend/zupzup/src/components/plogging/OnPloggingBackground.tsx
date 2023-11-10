@@ -79,7 +79,7 @@ const OnPloggingBackground = ({
           $trashOn={trashOn}
           $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
-          {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
+          {trashOn ? <CancelTrashCanSvg /> : <TrashCanSvg />}
         </S.TrashButton>
       </S.UserAccess>
     </S.Wrap>
@@ -224,7 +224,7 @@ const S = {
     height: 58px;
     border-radius: 29px;
     background-color: ${({ $trashOn, theme }) =>
-      $trashOn ? theme.color.main : theme.color.gray3};
+      $trashOn ? theme.color.gray3 : theme.color.main};
     color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 

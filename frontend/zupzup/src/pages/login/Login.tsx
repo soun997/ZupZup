@@ -1,15 +1,13 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 import { SocialLoginButton } from 'components';
-import { SOCIAL_KEY, URL } from 'utils';
+import { SOCIAL_KEY } from 'utils';
 
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
 import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
 
 const Login = () => {
-  const navigate = useNavigate();
   const handleSocialLogin = async (domain: string) => {
     window.location.href = `https://zupzup.shop/oauth2/authorization/${domain}`;
   };
@@ -32,8 +30,7 @@ const Login = () => {
         <SocialLoginButton
           $backgroundColor="#06BE34"
           color="#FFFFFF"
-          onClick={() => navigate(URL.LOGIN.REGIST_INFO.PHYSICAL)}
-          // onClick={() => handleSocialLogin(SOCIAL_KEY.NAVER)}
+          onClick={() => handleSocialLogin(SOCIAL_KEY.NAVER)}
         >
           <NaverIcon />
           네이버로 시작하기

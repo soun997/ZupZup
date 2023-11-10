@@ -1,6 +1,7 @@
 package com.twoez.zupzup.support.security;
 
 
+import com.twoez.zupzup.config.security.jwt.ExpiredTokenUser;
 import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.member.domain.Member;
@@ -13,8 +14,10 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,18 @@ public class MockSecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        if (httpRequest.getRequestURI().equals("/api/v1/auth/re-issue")) {
+            SecurityContextHolder.getContext()
+                    .setAuthentication(
+                            new UsernamePasswordAuthenticationToken(
+                                    new ExpiredTokenUser(1L), "password", new ArrayList<>()));
+            chain.doFilter(request, response);
+            return;
+        }
+
         Member member = createMember();
 
         LoginUser loginUser =

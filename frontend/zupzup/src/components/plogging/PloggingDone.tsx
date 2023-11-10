@@ -1,18 +1,24 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { SuccessAnimation } from 'components';
-import { useStopWatch } from 'hooks';
 
-interface Props {
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const PloggingDone = () => {
+  const [time, setTime] = useState(3);
 
-const PloggingDone = ({ setLoading }: Props) => {
-  const time = 3 - useStopWatch();
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (time > 1) {
+        setTime(time - 1);
+      } else {
+        setTime(3);
+        clearInterval(timer);
+      }
+    }, 1000);
 
-  if (time === 0) {
-    setLoading(false);
-    return;
-  }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [time]);
 
   return (
     <S.Wrap>

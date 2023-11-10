@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { Navigation, SettingComponent, TopNavigation } from 'components';
 import ModifSvg from 'assets/icons/pencil-modif.svg?react';
-import { store } from 'hooks';
+import { setBirthYear, setHeight, setWeight, store } from 'hooks';
 import { HealthInfo } from 'types/ProfileInfo';
 import { MemberApi } from 'api';
 import { useEffect, useState } from 'react';
@@ -35,6 +35,7 @@ const ProfileSettingPage = () => {
           break;
         }
         newHealthInfo.birthYear = info as number;
+        setBirthYear(info as number);
         break;
       case '키':
         if ((info as number) < 100 || (info as number) > 200) {
@@ -42,6 +43,7 @@ const ProfileSettingPage = () => {
           break;
         }
         newHealthInfo.height = info as number;
+        setHeight(info as number);
         break;
       case '몸무게':
         if ((info as number) < 10 || (info as number) > 200) {
@@ -49,6 +51,7 @@ const ProfileSettingPage = () => {
           break;
         }
         newHealthInfo.weight = info as number;
+        setWeight(info as number);
         break;
       default:
         break;

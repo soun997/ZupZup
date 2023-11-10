@@ -13,7 +13,8 @@ spring:
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
     mongodb:
-      uri: ${MONGO_URI}
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
       database: ${MONGO_DATABASE}
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
@@ -41,7 +42,8 @@ client:
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   auth-token-expired_second: 60
-  access-expired-second: 7200
+    # access-expired-second: 7200
+  access-expired-second: 30
   refresh_expired_second: 1209600
 
 management:

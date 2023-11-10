@@ -1,7 +1,7 @@
 package com.twoez.zupzup.trashcan.controller;
 
 
-import com.twoez.zupzup.global.response.ApiResponse;
+import com.twoez.zupzup.global.response.HttpResponse;
 import com.twoez.zupzup.trashcan.controller.dto.request.TrashcanListRequest;
 import com.twoez.zupzup.trashcan.controller.dto.response.TrashcanListResponse;
 import com.twoez.zupzup.trashcan.service.TrashcanQueryService;
@@ -18,9 +18,9 @@ public class TrashcanController {
     private final TrashcanQueryService trashcanQueryService;
 
     @PostMapping
-    public ApiResponse<List<TrashcanListResponse>> findByLocation(
+    public HttpResponse<List<TrashcanListResponse>> findByLocation(
             @Validated @RequestBody TrashcanListRequest request) {
-        return ApiResponse.ok(
+        return HttpResponse.okBuild(
                 trashcanQueryService
                         .findByLocation(request.currentLatitude(), request.currentLongitude())
                         .stream()

@@ -67,9 +67,10 @@ const MyPage = () => {
         </S.Title>
         <S.Level>
           <S.SubInfo $daytime={isDaytime}>
-            레벨 {characterInfo.level + 1} 까지
+            {(characterInfo.level + 1 < 11) 
+            ? `레벨 ${characterInfo.level + 1}까지` : '최대 레벨 달성!'} 
           </S.SubInfo>
-          <ProgressBar score={characterInfo.exp} total={100} />
+          <ProgressBar score={(characterInfo.level < 10) ? characterInfo.exp : 100} total={100} />
         </S.Level>
         <S.Report $daytime={isDaytime}>
           <BoardSvg onClick={() => navigate(URL.MYPAGE.REPORT)} />

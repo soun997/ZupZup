@@ -1,4 +1,5 @@
 import { instance } from 'api';
+import { PloggingLogSaveRequest } from 'types';
 
 const RECORD_URL = `/plogging-logs`;
 
@@ -16,6 +17,10 @@ const RecordApis = {
 
   //*프로필 플로깅 집계
   getMyPloggingInfo: () => instance.get(`${RECORD_URL}/total`),
+
+  //*플로깅 기록 저장
+  postPloggingLog: (data: PloggingLogSaveRequest) =>
+    instance.post(`${RECORD_URL}`, data),
 };
 
 export default RecordApis;

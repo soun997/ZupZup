@@ -1,25 +1,57 @@
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
+import { format } from 'date-fns';
 import { RecentRecord, ConfirmButton } from 'components';
 import * as utils from 'utils';
+import { PloggingApis } from 'api';
+import { useAppDispatch } from 'hooks';
+import { setPloggingId, setStartDateTime } from 'hooks/store/usePlogging';
 
 const PloggingStartBackground = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [nowPloggingUser, setNowPloggingUser] = useState<number>(0);
+
+  const fetchNowPloggingUser = async () => {
+    try {
+      const response = await PloggingApis.getNowPloggingUsers();
+      const data = response.data.results.totalPlogger;
+      setNowPloggingUser(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleStartPlogging = async () => {
+    const response = await PloggingApis.startPlogging();
+    dispatch(setPloggingId(response.data.results.ploggingLogId));
+    dispatch(setStartDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));
+    navigate(utils.URL.PLOGGING.ON);
+  };
+
+  useEffect(() => {
+    fetchNowPloggingUser();
+  }, []);
 
   return (
     <S.Wrap>
       <RecentRecord />
       <S.Header>
         <S.SubTitle>
-          현재 <S.CurrentMember>24</S.CurrentMember> 명이 플로깅 중이에요
+          {nowPloggingUser === 0 ? (
+            <>첫 플로깅 유저가 되어보세요!</>
+          ) : (
+            <>
+              현재 <S.CurrentMember>{nowPloggingUser}</S.CurrentMember> 명이
+              플로깅 중이에요
+            </>
+          )}
         </S.SubTitle>
         <S.Title>지금 바로 플로깅을 시작해주세요!</S.Title>
       </S.Header>
-      <ConfirmButton
-        text="플로깅 시작하기"
-        onClick={() => navigate(utils.URL.PLOGGING.ON)}
-      />
+      <ConfirmButton text="플로깅 시작하기" onClick={handleStartPlogging} />
     </S.Wrap>
   );
 };

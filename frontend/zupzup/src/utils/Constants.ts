@@ -43,6 +43,9 @@ export const URL = {
     PROFILE: '/setting/profile',
     THEME: '/setting/theme',
   },
+  TRASH: {
+    HOME: '/trash',
+  },
 };
 
 export const MAX_WIDTH = '768px';
@@ -55,6 +58,7 @@ export const GENDER = {
   MALE: '남성',
   FEMALE: '여성',
 };
+export const LOCATIONS_KEY = 'locations';
 
 export const IMAGE_MIME_TYPE = 'image/jpeg';
 

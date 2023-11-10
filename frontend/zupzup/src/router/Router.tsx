@@ -19,10 +19,6 @@ const Router = () => {
             element={<pages.PloggingStart />}
           />
           <Route path={utils.URL.PLOGGING.ON} element={<pages.OnPlogging />} />
-          <Route
-            path={utils.URL.PLOGGING.TRASH}
-            element={<pages.TrashReport />}
-          />
 
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
           <Route
@@ -102,6 +98,7 @@ const Router = () => {
             path={utils.URL.ONBORDING.WORKING}
             element={<pages.Working />}
           ></Route>
+          
           <Route path="*" element={<pages.Error />}></Route>
         </Route>
       </Routes>

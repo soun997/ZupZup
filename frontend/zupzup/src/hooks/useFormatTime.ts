@@ -1,4 +1,7 @@
 const formatTime = (seconds: number): string => {
+  if (seconds == 0) {
+    return `0초`;
+  }
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = seconds % 60;
@@ -22,7 +25,7 @@ const formatTimeByColons = (seconds: number): string => {
   const secondsString =
     remainingSeconds > 0
       ? `${remainingSeconds.toString().padStart(2, '0')}`
-      : '';
+      : '00';
 
   return `${hoursString}${minutesString}${secondsString}`;
 };

@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { CaptureResult } from 'components';
 
 import XSvg from 'assets/icons/x.svg?react';
+import TrashPage from 'pages/trash/TrashPage';
+import { TrashAnalyzeReport } from 'types/Trash';
+import { TrashReport } from 'pages';
 
 interface Props {
   setCameraOn: (cameraOn: boolean) => void;
@@ -12,6 +15,26 @@ interface Props {
 const Camera = ({ setCameraOn }: Props) => {
   const cameraRef = useRef<HTMLVideoElement>(null);
   const [capture, setCapture] = useState<boolean>(false);
+  const hasUserRequestAnalyzeState = useState<Boolean>(false);
+  const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
+    hasUserRequestAnalyzeState;
+  const captureFileState = useState<File>();
+  const [captureFile] = captureFileState;
+  const analyzeInfoState = useState<TrashAnalyzeReport>();
+  const [analyzeInfo] = analyzeInfoState;
+  const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<Boolean>();
+  const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
+  const disableCamera = () => {
+    if (cameraRef.current) {
+      const stream = cameraRef.current!.srcObject as MediaStream;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => {
+          track.stop();
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const enableCamera = async () => {
@@ -44,13 +67,46 @@ const Camera = ({ setCameraOn }: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (captureFile && !capture) {
+      setHasUserRequestAnalyze(true);
+    }
+  }, [capture]);
+
+  useEffect(() => {
+    if (isProcessingComplete && analyzeInfo) {
+      setHasUserRequestAnalyze(false);
+      setIsTrashReportPrepared(true);
+    }
+  }, [isProcessingComplete, analyzeInfo]);
+
   return (
     <S.Wrap>
       {capture && (
-        <CaptureResult cameraRef={cameraRef} setCapture={setCapture} />
+        <CaptureResult
+          cameraRef={cameraRef}
+          setCapture={setCapture}
+          captureFileState={captureFileState}
+        />
+      )}
+      {hasUserRequestAnalyze && (
+        <TrashPage
+          captureFile={captureFile}
+          setHasUserRequestAnalyze={setHasUserRequestAnalyze}
+          analyzeInfoState={analyzeInfoState}
+          setIsProcessingComplete={setIsProcessingComplete}
+        />
+      )}
+      {isTrashReportPrepared && (
+        <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} setCameraOn={setCameraOn} />
       )}
       <S.Header>
-        <S.CancelButton onClick={() => setCameraOn(false)}>
+        <S.CancelButton
+          onClick={() => {
+            disableCamera();
+            setCameraOn(false);
+          }}
+        >
           <XSvg />
         </S.CancelButton>
       </S.Header>

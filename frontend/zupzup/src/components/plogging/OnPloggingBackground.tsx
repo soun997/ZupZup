@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import SmallRunnerSvg from 'assets/icons/smallrunner.svg?react';
@@ -24,8 +23,11 @@ interface Props {
   setPloggingInfoOn: (ploggiingInfoOn: boolean) => void;
   cameraOn: boolean;
   setCameraOn: (cameraOn: boolean) => void;
+  trashOn: boolean;
+  getTrashInfo: (trashOn: boolean) => void;
   fixCenter: boolean;
   setFixCenter: (fixCenter: boolean) => void;
+  refreshTrashInfo: () => void;
 }
 
 const OnPloggingBackground = ({
@@ -34,11 +36,12 @@ const OnPloggingBackground = ({
   setPloggingInfoOn,
   cameraOn,
   setCameraOn,
+  trashOn,
+  getTrashInfo,
   fixCenter,
   setFixCenter,
+  refreshTrashInfo,
 }: Props) => {
-  const [trashOn, setTrashOn] = useState<boolean>(false);
-
   return (
     <S.Wrap>
       <S.RefreshMapBox>
@@ -51,6 +54,7 @@ const OnPloggingBackground = ({
           <AimSvg />
         </S.AimButton>
         <S.RefreshButton
+          onClick={() => refreshTrashInfo()}
           $trashOn={trashOn}
           $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
@@ -71,11 +75,11 @@ const OnPloggingBackground = ({
           <SmallRunnerSvg /> 플로깅 정보 확인
         </S.PloggingInfoButton>
         <S.TrashButton
-          onClick={() => setTrashOn(!trashOn)}
+          onClick={() => getTrashInfo(!trashOn)}
           $trashOn={trashOn}
           $modalOn={exitOn || ploggingInfoOn || cameraOn}
         >
-          {trashOn ? <TrashCanSvg /> : <CancelTrashCanSvg />}
+          {trashOn ? <CancelTrashCanSvg /> : <TrashCanSvg />}
         </S.TrashButton>
       </S.UserAccess>
     </S.Wrap>
@@ -153,7 +157,7 @@ const S = {
     align-items: center;
     justify-content: center;
     width: 160px;
-    height: 34px;
+    height: 40px;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.color.main};
     color: #fff;
@@ -220,7 +224,7 @@ const S = {
     height: 58px;
     border-radius: 29px;
     background-color: ${({ $trashOn, theme }) =>
-      $trashOn ? theme.color.main : theme.color.gray3};
+      $trashOn ? theme.color.gray3 : theme.color.main};
     color: #fff;
     pointer-events: ${({ $modalOn }) => ($modalOn ? 'none' : 'auto')};
 

@@ -4,7 +4,7 @@ import { SocialLoginButton } from 'components';
 import { SOCIAL_KEY } from 'utils';
 
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
-import NaverIcon from 'assets/icons/Naver_logo.svg?react';
+// import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
 
 const Login = () => {
@@ -29,14 +29,14 @@ const Login = () => {
           <KakaoIcon />
           카카오톡으로 시작하기
         </SocialLoginButton>
-        <SocialLoginButton
+        {/* <SocialLoginButton
           $backgroundColor="#06BE34"
           color="#FFFFFF"
           onClick={() => handleSocialLogin(SOCIAL_KEY.NAVER)}
         >
           <NaverIcon />
           네이버로 시작하기
-        </SocialLoginButton>
+        </SocialLoginButton> */}
         <SocialLoginButton
           $backgroundColor="#FFFFFF"
           color="#4E5968"
@@ -95,7 +95,8 @@ const S = {
     justify-content: center;
     gap: 12px;
     position: relative;
-    top: 120px;
+    margin: auto auto 60px auto;
+    width: 100%;
   `,
 };
 

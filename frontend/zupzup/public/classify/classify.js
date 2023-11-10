@@ -1,10 +1,21 @@
-// NodeJS 환경에서 실행해야 합니다!
-
 import fs from "fs";
 
 const NOT_FOUND = "NOT FOUND";
 
 async function makeTypeInfo() {
+  // const classifyType = await fetch("./classify_type.json")
+  //   .then((res) => res.json())
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+
+  // fs.readFile("classify_type.json", "utf-8", (err, data) => {
+  //   if (err) {
+  //     console.error("파일 읽기 중 오류 발생:", err);
+  //   } else {
+  //     classifyType = JSON.parse(data);
+  //   }
+  // });
   const jsonFile = fs.readFileSync("./classify_type.json", "utf-8");
   const classifyType = JSON.parse(jsonFile);
   console.log(classifyType);
@@ -22,7 +33,8 @@ async function makeTypeInfo() {
     }
     result[i] = {
       name: nameMap[i],
-      class: classType,
+      "class-eng": classType,
+      "class-kor": classifyType[classType].kor,
       desc: classifyType[classType].desc,
       coin: classifyType[classType].coin,
     };

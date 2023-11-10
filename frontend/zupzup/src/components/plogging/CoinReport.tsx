@@ -32,6 +32,7 @@ interface TrashTableDetail {
   type: number[];
   desc: string;
   coin: number;
+  kor: string;
 }
 
 const COIN_TABLE_URI = '/classify/classify_type.json';
@@ -67,7 +68,7 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
             .filter((type: string) => trashDetail[type] > 0)
             .map((type, idx) => (
               <S.EachFrame key={idx}>
-                <div className="eachName">{type}</div>
+                <div className="eachName">{coinTable[type].kor}</div>
                 <div className="eachVal">
                   {trashDetail[type] * (coinTable as TrashTable)[type].coin}{' '}
                   Coins
@@ -93,6 +94,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: ${({ theme }) => theme.color.main};
   `,
 
   TitleFrame: styled.div`

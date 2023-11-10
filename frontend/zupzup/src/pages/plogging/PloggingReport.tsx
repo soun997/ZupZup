@@ -18,12 +18,25 @@ interface Location {
 }
 
 const PloggingReport = () => {
+  const mapRef = useRef(null);
   const canvasRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { handleCaptureClick, captureRef } = useCapture();
   const [showLoading, setLoading] = useState(true);
+
+  const reportCapture = () => {
+    if (!canvasRef.current || !mapRef.current) {
+      return;
+    }
+
+    (mapRef.current! as HTMLDivElement).style.display = 'none';
+    (canvasRef.current! as HTMLCanvasElement).style.display = 'block';
+    handleCaptureClick();
+    (mapRef.current! as HTMLDivElement).style.display = 'block';
+    (canvasRef.current! as HTMLCanvasElement).style.display = 'none';
+  };
 
   const handleDonePlogging = () => {
     dispatch(deleteAllPlogging());
@@ -42,6 +55,66 @@ const PloggingReport = () => {
   };
 
   useEffect(() => {
+    const initMap = () => {
+      const maxLat = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
+      ) as number;
+      const minLat = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LATITUDE) as string,
+      ) as number;
+      const maxLng = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LONGITUDE) as string,
+      ) as number;
+      const minLng = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
+      ) as number;
+
+      const { Tmapv3 } = window;
+      const latlngBounds = new Tmapv3.LatLngBounds(
+        new Tmapv3.LatLng(minLat - 0.00001, minLng - 0.00001),
+      );
+      latlngBounds.extend(
+        new Tmapv3.LatLng(maxLat + 0.00001, maxLng + 0.00001),
+      );
+      console.log(latlngBounds);
+      if (mapRef.current) {
+        const map = new Tmapv3.Map(mapRef.current, {
+          zoom: 17,
+          width: '100%',
+          height: '200px',
+          bounds: latlngBounds,
+        });
+
+        const locations = JSON.parse(
+          localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
+        );
+
+        if (!locations || locations.length < 1) {
+          return;
+        }
+
+        const paths = locations.map(
+          (location: Location) => new Tmapv3.LatLng(location.lat, location.lng),
+        );
+
+        [...paths].forEach(
+          path =>
+            new Tmapv3.Marker({
+              position: path,
+              map: map,
+            }),
+        );
+
+        new Tmapv3.Polyline({
+          path: paths,
+          strokeColor: '#dd00dd',
+          strokeWeight: 6,
+          direction: true,
+          map: map,
+        });
+      }
+    };
+
     const initRoute = async () => {
       if (!canvasRef.current) {
         return;
@@ -67,6 +140,7 @@ const PloggingReport = () => {
 
       canvas.width = 800;
       canvas.height = 600;
+      canvas.style.display = 'none';
       context.strokeStyle = '#00c4b8';
       context.lineWidth = 6;
 
@@ -134,11 +208,11 @@ const PloggingReport = () => {
         // 업로드 실패 시 오류 처리
         console.error('파일 업로드 오류:', error);
       }
-      // if (!showLoading) {
-
-      // }
     };
 
+    if (mapRef.current) {
+      initMap();
+    }
     initRoute();
   }, [showLoading]);
 
@@ -168,12 +242,13 @@ const PloggingReport = () => {
         <S.SubText>플로깅 기록을 확인해주세요</S.SubText>
         <S.CaptureWrapper ref={captureRef}>
           <S.SubTitle>나의 이동 경로</S.SubTitle>
+          <S.Map ref={mapRef}></S.Map>
           <S.CanvasBox ref={canvasRef} />
           <S.SubTitle>기록</S.SubTitle>
           <RecordReport />
         </S.CaptureWrapper>
 
-        <S.SaveImage onClick={handleCaptureClick}>
+        <S.SaveImage onClick={() => reportCapture()}>
           <SaveSvg />
           이미지로 저장하기
         </S.SaveImage>
@@ -211,9 +286,9 @@ const S = {
   `,
   Map: styled.div`
     width: 100%;
-    height: 300px;
+    height: 100%;
     margin-top: 20px;
-    pointer-events: none;
+    /* pointer-events: none; */
   `,
   CanvasBox: styled.canvas`
     object-fit: cover;

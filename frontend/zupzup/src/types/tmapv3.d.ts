@@ -24,6 +24,7 @@ interface Marker {
 
 interface Polyline {
   getPath: () => PolylinePath;
+  setMap: (map: Map) => void;
 }
 
 interface PolylineOptions {

@@ -39,6 +39,7 @@ public class MemberService {
     private final PetRepository petRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
 
+    @Transactional
     public Member save(AuthUser authUser) {
 
         Member member = memberSpringDataRepository.save(authUser.toNewMember());

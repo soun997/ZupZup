@@ -16,16 +16,13 @@ interface Props {
   ];
 }
 
-const CaptureResult = ({
-  cameraRef,
-  setCapture,
-  captureFileState,
-}: Props) => {
+const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [captureFile, setCaptureFile] = captureFileState;
+  const [captureImage, setCaptureImage] = useState<File>();
 
   const downloadImage = () => {
     const downloadButton = downloadRef.current;
@@ -75,7 +72,7 @@ const CaptureResult = ({
 
         const file = canvasToFile(`captured_image.jpg`, canvas);
 
-        setCaptureFile(file);
+        setCaptureImage(file);
         setIsCapturing(false);
       }
     };
@@ -84,12 +81,17 @@ const CaptureResult = ({
   }, []);
 
   useEffect(() => {
-    if (captureFile) {
+    if (captureImage) {
       CONSOLE.info('trash captureFile saved in memory');
     }
-  }, [captureFile]);
+  }, [captureImage]);
 
   function requestAnalyze() {
+    if (!captureImage) {
+      alert('이미지 저장이 아직 되지 않았습니다!');
+      return;
+    }
+    setCaptureFile(captureImage);
     setCapture(false);
   }
 

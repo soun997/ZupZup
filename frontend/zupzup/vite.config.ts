@@ -31,7 +31,18 @@ export default defineConfig({
   ],
   base: process.env.NODE_ENV === 'development' ? '/' : './',
 
-  define: { _global: {} },
+  define: {
+    global: 'window',
+  },
+  resolve: {
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
+  },
+  optimizeDeps: {
+    exclude: ['axios', 'js-big-decimal'],
+  },
+
   build: {
     rollupOptions: {
       output: {

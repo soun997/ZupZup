@@ -7,13 +7,14 @@ interface LatLng {
 
 interface TMap {
   setCenter: (latLng: LatLng) => void;
+  on: (type: string, callbackfunc: () => void) => void;
 }
 
 interface TmapOptions {
   center?: object;
   width: string;
   height: string;
-  zoom: number;
+  zoom?: number;
   bounds?: LatLngBounds;
 }
 

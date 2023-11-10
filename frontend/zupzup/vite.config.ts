@@ -32,14 +32,17 @@ export default defineConfig({
   base: process.env.NODE_ENV === 'development' ? '/' : './',
 
   define: {
-    global: {},
+    global: 'window',
   },
   resolve: {
-    // https://github.com/aws-amplify/amplify-js/issues/9639
     alias: {
       './runtimeConfig': './runtimeConfig.browser',
     },
   },
+  optimizeDeps: {
+    exclude: ['axios', 'js-big-decimal'],
+  },
+
   build: {
     rollupOptions: {
       output: {

@@ -1,15 +1,56 @@
 import styled from 'styled-components';
-import { CoinInfo } from 'types/Trash';
+import { useState, useEffect } from 'react';
+import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { useNavigate } from 'react-router-dom';
+import { Loading } from 'pages';
 
 interface Props {
-  coins: CoinInfo[];
+  trashDetail: TrashDetail;
   totalCoin: number;
 }
 
-const CoinReport = ({ coins, totalCoin }: Props) => {
+interface TrashTable {
+  [type: string]: TrashTableDetail;
+  plastic: TrashTableDetail;
+  cigarette: TrashTableDetail;
+  can: TrashTableDetail;
+  glass: TrashTableDetail;
+  paper: TrashTableDetail;
+  styrofoam: TrashTableDetail;
+  metal: TrashTableDetail;
+  clothes: TrashTableDetail;
+  battery: TrashTableDetail;
+  vinyl: TrashTableDetail;
+  normal: TrashTableDetail;
+  food: TrashTableDetail;
+  mixed: TrashTableDetail;
+  etc: TrashTableDetail;
+}
+
+interface TrashTableDetail {
+  type: number[];
+  desc: string;
+  coin: number;
+}
+
+const COIN_TABLE_URI = '/classify/classify_type.json';
+
+const CoinReport = ({ trashDetail, totalCoin }: Props) => {
   const navigate = useNavigate();
+  const [coinTable, setCoinTable] = useState<TrashTable>();
+
+  useEffect(() => {
+    async function load() {
+      const coinTableFromJson = await fetch(COIN_TABLE_URI)
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+        });
+      setCoinTable(coinTableFromJson);
+    }
+    load();
+  }, []);
 
   return (
     <S.Wrap>
@@ -21,12 +62,21 @@ const CoinReport = ({ coins, totalCoin }: Props) => {
         </S.Caption>
       </S.TitleFrame>
       <S.ContentFrame>
-        {coins.map((coin, idx) => (
-          <S.EachFrame key={idx}>
-            <div className="eachName">{coin.name}</div>
-            <div className="eachVal">{coin.value} 원</div>
-          </S.EachFrame>
-        ))}
+        {coinTable ? (
+          Object.keys(trashDetail)
+            .filter((type: string) => trashDetail[type] > 0)
+            .map((type, idx) => (
+              <S.EachFrame key={idx}>
+                <div className="eachName">{type}</div>
+                <div className="eachVal">
+                  {trashDetail[type] * (coinTable as TrashTable)[type].coin}{' '}
+                  Coins
+                </div>
+              </S.EachFrame>
+            ))
+        ) : (
+          <Loading />
+        )}
       </S.ContentFrame>
       <S.ResultFrame>
         <S.Title>총 획득 코인</S.Title>

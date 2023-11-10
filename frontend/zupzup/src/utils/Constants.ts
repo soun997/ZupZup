@@ -43,6 +43,9 @@ export const URL = {
     PROFILE: '/setting/profile',
     THEME: '/setting/theme',
   },
+  TRASH: {
+    HOME: '/trash',
+  },
 };
 
 export const MAX_WIDTH = '768px';

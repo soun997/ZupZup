@@ -1,34 +1,31 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import * as utils from 'utils';
-
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import DownloadSvg from 'assets/icons/download.svg?react';
 import ShareSvg from 'assets/icons/share.svg?react';
+import CONSOLE from 'utils/ColorConsoles';
+import { canvasToFile } from 'utils/CanvasUtils';
 
 interface Props {
   cameraRef: React.RefObject<HTMLVideoElement>;
   setCapture: (capture: boolean) => void;
+  captureFileState: [
+    File | undefined,
+    React.Dispatch<React.SetStateAction<File | undefined>>,
+  ];
 }
 
-const CaptureResult = ({ cameraRef, setCapture }: Props) => {
+const CaptureResult = ({
+  cameraRef,
+  setCapture,
+  captureFileState,
+}: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
-  const [captureFile, setCaptureFile] = useState<File>();
-
-  const dataURLtoBlob = (dataURL: string) => {
-    const byteString = atob(dataURL.split(',')[1]);
-    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: mimeString });
-  };
+  const [captureFile, setCaptureFile] = captureFileState;
 
   const downloadImage = () => {
     const downloadButton = downloadRef.current;
@@ -76,10 +73,7 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
           .getContext('2d')!
           .drawImage(camera, 0, 0, canvas.width, canvas.height);
 
-        const blob = dataURLtoBlob(canvas.toDataURL(utils.IMAGE_MIME_TYPE));
-        const file = new File([blob], `captured_image.jpg`, {
-          type: utils.IMAGE_MIME_TYPE,
-        });
+        const file = canvasToFile(`captured_image.jpg`, canvas);
 
         setCaptureFile(file);
         setIsCapturing(false);
@@ -88,6 +82,16 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
 
     capture();
   }, []);
+
+  useEffect(() => {
+    if (captureFile) {
+      CONSOLE.info('trash captureFile saved in memory');
+    }
+  }, [captureFile]);
+
+  function requestAnalyze() {
+    setCapture(false);
+  }
 
   return (
     <S.Wrap>
@@ -103,6 +107,7 @@ const CaptureResult = ({ cameraRef, setCapture }: Props) => {
         <S.ShareButton ref={shareRef} onClick={() => shareImage()}>
           <ShareSvg /> 공유하기
         </S.ShareButton>
+        <S.AnalyzeButton onClick={requestAnalyze}>분석하기</S.AnalyzeButton>
         <S.DownloadButton ref={downloadRef} onClick={() => downloadImage()}>
           <DownloadSvg /> 이미지 저장
         </S.DownloadButton>
@@ -155,6 +160,23 @@ const S = {
     padding: 15px;
   `,
   ShareButton: styled.button`
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: transparent;
+    text-align: center;
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.body3};
+    line-height: ${({ theme }) => theme.font.lineheight.body3};
+    color: ${({ theme }) => theme.color.dark};
+
+    & > svg {
+      width: 25px;
+      margin: 0 8px 0 0;
+      filter: ${({ theme }) => theme.color.darkFilter};
+    }
+  `,
+  AnalyzeButton: styled.button`
     display: flex;
     align-items: center;
     border-radius: 4px;

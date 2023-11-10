@@ -10,6 +10,8 @@ import {
   setTrashDetail,
 } from 'hooks/store/usePlogging';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
+import { store } from 'hooks';
+import { TrashDetail } from 'types/Trash';
 import CONSOLE from 'utils/ColorConsoles';
 
 interface Prop {
@@ -38,6 +40,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   const [nameMap, setNameMap] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState<Boolean>();
 
+  const savedPloggingRecord = store.getState().plogging;
   useEffect(() => {
     async function load() {
       CONSOLE.info('[TrashReport load] 1. load name map');
@@ -156,9 +159,46 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   }
 
   function saveTrashReport() {
-    dispatch(setGatheredTrash(trashReport.gatheredTrash));
-    dispatch(setCoin(trashReport.totalCoin));
-    dispatch(setTrashDetail(trashReport.trashDetail));
+    dispatch(
+      setGatheredTrash(
+        savedPloggingRecord.gatheredTrash + trashReport.gatheredTrash,
+      ),
+    );
+    dispatch(setCoin(savedPloggingRecord.coin + trashReport.totalCoin));
+    dispatch(
+      setTrashDetail(
+        updateTrashDetail(
+          savedPloggingRecord.trashDetail,
+          trashReport.trashDetail,
+        ),
+      ),
+    );
+  }
+
+  function updateTrashDetail(
+    savedTrashDetail: TrashDetail,
+    newTrashDetail: TrashDetail,
+  ): TrashDetail {
+    let updatedTrashDetail: TrashDetail = {
+      plastic: 0,
+      cigarette: 0,
+      can: 0,
+      glass: 0,
+      paper: 0,
+      normal: 0,
+      styrofoam: 0,
+      metal: 0,
+      clothes: 0,
+      battery: 0,
+      vinyl: 0,
+      mixed: 0,
+      food: 0,
+      etc: 0,
+    };
+    Object.keys(updatedTrashDetail).forEach(key => {
+      updatedTrashDetail[key] = savedTrashDetail[key] + newTrashDetail[key];
+    });
+    return updatedTrashDetail;
   }
 
   return (

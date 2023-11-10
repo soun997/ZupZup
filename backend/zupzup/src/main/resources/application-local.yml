@@ -2,9 +2,14 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: true
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${MARIA_URL}
+    username: ${MARIA_USER}
+    password: ${MARIA_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create

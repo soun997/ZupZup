@@ -18,7 +18,7 @@ public class TrashcanQueryService {
     private final TrashcanQueryRepository trashcanQueryRepository;
 
     @Cacheable(
-            value = "TrashcanList", // xml 파일에서 설정해준 alias
+            cacheNames = "trashcanList", // xml 파일에서 설정해준 alias
             key = "#latitude.toString() + '_' + #longitude.toString()", // key : "위도_경도"
             unless = "#result == null or #result.isEmpty()" // 값이 null이거나 빈 리스트일 경우 캐싱 X
     )

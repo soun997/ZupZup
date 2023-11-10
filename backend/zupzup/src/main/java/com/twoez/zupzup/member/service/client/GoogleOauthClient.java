@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Component
 public interface GoogleOauthClient {
 
-    @Cacheable(value = "googlePublicKeys")
+    @Cacheable(cacheNames = "googlePublicKeys")
     @GetMapping("/oauth2/v3/certs")
     OidcPublicKeyList getGoogleOidcPublicKeys();
 }

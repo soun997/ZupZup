@@ -76,6 +76,8 @@ public class SecurityConfig {
                                                 new MvcRequestMatcher(
                                                         introspector, "api/v1/members/register"),
                                                 new MvcRequestMatcher(
+                                                        introspector, "api/v1/trashcans"),
+                                                new MvcRequestMatcher(
                                                         introspector, "api/v1/docs/api"))
                                         .permitAll()
                                         .requestMatchers(

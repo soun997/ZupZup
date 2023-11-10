@@ -53,13 +53,17 @@ const MyPloggingReport = () => {
         </div>
         <S.BoxInfo>
           <S.EachBoxInfo>
-            플로깅 횟수<div className="tag">{ploggingInfo.totalCount}회</div>
+            플로깅 횟수<div className="tag">{ploggingInfo.totalCount} 회</div>
           </S.EachBoxInfo>
           <S.EachBoxInfo>
             플로깅 시간
             <div className="tag">
               {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
-              {useFormatTime.formatTime(ploggingInfo.totalDurationTime)}
+              {
+                useFormatTime
+                  .formatTime(ploggingInfo.totalDurationTime)
+                  .split(' ')[0]
+              }
             </div>
           </S.EachBoxInfo>
           <S.EachBoxInfo $isLast={true}>

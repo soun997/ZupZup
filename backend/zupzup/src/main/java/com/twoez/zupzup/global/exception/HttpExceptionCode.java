@@ -49,6 +49,7 @@ public enum HttpExceptionCode {
             HttpStatus.INTERNAL_SERVER_ERROR, "ERR_OIDC_001", "Oidc 공개키 목록을 가져오는데 실패하였습니다."),
 
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다."),
+    ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "ERR_MEMBER_002", "이미 가입된 멤버입니다. 새로 가입할 수 없습니다."),
 
     PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
 

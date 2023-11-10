@@ -91,6 +91,13 @@ public class Member extends BaseTime {
                 && Objects.nonNull(weight);
     }
 
+    public boolean isNewMember() {
+        return Objects.isNull(gender)
+                && Objects.isNull(birthYear)
+                && Objects.isNull(height)
+                && Objects.isNull(weight);
+    }
+
     public void updateHealthInfo(Integer birthYear, Gender gender, Integer height, Integer weight) {
         this.birthYear = birthYear;
         this.gender = gender;

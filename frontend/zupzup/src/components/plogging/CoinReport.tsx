@@ -93,6 +93,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: ${({ theme }) => theme.color.main};
   `,
 
   TitleFrame: styled.div`

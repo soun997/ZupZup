@@ -140,7 +140,6 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
       }
       saveTrashReport();
     }
-    
   }, [nameMap, trashTypeTable, isImageLoaded]);
 
   function convertCoordinate(
@@ -271,6 +270,7 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.display1};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.display1};
+    color: ${({ theme }) => theme.color.main};
   `,
   SubTitle: styled.div`
     margin-top: 10px;

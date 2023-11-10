@@ -75,3 +75,11 @@ export const THEME = {
   DARK: 'dark',
   SYSTEM: 'system',
 };
+
+export const COORDINATE = {
+  LOCATIONS_KEY: 'locations',
+  MAX_LATITUDE: 'maxLatitude',
+  MIN_LATITUDE: 'minLatitude',
+  MAX_LONGITUDE: 'maxLongitude',
+  MIN_LONGITUDE: 'minLongitude',
+};

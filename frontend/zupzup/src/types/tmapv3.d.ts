@@ -10,10 +10,11 @@ interface TMap {
 }
 
 interface TmapOptions {
-  center: object;
+  center?: object;
   width: string;
   height: string;
   zoom: number;
+  bounds?: LatLngBounds;
 }
 
 interface Marker {
@@ -23,6 +24,7 @@ interface Marker {
 
 interface Polyline {
   getPath: () => PolylinePath;
+  setMap: (map: Map) => void;
 }
 
 interface PolylineOptions {
@@ -51,6 +53,10 @@ interface MarkerOptions {
 
 interface Size {}
 
+interface LatLngBounds {
+  extend: (latlng: LatLng) => void;
+}
+
 export declare global {
   interface Window {
     Tmapv3: {
@@ -68,6 +74,9 @@ export declare global {
       };
       Size: {
         new (width: number, height: number): Size;
+      };
+      LatLngBounds: {
+        new (latlng: LatLng): LatLngBounds;
       };
     };
   }

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { TrashInfo } from 'types';
+import * as utils from 'utils';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
 
 interface Location {
@@ -103,9 +104,8 @@ const PloggingMap = ({
         return;
       }
 
-      const LOCATIONS_KEY = 'locations';
       const locations = JSON.parse(
-        localStorage.getItem(LOCATIONS_KEY) as string,
+        localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
       );
 
       if (!locations || locations.length < 1) {

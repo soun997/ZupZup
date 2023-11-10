@@ -46,7 +46,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       </S.PloggingRecords>
       {showImage ? (
         <>
-          <S.Image src="/assets/images/map.png"></S.Image>
+          <S.Image src={ploggingInfo.routeImageUrl}></S.Image>
           <S.BottomBox $isOpen={showImage}>
             <ArrowUpSvg onClick={handleMoreInfo} />
           </S.BottomBox>

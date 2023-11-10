@@ -16,11 +16,7 @@ interface Props {
   ];
 }
 
-const CaptureResult = ({
-  cameraRef,
-  setCapture,
-  captureFileState,
-}: Props) => {
+const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const shareRef = useRef<HTMLButtonElement>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
@@ -84,8 +80,21 @@ const CaptureResult = ({
   }, []);
 
   useEffect(() => {
+    const disableCamera = () => {
+      if (cameraRef.current) {
+        const stream = cameraRef.current!.srcObject as MediaStream;
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => {
+            track.stop();
+          });
+        }
+        (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
+      }
+    };
     if (captureFile) {
       CONSOLE.info('trash captureFile saved in memory');
+      disableCamera();
     }
   }, [captureFile]);
 

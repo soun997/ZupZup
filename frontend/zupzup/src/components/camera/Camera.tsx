@@ -24,6 +24,7 @@ const Camera = ({ setCameraOn }: Props) => {
   const [analyzeInfo] = analyzeInfoState;
   const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<boolean>();
   const [isProcessingComplete, setIsProcessingComplete] = useState<boolean>();
+
   const disableCamera = () => {
     if (cameraRef.current) {
       const stream = cameraRef.current!.srcObject as MediaStream;
@@ -34,8 +35,8 @@ const Camera = ({ setCameraOn }: Props) => {
         });
       }
     }
+    (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
   };
-
   useEffect(() => {
     const enableCamera = async () => {
       try {

@@ -123,7 +123,7 @@ const PloggingReport = () => {
       <S.Content>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
-          <S.CloseButton onClick={() => navigate(utils.URL.MYPAGE.HOME)}>
+          <S.CloseButton onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}>
             닫기
           </S.CloseButton>
         </S.TitleFrame>

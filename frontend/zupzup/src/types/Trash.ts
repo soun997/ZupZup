@@ -48,7 +48,8 @@ export interface TrashTypeTable {
 
 export interface Trash {
   name: string;
-  class: string;
+  'class-eng': string;
+  'class-kor': string;
   desc: string;
   coin: number;
 }

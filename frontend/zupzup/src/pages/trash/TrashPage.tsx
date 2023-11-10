@@ -192,7 +192,7 @@ const TrashPage = ({
         break;
       }
 
-      const type = trashTypeTable![classData[i]].class;
+      const type = trashTypeTable![classData[i]]['class-eng'];
       result.trashDetail![type]++;
       result.totalCoin += trashTypeTable![classData[i]].coin;
       result.gatheredTrash++;

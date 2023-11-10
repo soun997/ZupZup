@@ -22,6 +22,7 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [captureFile, setCaptureFile] = captureFileState;
+  const [captureImage, setCaptureImage] = useState<File>();
 
   const downloadImage = () => {
     const downloadButton = downloadRef.current;
@@ -71,7 +72,7 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
 
         const file = canvasToFile(`captured_image.jpg`, canvas);
 
-        setCaptureFile(file);
+        setCaptureImage(file);
         setIsCapturing(false);
       }
     };
@@ -96,9 +97,14 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
       CONSOLE.info('trash captureFile saved in memory');
       disableCamera();
     }
-  }, [captureFile]);
+  }, [captureImage]);
 
   function requestAnalyze() {
+    if (!captureImage) {
+      alert('이미지 저장이 아직 되지 않았습니다!');
+      return;
+    }
+    setCaptureFile(captureImage);
     setCapture(false);
   }
 

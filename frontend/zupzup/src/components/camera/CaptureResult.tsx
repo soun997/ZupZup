@@ -1,14 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import * as utils from 'utils';
 
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import DownloadSvg from 'assets/icons/download.svg?react';
 import ShareSvg from 'assets/icons/share.svg?react';
 import CONSOLE from 'utils/ColorConsoles';
-import TrashPage from 'pages/trash/TrashPage';
 import { canvasToFile } from 'utils/CanvasUtils';
 
 interface Props {
@@ -18,17 +14,12 @@ interface Props {
     File | undefined,
     React.Dispatch<React.SetStateAction<File | undefined>>,
   ];
-  hasUserRequestAnalyzeState: [
-    Boolean,
-    React.Dispatch<React.SetStateAction<Boolean>>,
-  ];
 }
 
 const CaptureResult = ({
   cameraRef,
   setCapture,
   captureFileState,
-  hasUserRequestAnalyzeState,
 }: Props) => {
   CONSOLE.reRender('CaptureResult rendered!!');
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,9 +27,6 @@ const CaptureResult = ({
   const downloadRef = useRef<HTMLAnchorElement>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const [captureFile, setCaptureFile] = captureFileState;
-  const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
-    hasUserRequestAnalyzeState;
-  const navigate = useNavigate();
 
   const downloadImage = () => {
     const downloadButton = downloadRef.current;
@@ -110,12 +98,6 @@ const CaptureResult = ({
 
   return (
     <S.Wrap>
-      {hasUserRequestAnalyze && (
-        <TrashPage
-          captureFile={captureFile}
-          setHasUserRequestAnalyze={setHasUserRequestAnalyze}
-        />
-      )}
       <S.Header>
         <S.PrevButton onClick={() => setCapture(false)}>
           <AngleLeftSvg />

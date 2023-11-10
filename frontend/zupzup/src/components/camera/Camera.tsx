@@ -20,9 +20,9 @@ const Camera = ({ setCameraOn }: Props) => {
   const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
     hasUserRequestAnalyzeState;
   const captureFileState = useState<File>();
-  const [captureFile, setCaptureFile] = captureFileState;
-  const analyzeInfoeState = useState<TrashAnalyzeReport>();
-  const [analyzeInfo, setAnalyzeInfo] = analyzeInfoeState;
+  const [captureFile] = captureFileState;
+  const analyzeInfoState = useState<TrashAnalyzeReport>();
+  const [analyzeInfo] = analyzeInfoState;
   const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<Boolean>();
   const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
   const disableCamera = () => {
@@ -93,14 +93,13 @@ const Camera = ({ setCameraOn }: Props) => {
           cameraRef={cameraRef}
           setCapture={setCapture}
           captureFileState={captureFileState}
-          hasUserRequestAnalyzeState={hasUserRequestAnalyzeState}
         />
       )}
       {hasUserRequestAnalyze && (
         <TrashPage
           captureFile={captureFile}
           setHasUserRequestAnalyze={setHasUserRequestAnalyze}
-          analyzeInfoeState={analyzeInfoeState}
+          analyzeInfoState={analyzeInfoState}
           setIsProcessingComplete={setIsProcessingComplete}
         />
       )}

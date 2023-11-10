@@ -6,7 +6,7 @@ import {
   Tensor,
   dispose,
 } from '@tensorflow/tfjs';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { GraphModel } from '@tensorflow/tfjs-converter';
 import CONSOLE from 'utils/ColorConsoles';
 import { io } from '@tensorflow/tfjs-core';
@@ -18,13 +18,12 @@ import { TrashAnalyzeReport, TrashTypeTable } from 'types/Trash';
 interface Props {
   captureFile: File | undefined;
   setHasUserRequestAnalyze: (hasUserRequestAnalyze: boolean) => void;
-  analyzeInfoeState: [
+  analyzeInfoState: [
     TrashAnalyzeReport | undefined,
     React.Dispatch<React.SetStateAction<TrashAnalyzeReport | undefined>>,
   ];
   setIsProcessingComplete: (setIsProcessingComplete: boolean) => void;
 }
-
 
 interface AnalyzeResult {
   gatheredTrash: number;
@@ -34,8 +33,7 @@ interface AnalyzeResult {
 
 const TrashPage = ({
   captureFile,
-  setHasUserRequestAnalyze,
-  analyzeInfoeState,
+  analyzeInfoState,
   setIsProcessingComplete,
 }: Props) => {
   CONSOLE.reRender('TrashPage rendered!!');
@@ -52,9 +50,8 @@ const TrashPage = ({
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
-  const canvasRef = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
-  const [analyzeInfo, setAnaylzeInfo] = analyzeInfoeState;
+  const [_, setAnaylzeInfo] = analyzeInfoState;
 
   function loadImage() {
     const image = new Image();

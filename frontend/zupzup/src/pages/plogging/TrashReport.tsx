@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CoinReport, ConfirmButton } from 'components';
 import { TrashAnalyzeReport } from 'types/Trash';
 import { useAppDispatch } from 'hooks';
@@ -34,7 +33,6 @@ const CANVAS_SETTING = {
 const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   CONSOLE.reRender('TrashReport rendered!!');
   console.log(trashReport);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const trashAnalyzeCanvasRef =
     useRef() as React.MutableRefObject<HTMLCanvasElement>;

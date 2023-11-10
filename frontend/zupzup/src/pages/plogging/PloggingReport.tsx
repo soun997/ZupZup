@@ -71,46 +71,38 @@ const PloggingReport = () => {
 
       const { Tmapv3 } = window;
       const latlngBounds = new Tmapv3.LatLngBounds(
-        new Tmapv3.LatLng(minLat - 0.00001, minLng - 0.00001),
+        new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
       );
-      latlngBounds.extend(
-        new Tmapv3.LatLng(maxLat + 0.00001, maxLng + 0.00001),
-      );
+      latlngBounds.extend(new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001));
       console.log(latlngBounds);
       if (mapRef.current) {
         const map = new Tmapv3.Map(mapRef.current, {
-          zoom: 17,
           width: '100%',
           height: '200px',
           bounds: latlngBounds,
         });
 
-        const locations = JSON.parse(
-          localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
-        );
+        map.on('ConfigLoad', () => {
+          const locations = JSON.parse(
+            localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
+          );
 
-        if (!locations || locations.length < 1) {
-          return;
-        }
+          if (!locations || locations.length < 1) {
+            return;
+          }
 
-        const paths = locations.map(
-          (location: Location) => new Tmapv3.LatLng(location.lat, location.lng),
-        );
+          const paths = [...locations].map(
+            (location: Location) =>
+              new window.Tmapv3.LatLng(location.lat, location.lng),
+          );
 
-        [...paths].forEach(
-          path =>
-            new Tmapv3.Marker({
-              position: path,
-              map: map,
-            }),
-        );
-
-        new Tmapv3.Polyline({
-          path: paths,
-          strokeColor: '#dd00dd',
-          strokeWeight: 6,
-          direction: true,
-          map: map,
+          new window.Tmapv3.Polyline({
+            path: paths,
+            strokeColor: '#dd00dd',
+            strokeWeight: 6,
+            direction: true,
+            map: map,
+          });
         });
       }
     };

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import * as utils from 'utils';
-import { ConfirmButton, RecordReport } from 'components';
-import SaveSvg from 'assets/icons/save.svg?react';
+import { ConfirmButton, RecordReport, PloggingDone } from 'components';
 import { useAppDispatch, useCapture } from 'hooks';
-import PloggingDone from 'components/plogging/PloggingDone';
 import { deleteAllPlogging } from 'hooks/store/usePlogging';
+
+import SaveSvg from 'assets/icons/save.svg?react';
 
 interface Location {
   lat: number;
@@ -14,7 +15,7 @@ interface Location {
 }
 
 const PloggingReport = () => {
-  const mapRef = useRef(null);
+  const canvasRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -26,8 +27,24 @@ const PloggingReport = () => {
     navigate(utils.URL.MYPAGE.HOME);
   };
 
+  const dataURLtoBlob = (dataURL: string) => {
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  };
+
   useEffect(() => {
-    const initMap = () => {
+    const initRoute = () => {
+      setLoading(true);
+      if (!canvasRef.current) {
+        return;
+      }
+
       const maxLat = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
       ) as number;
@@ -40,50 +57,51 @@ const PloggingReport = () => {
       const minLng = JSON.parse(
         localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
       ) as number;
+      const latRange = maxLat - minLat;
+      const lngRange = maxLng - minLng;
 
-      // const lat = (maxLat + minLat) / 2.0;
-      // const lng = (maxLng + minLng) / 2.0;
-      const { Tmapv3 } = window;
-      const latlngBounds = new Tmapv3.LatLngBounds(
-        new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
+      const canvas = canvasRef.current as HTMLCanvasElement;
+      const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+      canvas.width = 800;
+      canvas.height = 600;
+      context.strokeStyle = '#00c4b8';
+      context.lineWidth = 6;
+
+      const locations = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
       );
-      latlngBounds.extend(new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001));
-      console.log(latlngBounds);
-      if (mapRef.current) {
-        const mapContainer = mapRef.current;
 
-        const map = new Tmapv3.Map(mapContainer, {
-          zoom: 17,
-          width: '100%',
-          height: '200px',
-          bounds: latlngBounds,
+      if (!locations || locations.length < 1) {
+        return;
+      }
+
+      for (let i = 0; i < locations.length - 1; i++) {
+        const curLocation = locations[i] as Location;
+        const nextLocation = locations[i + 1] as Location;
+
+        const startX = (curLocation.lng - minLng) * (canvas.width / lngRange);
+        const startY = (maxLat - curLocation.lat) * (canvas.height / latRange);
+        const endX = (nextLocation.lng - minLng) * (canvas.width / lngRange);
+        const endY = (maxLat - nextLocation.lat) * (canvas.height / latRange);
+
+        context.beginPath();
+        context.moveTo(startX, startY);
+        context.lineTo(endX, endY);
+        context.stroke();
+      }
+      setLoading(false);
+
+      if (!showLoading) {
+        const blob = dataURLtoBlob(canvas.toDataURL(utils.IMAGE_MIME_TYPE));
+        const file = new File([blob], `route.jpg`, {
+          type: utils.IMAGE_MIME_TYPE,
         });
-
-        const locations = JSON.parse(
-          localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
-        );
-
-        if (!locations || locations.length < 1) {
-          return;
-        }
-
-        const paths = locations.map(
-          (location: Location) => new Tmapv3.LatLng(location.lat, location.lng),
-        );
-
-        new Tmapv3.Polyline({
-          path: paths,
-          strokeColor: '#dd00dd',
-          strokeWeight: 6,
-          direction: true,
-          map: map,
-        });
-        // setLoading(false);
+        console.log(file);
       }
     };
-    if (mapRef.current) {
-      initMap();
-    }
+
+    initRoute();
   }, [showLoading]);
 
   useEffect(() => {
@@ -102,7 +120,7 @@ const PloggingReport = () => {
 
   return (
     <S.Wrap>
-      <S.Content ref={captureRef}>
+      <S.Content>
         <S.TitleFrame>
           <S.MainTitle>플로깅 완료</S.MainTitle>
           <S.CloseButton onClick={() => navigate(utils.URL.MYPAGE.HOME)}>
@@ -110,13 +128,12 @@ const PloggingReport = () => {
           </S.CloseButton>
         </S.TitleFrame>
         <S.SubText>플로깅 기록을 확인해주세요</S.SubText>
-
-        <S.SubTitle>나의 이동 경로</S.SubTitle>
-        <S.Map ref={mapRef}></S.Map>
-        {/* <S.Image src={store.getState().plogging.routeImageUrl!} /> */}
-
-        <S.SubTitle>기록</S.SubTitle>
-        <RecordReport />
+        <S.CaptureWrapper ref={captureRef}>
+          <S.SubTitle>나의 이동 경로</S.SubTitle>
+          <S.CanvasBox ref={canvasRef} />
+          <S.SubTitle>기록</S.SubTitle>
+          <RecordReport />
+        </S.CaptureWrapper>
 
         <S.SaveImage onClick={handleCaptureClick}>
           <SaveSvg />
@@ -138,10 +155,12 @@ const S = {
     width: 100%;
     height: 100vh;
     padding-top: 10px;
+    background-color: ${({ theme }) => theme.color.background};
+    /* color: ${({ theme }) => theme.color.main}; */
   `,
 
   Content: styled.div`
-    padding: 0 24px;
+    /* padding: 0 24px; */
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -158,11 +177,19 @@ const S = {
     margin-top: 20px;
     pointer-events: none;
   `,
-
+  CanvasBox: styled.canvas`
+    object-fit: cover;
+    width: 100%;
+    background-color: ${({ theme }) => theme.color.gray4};
+    margin: 20px 0 0 0;
+    border-radius: 4px;
+    padding: 10px;
+  `,
   TitleFrame: styled.div`
     margin-top: 25px;
     display: flex;
     justify-content: space-between;
+    padding: 0 24px;
   `,
 
   CloseButton: styled.div`
@@ -188,15 +215,16 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.body2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
+    padding: 0 24px;
   `,
 
   SubTitle: styled.div`
-    margin-top: 40px;
     color: ${({ theme }) => theme.color.dark};
     font-size: ${({ theme }) => theme.font.size.body1};
     font-family: ${({ theme }) => theme.font.family.focus2};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     line-height: ${({ theme }) => theme.font.lineheight.body2};
+    padding: 40px 0 0;
   `,
 
   BottomFrame: styled.div`
@@ -219,6 +247,11 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.focus3};
     font-weight: ${({ theme }) => theme.font.weight.body2};
     color: ${({ theme }) => theme.color.gray2};
+    padding: 0 24px;
+  `,
+  CaptureWrapper: styled.div`
+    padding: 0 24px;
+    background-color: ${({ theme }) => theme.color.background};
   `,
 };
 export default PloggingReport;

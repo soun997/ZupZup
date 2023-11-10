@@ -35,7 +35,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
   const trashAnalyzeCanvasRef =
     useRef() as React.MutableRefObject<HTMLCanvasElement>;
   const [nameMap, setNameMap] = useState(null);
-  const [isImageLoaded, setIsImageLoaded] = useState<Boolean>();
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>();
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
 
   const savedPloggingRecord = store.getState().plogging;
@@ -126,7 +126,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
           offsetY,
         );
         const score = scores[i].toFixed(2);
-        const label = trashTypeTable[classes[i]]["class-kor"];
+        const label = trashTypeTable[classes[i]]['class-kor'];
         context?.strokeRect(
           convertedX1,
           convertedY1,
@@ -175,7 +175,7 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
     savedTrashDetail: TrashDetail,
     newTrashDetail: TrashDetail,
   ): TrashDetail {
-    let updatedTrashDetail: TrashDetail = {
+    const updatedTrashDetail: TrashDetail = {
       plastic: 0,
       cigarette: 0,
       can: 0,
@@ -254,8 +254,9 @@ const S = {
   `,
   CanvasContainer: styled.div`
     width: 100%;
-    height: 70%;
-    margin-top: 44px;
+    height: 250px;
+    /* height: 70%; */
+    margin-top: 30px;
     overflow: visible;
   `,
   Canvas: styled.canvas`
@@ -290,7 +291,7 @@ const S = {
   `,
   Header: styled.div`
     width: 100%;
-    height: 100px;
+    height: 50px;
     display: flex;
     align-items: center;
     padding: 0 15px;

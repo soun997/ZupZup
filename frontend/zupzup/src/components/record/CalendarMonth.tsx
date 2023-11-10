@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 
-import { format } from 'date-fns';
+import { format, addMonths, subMonths } from 'date-fns';
 
-const CalendarMonth = () => {
-  const now = new Date();
+import NextSvg from 'assets/icons/next.svg?react';
+import PrevSvg from 'assets/icons/prev.svg?react';
+
+interface Props {
+  currentDate: Date;
+  setCurrentDate: (currentDate: Date) => void;
+}
+
+const CalendarMonth = ({ currentDate, setCurrentDate }: Props) => {
   return (
     <S.Wrap>
-      <S.Month>{format(now, 'yyyy년 MM월')}</S.Month>
+      <PrevSvg onClick={() => setCurrentDate(subMonths(currentDate, 1))} />
+      <S.Month>{format(currentDate, 'yyyy년 MM월')}</S.Month>
+      <NextSvg onClick={() => setCurrentDate(addMonths(currentDate, 1))} />
     </S.Wrap>
   );
 };
@@ -21,6 +30,13 @@ const S = {
     height: 84px;
     background-color: ${({ theme }) => theme.color.white};
     padding: 0 20px;
+
+    & > svg {
+      width: 20px;
+      filter: ${({ theme }) => theme.color.darkFilter};
+      margin: 0 5px 2px;
+      cursor: pointer;
+    }
   `,
   Month: styled.div`
     font-size: ${({ theme }) => theme.font.size.display3};

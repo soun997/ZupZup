@@ -81,8 +81,21 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (captureImage) {
+    const disableCamera = () => {
+      if (cameraRef.current) {
+        const stream = cameraRef.current!.srcObject as MediaStream;
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => {
+            track.stop();
+          });
+        }
+        (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
+      }
+    };
+    if (captureFile) {
       CONSOLE.info('trash captureFile saved in memory');
+      disableCamera();
     }
   }, [captureImage]);
 

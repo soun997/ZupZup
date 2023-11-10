@@ -15,14 +15,13 @@ import {
   useGeolocation,
   useStopWatch,
   useDistance,
-  store,
   calculateCalories,
   useAppDispatch,
 } from 'hooks';
 import * as utils from 'utils';
 
-import { PloggingApis, RecordApis, TrashApis } from 'api';
-import { PloggingLogRequest, TrashRequest, TrashInfo } from 'types';
+import { TrashApis } from 'api';
+import { TrashInfo } from 'types';
 import { format } from 'date-fns';
 import {
   setCalories,
@@ -51,24 +50,6 @@ const OnPlogging = () => {
     dispatch(setDistance(totalDistance));
     dispatch(setTime(stopwatch));
 
-    const ploggingData: PloggingLogRequest = {
-      calories: onCalories,
-      startDateTime: store.getState().plogging.startDateTime!,
-      endDateTime: store.getState().plogging.endDateTime!,
-      distance: totalDistance,
-      durationTime: stopwatch,
-      coin: store.getState().plogging.coin,
-      gatheredTrash: store.getState().plogging.gatheredTrash,
-      routeImageUrl: 'assets/images/route.png',
-    };
-
-    const trashData: TrashRequest = store.getState().plogging.trashDetail;
-    console.log(ploggingData, trashData);
-    await RecordApis.postPloggingLog({
-      ploggingLogRequest: ploggingData,
-      trashRequest: trashData,
-    });
-    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 
@@ -105,12 +86,46 @@ const OnPlogging = () => {
 
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
+
+      const maxLatitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LATITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MAX_LATITUDE,
+        JSON.stringify(Math.max(maxLatitude, lat)),
+      );
+      const minLatitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LATITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MIN_LATITUDE,
+        JSON.stringify(
+          Math.min(minLatitude ? minLatitude : Number.MAX_VALUE, lat),
+        ),
+      );
+      const maxLongitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MAX_LONGITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MAX_LONGITUDE,
+        JSON.stringify(Math.max(maxLongitude, lng)),
+      );
+      const minLongitude = JSON.parse(
+        localStorage.getItem(utils.COORDINATE.MIN_LONGITUDE) as string,
+      );
+      localStorage.setItem(
+        utils.COORDINATE.MIN_LONGITUDE,
+        JSON.stringify(
+          Math.min(minLongitude ? minLongitude : Number.MAX_VALUE, lng),
+        ),
+      );
+
       const locations = JSON.parse(
-        localStorage.getItem(utils.LOCATIONS_KEY) as string,
+        localStorage.getItem(utils.COORDINATE.LOCATIONS_KEY) as string,
       );
       if (!locations) {
         localStorage.setItem(
-          utils.LOCATIONS_KEY,
+          utils.COORDINATE.LOCATIONS_KEY,
           JSON.stringify([{ lat, lng }]),
         );
         return;
@@ -123,25 +138,21 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5 && distance <= 120) {
+      if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
         const calorie = calculateCalories(stopwatch);
         setCalorie(calorie);
         locations.push({ lat, lng });
-        localStorage.setItem(utils.LOCATIONS_KEY, JSON.stringify(locations));
+        localStorage.setItem(
+          utils.COORDINATE.LOCATIONS_KEY,
+          JSON.stringify(locations),
+        );
       }
     };
 
     recordLocation();
   }, [location, stopwatch]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.removeItem(utils.LOCATIONS_KEY);
-      localStorage.clear();
-    };
-  }, []);
 
   return (
     <S.Wrap>

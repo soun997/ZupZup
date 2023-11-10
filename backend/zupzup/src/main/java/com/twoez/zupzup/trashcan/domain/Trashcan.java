@@ -3,6 +3,7 @@ package com.twoez.zupzup.trashcan.domain;
 
 import com.twoez.zupzup.global.audit.BaseTime;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Trashcan extends BaseTime {
+public class Trashcan extends BaseTime implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

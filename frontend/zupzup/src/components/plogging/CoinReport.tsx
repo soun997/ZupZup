@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
-import { useNavigate } from 'react-router-dom';
 import { Loading } from 'pages';
 
 interface Props {
@@ -38,7 +37,6 @@ interface TrashTableDetail {
 const COIN_TABLE_URI = '/classify/classify_type.json';
 
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
-  const navigate = useNavigate();
   const [coinTable, setCoinTable] = useState<TrashTable>();
 
   useEffect(() => {
@@ -57,7 +55,7 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
     <S.Wrap>
       <S.TitleFrame>
         <S.Title>획득한 코인</S.Title>
-        <S.Caption onClick={() => navigate('/')}>
+        <S.Caption onClick={() => alert('준비중 입니다')}>
           코인 산정 기준이 궁금하신가요?
           <ArrowSvg />
         </S.Caption>

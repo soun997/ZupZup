@@ -1,4 +1,7 @@
 spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: ${MARIA_URL}

@@ -9,7 +9,9 @@ import GoogleIcon from 'assets/icons/Google_logo.svg?react';
 
 const Login = () => {
   const handleSocialLogin = async (domain: string) => {
-    window.location.href = `https://zupzup.shop/oauth2/authorization/${domain}`;
+    window.location.href = `${
+      import.meta.env.VITE_APP_SERVER
+    }/oauth2/authorization/${domain}`;
   };
 
   return (

@@ -15,15 +15,16 @@ interface Props {
 const Camera = ({ setCameraOn }: Props) => {
   const cameraRef = useRef<HTMLVideoElement>(null);
   const [capture, setCapture] = useState<boolean>(false);
-  const hasUserRequestAnalyzeState = useState<Boolean>(false);
+  const hasUserRequestAnalyzeState = useState<boolean>(false);
   const [hasUserRequestAnalyze, setHasUserRequestAnalyze] =
     hasUserRequestAnalyzeState;
   const captureFileState = useState<File>();
   const [captureFile] = captureFileState;
   const analyzeInfoState = useState<TrashAnalyzeReport>();
   const [analyzeInfo] = analyzeInfoState;
-  const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<Boolean>();
-  const [isProcessingComplete, setIsProcessingComplete] = useState<Boolean>();
+  const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<boolean>();
+  const [isProcessingComplete, setIsProcessingComplete] = useState<boolean>();
+
   const disableCamera = () => {
     if (cameraRef.current) {
       const stream = cameraRef.current!.srcObject as MediaStream;
@@ -34,8 +35,8 @@ const Camera = ({ setCameraOn }: Props) => {
         });
       }
     }
+    (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
   };
-
   useEffect(() => {
     const enableCamera = async () => {
       try {
@@ -98,7 +99,10 @@ const Camera = ({ setCameraOn }: Props) => {
         />
       )}
       {isTrashReportPrepared && (
-        <TrashReport trashReport={analyzeInfo as TrashAnalyzeReport} setCameraOn={setCameraOn} />
+        <TrashReport
+          trashReport={analyzeInfo as TrashAnalyzeReport}
+          setCameraOn={setCameraOn}
+        />
       )}
       <S.Header>
         <S.CancelButton

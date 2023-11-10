@@ -11,8 +11,8 @@ const Record = ({ ploggingInfos }: Props) => {
   return (
     <S.Wrap>
       {ploggingInfos &&
-        [...ploggingInfos].map(ploggingInfo => (
-          <RecordBox ploggingInfo={ploggingInfo} />
+        [...ploggingInfos].map((ploggingInfo, index) => (
+          <RecordBox key={index} ploggingInfo={ploggingInfo} />
         ))}
       {ploggingInfos.length === 0 && (
         <S.NotExistsPlogging>

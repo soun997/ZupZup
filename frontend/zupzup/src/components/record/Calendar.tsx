@@ -25,14 +25,9 @@ interface PloggingState {
 }
 
 const Calendar = (props: CalendarProps) => {
-  const now = new Date();
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [calendar, setCalendar] = useState<JSX.Element[]>();
   const [ploggingStates, setPloggingStates] = useState<PloggingState>();
-
-  const monthStart = startOfMonth(now);
-  const monthEnd = endOfMonth(monthStart);
-  const startDate = startOfWeek(monthStart);
-  const endDate = endOfWeek(monthEnd);
 
   const selectDate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLElement;
@@ -44,40 +39,31 @@ const Calendar = (props: CalendarProps) => {
     }
   };
 
-  const initPloggingStates = async () => {
-    try {
-      const response = await RecordApis.getPloggingLogByMonth(
-        format(now, 'yyyy-MM-dd'),
-      );
-
-      const states: PloggingState = {};
-      [...response.data.results].forEach((element: PloggingDayState) => {
-        states[element.date] = element.exists;
-      });
-      setPloggingStates(states);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const initCalendar = () => {
     const rows = [];
     let days = [];
     let dots = [];
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
     let day = startDate;
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         days.push(
           <S.Date
-            className={`${isSameMonth(now, day) ? 'active' : ''} ${
-              isSameDay(now, day) ? 'today' : ''
+            className={`${
+              isSameMonth(currentDate, new Date()) &&
+              isSameDay(currentDate, day)
+                ? 'today'
+                : ''
             }`}
             key={day.getTime()}
             onClick={e => selectDate(e)}
           >
             <input type="hidden" value={day.toISOString()} />
-            {isSameMonth(now, day) ? format(day, 'd') : ''}
+            {isSameMonth(currentDate, day) ? format(day, 'd') : ''}
           </S.Date>,
         );
 
@@ -111,14 +97,16 @@ const Calendar = (props: CalendarProps) => {
     for (let i = 0; i < 7; i++) {
       days.push(
         <S.Date
-          className={`${isSameMonth(now, day) ? 'active' : ''} ${
-            isSameDay(now, day) ? 'today' : ''
+          className={`${
+            isSameMonth(currentDate, new Date()) && isSameDay(currentDate, day)
+              ? 'today'
+              : ''
           } ${isSameDay(date, day) ? 'selected' : ''}`}
           key={day.getTime()}
           onClick={e => selectDate(e)}
         >
           <input type="hidden" value={day.toISOString()} />
-          {isSameMonth(now, day) ? format(day, 'd') : ''}
+          {isSameMonth(currentDate, day) ? format(day, 'd') : ''}
         </S.Date>,
       );
 
@@ -148,18 +136,37 @@ const Calendar = (props: CalendarProps) => {
   };
 
   useEffect(() => {
+    const initPloggingStates = async () => {
+      try {
+        const response = await RecordApis.getPloggingLogByMonth(
+          format(currentDate, 'yyyy-MM-dd'),
+        );
+
+        const states: PloggingState = {};
+        [...response.data.results].forEach((element: PloggingDayState) => {
+          states[element.date] = element.exists;
+        });
+        setPloggingStates(states);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     initPloggingStates();
-  }, []);
+  }, [currentDate]);
 
   useEffect(() => {
-    if (ploggingStates) {
+    if (ploggingStates && currentDate) {
       initCalendar();
     }
   }, [ploggingStates]);
 
   return (
     <S.Wrap>
-      <CalendarMonth />
+      <CalendarMonth
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+      />
       <S.Calendar className={props.selectedDate === null ? 'month' : 'week'}>
         <S.DaysOfWeek>
           <S.NameOfDays>일</S.NameOfDays>
@@ -255,7 +262,6 @@ const S = {
     &.active:active {
       background-color: ${({ theme }) => theme.color.main};
       color: ${({ theme }) => theme.color.white};
-      cursor: pointer;
     }
   `,
   Dots: styled.ul`

@@ -1,4 +1,7 @@
 spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
   h2:
     console:
       enabled: true

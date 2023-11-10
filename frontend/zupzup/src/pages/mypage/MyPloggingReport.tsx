@@ -6,7 +6,6 @@ import { RecordApis } from 'api';
 import { useEffect, useState } from 'react';
 import { Loading } from 'pages';
 import ErrorSvg from 'assets/icons/error-check.svg?react';
-import { useFormatTime } from 'hooks';
 
 const trashInfos = [
   { name: '플라스틱', count: 0 },
@@ -27,6 +26,18 @@ const MyPloggingReport = () => {
     } catch (error) {
       console.error('Error fetching report info:', error);
     }
+  };
+
+  const formatTimeToString = (totalDurationTime: number): string => {
+    const hours = Math.floor(totalDurationTime / 3600);
+    const minutes = Math.floor((totalDurationTime % 3600) / 60);
+    const seconds = totalDurationTime % 60;
+
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   };
 
   useEffect(() => {
@@ -59,10 +70,7 @@ const MyPloggingReport = () => {
             플로깅 시간
             <div className="tag">
               {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
-              {
-                useFormatTime
-                  .formatTime(ploggingInfo.totalDurationTime)
-              }
+              {formatTimeToString(ploggingInfo.totalDurationTime)}
             </div>
           </S.EachBoxInfo>
           <S.EachBoxInfo $isLast={true}>

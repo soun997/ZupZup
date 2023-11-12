@@ -13,6 +13,7 @@ import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.Member;
+import com.twoez.zupzup.member.exception.AlreadyRegisteredMemberException;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
 import com.twoez.zupzup.member.repository.MemberSpringDataRepository;
@@ -39,6 +40,7 @@ public class MemberService {
     private final PetRepository petRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
 
+    @Transactional
     public Member save(AuthUser authUser) {
 
         Member member = memberSpringDataRepository.save(authUser.toNewMember());
@@ -108,6 +110,14 @@ public class MemberService {
 
     @Transactional
     public void modifyMemberHealth(MemberHealthRegisterRequest memberHealthRegisterRequest) {
+        // TODO : DB에 2번 접근하는 문제 해결하기
+        Member memberRequestRegister = findById(memberHealthRegisterRequest.memberId());
+
+        // 이전에 가입하며 최초 헬스정보를 입력한 멤버는 다시 이 요청을 보낼 수 없다.
+        Assertion.with(memberRequestRegister)
+                .setValidation(Member::isNewMember)
+                .validateOrThrow(AlreadyRegisteredMemberException::new);
+
         modifyHealth(
                 memberHealthRegisterRequest.memberId(),
                 memberHealthRegisterRequest.birthYear(),

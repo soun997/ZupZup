@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 public class IdTokenValidator {
 
     private final GoogleIdTokenValidator googleIdTokenValidator;
+    private final KakaoIdTokenValidator kakaoIdTokenValidator;
 
     public AuthUser extractAuthUser(OauthProvider oauthProvider, String idToken) {
         return switch (oauthProvider) {
             case GOOGLE -> googleIdTokenValidator.extractAuthUser(idToken);
-            case KAKAO -> null; // TODO : KAKAO 로그인 구현시 추가 예정
+            case KAKAO -> kakaoIdTokenValidator.extractAuthUser(idToken);
         };
     }
 }

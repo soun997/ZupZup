@@ -70,7 +70,7 @@ const S = {
     align-items: center;
     overflow-y: scroll;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
     color: ${({ theme }) => theme.color.dark};

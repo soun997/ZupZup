@@ -67,10 +67,14 @@ const MyPage = () => {
         </S.Title>
         <S.Level>
           <S.SubInfo $daytime={isDaytime}>
-            {(characterInfo.level + 1 < 11) 
-            ? `레벨 ${characterInfo.level + 1}까지` : '최대 레벨 달성!'} 
+            {characterInfo.level + 1 < 11
+              ? `레벨 ${characterInfo.level + 1}까지`
+              : '최대 레벨 달성!'}
           </S.SubInfo>
-          <ProgressBar score={(characterInfo.level < 10) ? characterInfo.exp : 100} total={100} />
+          <ProgressBar
+            score={characterInfo.level < 10 ? characterInfo.exp : 100}
+            total={100}
+          />
         </S.Level>
         <S.Report $daytime={isDaytime}>
           <BoardSvg onClick={() => navigate(URL.MYPAGE.REPORT)} />
@@ -99,7 +103,7 @@ const S = {
     flex-direction: column;
     overflow: hidden;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background: ${({ $daytime }) =>
       $daytime
         ? `url("${import.meta.env.VITE_S3_URL}/character/egloo-crop.jpg")`

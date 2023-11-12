@@ -212,7 +212,7 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
   `,
 };

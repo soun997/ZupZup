@@ -25,7 +25,7 @@ const S = {
   `,
   Main: styled.div`
     width: ${({ theme }) => theme.deviceSize.mobile360};
-    min-height: 100vh;
+    min-height: 100dvh;
     min-height: -webkit-fill-available;
     background-color: ${({ theme }) => theme.color.background};
 

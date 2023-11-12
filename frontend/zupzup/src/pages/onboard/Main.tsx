@@ -31,7 +31,7 @@ const S = {
     flex-direction: column;
     overflow: hidden;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
 
     background-image: url(${import.meta.env.VITE_S3_URL}/background-3.png);
     background-size: cover;

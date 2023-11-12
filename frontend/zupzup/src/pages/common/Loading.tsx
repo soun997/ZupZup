@@ -16,7 +16,7 @@ const S = {
     align-items: center;
     overflow: hidden;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
     color: ${({ theme }) => theme.color.dark};
   `,

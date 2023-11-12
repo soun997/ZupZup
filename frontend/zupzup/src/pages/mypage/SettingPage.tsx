@@ -96,7 +96,7 @@ const S = {
     flex-direction: column;
 
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
   `,
 
   Content: styled.div`

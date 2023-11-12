@@ -33,8 +33,8 @@ export default Record;
 const S = {
   Wrap: styled.div`
     width: 100%;
-    height: calc(100vh - 280px);
-    max-height: calc(100vh - 280px);
+    height: calc(100dvh - 280px);
+    max-height: calc(100dvh - 280px);
     background-color: ${({ theme }) => theme.color.background};
     padding: 20px 15px;
 

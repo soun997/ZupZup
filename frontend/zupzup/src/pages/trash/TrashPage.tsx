@@ -46,7 +46,7 @@ const TrashPage = ({
     null,
   );
   const [nameMap, setNameMap] = useState(null);
-  const [isLoaded, setIsLoaded] = useState<Boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
 
@@ -165,7 +165,7 @@ const TrashPage = ({
   function processAnalyzeResult(
     classData: Float32Array | Int32Array | Uint8Array,
   ) {
-    let trashDetail: TrashDetail = {
+    const trashDetail: TrashDetail = {
       plastic: 0,
       cigarette: 0,
       can: 0,
@@ -220,7 +220,7 @@ const S = {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
     z-index: 400;
   `,

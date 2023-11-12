@@ -16,7 +16,7 @@ const MemberApis = {
 
   //*회원등록시
   registInfo: (registData: RegistInfo) =>
-    instance.put(`${MEMBER_URL}/register`, registData),
+    axios.put(`${BASE_URL}${MEMBER_URL}/register`, registData),
 
   //*프로필 정보 조회
   getProfileInfo: () => instance.get(`${MEMBER_URL}/profile`),

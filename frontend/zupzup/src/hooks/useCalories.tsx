@@ -6,7 +6,7 @@ const calculateCalories = (stopwatch: number): number => {
   const time = stopwatch / 60;
   console.log('time', time, stopwatch);
 
-  const oneMet = 10 * (3.5 * weightInKg * time);
+  const oneMet = 9.8 * (3.5 * weightInKg * time);
   const calories = (oneMet / 200) * 5;
 
   console.log(oneMet, calories);

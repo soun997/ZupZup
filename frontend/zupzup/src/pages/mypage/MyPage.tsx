@@ -91,7 +91,7 @@ const MyPage = () => {
         $daytime={isDaytime}
         level={characterInfo.level}
       ></S.Image>
-      <Navigation />
+      <Navigation currentPage="myPage" />
     </S.Wrap>
   );
 };

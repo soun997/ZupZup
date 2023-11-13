@@ -43,6 +43,8 @@ const OnPlogging = () => {
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
   const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
+  const [locationLoading, setLocationLoading] = useState<boolean>(false);
+
   const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
 
   const exitPlogging = async () => {
@@ -106,6 +108,7 @@ const OnPlogging = () => {
         return;
       }
 
+      setLocationLoading(true);
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
 
@@ -207,21 +210,20 @@ const OnPlogging = () => {
         refreshTrashInfo={refreshTrashInfo}
       />
       {}
-      {location.loaded && (
-        <PloggingMap
-          exitOn={exitOn}
-          ploggingInfoOn={ploggingInfoOn}
-          cameraOn={cameraOn}
-          location={{
-            lat: location.coordinates!.lat,
-            lng: location.coordinates!.lng,
-          }}
-          fixCenter={fixCenter}
-          setFixCenter={setFixCenter}
-          trashs={trashs}
-          trashOn={trashOn}
-        />
-      )}
+      <PloggingMap
+        exitOn={exitOn}
+        ploggingInfoOn={ploggingInfoOn}
+        cameraOn={cameraOn}
+        location={{
+          lat: location.coordinates!.lat,
+          lng: location.coordinates!.lng,
+        }}
+        locationLoading={locationLoading}
+        fixCenter={fixCenter}
+        setFixCenter={setFixCenter}
+        trashs={trashs}
+        trashOn={trashOn}
+      />
     </S.Wrap>
   );
 };

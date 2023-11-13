@@ -16,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
+import com.twoez.zupzup.fixture.plogginglog.TotalTrashFixture;
+import com.twoez.zupzup.fixture.plogginglog.TrashFixture;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
@@ -25,6 +27,8 @@ import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalTrash;
+import com.twoez.zupzup.plogginglog.domain.Trash;
 import com.twoez.zupzup.plogginglog.service.PloggingLogQueryService;
 import com.twoez.zupzup.plogginglog.service.PloggingLogService;
 import com.twoez.zupzup.support.docs.RestDocsTest;
@@ -274,12 +278,33 @@ class PloggingLogControllerTest extends RestDocsTest {
     }
 
     @Test
+    @DisplayName("사용자는 특정 플로깅 로그의 쓰레기 정보를 조회할 수 있다.")
+    void trashTest() throws Exception {
+        Trash trash = TrashFixture.DEFAULT.getTrash();
+
+        given(ploggingLogService.searchTrashByPloggingLogId(any(Long.class))).willReturn(trash);
+
+        ResultActions perform =
+                mockMvc.perform(
+                        get("/api/v1/plogging-logs/{ploggingLogId}/trash", 1L)
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        perform.andExpect(status().isOk()).andExpect(jsonPath("$.results.plastic").value(1));
+
+        perform.andDo(print())
+                .andDo(document("plogginglog-total", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
     @DisplayName("사용자는 플로깅 기록 집계를 조회할 수 있다.")
     void totalPloggingLogDetailsTest() throws Exception {
 
         TotalPloggingLog totalPloggingLog = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        TotalTrash totalTrash = TotalTrashFixture.DEFAULT.getTotalTrash();
+
         given(ploggingLogQueryService.searchTotalPloggingLog(any(Member.class)))
                 .willReturn(totalPloggingLog);
+        given(ploggingLogQueryService.searchTotalTrash(any(Member.class))).willReturn(totalTrash);
 
         ResultActions perform =
                 mockMvc.perform(
@@ -287,7 +312,8 @@ class PloggingLogControllerTest extends RestDocsTest {
 
         perform.andExpect(status().isOk())
                 .andExpect(jsonPath("$.results.totalDistance").value(100L))
-                .andExpect(jsonPath("$.results.totalCount").value(10L));
+                .andExpect(jsonPath("$.results.totalCount").value(10L))
+                .andExpect(jsonPath("$.results.totalPlastic").value(1));
         perform.andDo(print())
                 .andDo(document("plogginglog-total", getDocumentRequest(), getDocumentResponse()));
     }

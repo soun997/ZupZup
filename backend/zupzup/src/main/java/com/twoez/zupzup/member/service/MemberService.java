@@ -21,7 +21,9 @@ import com.twoez.zupzup.member.repository.redis.RefreshTokenRedisRepository;
 import com.twoez.zupzup.pet.domain.Pet;
 import com.twoez.zupzup.pet.repository.PetRepository;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalTrash;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
+import com.twoez.zupzup.plogginglog.repository.TotalTrashRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,7 @@ public class MemberService {
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
     private final PetRepository petRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
+    private final TotalTrashRepository totalTrashRepository;
 
     @Transactional
     public Member save(AuthUser authUser) {
@@ -46,7 +49,7 @@ public class MemberService {
         Member member = memberSpringDataRepository.save(authUser.toNewMember());
         petRepository.save(Pet.init(member));
         totalPloggingLogRepository.save(TotalPloggingLog.init(member));
-
+        totalTrashRepository.save(TotalTrash.init(member));
         return member;
     }
 

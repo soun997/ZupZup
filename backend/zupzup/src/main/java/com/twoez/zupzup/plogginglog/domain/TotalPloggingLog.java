@@ -3,14 +3,7 @@ package com.twoez.zupzup.plogginglog.domain;
 
 import com.twoez.zupzup.global.audit.BaseTime;
 import com.twoez.zupzup.member.domain.Member;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,7 +39,7 @@ public class TotalPloggingLog extends BaseTime {
     @ColumnDefault("false")
     private Boolean isDeleted;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

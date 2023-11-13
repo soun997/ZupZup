@@ -7,6 +7,8 @@ import static org.mockito.BDDMockito.given;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.fixture.plogginglog.TotalPloggingLogFixture;
+import com.twoez.zupzup.fixture.plogginglog.TotalTrashFixture;
+import com.twoez.zupzup.fixture.plogginglog.TrashFixture;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.plogginglog.controller.dto.request.LogRequest;
@@ -14,8 +16,11 @@ import com.twoez.zupzup.plogginglog.controller.dto.request.PloggingLogRequest;
 import com.twoez.zupzup.plogginglog.controller.dto.request.TrashRequest;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
+import com.twoez.zupzup.plogginglog.domain.TotalTrash;
+import com.twoez.zupzup.plogginglog.domain.Trash;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
+import com.twoez.zupzup.plogginglog.repository.TotalTrashRepository;
 import com.twoez.zupzup.plogginglog.repository.TrashRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -33,6 +38,7 @@ class PloggingLogServiceTest {
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;
     @Mock MemberRepository memberRepository;
     @Mock TrashRepository trashRepository;
+    @Mock TotalTrashRepository totalTrashRepository;
     @InjectMocks PloggingLogService ploggingLogService;
 
     PloggingLogRequest ploggingLogRequest =
@@ -54,13 +60,18 @@ class PloggingLogServiceTest {
     void addPloggingLogTest() {
 
         Member member = MemberFixture.DEFAULT.getMember();
-        TotalPloggingLog total = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        TotalPloggingLog totalPloggingLog = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+        Trash trash = TrashFixture.DEFAULT.getTrash();
+        TotalTrash totalTrash = TotalTrashFixture.DEFAULT.getTotalTrash();
 
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(member));
         given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
-                .willReturn(Optional.of(total));
+                .willReturn(Optional.of(totalPloggingLog));
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+        given(trashRepository.save(any(Trash.class))).willReturn(trash);
+        given(totalTrashRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(totalTrash));
 
         PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
@@ -75,11 +86,16 @@ class PloggingLogServiceTest {
         Member updatedMember = MemberFixture.DEFAULT.getMember();
         TotalPloggingLog total = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+        Trash trash = TrashFixture.DEFAULT.getTrash();
+        TotalTrash totalTrash = TotalTrashFixture.DEFAULT.getTotalTrash();
 
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(updatedMember));
         given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
                 .willReturn(Optional.of(total));
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+        given(trashRepository.save(any(Trash.class))).willReturn(trash);
+        given(totalTrashRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(totalTrash));
 
         PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
@@ -89,24 +105,38 @@ class PloggingLogServiceTest {
     }
 
     @Test
-    @DisplayName("플로깅 기록을 저장할 때, 플로깅 기록 집계 테이블을 갱신한다.")
-    void updateTotalPloggingLogTest() {
+    @DisplayName("플로깅 기록을 저장할 때, 플로깅 기록 집계 테이블과 쓰레기 집계 테이블을 갱신한다.")
+    void updateTotalPloggingLogAndTotalTrashTest() {
 
         Member member = MemberFixture.DEFAULT.getMember();
-        TotalPloggingLog originTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
-        TotalPloggingLog updatedTotal = TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        TotalPloggingLog originTotalPloggingLog =
+                TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
+        TotalPloggingLog updatedTotalPloggingLog =
+                TotalPloggingLogFixture.DEFAULT.getTotalPloggingLog();
         PloggingLog ploggingLog = PloggingLogFixture.DEFAULT.getPloggingLog();
+
+        Trash trash = TrashFixture.DEFAULT.getTrash();
+        TotalTrash originTotalTrash = TotalTrashFixture.DEFAULT.getTotalTrash();
+        TotalTrash updatedTotalTrash = TotalTrashFixture.DEFAULT.getTotalTrash();
 
         given(memberRepository.findById(any(Long.class))).willReturn(Optional.of(member));
         given(totalPloggingLogRepository.findByMemberId(any(Long.class)))
-                .willReturn(Optional.of(updatedTotal));
+                .willReturn(Optional.of(updatedTotalPloggingLog));
+
         given(ploggingLogRepository.save(any(PloggingLog.class))).willReturn(ploggingLog);
+
+        given(trashRepository.save(any(Trash.class))).willReturn(trash);
+        given(totalTrashRepository.findByMemberId(any(Long.class)))
+                .willReturn(Optional.of(updatedTotalTrash));
 
         PloggingLog result = ploggingLogService.add(request, any(Long.class));
 
         assertThat(result).isEqualTo(ploggingLog);
-        assertThat(updatedTotal.getTotalDistance())
+        assertThat(updatedTotalPloggingLog.getTotalDistance())
                 .isEqualTo(
-                        originTotal.getTotalDistance() + request.ploggingLogRequest().distance());
+                        originTotalPloggingLog.getTotalDistance()
+                                + request.ploggingLogRequest().distance());
+        assertThat(updatedTotalTrash.getTotalPlastic())
+                .isEqualTo(originTotalTrash.getTotalPlastic() + request.trashRequest().plastic());
     }
 }

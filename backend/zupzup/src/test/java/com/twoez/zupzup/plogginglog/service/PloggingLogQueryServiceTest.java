@@ -8,10 +8,12 @@ import static org.mockito.BDDMockito.given;
 import com.twoez.zupzup.fixture.member.MemberFixture;
 import com.twoez.zupzup.fixture.plogginglog.PloggingLogFixture;
 import com.twoez.zupzup.global.exception.plogginglog.TotalPloggingLogNotFoundException;
+import com.twoez.zupzup.global.exception.plogginglog.TotalTrashNotFoundException;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.plogginglog.domain.PloggingLog;
 import com.twoez.zupzup.plogginglog.repository.PloggingLogQueryRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
+import com.twoez.zupzup.plogginglog.repository.TotalTrashRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +31,7 @@ class PloggingLogQueryServiceTest {
 
     @Mock PloggingLogQueryRepository ploggingLogQueryRepository;
     @Mock TotalPloggingLogRepository totalPloggingLogRepository;
+    @Mock TotalTrashRepository totalTrashRepository;
     @InjectMocks PloggingLogQueryService ploggingLogQueryService;
 
     Member member = MemberFixture.DEFAULT.getMember();
@@ -112,5 +115,15 @@ class PloggingLogQueryServiceTest {
 
         assertThatThrownBy(() -> ploggingLogQueryService.searchTotalPloggingLog(member))
                 .isInstanceOf(TotalPloggingLogNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("조회할 쓰레기 집계가 없다면 오류가 발생한다.")
+    void totalTrashInitTest() {
+
+        given(totalTrashRepository.findByMemberId(member.getId())).willReturn(Optional.empty());
+
+        assertThatThrownBy(() -> ploggingLogQueryService.searchTotalTrash(member))
+                .isInstanceOf(TotalTrashNotFoundException.class);
     }
 }

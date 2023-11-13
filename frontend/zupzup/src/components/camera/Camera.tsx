@@ -188,9 +188,9 @@ const S = {
     padding: 20px 0;
   `,
   CaptureButton: styled.button`
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
     background-color: ${({ theme }) => theme.color.white};
     border: 4px solid ${({ theme }) => theme.color.gray5};
     box-shadow: 0px 0px 10px 1px #3333;

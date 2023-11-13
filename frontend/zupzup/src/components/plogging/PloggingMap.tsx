@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { TrashInfo } from 'types';
 import * as utils from 'utils';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
+import { useAppDispatch } from 'hooks';
+import { setCenterLat, setCenterLng } from 'hooks/store/useMap';
 
 interface Location {
   lat: number;
@@ -42,6 +44,7 @@ const PloggingMap = ({
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
   const [polyline, setPolyline] = useState<Polyline | null>(null);
   const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
+  const dispatch = useAppDispatch();
 
   const initMap = ({ lat, lng }: { lat: number; lng: number }) => {
     const { Tmapv3 } = window;
@@ -145,6 +148,11 @@ const PloggingMap = ({
       tmap.setZoom(17);
     }
   }, [locationLoading]);
+
+  useEffect(() => {
+    dispatch(setCenterLat(tmap?.getCenter()._lat));
+    dispatch(setCenterLng(tmap?.getCenter()._lng));
+  }, [tmap?.getCenter()]);
 
   useEffect(() => {
     const updateTrashMarkers = () => {

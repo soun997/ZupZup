@@ -8,6 +8,7 @@ interface LatLng {
 interface TMap {
   setCenter: (latLng: LatLng) => void;
   setZoom: (zoom: number) => void;
+  getCenter: () => LatLng;
   on: (type: string, callbackfunc: () => void) => void;
 }
 

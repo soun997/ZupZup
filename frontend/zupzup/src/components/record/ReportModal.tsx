@@ -119,15 +119,15 @@ const S = {
     width: 100%;
 
     .eachName {
-      font-size: ${({ theme }) => theme.font.size.focus1};
+      font-size: ${({ theme }) => theme.font.size.focus2};
       font-family: ${({ theme }) => theme.font.family.focus2};
       color: ${({ theme }) => theme.color.gray2};
     }
 
     .eachVal {
       color: ${({ theme }) => theme.color.gray1};
-      font-size: ${({ theme }) => theme.font.size.focus1};
-      font-family: ${({ theme }) => theme.font.family.focus1};
+      font-size: ${({ theme }) => theme.font.size.focus3};
+      font-family: ${({ theme }) => theme.font.family.focus3};
     }
   `,
 };

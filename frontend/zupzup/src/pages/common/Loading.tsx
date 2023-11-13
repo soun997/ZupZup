@@ -33,7 +33,7 @@ const S = {
     font-weight: ${({ theme }) => theme.font.weight.focus3};
     font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.body2};
-    margin-top: -50px;
+    margin-top: -70px;
   `,
 
   SubText: styled.div`

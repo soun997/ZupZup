@@ -24,6 +24,7 @@ const Camera = ({ setCameraOn }: Props) => {
   const [analyzeInfo] = analyzeInfoState;
   const [isTrashReportPrepared, setIsTrashReportPrepared] = useState<boolean>();
   const [isProcessingComplete, setIsProcessingComplete] = useState<boolean>();
+  const [accessableCamera, setAccessableCamera] = useState<boolean>(true);
 
   const disableCamera = () => {
     if (cameraRef.current) {
@@ -35,8 +36,11 @@ const Camera = ({ setCameraOn }: Props) => {
         });
       }
     }
-    (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
+    if (accessableCamera) {
+      (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
+    }
   };
+
   useEffect(() => {
     const enableCamera = async () => {
       try {
@@ -48,8 +52,10 @@ const Camera = ({ setCameraOn }: Props) => {
         if (cameraRef.current) {
           cameraRef.current!.srcObject = stream;
         }
+        setAccessableCamera(true);
       } catch (error) {
         console.log('camera access error : ', error);
+        setAccessableCamera(false);
       }
     };
 
@@ -114,10 +120,23 @@ const Camera = ({ setCameraOn }: Props) => {
           <XSvg />
         </S.CancelButton>
       </S.Header>
-      <S.CameraBox ref={cameraRef} autoPlay playsInline height="100%" />
-      <S.UserAccess>
-        <S.CaptureButton onClick={() => setCapture(true)}></S.CaptureButton>
-      </S.UserAccess>
+      {accessableCamera ? (
+        <>
+          <S.CameraBox ref={cameraRef} autoPlay playsInline height="100%" />
+          <S.UserAccess>
+            <S.CaptureButton onClick={() => setCapture(true)}></S.CaptureButton>
+          </S.UserAccess>
+        </>
+      ) : (
+        <S.CameraAccessInfo>
+          <S.CameraAccessInfoImage
+            src={`${import.meta.env.VITE_S3_URL}/character/no-result.png`}
+          />
+          <S.CameraAccessInfoComment>
+            카메라 권한을 허용해주세요
+          </S.CameraAccessInfoComment>
+        </S.CameraAccessInfo>
+      )}
     </S.Wrap>
   );
 };
@@ -178,6 +197,42 @@ const S = {
 
     &:active {
       box-shadow: 0px 0px 4px 1px #3333;
+    }
+  `,
+  CameraAccessInfo: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  `,
+  CameraAccessInfoImage: styled.img`
+    width: 60%;
+  `,
+  CameraAccessInfoComment: styled.div`
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.body2};
+    color: ${({ theme }) => theme.color.dark};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  `,
+  SettingsButton: styled.button`
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid ${({ theme }) => theme.color.main};
+    background-color: transparent;
+    color: ${({ theme }) => theme.color.main};
+
+    margin: 10px 0 0;
+
+    &:active {
+      background-color: ${({ theme }) => theme.color.main};
+      color: ${({ theme }) => theme.color.white};
     }
   `,
 };

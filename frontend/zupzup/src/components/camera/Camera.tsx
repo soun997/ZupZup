@@ -41,22 +41,6 @@ const Camera = ({ setCameraOn }: Props) => {
     }
   };
 
-  const openMobileSettings = () => {
-    // 모바일 설정 창으로 이동하는 로직
-    if (window.navigator.userAgent.match(/Android/i)) {
-      // Android의 경우
-      window.location.href = 'content://com.android.settings/settings';
-    } else if (window.navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-      // iOS의 경우
-      window.location.href = 'app-settings:';
-    } else {
-      // 기타 플랫폼의 경우 사용자에게 안내
-      alert(
-        '모바일 설정 창으로 이동할 수 없습니다. 수동으로 설정을 변경해주세요.',
-      );
-    }
-  };
-
   useEffect(() => {
     const enableCamera = async () => {
       try {
@@ -151,9 +135,6 @@ const Camera = ({ setCameraOn }: Props) => {
           <S.CameraAccessInfoComment>
             카메라 권한을 허용해주세요
           </S.CameraAccessInfoComment>
-          <S.SettingsButton onClick={() => openMobileSettings()}>
-            설정하기
-          </S.SettingsButton>
         </S.CameraAccessInfo>
       )}
     </S.Wrap>

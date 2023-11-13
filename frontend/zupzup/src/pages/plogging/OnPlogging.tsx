@@ -21,7 +21,7 @@ import {
 } from 'hooks';
 import * as utils from 'utils';
 
-import { TrashApis } from 'api';
+import { PloggingApis, TrashApis } from 'api';
 import { TrashInfo } from 'types';
 import { format } from 'date-fns';
 import {
@@ -51,6 +51,7 @@ const OnPlogging = () => {
     dispatch(setDistance(totalDistance));
     dispatch(setTime(stopwatch));
 
+    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 

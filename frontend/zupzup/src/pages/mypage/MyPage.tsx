@@ -109,10 +109,10 @@ const S = {
     height: 100dvh;
     background: ${({ $daytime }) =>
       $daytime
-        ? `url("${import.meta.env.VITE_S3_URL}/character/egloo-crop.jpg")`
+        ? `url("${import.meta.env.VITE_S3_URL}/character/egloo-crop.avif")`
         : `url("${
             import.meta.env.VITE_S3_URL
-          }/character/egloo-crop-night.jpg")`};
+          }/character/egloo-crop-night.avif")`};
     background-size: cover;
     color: ${({ theme }) => theme.color.dark};
   `,

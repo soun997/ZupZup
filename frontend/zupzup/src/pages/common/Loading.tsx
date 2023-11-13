@@ -6,9 +6,7 @@ const Loading = () => {
     <S.Wrap>
       <LoadingAnimation />
       <S.Text>데이터가 로딩중입니다</S.Text>
-      <S.SubText>
-        (로딩바가 멈추더라도 진행중이니 조금만 기다려주세요!)
-      </S.SubText>
+      <S.SubText>(로딩이 멈추더라도 진행중이니 조금만 기다려주세요!)</S.SubText>
     </S.Wrap>
   );
 };

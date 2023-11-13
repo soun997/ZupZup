@@ -3,25 +3,56 @@ import styled from 'styled-components';
 
 import ClockSvg from 'assets/icons/clock.svg?react';
 import PathSvg from 'assets/icons/path.svg?react';
+import ReportSvg from 'assets/icons/clipboard.svg?react';
+
 import DumbbellSvg from 'assets/icons/dumbbell.svg?react';
 import MoreSvg from 'assets/icons/more-horizontal.svg?react';
 import ArrowUpSvg from 'assets/icons/angle-up.svg?react';
-import { PloggingInfo } from 'types';
+import { PloggingInfo, TrashDetail } from 'types';
 import { useFormatDateTime } from 'hooks';
+import { ReportModal } from 'components';
 
 interface Props {
   ploggingInfo: PloggingInfo;
 }
 
+//! 수정해주세요
+const tempRecord: TrashDetail = {
+  plastic: 0,
+  cigarette: 2,
+  can: 2,
+  glass: 2,
+  paper: 0,
+  normal: 0,
+  styrofoam: 2,
+  metal: 2,
+  clothes: 2,
+  battery: 2,
+  vinyl: 2,
+  mixed: 2,
+  food: 2,
+  etc: 2,
+};
+
 const RecordBox = ({ ploggingInfo }: Props) => {
   const [showImage, setShowImage] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleMoreInfo = () => {
     setShowImage(!showImage);
   };
   return (
     <S.Wrap>
+      <ReportModal
+        trashDetail={tempRecord}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       <S.Header>
         {useFormatDateTime.formatDateTimeHour(ploggingInfo.startDateTime)}
+        <S.RecordButton onClick={() => setIsModalOpen(true)}>
+          <ReportSvg />
+        </S.RecordButton>
       </S.Header>
       <S.PloggingRecords>
         <S.RecordInfoBox>
@@ -81,7 +112,11 @@ const S = {
     font-size: ${({ theme }) => theme.font.size.body3};
     font-family: ${({ theme }) => theme.font.family.body3};
     line-height: ${({ theme }) => theme.font.lineheight.body3};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   `,
+
   PloggingRecords: styled.div`
     display: flex;
     align-items: center;
@@ -122,6 +157,16 @@ const S = {
     width: 100%;
     margin-top: 14px;
     align-self: center;
+  `,
+
+  RecordButton: styled.div`
+    margin-top: -4px;
+    & svg,
+    svg path {
+      cursor: pointer;
+      stroke: ${({ theme }) => theme.color.main};
+      width: 22px;
+    }
   `,
 };
 

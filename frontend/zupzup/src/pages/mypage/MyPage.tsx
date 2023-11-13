@@ -67,9 +67,12 @@ const MyPage = () => {
         </S.Title>
         <S.Level>
           <S.SubInfo $daytime={isDaytime}>
-            {characterInfo.level + 1 < 11
-              ? `레벨 ${characterInfo.level + 1}까지`
-              : '최대 레벨 달성!'}
+            <div>
+              {characterInfo.level < 10
+                ? `레벨 ${characterInfo.level}`
+                : '최대 레벨 달성!'}
+            </div>
+            <div>EXP&nbsp; {characterInfo.exp} / 100</div>
           </S.SubInfo>
           <ProgressBar
             score={characterInfo.level < 10 ? characterInfo.exp : 100}
@@ -142,9 +145,15 @@ const S = {
     margin-top: 10px;
   `,
   SubInfo: styled.div<StyleProps>`
-    color: ${({ $daytime }) => ($daytime ? '#01302D' : '#fff')};
-    font-size: ${({ theme }) => theme.font.size.body3};
-    font-family: ${({ theme }) => theme.font.family.focus2};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    & div {
+      color: ${({ $daytime }) => ($daytime ? '#01302D' : '#fff')};
+      font-size: ${({ theme }) => theme.font.size.focus3};
+      font-family: ${({ theme }) => theme.font.family.focus2};
+    }
   `,
 
   Report: styled.div<StyleProps>`

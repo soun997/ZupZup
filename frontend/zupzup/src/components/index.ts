@@ -5,6 +5,7 @@ export { default as Calendar } from './record/Calendar';
 export { default as CalendarMonth } from './record/CalendarMonth';
 export { default as Record } from './record/Record';
 export { default as RecordBox } from './record/RecordBox';
+export { default as ReportModal } from './record/ReportModal';
 
 export { default as Navigation } from './common/Navigation';
 export { default as TopNavigation } from './common/TopNavigation';
@@ -26,6 +27,7 @@ export { default as PloggingStartMap } from './plogging/PloggingStartMap';
 export { default as CoinReport } from './plogging/CoinReport';
 export { default as RecordReport } from './plogging/RecordReport';
 export { default as ExitModal } from './plogging/ExitModal';
+export { default as CoinModal } from './plogging/CoinModal';
 export { default as PloggingDone } from './plogging/PloggingDone';
 
 export { RegistInfoInput, RegistInfoCheckBox } from './login/RegistInfoInput';
@@ -49,3 +51,5 @@ export { default as KeyFrameList } from './animation/KeyFrame';
 export { default as OnBoardingFirst } from './onboarding/OnBoardFirst';
 export { default as OnBoardingSecond } from './onboarding/OnBoardSecond';
 export { default as OnBoardingThird } from './onboarding/OnBoardThird';
+export { default as OnBoardingFourth } from './onboarding/OnBoardFourth';
+export { default as OnBoardingFifth } from './onboarding/OnBoardFifth';

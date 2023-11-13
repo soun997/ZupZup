@@ -17,10 +17,11 @@ import {
   useDistance,
   calculateCalories,
   useAppDispatch,
+  useHistory,
 } from 'hooks';
 import * as utils from 'utils';
 
-import { TrashApis } from 'api';
+import { PloggingApis, TrashApis } from 'api';
 import { TrashInfo } from 'types';
 import { format } from 'date-fns';
 import {
@@ -52,6 +53,7 @@ const OnPlogging = () => {
     dispatch(setDistance(totalDistance));
     dispatch(setTime(stopwatch));
 
+    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 
@@ -79,6 +81,26 @@ const OnPlogging = () => {
     getTrashInfo(false);
     getTrashInfo(true);
   };
+
+  useEffect(() => {
+    const listenBackEvent = () => {
+      if (
+        confirm('페이지를 나가면 플로깅이 종료됩니다. 정말 종료하시겠습니까?')
+      ) {
+        exitPlogging();
+      } else {
+        useHistory.push(utils.URL.PLOGGING.ON);
+      }
+    };
+
+    const unlistenHistoryEvent = useHistory.listen(({ action }) => {
+      if (action === 'POP') {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
+  });
 
   useEffect(() => {
     const recordLocation = () => {

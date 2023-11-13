@@ -6,6 +6,8 @@ import {
   OnBoardingFirst,
   OnBoardingSecond,
   OnBoardingThird,
+  OnBoardingFourth,
+  OnBoardingFifth
 } from 'components';
 import { URL } from 'utils';
 
@@ -18,6 +20,8 @@ const RegistSuccess = () => {
     <OnBoardingFirst />,
     <OnBoardingSecond />,
     <OnBoardingThird />,
+    <OnBoardingFourth />,
+    <OnBoardingFifth />
   ];
 
   const handleFinishTutorial = () => {
@@ -36,7 +40,7 @@ const RegistSuccess = () => {
   return (
     <S.Wrap>
       <S.Bar>
-        {[...new Array(3)].map((_, i) => (
+        {[...new Array(5)].map((_, i) => (
           <S.BarSegment active={tab === i + 1} onClick={() => setTab(i + 1)} />
         ))}
       </S.Bar>
@@ -55,9 +59,9 @@ const RegistSuccess = () => {
           />
         )}
         <ConfirmButton
-          text={tab === 3 ? '시작하기' : '다음'}
+          text={tab === 5 ? '시작하기' : '다음'}
           onClick={() =>
-            tab === 3 ? handleFinishTutorial() : handleNextButton()
+            tab === 5 ? handleFinishTutorial() : handleNextButton()
           }
         />
       </S.BottomFrame>

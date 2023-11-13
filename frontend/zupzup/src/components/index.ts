@@ -26,6 +26,7 @@ export { default as PloggingStartMap } from './plogging/PloggingStartMap';
 export { default as CoinReport } from './plogging/CoinReport';
 export { default as RecordReport } from './plogging/RecordReport';
 export { default as ExitModal } from './plogging/ExitModal';
+export { default as CoinModal } from './plogging/CoinModal';
 export { default as PloggingDone } from './plogging/PloggingDone';
 
 export { RegistInfoInput, RegistInfoCheckBox } from './login/RegistInfoInput';

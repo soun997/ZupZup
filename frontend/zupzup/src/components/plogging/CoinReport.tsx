@@ -4,6 +4,7 @@ import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Loading } from 'pages';
 import { TrashTable } from 'types/PloggingReport';
+import { CoinModal } from 'components';
 
 interface Props {
   trashDetail: TrashDetail;
@@ -14,6 +15,7 @@ const COIN_TABLE_URI = '/classify/classify_type.json';
 
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
   const [coinTable, setCoinTable] = useState<TrashTable>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -29,9 +31,10 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
 
   return (
     <S.Wrap>
+      <CoinModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <S.TitleFrame>
         <S.Title>획득한 코인</S.Title>
-        <S.Caption onClick={() => alert('준비중 입니다')}>
+        <S.Caption onClick={() => setIsModalOpen(true)}>
           코인 산정 기준이 궁금하신가요?
           <ArrowSvg />
         </S.Caption>

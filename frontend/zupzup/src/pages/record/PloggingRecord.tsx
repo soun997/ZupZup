@@ -30,6 +30,7 @@ const PloggingRecord = () => {
       setPloggingInfos([]);
     }
   }, [selectedDate]);
+
   return (
     <S.Wrap>
       <CalendarHeader />

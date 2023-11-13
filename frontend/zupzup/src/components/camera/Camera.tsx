@@ -133,7 +133,26 @@ const Camera = ({ setCameraOn }: Props) => {
             src={`${import.meta.env.VITE_S3_URL}/character/no-result.png`}
           />
           <S.CameraAccessInfoComment>
-            카메라 권한을 허용해주세요
+            <S.CameraAccessTitle>
+              카메라 권한을 허용해주세요
+            </S.CameraAccessTitle>
+            <S.CameraAccessDescList>
+              <S.CameraAccessType>
+                안드로이드
+                <S.CameraAccessDesc>
+                  : 앱 아이콘을 꾹 누른 뒤 사이트 설정에서 카메라 허용을
+                  체크해주세요!
+                </S.CameraAccessDesc>
+              </S.CameraAccessType>
+
+              <S.CameraAccessType>
+                IOS
+                <S.CameraAccessDesc>
+                  : 앱 재시작 후 카메라 기능을 다시 실행하면 카메라 접근 권한
+                  요청이 옵니다. 꼭 허용을 눌러주세요!
+                </S.CameraAccessDesc>
+              </S.CameraAccessType>
+            </S.CameraAccessDescList>
           </S.CameraAccessInfoComment>
         </S.CameraAccessInfo>
       )}
@@ -234,5 +253,35 @@ const S = {
       background-color: ${({ theme }) => theme.color.main};
       color: ${({ theme }) => theme.color.white};
     }
+  `,
+  CameraAccessTitle: styled.div`
+    font-size: ${({ theme }) => theme.font.size.body2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.body2};
+    color: ${({ theme }) => theme.color.dark};
+    margin-bottom: 10px;
+  `,
+
+  CameraAccessDescList: styled.div`
+    /* display: grid; */
+    /* grid-template-columns: 1fr 4fr; */
+    text-align: left;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  `,
+  CameraAccessDesc: styled.div`
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.body2};
+    line-height: ${({ theme }) => theme.font.lineheight.body2};
+    color: ${({ theme }) => theme.color.dark};
+  `,
+  CameraAccessType: styled.div`
+    font-size: ${({ theme }) => theme.font.size.body3};
+    font-family: ${({ theme }) => theme.font.family.focus2};
+    line-height: ${({ theme }) => theme.font.lineheight.body2};
+    color: ${({ theme }) => theme.color.dark};
+    margin-bottom: 10px;
   `,
 };

@@ -23,16 +23,17 @@ const S = {
     height: 100dvh;
     background-color: ${({ theme }) => theme.color.background};
     color: ${({ theme }) => theme.color.dark};
+    justify-content: center;
   `,
 
   Text: styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -30px;
     font-weight: ${({ theme }) => theme.font.weight.focus3};
     font-size: ${({ theme }) => theme.font.size.body2};
     font-family: ${({ theme }) => theme.font.family.body2};
+    margin-top: -50px;
   `,
 
   SubText: styled.div`

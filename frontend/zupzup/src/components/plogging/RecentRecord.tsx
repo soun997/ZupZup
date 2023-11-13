@@ -49,7 +49,10 @@ const RecentRecord = () => {
         <SmallClockSvg />
         {recentRecord ? (
           <>
-            <S.RecordInfo>{recentDay}일 전</S.RecordInfo>&nbsp;|&nbsp;
+            <S.RecordInfo>
+              {recentDay === 0 ? '오늘' : recentDay + '일 전'}
+            </S.RecordInfo>
+            &nbsp;|&nbsp;
             <S.RecordInfo>
               {(recentRecord.distance / 1000).toFixed(2)} km
             </S.RecordInfo>

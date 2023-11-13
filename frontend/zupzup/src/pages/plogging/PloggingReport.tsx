@@ -215,6 +215,7 @@ const PloggingReport = () => {
 
     return () => {
       clearTimeout(loadingTimer);
+      localStorage.clear();
     };
   }, []);
 

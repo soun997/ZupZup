@@ -8,14 +8,29 @@ import PrevSvg from 'assets/icons/prev.svg?react';
 interface Props {
   currentDate: Date;
   setCurrentDate: (currentDate: Date) => void;
+  setSelectedDate: (selectedDate: Date | null) => void;
 }
 
-const CalendarMonth = ({ currentDate, setCurrentDate }: Props) => {
+const CalendarMonth = ({
+  currentDate,
+  setCurrentDate,
+  setSelectedDate,
+}: Props) => {
   return (
     <S.Wrap>
-      <PrevSvg onClick={() => setCurrentDate(subMonths(currentDate, 1))} />
+      <PrevSvg
+        onClick={() => {
+          setCurrentDate(subMonths(currentDate, 1));
+          setSelectedDate(null);
+        }}
+      />
       <S.Month>{format(currentDate, 'yyyy년 MM월')}</S.Month>
-      <NextSvg onClick={() => setCurrentDate(addMonths(currentDate, 1))} />
+      <NextSvg
+        onClick={() => {
+          setCurrentDate(addMonths(currentDate, 1));
+          setSelectedDate(null);
+        }}
+      />
     </S.Wrap>
   );
 };

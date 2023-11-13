@@ -166,6 +166,7 @@ const Calendar = (props: CalendarProps) => {
       <CalendarMonth
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}
+        setSelectedDate={props.setSelectedDate}
       />
       <S.Calendar className={props.selectedDate === null ? 'month' : 'week'}>
         <S.DaysOfWeek>

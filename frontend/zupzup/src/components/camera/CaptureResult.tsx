@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import AngleLeftSvg from 'assets/icons/angle-left.svg?react';
 import DownloadSvg from 'assets/icons/download.svg?react';
 import ShareSvg from 'assets/icons/share.svg?react';
-import CONSOLE from 'utils/ColorConsoles';
 import { canvasToFile } from 'utils/CanvasUtils';
 
 interface Props {
@@ -93,8 +92,8 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
         (cameraRef.current as HTMLVideoElement).disablePictureInPicture = true;
       }
     };
+
     if (captureFile) {
-      CONSOLE.info('trash captureFile saved in memory');
       disableCamera();
     }
   }, [captureImage]);

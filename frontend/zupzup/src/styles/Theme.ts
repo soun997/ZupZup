@@ -30,6 +30,8 @@ const color = {
   warning: '#FA4B4B',
   darkFilter:
     'invert(9%) sepia(4%) saturate(2%) hue-rotate(359deg) brightness(102%) contrast(92%);',
+  mainFilter:
+    'invert(69%) sepia(84%) saturate(4058%) hue-rotate(137deg) brightness(98%) contrast(101%);',
 };
 
 const darkColor = {
@@ -48,6 +50,8 @@ const darkColor = {
   warning: '#FA4B4B',
   darkFilter:
     'invert(85%) sepia(5%) saturate(62%) hue-rotate(202deg) brightness(92%) contrast(92%);',
+  mainFilter:
+    'invert(69%) sepia(84%) saturate(4058%) hue-rotate(137deg) brightness(98%) contrast(101%);',
 };
 
 const font = {

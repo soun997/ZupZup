@@ -24,7 +24,7 @@ const PloggingStart = () => {
       ) : (
         <Loading />
       )}
-      <Navigation />
+      <Navigation currentPage="main" />
     </S.Wrap>
   );
 };

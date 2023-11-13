@@ -7,19 +7,36 @@ import ShoesSvg from 'assets/icons/shoes.svg?react';
 
 import * as utils from 'utils';
 
-const Navigation = () => {
+interface Props {
+  currentPage: string;
+}
+
+interface SideButtonProps {
+  $currentPage: boolean;
+}
+
+const Navigation = ({ currentPage }: Props) => {
   const navigate = useNavigate();
 
   return (
     <S.Wrap>
       <S.Nav>
-        <S.SideButton onClick={() => navigate(utils.URL.CALENDAR.CALENDAR)}>
+        <S.SideButton
+          $currentPage={currentPage === 'ploggingRecord'}
+          onClick={() => navigate(utils.URL.CALENDAR.CALENDAR)}
+        >
           <CalendarSvg />
         </S.SideButton>
         <S.MainButton onClick={() => navigate(utils.URL.PLOGGING.LOBBY)}>
           <ShoesSvg />
         </S.MainButton>
-        <S.SideButton>
+        <S.SideButton
+          $currentPage={
+            currentPage === 'myPage' ||
+            currentPage === 'settings' ||
+            currentPage === 'profileSettings'
+          }
+        >
           <ProfileSvg onClick={() => navigate(utils.URL.MYPAGE.HOME)} />
         </S.SideButton>
       </S.Nav>
@@ -72,13 +89,14 @@ const S = {
       filter: ${({ theme }) => theme.color.white};
     }
   `,
-  SideButton: styled.div`
+  SideButton: styled.div<SideButtonProps>`
     &:active {
       cursor: pointer;
     }
 
     & > svg {
-      filter: ${({ theme }) => theme.color.darkFilter};
+      filter: ${({ theme, $currentPage }) =>
+        $currentPage ? theme.color.mainFilter : theme.color.darkFilter};
     }
   `,
 };

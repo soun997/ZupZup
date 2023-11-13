@@ -51,6 +51,7 @@ interface MarkerOptions {
   position: LatLng;
   icon?: object | string;
   iconSize?: object;
+  offset?: Point;
   map: Map;
 }
 
@@ -59,6 +60,8 @@ interface Size {}
 interface LatLngBounds {
   extend: (latlng: LatLng) => void;
 }
+
+interface Point {}
 
 export declare global {
   interface Window {
@@ -80,6 +83,9 @@ export declare global {
       };
       LatLngBounds: {
         new (latlng: LatLng): LatLngBounds;
+      };
+      Point: {
+        new (x: number, y: number): Point;
       };
     };
   }

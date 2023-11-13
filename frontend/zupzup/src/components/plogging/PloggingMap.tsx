@@ -159,15 +159,23 @@ const PloggingMap = ({
       if (!tmap) {
         return;
       }
-      const markers = [...trashs].map(
-        trash =>
-          new window.Tmapv3.Marker({
-            position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
-            icon: '/assets/images/trash_can.png',
-            iconSize: new window.Tmapv3.Size(40, 40),
-            map: tmap,
-          }),
-      );
+      const markers = [...trashs].map(trash => {
+        let trashIcon = `${import.meta.env.VITE_S3_URL}/general_trash.png`;
+
+        if (trash.trashcanType === '재활용') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/recycle_trash.png`;
+        } else if (trash.trashcanType === '담배꽁초') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/cigarette_trash.png`;
+        }
+
+        return new window.Tmapv3.Marker({
+          position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
+          icon: trashIcon,
+          iconSize: new window.Tmapv3.Size(30, 40),
+          offset: new window.Tmapv3.Point(-10, 0),
+          map: tmap,
+        });
+      });
       setTrashMarkers([...markers]);
     };
 

@@ -72,7 +72,7 @@ const MyPage = () => {
                 ? `레벨 ${characterInfo.level}`
                 : '최대 레벨 달성!'}
             </div>
-            <div>{characterInfo.exp}EXP / 100EXP</div>
+            <div>EXP&nbsp; {characterInfo.exp} / 100</div>
           </S.SubInfo>
           <ProgressBar
             score={characterInfo.level < 10 ? characterInfo.exp : 100}

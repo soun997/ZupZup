@@ -108,7 +108,7 @@ const S = {
 
   ModalContent: styled.div`
     margin-top: 1.2em;
-    gap: 16px;
+    gap: 1.3em;
     display: flex;
     flex-direction: column;
   `,

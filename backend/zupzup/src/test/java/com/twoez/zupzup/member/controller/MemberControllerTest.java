@@ -54,7 +54,7 @@ class MemberControllerTest extends RestDocsTest {
 
         perfrom.andExpect(status().isOk())
                 .andExpect(jsonPath("$.results.memberId").value(1L))
-                .andExpect(jsonPath("$.results.name").value("줍줍이"))
+                .andExpect(jsonPath("$.results.memberName").value("줍줍이"))
                 .andExpect(jsonPath("$.results.accessToken").value("ACCESSTOKEN"))
                 .andExpect(jsonPath("$.results.refreshToken").value("REFRESHTOKEN"));
 

@@ -3,35 +3,11 @@ import { useState, useEffect } from 'react';
 import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Loading } from 'pages';
+import { TrashTable } from 'types/PloggingReport';
 
 interface Props {
   trashDetail: TrashDetail;
   totalCoin: number;
-}
-
-interface TrashTable {
-  [type: string]: TrashTableDetail;
-  plastic: TrashTableDetail;
-  cigarette: TrashTableDetail;
-  can: TrashTableDetail;
-  glass: TrashTableDetail;
-  paper: TrashTableDetail;
-  styrofoam: TrashTableDetail;
-  metal: TrashTableDetail;
-  clothes: TrashTableDetail;
-  battery: TrashTableDetail;
-  vinyl: TrashTableDetail;
-  normal: TrashTableDetail;
-  food: TrashTableDetail;
-  mixed: TrashTableDetail;
-  etc: TrashTableDetail;
-}
-
-interface TrashTableDetail {
-  type: number[];
-  desc: string;
-  coin: number;
-  kor: string;
 }
 
 const COIN_TABLE_URI = '/classify/classify_type.json';
@@ -92,7 +68,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   TitleFrame: styled.div`
@@ -113,7 +89,7 @@ const S = {
     gap: 3px;
     font-size: ${({ theme }) => theme.font.size.caption};
     font-family: ${({ theme }) => theme.font.family.caption};
-    color: ${({ theme }) => theme.color.gray3};
+    color: ${({ theme }) => theme.color.gray2};
   `,
 
   ContentFrame: styled.div`

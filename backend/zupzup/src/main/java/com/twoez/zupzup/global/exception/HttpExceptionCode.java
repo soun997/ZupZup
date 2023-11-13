@@ -67,7 +67,11 @@ public enum HttpExceptionCode {
 
     COIN_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "ERR_ITEM_002", "코인이 충분하지 않습니다."),
 
-    HEALTH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_HEALTH_001", "멤버의 헬스 정보를 찾을 수 없습니다.");
+    HEALTH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_HEALTH_001", "멤버의 헬스 정보를 찾을 수 없습니다."),
+
+    TRASH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_TRASH_001", "해당 플로깅 로그의 쓰레기 정보를 찾을 수 없습니다."),
+
+    TOTAL_TRASH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_TOTAL_TRASH_001", "쓰레기 정보 집계를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

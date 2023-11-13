@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SocialLoginButton } from 'components';
@@ -6,13 +8,33 @@ import { SOCIAL_KEY } from 'utils';
 import KakaoIcon from 'assets/icons/Kakao_logo.svg?react';
 // import NaverIcon from 'assets/icons/Naver_logo.svg?react';
 import GoogleIcon from 'assets/icons/Google_logo.svg?react';
+import { MemberApi } from 'api';
+import * as utils from 'utils';
 
 const Login = () => {
+  const navigate = useNavigate();
   const handleSocialLogin = async (domain: string) => {
     window.location.href = `${
       import.meta.env.VITE_APP_SERVER
     }/oauth2/authorization/${domain}`;
   };
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const response = await MemberApi.getProfileInfo();
+        if (response.data.results.memberId) {
+          navigate(utils.URL.PLOGGING.LOBBY);
+          return;
+        }
+        navigate(utils.URL.LOGIN.HOME);
+      } catch (error) {
+        navigate(utils.URL.LOGIN.HOME);
+      }
+    };
+
+    checkLogin();
+  }, []);
 
   return (
     <S.Wrap>

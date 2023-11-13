@@ -25,6 +25,11 @@ const PloggingStartBackground = () => {
   };
 
   const handleStartPlogging = async () => {
+    localStorage.removeItem(utils.COORDINATE.LOCATIONS_KEY);
+    localStorage.removeItem(utils.COORDINATE.MIN_LATITUDE);
+    localStorage.removeItem(utils.COORDINATE.MAX_LATITUDE);
+    localStorage.removeItem(utils.COORDINATE.MIN_LONGITUDE);
+    localStorage.removeItem(utils.COORDINATE.MAX_LONGITUDE);
     const response = await PloggingApis.startPlogging();
     dispatch(setPloggingId(response.data.results.ploggingLogId));
     dispatch(setStartDateTime(format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")));

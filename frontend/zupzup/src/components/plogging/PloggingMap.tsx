@@ -23,6 +23,7 @@ interface Props {
   setFixCenter: (fixCenter: boolean) => void;
   trashs: Array<TrashInfo>;
   trashOn: boolean;
+  locationLoading: boolean;
 }
 
 const PloggingMap = ({
@@ -34,6 +35,7 @@ const PloggingMap = ({
   setFixCenter,
   trashs,
   trashOn,
+  locationLoading,
 }: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
@@ -41,14 +43,17 @@ const PloggingMap = ({
   const [polyline, setPolyline] = useState<Polyline | null>(null);
   const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
 
-  const initMap = ({ lat, lng }: Location) => {
+  const initMap = ({ lat, lng }: { lat: number; lng: number }) => {
     const { Tmapv3 } = window;
     const latlng = new Tmapv3.LatLng(lat, lng);
+    const latlngBounds = new Tmapv3.LatLngBounds(
+      new Tmapv3.LatLng(33.0, 124.5),
+    );
+    latlngBounds.extend(new Tmapv3.LatLng(38.9, 132.0));
     const map = new Tmapv3.Map(mapRef.current!, {
-      center: latlng,
+      bounds: latlngBounds,
       width: '100%',
       height: '100%',
-      zoom: 17,
     });
 
     const marker = new Tmapv3.Marker({
@@ -58,24 +63,18 @@ const PloggingMap = ({
 
     const polyline = new Tmapv3.Polyline({
       path: [latlng],
-      strokeColor: '#dd00dd',
-      strokeWeight: 6,
+      strokeColor: '#00C4B8',
+      strokeWeight: 8,
       direction: true,
       map: map,
     });
+
     setTmap(map);
     setCurMarker(marker);
     setPolyline(polyline);
   };
 
   useEffect(() => {
-    if (!(mapRef.current! as HTMLElement).firstChild) {
-      initMap({
-        lat: location.lat,
-        lng: location.lng,
-      });
-    }
-
     const updateMapCenter = () => {
       tmap?.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
     };
@@ -119,20 +118,33 @@ const PloggingMap = ({
 
       const newPolyline = new window.Tmapv3.Polyline({
         path: paths,
-        strokeColor: '#dd00dd',
-        strokeWeight: 6,
+        strokeColor: '#00C4B8',
+        strokeWeight: 8,
         direction: true,
         map: tmap,
       });
       setPolyline(newPolyline);
     };
 
+    if (!(mapRef.current! as HTMLElement).firstChild) {
+      initMap({
+        lat: 37.715133,
+        lng: 126.734086,
+      });
+    }
     updateMarker();
     updatePath();
     if (fixCenter) {
       updateMapCenter();
     }
   }, [location]);
+
+  useEffect(() => {
+    if (tmap && locationLoading) {
+      tmap.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
+      tmap.setZoom(17);
+    }
+  }, [locationLoading]);
 
   useEffect(() => {
     const updateTrashMarkers = () => {

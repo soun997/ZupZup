@@ -6,6 +6,7 @@ import {
   Navigation,
 } from 'components';
 import { useGeolocation } from 'hooks';
+import { Loading } from 'pages';
 
 const PloggingStart = () => {
   const location = useGeolocation();
@@ -13,15 +14,17 @@ const PloggingStart = () => {
   return (
     <S.Wrap>
       <PloggingStartBackground />
-      {location.loaded && (
+      {location.loaded ? (
         <PloggingStartMap
           location={{
             lat: location.coordinates!.lat,
             lng: location.coordinates!.lng,
           }}
         />
+      ) : (
+        <Loading />
       )}
-      <Navigation />
+      <Navigation currentPage="main" />
     </S.Wrap>
   );
 };

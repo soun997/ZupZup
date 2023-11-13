@@ -121,7 +121,7 @@ const ProfileSettingPage = () => {
           onClick={() => openModal('몸무게', healthInfo.weight)}
         />
       </S.SettingSection>
-      <Navigation />
+      <Navigation currentPage="profileSettings" />
     </S.Wrap>
   );
 };

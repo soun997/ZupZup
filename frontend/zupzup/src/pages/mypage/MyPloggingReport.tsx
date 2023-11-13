@@ -118,6 +118,7 @@ const S = {
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
     color: ${({ theme }) => theme.color.dark};
+    padding-top: 10px;
   `,
   Image: styled.img`
     margin: 20px 0 50px;

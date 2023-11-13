@@ -74,7 +74,6 @@ const PloggingReport = () => {
         new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
       );
       latlngBounds.extend(new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001));
-      console.log(latlngBounds);
       if (mapRef.current) {
         const map = new Tmapv3.Map(mapRef.current, {
           width: '100%',
@@ -98,7 +97,7 @@ const PloggingReport = () => {
 
           new window.Tmapv3.Polyline({
             path: paths,
-            strokeColor: '#dd00dd',
+            strokeColor: '#00C4B8',
             strokeWeight: 6,
             direction: true,
             map: map,
@@ -215,6 +214,11 @@ const PloggingReport = () => {
 
     return () => {
       clearTimeout(loadingTimer);
+      localStorage.removeItem(utils.COORDINATE.LOCATIONS_KEY);
+      localStorage.removeItem(utils.COORDINATE.MIN_LATITUDE);
+      localStorage.removeItem(utils.COORDINATE.MAX_LATITUDE);
+      localStorage.removeItem(utils.COORDINATE.MIN_LONGITUDE);
+      localStorage.removeItem(utils.COORDINATE.MAX_LONGITUDE);
     };
   }, []);
 
@@ -280,7 +284,7 @@ const S = {
     width: 100%;
     height: 100%;
     margin-top: 20px;
-    /* pointer-events: none; */
+    pointer-events: none;
   `,
   CanvasBox: styled.canvas`
     object-fit: cover;

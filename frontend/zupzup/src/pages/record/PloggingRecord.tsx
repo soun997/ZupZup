@@ -30,6 +30,7 @@ const PloggingRecord = () => {
       setPloggingInfos([]);
     }
   }, [selectedDate]);
+
   return (
     <S.Wrap>
       <CalendarHeader />
@@ -37,7 +38,7 @@ const PloggingRecord = () => {
       {selectedDate && ploggingInfos && (
         <Record ploggingInfos={ploggingInfos} />
       )}
-      <Navigation />
+      <Navigation currentPage="ploggingRecord" />
     </S.Wrap>
   );
 };

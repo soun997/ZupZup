@@ -85,7 +85,7 @@ const Setting = () => {
           />
         </S.SettingSection>
       </S.Content>
-      <Navigation />
+      <Navigation currentPage="settings" />
     </S.Wrap>
   );
 };

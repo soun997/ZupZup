@@ -5,6 +5,7 @@ export { default as Calendar } from './record/Calendar';
 export { default as CalendarMonth } from './record/CalendarMonth';
 export { default as Record } from './record/Record';
 export { default as RecordBox } from './record/RecordBox';
+export { default as ReportModal } from './record/ReportModal';
 
 export { default as Navigation } from './common/Navigation';
 export { default as TopNavigation } from './common/TopNavigation';

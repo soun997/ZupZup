@@ -1,17 +1,35 @@
-import React from 'react';
+import { Loading } from 'pages';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { PLOGGING_COIN_INFO } from 'utils';
+import { TrashDetail } from 'types';
+import { TrashTable } from 'types/PloggingReport';
 
-interface CoinModalProps {
+interface ReportModalProps {
   isOpen: boolean;
   onClose: () => void;
+  trashDetail: TrashDetail;
 }
 
-const trashCoin = PLOGGING_COIN_INFO;
+const COIN_TABLE_URI = '/classify/classify_type.json';
+const ReportModal: React.FC<ReportModalProps> = ({
+  isOpen,
+  onClose,
+  trashDetail,
+}) => {
+  useEffect(() => {
+    async function load() {
+      const coinTableFromJson = await fetch(COIN_TABLE_URI)
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+        });
+      setCoinTable(coinTableFromJson);
+    }
+    load();
+  }, []);
+  const [coinTable, setCoinTable] = useState<TrashTable>();
 
-const CoinModal: React.FC<CoinModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
   const handleClose = (event: React.MouseEvent) => {
     event.stopPropagation();
     onClose();
@@ -25,16 +43,25 @@ const CoinModal: React.FC<CoinModalProps> = ({ isOpen, onClose }) => {
     <S.ModalOverlay onClick={handleClose}>
       <S.ModalWrapper onClick={handleWrapperClick}>
         <S.ModalHeader>
-          <h2>코인 산정 기준</h2>
+          <h2>일일 레포트</h2>
           <button onClick={onClose}>닫기</button>
         </S.ModalHeader>
         <S.ModalContent>
-          {trashCoin.map((eachTrash, idx) => (
-            <S.EachFrame key={idx}>
-              <div className="eachName">{eachTrash.name}</div>
-              <div className="eachVal">{eachTrash.coin} Coins</div>
-            </S.EachFrame>
-          ))}
+          {coinTable ? (
+            Object.keys(trashDetail)
+              .filter((type: string) => trashDetail[type] > 0)
+              .map((type, idx) => (
+                <S.EachFrame key={idx}>
+                  <div className="eachName">{coinTable[type].kor}</div>
+                  <div className="eachVal">
+                    {trashDetail[type] * (coinTable as TrashTable)[type].coin}{' '}
+                    Coins
+                  </div>
+                </S.EachFrame>
+              ))
+          ) : (
+            <Loading />
+          )}
         </S.ModalContent>
       </S.ModalWrapper>
     </S.ModalOverlay>
@@ -43,7 +70,7 @@ const CoinModal: React.FC<CoinModalProps> = ({ isOpen, onClose }) => {
 
 const S = {
   ModalOverlay: styled.div`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -84,7 +111,6 @@ const S = {
     gap: 16px;
     display: flex;
     flex-direction: column;
-    // 스타일을 추가하세요
   `,
 
   EachFrame: styled.div`
@@ -106,4 +132,4 @@ const S = {
   `,
 };
 
-export default CoinModal;
+export default ReportModal;

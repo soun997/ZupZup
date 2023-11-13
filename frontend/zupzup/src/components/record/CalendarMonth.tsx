@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import { format, addMonths, subMonths } from 'date-fns';
 
-import NextSvg from 'assets/icons/next.svg?react';
-import PrevSvg from 'assets/icons/prev.svg?react';
+import NextSvg from 'assets/icons/angle-right.svg?react';
+import PrevSvg from 'assets/icons/angle-left.svg?react';
 
 interface Props {
   currentDate: Date;
@@ -44,13 +44,18 @@ const S = {
     width: 100%;
     height: 84px;
     background-color: ${({ theme }) => theme.color.white};
-    padding: 0 20px;
+    justify-content: center;
+    padding-bottom: 10px;
 
-    & > svg {
+    & svg {
       width: 20px;
-      filter: ${({ theme }) => theme.color.darkFilter};
+      height: 20px;
       margin: 0 5px 2px;
       cursor: pointer;
+
+      & path {
+        fill: ${({ theme }) => theme.color.gray3};
+      }
     }
   `,
   Month: styled.div`
@@ -58,5 +63,6 @@ const S = {
     font-family: ${({ theme }) => theme.font.family.display3};
     line-height: ${({ theme }) => theme.font.lineheight.display3};
     color: ${({ theme }) => theme.color.dark};
+    margin: 0 10px;
   `,
 };

@@ -51,3 +51,5 @@ export { default as KeyFrameList } from './animation/KeyFrame';
 export { default as OnBoardingFirst } from './onboarding/OnBoardFirst';
 export { default as OnBoardingSecond } from './onboarding/OnBoardSecond';
 export { default as OnBoardingThird } from './onboarding/OnBoardThird';
+export { default as OnBoardingFourth } from './onboarding/OnBoardFourth';
+export { default as OnBoardingFifth } from './onboarding/OnBoardFifth';

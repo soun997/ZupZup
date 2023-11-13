@@ -58,8 +58,8 @@ const PloggingMap = ({
 
     const polyline = new Tmapv3.Polyline({
       path: [latlng],
-      strokeColor: '#dd00dd',
-      strokeWeight: 6,
+      strokeColor: '#00C4B8',
+      strokeWeight: 8,
       direction: true,
       map: map,
     });
@@ -119,8 +119,8 @@ const PloggingMap = ({
 
       const newPolyline = new window.Tmapv3.Polyline({
         path: paths,
-        strokeColor: '#dd00dd',
-        strokeWeight: 6,
+        strokeColor: '#00C4B8',
+        strokeWeight: 8,
         direction: true,
         map: tmap,
       });

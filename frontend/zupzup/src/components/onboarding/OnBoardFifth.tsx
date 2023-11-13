@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-const OnBoardThird = () => {
+const OnBoardFifth= () => {
   return (
     <S.Wrap>
       <S.TitleFrame>
         <S.MainTitle>
-          쓰레기통 버튼을 누르면
-          <br />주변의 쓰레기통 위치를 확인할 수 있어요
+          획득한 코인으로
+          <br /> 펭깅이를 키워주세요
         </S.MainTitle>
-        <S.SubTitle>주운 쓰레기를 꼭 쓰레기통에 버려주세요!</S.SubTitle>
+        <S.SubTitle>상점을 통해 음식을 구매할 수 있어요</S.SubTitle>
       </S.TitleFrame>
       <S.Image
-        src={`${import.meta.env.VITE_S3_URL}/character/penguin-trash.png`}
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-shop.png`}
       />
     </S.Wrap>
   );
@@ -51,4 +51,4 @@ const S = {
     width: 100%;
   `,
 };
-export default OnBoardThird;
+export default OnBoardFifth;

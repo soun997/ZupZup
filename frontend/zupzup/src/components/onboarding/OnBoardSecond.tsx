@@ -5,7 +5,7 @@ const OnBoardSecond = () => {
     <S.Wrap>
       <S.TitleFrame>
         <S.MainTitle>
-          플로깅을 시작하고 쓰레기를 발견하면
+          쓰레기를 발견하면 
           <br />
           하단의 카메라 버튼을 눌러주세요
         </S.MainTitle>
@@ -14,7 +14,7 @@ const OnBoardSecond = () => {
         </S.SubTitle>
       </S.TitleFrame>
       <S.Image
-        src={`${import.meta.env.VITE_S3_URL}/character/penguin-trash.png`}
+        src={`${import.meta.env.VITE_S3_URL}/character/penguin-lv4.png`}
       />
     </S.Wrap>
   );

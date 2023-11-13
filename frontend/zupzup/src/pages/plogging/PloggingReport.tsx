@@ -98,7 +98,7 @@ const PloggingReport = () => {
 
           new window.Tmapv3.Polyline({
             path: paths,
-            strokeColor: '#dd00dd',
+            strokeColor: '#00C4B8',
             strokeWeight: 6,
             direction: true,
             map: map,

@@ -6,13 +6,13 @@ import lombok.Builder;
 
 @Builder
 public record MemberHealthCreateResponse(
-        Long memberId, String name, String accessToken, String refreshToken) {
+        Long memberId, String memberName, String accessToken, String refreshToken) {
 
     public static MemberHealthCreateResponse from(
             AuthorizationToken authorizationToken, Long memberId, String name) {
         return MemberHealthCreateResponse.builder()
                 .memberId(memberId)
-                .name(name)
+                .memberName(name)
                 .accessToken(authorizationToken.getAccessToken())
                 .refreshToken(authorizationToken.getRefreshToken())
                 .build();

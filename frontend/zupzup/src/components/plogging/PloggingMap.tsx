@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { TrashInfo } from 'types';
 import * as utils from 'utils';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
+import { useAppDispatch } from 'hooks';
+import { setCenterLat, setCenterLng } from 'hooks/store/useMap';
 
 interface Location {
   lat: number;
@@ -42,6 +44,7 @@ const PloggingMap = ({
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
   const [polyline, setPolyline] = useState<Polyline | null>(null);
   const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
+  const dispatch = useAppDispatch();
 
   const initMap = ({ lat, lng }: { lat: number; lng: number }) => {
     const { Tmapv3 } = window;
@@ -147,19 +150,32 @@ const PloggingMap = ({
   }, [locationLoading]);
 
   useEffect(() => {
+    dispatch(setCenterLat(tmap?.getCenter()._lat));
+    dispatch(setCenterLng(tmap?.getCenter()._lng));
+  }, [tmap?.getCenter()]);
+
+  useEffect(() => {
     const updateTrashMarkers = () => {
       if (!tmap) {
         return;
       }
-      const markers = [...trashs].map(
-        trash =>
-          new window.Tmapv3.Marker({
-            position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
-            icon: '/assets/images/trash_can.png',
-            iconSize: new window.Tmapv3.Size(40, 40),
-            map: tmap,
-          }),
-      );
+      const markers = [...trashs].map(trash => {
+        let trashIcon = `${import.meta.env.VITE_S3_URL}/general_trash.png`;
+
+        if (trash.trashcanType === '재활용') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/recycle_trash.png`;
+        } else if (trash.trashcanType === '담배꽁초') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/cigarette_trash.png`;
+        }
+
+        return new window.Tmapv3.Marker({
+          position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
+          icon: trashIcon,
+          iconSize: new window.Tmapv3.Size(30, 40),
+          offset: new window.Tmapv3.Point(-10, 0),
+          map: tmap,
+        });
+      });
       setTrashMarkers([...markers]);
     };
 

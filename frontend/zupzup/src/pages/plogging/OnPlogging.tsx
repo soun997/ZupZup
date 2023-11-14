@@ -18,6 +18,7 @@ import {
   calculateCalories,
   useAppDispatch,
   useHistory,
+  store,
 } from 'hooks';
 import * as utils from 'utils';
 
@@ -58,10 +59,16 @@ const OnPlogging = () => {
   };
 
   const getTrashInfo = async (trashStatus: boolean) => {
+    const centerLat: number | null = store.getState().map.centerLat;
+    const centerLng: number | null = store.getState().map.centerLng;
+    if (!centerLat || !centerLng) {
+      return;
+    }
+
     if (trashStatus && location.loaded) {
       const trashcanRequest = {
-        currentLatitude: location.coordinates!.lat,
-        currentLongitude: location.coordinates!.lng,
+        currentLatitude: centerLat,
+        currentLongitude: centerLng,
       };
 
       try {

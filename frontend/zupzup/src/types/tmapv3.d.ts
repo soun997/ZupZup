@@ -8,6 +8,7 @@ interface LatLng {
 interface TMap {
   setCenter: (latLng: LatLng) => void;
   setZoom: (zoom: number) => void;
+  getCenter: () => LatLng;
   on: (type: string, callbackfunc: () => void) => void;
 }
 
@@ -50,6 +51,7 @@ interface MarkerOptions {
   position: LatLng;
   icon?: object | string;
   iconSize?: object;
+  offset?: Point;
   map: Map;
 }
 
@@ -58,6 +60,8 @@ interface Size {}
 interface LatLngBounds {
   extend: (latlng: LatLng) => void;
 }
+
+interface Point {}
 
 export declare global {
   interface Window {
@@ -79,6 +83,9 @@ export declare global {
       };
       LatLngBounds: {
         new (latlng: LatLng): LatLngBounds;
+      };
+      Point: {
+        new (x: number, y: number): Point;
       };
     };
   }

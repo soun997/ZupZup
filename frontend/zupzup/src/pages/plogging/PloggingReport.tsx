@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport, PloggingDone } from 'components';
-import { store, useAppDispatch, useCapture } from 'hooks';
+import { store, useAppDispatch, useCapture, useHistory } from 'hooks';
 import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
 import SaveSvg from 'assets/icons/save.svg?react';
@@ -74,7 +74,6 @@ const PloggingReport = () => {
         new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
       );
       latlngBounds.extend(new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001));
-      console.log(latlngBounds);
       if (mapRef.current) {
         const map = new Tmapv3.Map(mapRef.current, {
           width: '100%',
@@ -215,9 +214,27 @@ const PloggingReport = () => {
 
     return () => {
       clearTimeout(loadingTimer);
-      localStorage.clear();
+      localStorage.removeItem(utils.COORDINATE.LOCATIONS_KEY);
+      localStorage.removeItem(utils.COORDINATE.MIN_LATITUDE);
+      localStorage.removeItem(utils.COORDINATE.MAX_LATITUDE);
+      localStorage.removeItem(utils.COORDINATE.MIN_LONGITUDE);
+      localStorage.removeItem(utils.COORDINATE.MAX_LONGITUDE);
     };
   }, []);
+
+  useEffect(() => {
+    const listenBackEvent = () => {
+      useHistory.push(utils.URL.PLOGGING.REPORT);
+    };
+
+    const unlistenHistoryEvent = useHistory.listen(({ action }) => {
+      if (action === 'POP') {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
+  });
 
   if (showLoading) {
     return <PloggingDone />;
@@ -281,7 +298,7 @@ const S = {
     width: 100%;
     height: 100%;
     margin-top: 20px;
-    /* pointer-events: none; */
+    pointer-events: none;
   `,
   CanvasBox: styled.canvas`
     object-fit: cover;

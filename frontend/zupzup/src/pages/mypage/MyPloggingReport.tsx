@@ -5,24 +5,35 @@ import { URL } from 'utils';
 import { RecordApis } from 'api';
 import { useEffect, useState } from 'react';
 import { Loading } from 'pages';
-import ErrorSvg from 'assets/icons/error-check.svg?react';
-
-const trashInfos = [
-  { name: '플라스틱', count: 0 },
-  { name: '담배꽁초', count: 0 },
-  { name: '일반 쓰레기', count: 0 },
-  { name: '음식물 쓰레기', count: 0 },
-  { name: '유리조각', count: 0 },
-];
+// import ErrorSvg from 'assets/icons/error-check.svg?react';
+import { TrashDetail } from 'types';
 
 const MyPloggingReport = () => {
   const [ploggingInfo, setPloggingInfo] = useState<TotalPloggingInfo>();
+  const [trashInfo, setTrashInfo] = useState<TrashDetail>();
+
   const fetchMyReport = async () => {
     try {
       const response = await RecordApis.getMyPloggingInfo();
-      const data = response.data.results;
-      console.log(data);
+      console.log(response);
+      const data: TotalPloggingInfo = response.data.results;
       setPloggingInfo(data);
+      setTrashInfo({
+        plastic: data.totalPlastic,
+        battery: data.totalBattery,
+        can: data.totalCan,
+        cigarette: data.totalCigarette,
+        clothes: data.totalClothes,
+        paper: data.totalPaper,
+        etc: data.totalEtc,
+        food: data.totalFood,
+        glass: data.totalGlass,
+        metal: data.totalMetal,
+        mixed: data.totalMixed,
+        normal: data.totalNormal,
+        styrofoam: data.totalStyrofoam,
+        vinyl: data.totalVinyl,
+      });
     } catch (error) {
       console.error('Error fetching report info:', error);
     }
@@ -69,7 +80,6 @@ const MyPloggingReport = () => {
           <S.EachBoxInfo>
             플로깅 시간
             <div className="tag">
-              {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
               {formatTimeToString(ploggingInfo.totalDurationTime)}
             </div>
           </S.EachBoxInfo>
@@ -85,12 +95,12 @@ const MyPloggingReport = () => {
           총 {ploggingInfo.totalGatheredTrash}회 쓰레기를 주웠어요.
         </div>
         <div className="memoInfo">
-          <PloggingMemo trashInfo={trashInfos} />
+          <PloggingMemo trashInfo={trashInfo!} />
         </div>
-        <ErrorCheck>
+        {/* <ErrorCheck>
           <ErrorSvg />
-          {'서비스 준비중입니다'}
-        </ErrorCheck>
+          서비스 준비중입니다
+        </ErrorCheck> */}
       </S.BoxFrame>
 
       <S.InfoBox>
@@ -118,6 +128,7 @@ const S = {
     background-color: ${({ theme }) => theme.color.background};
     font-family: ${({ theme }) => theme.font.family.body2};
     color: ${({ theme }) => theme.color.dark};
+    padding-top: 10px;
   `,
   Image: styled.img`
     margin: 20px 0 50px;
@@ -204,18 +215,18 @@ const S = {
   `,
 };
 
-const ErrorCheck = styled.div`
-  display: flex;
-  align-items: center;
-  align-self: flex-end;
-  color: ${({ theme }) => theme.color.warning};
-  gap: 5px;
-  font-size: 12px;
-  border: none;
-  width: fit-content;
-  margin: -5px;
-  padding-right: 20px;
-  font-family: ${({ theme }) => theme.font.family.body2};
-`;
+// const ErrorCheck = styled.div`
+//   display: flex;
+//   align-items: center;
+//   align-self: flex-end;
+//   color: ${({ theme }) => theme.color.warning};
+//   gap: 5px;
+//   font-size: 12px;
+//   border: none;
+//   width: fit-content;
+//   margin: -5px;
+//   padding-right: 20px;
+//   font-family: ${({ theme }) => theme.font.family.body2};
+// `;
 
 export default MyPloggingReport;

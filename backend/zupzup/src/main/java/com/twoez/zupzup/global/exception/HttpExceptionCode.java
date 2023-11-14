@@ -54,6 +54,8 @@ public enum HttpExceptionCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다."),
     ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "ERR_MEMBER_002", "이미 가입된 멤버입니다. 새로 가입할 수 없습니다."),
 
+    PLOGGING_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_001", "진행 중인 플로깅이 아닙니다."),
+
     PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
 
     ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다."),
@@ -70,7 +72,11 @@ public enum HttpExceptionCode {
 
     COIN_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "ERR_ITEM_002", "코인이 충분하지 않습니다."),
 
-    HEALTH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_HEALTH_001", "멤버의 헬스 정보를 찾을 수 없습니다.");
+    HEALTH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_HEALTH_001", "멤버의 헬스 정보를 찾을 수 없습니다."),
+
+    TRASH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_TRASH_001", "해당 플로깅 로그의 쓰레기 정보를 찾을 수 없습니다."),
+
+    TOTAL_TRASH_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_TOTAL_TRASH_001", "쓰레기 정보 집계를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorCode;

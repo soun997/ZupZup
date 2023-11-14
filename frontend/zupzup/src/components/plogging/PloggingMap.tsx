@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { TrashInfo } from 'types';
 import * as utils from 'utils';
 import { Marker, Polyline, TMap } from 'types/tmapv3';
+import { useAppDispatch } from 'hooks';
+import { setCenterLat, setCenterLng } from 'hooks/store/useMap';
 
 interface Location {
   lat: number;
@@ -23,6 +25,7 @@ interface Props {
   setFixCenter: (fixCenter: boolean) => void;
   trashs: Array<TrashInfo>;
   trashOn: boolean;
+  locationLoading: boolean;
 }
 
 const PloggingMap = ({
@@ -34,21 +37,26 @@ const PloggingMap = ({
   setFixCenter,
   trashs,
   trashOn,
+  locationLoading,
 }: Props) => {
   const mapRef = useRef(null);
   const [tmap, setTmap] = useState<TMap | null>(null);
   const [curMarker, setCurMarker] = useState<Marker | null>(null);
   const [polyline, setPolyline] = useState<Polyline | null>(null);
   const [trashMarkers, setTrashMarkers] = useState<Array<Marker>>([]);
+  const dispatch = useAppDispatch();
 
-  const initMap = ({ lat, lng }: Location) => {
+  const initMap = ({ lat, lng }: { lat: number; lng: number }) => {
     const { Tmapv3 } = window;
     const latlng = new Tmapv3.LatLng(lat, lng);
+    const latlngBounds = new Tmapv3.LatLngBounds(
+      new Tmapv3.LatLng(33.0, 124.5),
+    );
+    latlngBounds.extend(new Tmapv3.LatLng(38.9, 132.0));
     const map = new Tmapv3.Map(mapRef.current!, {
-      center: latlng,
+      bounds: latlngBounds,
       width: '100%',
       height: '100%',
-      zoom: 17,
     });
 
     const marker = new Tmapv3.Marker({
@@ -63,19 +71,13 @@ const PloggingMap = ({
       direction: true,
       map: map,
     });
+
     setTmap(map);
     setCurMarker(marker);
     setPolyline(polyline);
   };
 
   useEffect(() => {
-    if (!(mapRef.current! as HTMLElement).firstChild) {
-      initMap({
-        lat: location.lat,
-        lng: location.lng,
-      });
-    }
-
     const updateMapCenter = () => {
       tmap?.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
     };
@@ -127,6 +129,12 @@ const PloggingMap = ({
       setPolyline(newPolyline);
     };
 
+    if (!(mapRef.current! as HTMLElement).firstChild) {
+      initMap({
+        lat: 37.715133,
+        lng: 126.734086,
+      });
+    }
     updateMarker();
     updatePath();
     if (fixCenter) {
@@ -135,19 +143,39 @@ const PloggingMap = ({
   }, [location]);
 
   useEffect(() => {
+    if (tmap && locationLoading) {
+      tmap.setCenter(new window.Tmapv3.LatLng(location.lat, location.lng));
+      tmap.setZoom(17);
+    }
+  }, [locationLoading]);
+
+  useEffect(() => {
+    dispatch(setCenterLat(tmap?.getCenter()._lat));
+    dispatch(setCenterLng(tmap?.getCenter()._lng));
+  }, [tmap?.getCenter()]);
+
+  useEffect(() => {
     const updateTrashMarkers = () => {
       if (!tmap) {
         return;
       }
-      const markers = [...trashs].map(
-        trash =>
-          new window.Tmapv3.Marker({
-            position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
-            icon: '/assets/images/trash_can.png',
-            iconSize: new window.Tmapv3.Size(40, 40),
-            map: tmap,
-          }),
-      );
+      const markers = [...trashs].map(trash => {
+        let trashIcon = `${import.meta.env.VITE_S3_URL}/general_trash.png`;
+
+        if (trash.trashcanType === '재활용') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/recycle_trash.png`;
+        } else if (trash.trashcanType === '담배꽁초') {
+          trashIcon = `${import.meta.env.VITE_S3_URL}/cigarette_trash.png`;
+        }
+
+        return new window.Tmapv3.Marker({
+          position: new window.Tmapv3.LatLng(trash.latitude, trash.longitude),
+          icon: trashIcon,
+          iconSize: new window.Tmapv3.Size(30, 40),
+          offset: new window.Tmapv3.Point(-10, 0),
+          map: tmap,
+        });
+      });
       setTrashMarkers([...markers]);
     };
 

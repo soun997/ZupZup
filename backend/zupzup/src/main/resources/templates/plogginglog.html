@@ -702,13 +702,14 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 243
+Content-Length: 265
 
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-13T10:08:20.7064782",
-    "endDateTime" : "2023-11-13T10:08:20.7064782",
+    "ploggingLogId" : 1,
+    "startDateTime" : "2023-11-14T16:29:56.13208",
+    "endDateTime" : "2023-11-14T16:29:56.13208",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -756,13 +757,14 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 243
+Content-Length: 269
 
 {
   "status" : 200,
   "results" : [ {
-    "startDateTime" : "2023-11-13T10:08:20.7639743",
-    "endDateTime" : "2023-11-13T10:08:20.7639743",
+    "ploggingLogId" : 1,
+    "startDateTime" : "2023-11-14T16:29:56.2062252",
+    "endDateTime" : "2023-11-14T16:29:56.2062252",
     "distance" : 10,
     "calories" : 600,
     "routeImageUrl" : "https://image.com"
@@ -797,8 +799,8 @@ Content-Length: 195
 {
   "status" : 200,
   "results" : {
-    "startDateTime" : "2023-11-13T10:08:20.7466839",
-    "endDateTime" : "2023-11-13T10:08:20.7466839",
+    "startDateTime" : "2023-11-14T16:29:56.1912264",
+    "endDateTime" : "2023-11-14T16:29:56.1912264",
     "distance" : 10,
     "calories" : 600
   }
@@ -1111,7 +1113,7 @@ Content-Length: 628
 <h3 id="_request_9"><a class="link" href="#_request_9">Request</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/total HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/plogging-logs/1/trash HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: k9a202.p.ssafy.io:8080</code></pre>
 </div>
@@ -1123,16 +1125,25 @@ Host: k9a202.p.ssafy.io:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 192
+Content-Length: 311
 
 {
   "status" : 200,
   "results" : {
-    "totalDistance" : 100,
-    "totalCount" : 10,
-    "totalDurationTime" : 36000,
-    "totalCalories" : 2000,
-    "totalGatheredTrash" : 200
+    "plastic" : 1,
+    "cigarette" : 2,
+    "can" : 3,
+    "glass" : 4,
+    "normal" : 5,
+    "styrofoam" : 6,
+    "metal" : 7,
+    "clothes" : 8,
+    "battery" : 9,
+    "paper" : 10,
+    "vinyl" : 11,
+    "mixed" : 12,
+    "food" : 13,
+    "etc" : 14
   }
 }</code></pre>
 </div>

@@ -17,10 +17,12 @@ import {
   useDistance,
   calculateCalories,
   useAppDispatch,
+  useHistory,
+  store,
 } from 'hooks';
 import * as utils from 'utils';
 
-import { TrashApis } from 'api';
+import { PloggingApis, TrashApis } from 'api';
 import { TrashInfo } from 'types';
 import { format } from 'date-fns';
 import {
@@ -42,6 +44,8 @@ const OnPlogging = () => {
   const [totalDistance, setTotalDistance] = useState<number>(0.0);
   const [onCalories, setCalorie] = useState<number>(0);
   const [fixCenter, setFixCenter] = useState<boolean>(false);
+  const [locationLoading, setLocationLoading] = useState<boolean>(false);
+
   const [trashs, setTrashs] = useState<Array<TrashInfo>>([]);
 
   const exitPlogging = async () => {
@@ -50,14 +54,21 @@ const OnPlogging = () => {
     dispatch(setDistance(totalDistance));
     dispatch(setTime(stopwatch));
 
+    await PloggingApis.stopPlogging();
     navigate(utils.URL.PLOGGING.REPORT);
   };
 
   const getTrashInfo = async (trashStatus: boolean) => {
+    const centerLat: number | null = store.getState().map.centerLat;
+    const centerLng: number | null = store.getState().map.centerLng;
+    if (!centerLat || !centerLng) {
+      return;
+    }
+
     if (trashStatus && location.loaded) {
       const trashcanRequest = {
-        currentLatitude: location.coordinates!.lat,
-        currentLongitude: location.coordinates!.lng,
+        currentLatitude: centerLat,
+        currentLongitude: centerLng,
       };
 
       try {
@@ -79,11 +90,32 @@ const OnPlogging = () => {
   };
 
   useEffect(() => {
+    const listenBackEvent = () => {
+      if (
+        confirm('페이지를 나가면 플로깅이 종료됩니다. 정말 종료하시겠습니까?')
+      ) {
+        exitPlogging();
+      } else {
+        useHistory.push(utils.URL.PLOGGING.ON);
+      }
+    };
+
+    const unlistenHistoryEvent = useHistory.listen(({ action }) => {
+      if (action === 'POP') {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
+  });
+
+  useEffect(() => {
     const recordLocation = () => {
       if (!location.loaded) {
         return;
       }
 
+      setLocationLoading(true);
       const lat = location.coordinates!.lat;
       const lng = location.coordinates!.lng;
 
@@ -138,10 +170,10 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5) {
+      if (distance >= 1) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
-        const calorie = calculateCalories(stopwatch);
+        const calorie = calculateCalories(stopwatch, totalDistance + distance);
         setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(
@@ -185,21 +217,20 @@ const OnPlogging = () => {
         refreshTrashInfo={refreshTrashInfo}
       />
       {}
-      {location.loaded && (
-        <PloggingMap
-          exitOn={exitOn}
-          ploggingInfoOn={ploggingInfoOn}
-          cameraOn={cameraOn}
-          location={{
-            lat: location.coordinates!.lat,
-            lng: location.coordinates!.lng,
-          }}
-          fixCenter={fixCenter}
-          setFixCenter={setFixCenter}
-          trashs={trashs}
-          trashOn={trashOn}
-        />
-      )}
+      <PloggingMap
+        exitOn={exitOn}
+        ploggingInfoOn={ploggingInfoOn}
+        cameraOn={cameraOn}
+        location={{
+          lat: location.coordinates!.lat,
+          lng: location.coordinates!.lng,
+        }}
+        locationLoading={locationLoading}
+        fixCenter={fixCenter}
+        setFixCenter={setFixCenter}
+        trashs={trashs}
+        trashOn={trashOn}
+      />
     </S.Wrap>
   );
 };

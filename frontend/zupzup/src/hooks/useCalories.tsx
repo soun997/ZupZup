@@ -1,28 +1,18 @@
 import { store } from './store/useStore';
 
-const calculateCalories = (stopwatch: number): number => {
-  //   const isMale = store.getState().auth.gender === 'M';
-  //   const heightInCm = Number(store.getState().auth.height);
-  //   const age =
-  //     new Date().getFullYear() - Number(store.getState().auth.birthYear);
+const calculateCalories = (stopwatch: number, distance: number): number => {
   const weightInKg = Number(store.getState().auth.weight);
-  // const genderModifier = isMale ? 5 : -161;
 
-  const time = stopwatch / 60;
+  const time = stopwatch / 3600; // hour
   console.log('time', time, stopwatch);
 
-  const oneMet = 10 * (3.5 * weightInKg * time);
-  const calories = (oneMet / 1000) * 5;
+  const speed = distance / (1000 * time); //시속
+  //시속 9km 당 6 METs -> 1km : 2/3 Mets
+  const oneMet = (2 * speed * time) / 3;
+
+  const calories = 1.05 * oneMet * weightInKg;
 
   console.log(oneMet, calories);
-
-  // // 기초 대사량 계산 (일일 기본 칼로리 소모량)
-  // const basalMetabolicRate =
-  //   10 * weightInKg + 6.25 * heightInCm - 5 * age + genderModifier;
-
-  // // 활동 레벨에 따른 추가 칼로리 계산
-  // const activityLevel = 1.2;
-  // const totalCalories = basalMetabolicRate * activityLevel;
 
   return calories;
 };

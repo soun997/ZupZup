@@ -1,30 +1,33 @@
 package com.twoez.zupzup.plogging.service;
 
 
+import com.twoez.zupzup.global.exception.plogging.PloggingNotFoundException;
+import com.twoez.zupzup.plogging.domain.Plogging;
 import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class PloggingService {
 
     private final PloggingRedisRepository ploggingRedisRepository;
 
-    public Long increaseTotalPlogger() {
-
-        return ploggingRedisRepository.increase();
+    public Long add(Long memberId) {
+        ploggingRedisRepository.save(Plogging.from(memberId));
+        return ploggingRedisRepository.count();
     }
 
-    public Long decreaseTotalPlogger() {
-
-        return ploggingRedisRepository.decrease();
+    public Long remove(Long memberId) {
+        Plogging plogging =
+                ploggingRedisRepository
+                        .findById(String.valueOf(memberId))
+                        .orElseThrow(PloggingNotFoundException::new);
+        ploggingRedisRepository.delete(plogging);
+        return ploggingRedisRepository.count();
     }
 
-    public Long searchTotalPlogger() {
-
-        return ploggingRedisRepository.findTotalPlogger();
+    public Long count() {
+        return ploggingRedisRepository.count();
     }
 }

@@ -15,6 +15,20 @@ export interface TotalPloggingInfo {
   totalDurationTime: number;
   totalCalories: number;
   totalGatheredTrash: number;
+  totalPlastic: number;
+  totalCigarette: number;
+  totalCan: number;
+  totalGlass: number;
+  totalNormal: number;
+  totalStyrofoam: number;
+  totalMetal: number;
+  totalClothes: number;
+  totalBattery: number;
+  totalPaper: number;
+  totalVinyl: number;
+  totalMixed: number;
+  totalFood: number;
+  totalEtc: number;
 }
 
 export interface RegistInfo {

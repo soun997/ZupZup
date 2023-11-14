@@ -3,49 +3,23 @@ import { useState, useEffect } from 'react';
 import { TrashDetail } from 'types/Trash';
 import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Loading } from 'pages';
+import { TrashTable } from 'types/PloggingReport';
+import { CoinModal } from 'components';
+import { TrashApis } from 'api';
 
 interface Props {
   trashDetail: TrashDetail;
   totalCoin: number;
 }
 
-interface TrashTable {
-  [type: string]: TrashTableDetail;
-  plastic: TrashTableDetail;
-  cigarette: TrashTableDetail;
-  can: TrashTableDetail;
-  glass: TrashTableDetail;
-  paper: TrashTableDetail;
-  styrofoam: TrashTableDetail;
-  metal: TrashTableDetail;
-  clothes: TrashTableDetail;
-  battery: TrashTableDetail;
-  vinyl: TrashTableDetail;
-  normal: TrashTableDetail;
-  food: TrashTableDetail;
-  mixed: TrashTableDetail;
-  etc: TrashTableDetail;
-}
-
-interface TrashTableDetail {
-  type: number[];
-  desc: string;
-  coin: number;
-  kor: string;
-}
-
-const COIN_TABLE_URI = '/classify/classify_type.json';
-
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
   const [coinTable, setCoinTable] = useState<TrashTable>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
-      const coinTableFromJson = await fetch(COIN_TABLE_URI)
-        .then(response => response.json())
-        .catch(error => {
-          console.log(error);
-        });
+      const coinData = await TrashApis.getTrashDetail();
+      const coinTableFromJson = coinData.data;
       setCoinTable(coinTableFromJson);
     }
     load();
@@ -53,9 +27,10 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
 
   return (
     <S.Wrap>
+      <CoinModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <S.TitleFrame>
         <S.Title>획득한 코인</S.Title>
-        <S.Caption onClick={() => alert('준비중 입니다')}>
+        <S.Caption onClick={() => setIsModalOpen(true)}>
           코인 산정 기준이 궁금하신가요?
           <ArrowSvg />
         </S.Caption>
@@ -92,7 +67,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.dark};
   `,
 
   TitleFrame: styled.div`
@@ -113,7 +88,7 @@ const S = {
     gap: 3px;
     font-size: ${({ theme }) => theme.font.size.caption};
     font-family: ${({ theme }) => theme.font.family.caption};
-    color: ${({ theme }) => theme.color.gray3};
+    color: ${({ theme }) => theme.color.gray2};
   `,
 
   ContentFrame: styled.div`

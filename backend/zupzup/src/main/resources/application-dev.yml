@@ -82,3 +82,6 @@ management:
       enabled: true
   server:
     port: ${HEALTH_PORT}
+
+security:
+  permit-urls: ${SECURITY_PERMITTED_URLS}

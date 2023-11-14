@@ -1,12 +1,24 @@
+<!--
+TODO
+1. 어플리케이션 화면
+2. (시간되면) 목차
+3. 더 추가할게 있는지
+-->
+
 <!-- 대문 이미지 넣기  -->
 ![대문사진](https://i.postimg.cc/Hs7WB7z8/image.png)
+
+<br/>
 
 # 🏃‍♀️ 내 손 안의 플로깅 앱 : 줍줍 🏃‍♂️
 > '나' 와  '환경'  모두를 생각하는 플로깅 어플리케이션 🌳 <br>
 > 플로깅 기록을 보다 간편하게 작성해보세요 🌎<br>
 
-## 🔗 라이브
-[app.zupzup.shop](https://app.zupzup.shop/)
+<br/>
+<br/>
+
+## 🔗 배포 주소
+- [app.zupzup.shop](https://app.zupzup.shop/)
 <br>
 <br>
 
@@ -14,7 +26,9 @@
 
 ### 🔗 [소개 UCC]()
 ### 🔗 [시연 영상]()
-
+### 🔗 [ER Diagram](https://www.erdcloud.com/d/i2qYSu9dyHPPLoYjf)
+### 🔗 [Figma](https://www.figma.com/file/u6TPBskjtMDknWenvkEdVs/Design?type=design&node-id=2%3A2&mode=design&t=Spsd4gU14uSrHMu0-1)
+### 🔗 [API 명세서](https://insidious-maraca-cb4.notion.site/API-d613213651e745c68eecefd876a27803?pvs=4)
 
 <br>
 
@@ -75,39 +89,6 @@
 
 <br>
 
-## 📌 기술
-&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Frontend Develop** <br>
-
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow.js-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
-
-&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Backend Develop** <br>
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Spring](https://img.shields.io/badge/spring_security-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
-
-&nbsp;&nbsp;&nbsp;&nbsp; **🛠 DataBase** <br>
-![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-
-&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Infra** <br>
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)
-![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
-![Datadog](https://img.shields.io/badge/datadog-%23632CA6.svg?style=for-the-badge&logo=datadog&logoColor=white)
-
-&nbsp;&nbsp;&nbsp;&nbsp; **🛠 SCM** <br>
-
-![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
-![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
-![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
-<br>
 
 ## 📌 주요 기능
 **현재 위치를 활용한 플로깅**
@@ -146,21 +127,105 @@
 - 총 플로깅 횟수, 플로깅시간, 총 소모 칼로리, 각 쓰레기별 주운 개수 확인 가능
   <br>
 
+<br/>
+
+## 📌 기술스택
+&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Frontend Develop** <br>
+
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow.js-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+
+&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Backend Develop** <br>
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Spring](https://img.shields.io/badge/spring_security-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
+
+&nbsp;&nbsp;&nbsp;&nbsp; **🛠 DataBase** <br>
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
+
+&nbsp;&nbsp;&nbsp;&nbsp; **🛠 Infra** <br>
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Datadog](https://img.shields.io/badge/datadog-%23632CA6.svg?style=for-the-badge&logo=datadog&logoColor=white)
+
+&nbsp;&nbsp;&nbsp;&nbsp; **🛠 SCM** <br>
+
+![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
+![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+
+<br>
 
 ## 👨‍💻 Structure
 ### ✍ Back-End 
 **◼ Package Structure**
-![백엔드 패키지 구조](https://ifh.cc/g/mHQVVa.png)
+``` text
+├── board
+│   ├── 📂 controller
+│   │   ├── 📂 dto
+│   │   │   ├── 📂 request
+│   │   │   │   └── BoardListRequest
+│   │   │   └── 📂 response
+│   │   │       └── BoardListResponse
+│   │   └── BoardController 
+│   ├── 📂 service
+│   │   └── BoardService
+│   ├── 📂 domain
+│   ├── 📂 repository
+│		│		├── BoardSpringDataRepository
+│		│		└── BoardQueryRepository
+│   └── 📂 exception
+├── member
+│   ├── 📂 controller
+│   ├── 📂 application
+│   ├── 📂 persistence
+│   ├── 📂 domain
+│   └── 📂 exception
+├── Application
+```
+
 <br>
-<br>
-**◼ ERD**
-<br>
-![백엔드 ERD](https://i.postimg.cc/TPD5WYNn/ZUPZUP.png)
 
 ### ✍ Front-End
 **Directory structure**
 <br>
-![프론트 디렉토리 구조](https://ifh.cc/g/DA3GHd.png)
+``` text
+├── public
+│   ├── index.html
+│   └── web.config
+├── src
+│   ├── 📂 api
+│   ├── 📂 assets
+│   │   ├── 📂 images
+│   │   ├── 📂 font
+│   ├── 📂 router
+│   ├── 📂 components
+│   ├── 📂 hooks
+│   ├── 📂 pages
+│   ├── 📂 styles
+│   ├── 📂 utils
+│   ├── vite-env.d.ts
+│   ├── App.tsx
+│   └── main.tsx
+├── .eslintrc.cjs
+│── .gitignore
+├── .prettierrc
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── yarn.lock
+└── vite.config.js
+```
+
+<br/>
 
 ## 🎊 Git Commit Convention
 **💡 Commit Type**

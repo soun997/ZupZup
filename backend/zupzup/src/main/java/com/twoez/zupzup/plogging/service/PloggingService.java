@@ -6,11 +6,9 @@ import com.twoez.zupzup.plogging.domain.Plogging;
 import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class PloggingService {
 
     private final PloggingRedisRepository ploggingRedisRepository;

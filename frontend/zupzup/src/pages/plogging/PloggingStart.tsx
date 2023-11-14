@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -6,24 +7,27 @@ import {
   Navigation,
 } from 'components';
 import { useGeolocation } from 'hooks';
-import { Loading } from 'pages';
 
 const PloggingStart = () => {
   const location = useGeolocation();
+  const [locationLoading, setLocationLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (location.loaded) {
+      setLocationLoading(true);
+    }
+  }, [location]);
 
   return (
     <S.Wrap>
       <PloggingStartBackground />
-      {location.loaded ? (
-        <PloggingStartMap
-          location={{
-            lat: location.coordinates!.lat,
-            lng: location.coordinates!.lng,
-          }}
-        />
-      ) : (
-        <Loading />
-      )}
+      <PloggingStartMap
+        location={{
+          lat: location.coordinates!.lat,
+          lng: location.coordinates!.lng,
+        }}
+        locationLoading={locationLoading}
+      />
       <Navigation currentPage="main" />
     </S.Wrap>
   );

@@ -60,6 +60,9 @@ const ReportModal: React.FC<ReportModalProps> = ({
           ) : (
             <Loading />
           )}
+          {coinTable && Object.values(trashDetail).every(val => val === 0) && (
+            <div>주은 쓰레기 정보가 없습니다.</div>
+          )}
         </S.ModalContent>
       </S.ModalWrapper>
     </S.ModalOverlay>

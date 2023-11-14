@@ -34,6 +34,7 @@ export interface PloggingLogSaveRequest {
 
 // response
 export interface PloggingInfo {
+  ploggingLogId: number;
   startDateTime: string;
   endDateTime: string;
   distance: number;

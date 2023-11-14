@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import ClockSvg from 'assets/icons/clock.svg?react';
@@ -11,32 +11,30 @@ import ArrowUpSvg from 'assets/icons/angle-up.svg?react';
 import { PloggingInfo, TrashDetail } from 'types';
 import { useFormatDateTime } from 'hooks';
 import { ReportModal } from 'components';
+import { RecordApis } from 'api';
 
 interface Props {
   ploggingInfo: PloggingInfo;
 }
 
 //! 수정해주세요
-const tempRecord: TrashDetail = {
-  plastic: 0,
-  cigarette: 2,
-  can: 2,
-  glass: 2,
-  paper: 0,
-  normal: 0,
-  styrofoam: 2,
-  metal: 2,
-  clothes: 2,
-  battery: 2,
-  vinyl: 2,
-  mixed: 2,
-  food: 2,
-  etc: 2,
-};
 
 const RecordBox = ({ ploggingInfo }: Props) => {
   const [showImage, setShowImage] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [trashRecord, setTrashRecord] = useState<TrashDetail>();
+
+  useEffect(() => {
+    fetchRecordTrash();
+  }, []);
+
+  const fetchRecordTrash = async () => {
+    const response = await RecordApis.getPloggingTrash(
+      ploggingInfo.ploggingLogId,
+    );
+    const data = response.data.results;
+    setTrashRecord(data);
+  };
 
   const handleMoreInfo = () => {
     setShowImage(!showImage);
@@ -44,7 +42,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
   return (
     <S.Wrap>
       <ReportModal
-        trashDetail={tempRecord}
+        trashDetail={trashRecord!}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />

@@ -17,7 +17,6 @@ const MyPloggingReport = () => {
       const response = await RecordApis.getMyPloggingInfo();
       console.log(response);
       const data: TotalPloggingInfo = response.data.results;
-      console.log(data);
       setPloggingInfo(data);
       setTrashInfo({
         plastic: data.totalPlastic,

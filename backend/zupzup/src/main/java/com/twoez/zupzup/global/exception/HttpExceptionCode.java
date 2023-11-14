@@ -51,6 +51,8 @@ public enum HttpExceptionCode {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다."),
     ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "ERR_MEMBER_002", "이미 가입된 멤버입니다. 새로 가입할 수 없습니다."),
 
+    PLOGGING_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_001", "진행 중인 플로깅이 아닙니다."),
+
     PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
 
     ROUTE_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_002", "플로깅 이동경로를 찾을 수 없습니다."),

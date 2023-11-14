@@ -1,14 +1,13 @@
 package com.twoez.zupzup.plogging.controller;
 
 
-import com.twoez.zupzup.global.response.ApiResponse;
+import com.twoez.zupzup.global.response.HttpResponse;
+import com.twoez.zupzup.member.domain.LoginUser;
 import com.twoez.zupzup.plogging.controller.dto.PloggerResponse;
 import com.twoez.zupzup.plogging.service.PloggingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,21 +16,23 @@ public class PloggingController {
 
     private final PloggingService ploggingService;
 
-    @PutMapping("/start")
-    public ApiResponse<PloggerResponse> ploggerAdd() {
-
-        return ApiResponse.ok(PloggerResponse.from(ploggingService.increaseTotalPlogger()));
+    @PostMapping("/start")
+    public HttpResponse<PloggerResponse> ploggerAdd(@AuthenticationPrincipal LoginUser loginUser) {
+        return HttpResponse.okBuild(
+                (PloggerResponse.from(ploggingService.add(loginUser.getMemberId()))));
     }
 
-    @PutMapping("/finish")
-    public ApiResponse<PloggerResponse> ploggerRemove() {
+    @DeleteMapping("/finish")
+    public HttpResponse<PloggerResponse> ploggerRemove(
+            @AuthenticationPrincipal LoginUser loginUser) {
 
-        return ApiResponse.ok(PloggerResponse.from(ploggingService.decreaseTotalPlogger()));
+        return HttpResponse.okBuild(
+                PloggerResponse.from(ploggingService.remove(loginUser.getMemberId())));
     }
 
     @GetMapping("/number-of-users")
-    public ApiResponse<PloggerResponse> ploggerDetails() {
+    public HttpResponse<PloggerResponse> ploggerCount() {
 
-        return ApiResponse.ok(PloggerResponse.from(ploggingService.searchTotalPlogger()));
+        return HttpResponse.okBuild(PloggerResponse.from(ploggingService.count()));
     }
 }

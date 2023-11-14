@@ -5,13 +5,12 @@ import ArrowSvg from 'assets/icons/angle-right.svg?react';
 import { Loading } from 'pages';
 import { TrashTable } from 'types/PloggingReport';
 import { CoinModal } from 'components';
+import { TrashApis } from 'api';
 
 interface Props {
   trashDetail: TrashDetail;
   totalCoin: number;
 }
-
-const COIN_TABLE_URI = '/classify/classify_type.json';
 
 const CoinReport = ({ trashDetail, totalCoin }: Props) => {
   const [coinTable, setCoinTable] = useState<TrashTable>();
@@ -19,11 +18,8 @@ const CoinReport = ({ trashDetail, totalCoin }: Props) => {
 
   useEffect(() => {
     async function load() {
-      const coinTableFromJson = await fetch(COIN_TABLE_URI)
-        .then(response => response.json())
-        .catch(error => {
-          console.log(error);
-        });
+      const coinData = await TrashApis.getTrashDetail();
+      const coinTableFromJson = coinData.data;
       setCoinTable(coinTableFromJson);
     }
     load();

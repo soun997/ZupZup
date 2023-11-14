@@ -1,22 +1,40 @@
+import { Loading } from 'pages';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { TrashTable } from 'types/PloggingReport';
+import { TrashApis } from 'api';
+import { TrashDetail } from 'types';
 
 interface Props {
-  trashInfo: {
-    name: string;
-    count: number;
-  }[];
+  trashInfo: TrashDetail;
 }
 const PloggingMemo = ({ trashInfo }: Props) => {
+  const [coinTable, setCoinTable] = useState<TrashTable>();
+
+  useEffect(() => {
+    async function load() {
+      const coinData = await TrashApis.getTrashDetail();
+      const coinTableFromJson = coinData.data;
+      setCoinTable(coinTableFromJson);
+    }
+    load();
+  }, []);
   return (
     <S.MemoFrame>
-      {trashInfo.map((trash, index) => (
-        <li key={index}>
-          <div className="text">
-            <div className="name">{trash.name}</div>
-            <div className="count">{trash.count}회</div>
-          </div>
-        </li>
-      ))}
+      {coinTable ? (
+        Object.keys(trashInfo)
+          .filter((type: string) => trashInfo[type] > 0)
+          .map((type, idx) => (
+            <li key={idx}>
+              <div className="text">
+                <div className="name">{coinTable[type].kor}</div>
+                <div className="count">{trashInfo[type]}회</div>
+              </div>
+            </li>
+          ))
+      ) : (
+        <Loading />
+      )}
     </S.MemoFrame>
   );
 };

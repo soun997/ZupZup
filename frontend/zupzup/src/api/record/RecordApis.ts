@@ -14,6 +14,8 @@ const RecordApis = {
   getPloggingLogByDay: (date: string) =>
     instance.get(`${RECORD_URL}/days?date=${date}`),
   getPloggingLogByRecent: () => instance.get(`${RECORD_URL}/recent`),
+  getPloggingTrash: (ploggingLogId: number) =>
+    instance.get(`${RECORD_URL}/${ploggingLogId}/trash`),
 
   //*프로필 플로깅 집계
   getMyPloggingInfo: () => instance.get(`${RECORD_URL}/total`),

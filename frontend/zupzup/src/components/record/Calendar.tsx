@@ -70,7 +70,12 @@ const Calendar = (props: CalendarProps) => {
         dots.push(
           <S.Dot
             key={day.getTime()}
-            $exists={ploggingStates![format(day, 'yyyy-MM-dd')] ? true : false}
+            $exists={
+              ploggingStates![format(day, 'yyyy-MM-dd')] &&
+              isSameMonth(currentDate, day)
+                ? true
+                : false
+            }
           ></S.Dot>,
         );
 

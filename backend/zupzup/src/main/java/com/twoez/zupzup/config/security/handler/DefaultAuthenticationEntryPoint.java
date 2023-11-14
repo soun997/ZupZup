@@ -46,7 +46,6 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
                 .validate();
 
         if (response.isCommitted()) {
-            log.info("response committed");
             return;
         }
         super.commence(request, response, arg2);

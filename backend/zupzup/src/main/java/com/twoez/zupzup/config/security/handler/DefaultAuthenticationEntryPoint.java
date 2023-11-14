@@ -32,21 +32,12 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
         arg2.printStackTrace();
         log.info("stackTrace over");
 
-        //        Assertion.with(request)
-        //                .setValidation(endpointChecker::existsEndPoint)
-        //                .validateOrExecute(
-        //                        () -> writeExceptionResponse(response,
-        // authenticationExceptionCode));
-        //
-        //        // Authentication 이 필요한데 유효한 Authorization Header가 없을 경우
-        //        Assertion.with(request).setValidation(HttpRequestUtils::hasAuthorizationHeader)
-        //                .validateOrExecute(() -> writeExceptionResponse(response,
-        //                        HttpExceptionCode.INVALID_AUTHORIZATION_HEADER));
-
         Assertions.with(request)
+                // 유효한 endpoint url 체크
                 .setValidation(endpointChecker::existsEndPoint)
                 .validateOrExecute(
                         () -> writeExceptionResponse(response, HttpExceptionCode.REQUEST_NOT_FOUND))
+                // Authorization Header가 있는지 체크
                 .setValidation(HttpRequestUtils::hasAuthorizationHeader)
                 .validateOrExecute(
                         () ->

@@ -99,7 +99,7 @@ const MyPloggingReport = () => {
         </div>
         <ErrorCheck>
           <ErrorSvg />
-          {'서비스 준비중입니다'}
+          {/* {'서비스 준비중입니다'} */}
         </ErrorCheck>
       </S.BoxFrame>
 

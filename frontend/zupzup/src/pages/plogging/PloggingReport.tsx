@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as utils from 'utils';
 import { ConfirmButton, RecordReport, PloggingDone } from 'components';
-import { store, useAppDispatch, useCapture } from 'hooks';
+import { store, useAppDispatch, useCapture, useHistory } from 'hooks';
 import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
 import SaveSvg from 'assets/icons/save.svg?react';
@@ -221,6 +221,20 @@ const PloggingReport = () => {
       localStorage.removeItem(utils.COORDINATE.MAX_LONGITUDE);
     };
   }, []);
+
+  useEffect(() => {
+    const listenBackEvent = () => {
+      useHistory.push(utils.URL.PLOGGING.REPORT);
+    };
+
+    const unlistenHistoryEvent = useHistory.listen(({ action }) => {
+      if (action === 'POP') {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
+  });
 
   if (showLoading) {
     return <PloggingDone />;

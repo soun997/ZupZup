@@ -16,16 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/**
- *
- *
- * <pre>
- * AccessToken이 없어야 하는 요청 체크 filter
- *
- * 1. POST /api/v1/auth
- * 2. PUT  /api/v1/members/register
- * </pre>
- */
 @Component
 @RequiredArgsConstructor
 public class AuthorizationTokenCheckFilter extends OncePerRequestFilter {

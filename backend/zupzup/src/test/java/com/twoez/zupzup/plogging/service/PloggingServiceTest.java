@@ -1,9 +1,14 @@
 package com.twoez.zupzup.plogging.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.twoez.zupzup.fixture.plogging.PloggingFixture;
+import com.twoez.zupzup.member.repository.MemberRepository;
+import com.twoez.zupzup.plogging.domain.Plogging;
 import com.twoez.zupzup.plogging.repository.redis.PloggingRedisRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +17,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PloggingServiceTest {
+class PloggingServiceTest {
 
     @Mock PloggingRedisRepository ploggingRedisRepository;
+    @Mock MemberRepository memberRepository;
     @InjectMocks PloggingService ploggingService;
 
     @Test
@@ -22,9 +28,11 @@ public class PloggingServiceTest {
     void increaseTotalPloggerTest() {
 
         Long total = 0L;
-        given(ploggingRedisRepository.increase()).willReturn(total + 1L);
+        Plogging plogging = PloggingFixture.DEFAULT.getPlogging();
+        ploggingRedisRepository.save(plogging);
+        given(ploggingRedisRepository.count()).willReturn(total + 1);
 
-        Long result = ploggingService.increaseTotalPlogger();
+        Long result = ploggingService.add(1L);
 
         assertThat(result).isEqualTo(1L);
     }
@@ -34,10 +42,14 @@ public class PloggingServiceTest {
     void decreaseTotalPloggerTest() {
 
         Long total = 1L;
-        given(ploggingRedisRepository.decrease()).willReturn(total - 1L);
 
-        Long result = ploggingService.decreaseTotalPlogger();
+        Plogging plogging = PloggingFixture.DEFAULT.getPlogging();
 
-        assertThat(result).isEqualTo(0L);
+        given(ploggingRedisRepository.count()).willReturn(total - 1L);
+        given(ploggingRedisRepository.findById(any())).willReturn(Optional.of(plogging));
+
+        Long result = ploggingService.remove(any());
+
+        assertThat(result).isZero();
     }
 }

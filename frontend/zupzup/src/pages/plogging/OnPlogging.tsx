@@ -173,7 +173,7 @@ const OnPlogging = () => {
       if (distance >= 0.5) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
-        const calorie = calculateCalories(stopwatch);
+        const calorie = calculateCalories(stopwatch, totalDistance + distance);
         setCalorie(calorie);
         locations.push({ lat, lng });
         localStorage.setItem(

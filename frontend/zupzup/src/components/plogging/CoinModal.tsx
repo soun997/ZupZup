@@ -63,14 +63,17 @@ const S = {
   ModalHeader: styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: ${({ theme }) => theme.font.size.focus1};
-    font-family: ${({ theme }) => theme.font.family.focus1};
-    color: ${({ theme }) => theme.color.dark};
+    align-items: flex-end;
+
+    & h2 {
+      font-size: ${({ theme }) => theme.font.size.focus1};
+      font-family: ${({ theme }) => theme.font.family.focus1};
+      color: ${({ theme }) => theme.color.dark};
+    }
     border-bottom: 1px solid ${({ theme }) => theme.color.dark};
     padding-bottom: 0.5em;
 
-    button {
+    & button {
       border: none;
       background: transparent;
       font-size: ${({ theme }) => theme.font.size.focus2};

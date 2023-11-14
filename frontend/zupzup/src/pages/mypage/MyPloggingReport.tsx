@@ -6,23 +6,35 @@ import { RecordApis } from 'api';
 import { useEffect, useState } from 'react';
 import { Loading } from 'pages';
 import ErrorSvg from 'assets/icons/error-check.svg?react';
-
-const trashInfos = [
-  { name: '플라스틱', count: 0 },
-  { name: '담배꽁초', count: 0 },
-  { name: '일반 쓰레기', count: 0 },
-  { name: '음식물 쓰레기', count: 0 },
-  { name: '유리조각', count: 0 },
-];
+import { TrashDetail } from 'types';
 
 const MyPloggingReport = () => {
   const [ploggingInfo, setPloggingInfo] = useState<TotalPloggingInfo>();
+  const [trashInfo, setTrashInfo] = useState<TrashDetail>();
+
   const fetchMyReport = async () => {
     try {
       const response = await RecordApis.getMyPloggingInfo();
-      const data = response.data.results;
+      console.log(response);
+      const data: TotalPloggingInfo = response.data.results;
       console.log(data);
       setPloggingInfo(data);
+      setTrashInfo({
+        plastic: data.totalPlastic,
+        battery: data.totalBattery,
+        can: data.totalCan,
+        cigarette: data.totalCigarette,
+        clothes: data.totalClothes,
+        paper: data.totalPaper,
+        etc: data.totalEtc,
+        food: data.totalFood,
+        glass: data.totalGlass,
+        metal: data.totalMetal,
+        mixed: data.totalMixed,
+        normal: data.totalNormal,
+        styrofoam: data.totalStyrofoam,
+        vinyl: data.totalVinyl,
+      });
     } catch (error) {
       console.error('Error fetching report info:', error);
     }
@@ -69,7 +81,6 @@ const MyPloggingReport = () => {
           <S.EachBoxInfo>
             플로깅 시간
             <div className="tag">
-              {/* {Math.floor(ploggingInfo.totalDurationTime / 3600)} 시간 */}
               {formatTimeToString(ploggingInfo.totalDurationTime)}
             </div>
           </S.EachBoxInfo>
@@ -85,7 +96,7 @@ const MyPloggingReport = () => {
           총 {ploggingInfo.totalGatheredTrash}회 쓰레기를 주웠어요.
         </div>
         <div className="memoInfo">
-          <PloggingMemo trashInfo={trashInfos} />
+          <PloggingMemo trashInfo={trashInfo!} />
         </div>
         <ErrorCheck>
           <ErrorSvg />

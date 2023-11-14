@@ -84,6 +84,7 @@ export const COORDINATE = {
   MIN_LONGITUDE: 'minLongitude',
 };
 
+export const COIN_TABLE_URI = '/classify/classify_type.json';
 export const PLOGGING_COIN_INFO = [
   {
     name: '플라스틱',

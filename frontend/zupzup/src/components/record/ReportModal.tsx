@@ -1,3 +1,4 @@
+import { TrashApis } from 'api';
 import { Loading } from 'pages';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -10,26 +11,23 @@ interface ReportModalProps {
   trashDetail: TrashDetail;
 }
 
-const COIN_TABLE_URI = '/classify/classify_type.json';
 const ReportModal: React.FC<ReportModalProps> = ({
   isOpen,
   onClose,
   trashDetail,
 }) => {
+  const [coinTable, setCoinTable] = useState<TrashTable>();
   useEffect(() => {
     async function load() {
-      const coinTableFromJson = await fetch(COIN_TABLE_URI)
-        .then(response => response.json())
-        .catch(error => {
-          console.log(error);
-        });
+      const coinData = await TrashApis.getTrashDetail();
+      const coinTableFromJson = coinData.data;
       setCoinTable(coinTableFromJson);
     }
     load();
   }, []);
-  const [coinTable, setCoinTable] = useState<TrashTable>();
 
   if (!isOpen) return null;
+
   const handleClose = (event: React.MouseEvent) => {
     event.stopPropagation();
     onClose();
@@ -90,19 +88,24 @@ const S = {
   ModalHeader: styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: ${({ theme }) => theme.font.size.focus1};
-    font-family: ${({ theme }) => theme.font.family.focus1};
-    color: ${({ theme }) => theme.color.dark};
+    align-items: flex-end;
+
+    & h2 {
+      font-size: ${({ theme }) => theme.font.size.focus1};
+      font-family: ${({ theme }) => theme.font.family.focus1};
+      color: ${({ theme }) => theme.color.dark};
+    }
     border-bottom: 1px solid ${({ theme }) => theme.color.dark};
     padding-bottom: 0.5em;
 
-    button {
+    & button {
       border: none;
       background: transparent;
       font-size: ${({ theme }) => theme.font.size.focus2};
       font-family: ${({ theme }) => theme.font.family.focus2};
       color: ${({ theme }) => theme.color.gray2};
+      height: fit-content;
+      /* margin-top: -5px; */
     }
   `,
 

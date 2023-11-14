@@ -1,14 +1,15 @@
 package com.twoez.zupzup.global.util;
 
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-
 /**
  * 다양한 validation에 대해 RuntimeException 예외 핸들링 방식을 제공합니다.
+ *
  * @param <T>
  */
 public class Assertions<T> {
@@ -33,8 +34,8 @@ public class Assertions<T> {
         return this;
     }
 
-    public <X extends RuntimeException> Assertions<T> validateOrThrow(Supplier<? extends X> exceptionSupplier)
-            throws X {
+    public <X extends RuntimeException> Assertions<T> validateOrThrow(
+            Supplier<? extends X> exceptionSupplier) throws X {
         checkValidation(validationId);
         this.exceptionHandlerMap.put(validationId++, exceptionSupplier);
         return this;
@@ -53,11 +54,12 @@ public class Assertions<T> {
     }
 
     public void validate() {
-        for (int i=1; i<validationId; i++) {
+        for (int i = 1; i < validationId; i++) {
             Predicate<T> predicate = predicateMap.get(i);
             Object handler = exceptionHandlerMap.get(i);
             if (handler instanceof Supplier) { // validateOrThrow
-                Supplier<? extends RuntimeException> exceptionSupplier = (Supplier<? extends RuntimeException>) handler;
+                Supplier<? extends RuntimeException> exceptionSupplier =
+                        (Supplier<? extends RuntimeException>) handler;
                 if (!predicate.test(param)) {
                     i = validationId;
                     throw exceptionSupplier.get();
@@ -71,5 +73,4 @@ public class Assertions<T> {
             }
         }
     }
-
 }

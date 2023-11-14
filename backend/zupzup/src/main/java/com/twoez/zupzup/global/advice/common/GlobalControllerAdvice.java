@@ -36,7 +36,8 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResponse<ErrorResponse> processValidationError(MethodArgumentNotValidException exception) {
+    public ApiResponse<ErrorResponse> processValidationError(
+            MethodArgumentNotValidException exception) {
         BindingResult bindingResult = exception.getBindingResult();
 
         StringBuilder builder = new StringBuilder();
@@ -50,8 +51,8 @@ public class GlobalControllerAdvice {
             builder.append(" & ");
         }
 
-        return ApiResponse.badRequest(ErrorResponse.from(HttpExceptionCode.INVALID_ARGUMENT,
-                builder.toString()));
+        return ApiResponse.badRequest(
+                ErrorResponse.from(HttpExceptionCode.INVALID_ARGUMENT, builder.toString()));
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
@@ -59,7 +60,7 @@ public class GlobalControllerAdvice {
     public ApiResponse<ErrorResponse> noHandlerFound(NoHandlerFoundException exception) {
         HttpExceptionCode exceptionCode = HttpExceptionCode.REQUEST_NOT_FOUND;
         AdviceLoggingUtils.exceptionLog(exceptionCode, exception);
-        return ApiResponse.badRequest(ErrorResponse.from(exceptionCode,
-                exceptionCode.getMessage()));
+        return ApiResponse.badRequest(
+                ErrorResponse.from(exceptionCode, exceptionCode.getMessage()));
     }
 }

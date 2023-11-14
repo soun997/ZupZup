@@ -116,7 +116,8 @@ public class SecurityConfig {
     }
 
     private RequestMatcher[] getPermittedRequestUrl(HandlerMappingIntrospector introspector) {
-        return Arrays.stream(permitUrls).map(url -> new MvcRequestMatcher(introspector, url))
+        return Arrays.stream(permitUrls)
+                .map(url -> new MvcRequestMatcher(introspector, url))
                 .toArray(RequestMatcher[]::new);
     }
 }

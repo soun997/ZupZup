@@ -170,7 +170,7 @@ const OnPlogging = () => {
         curLng: lng,
       });
 
-      if (distance >= 0.5) {
+      if (distance >= 1) {
         setTotalDistance(totalDistance => totalDistance + distance);
 
         const calorie = calculateCalories(stopwatch, totalDistance + distance);

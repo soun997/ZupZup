@@ -24,6 +24,7 @@ public enum HttpExceptionCode {
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_006", "RefreshToken이 존재하지 않습니다."),
     INVALID_REFRESH_TOKEN(
             HttpStatus.BAD_REQUEST, "ERR_AUTH_007", "해당 Member에게 발급된 RefreshToken이 아닙니다."),
+    NOT_REQUIRED_AUTHENTICATION_REQUEST(HttpStatus.BAD_REQUEST, "ERR_AUTH_008", "올바르지 않은 인증요청입니다."),
 
     OAUTH_PROVIDER_NOT_FOUND(
             HttpStatus.BAD_REQUEST, "ERR_OAUTH_001", "Oauth Provider 가 존재하지 않습니다."),

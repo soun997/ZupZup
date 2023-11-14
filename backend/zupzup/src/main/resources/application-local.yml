@@ -63,7 +63,6 @@ oidc:
 
 client:
   url: ${CLIENT_URL}
-  url-local: http://localhost:5174
   redirect:
     login-success: ${CLIENT_REDIRECT_LOGIN_SUCCESS}
 

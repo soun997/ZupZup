@@ -105,7 +105,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(clientUrl, "http://localhost:5174"));
+        config.setAllowedOrigins(List.of(clientUrl));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

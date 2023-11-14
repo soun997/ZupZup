@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.twoez.zupzup.global.util.AuthorizationTokenUtils;
 import com.twoez.zupzup.global.util.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.Optional;
 
 public class HttpRequestUtils {
@@ -49,5 +50,9 @@ public class HttpRequestUtils {
 
         return AuthorizationTokenUtils.getTokenFromAuthorizationHeader(
                 bearerToken, AuthorizationTokenUtils.GRANT_TYPE_BEARER);
+    }
+
+    public static boolean hasAuthorizationHeader(HttpServletRequest request) {
+        return Objects.nonNull(request.getHeader(AUTHORIZATION_HEADER));
     }
 }

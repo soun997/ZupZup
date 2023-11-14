@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -51,5 +52,14 @@ public class GlobalControllerAdvice {
 
         return ApiResponse.badRequest(ErrorResponse.from(HttpExceptionCode.INVALID_ARGUMENT,
                 builder.toString()));
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<ErrorResponse> noHandlerFound(NoHandlerFoundException exception) {
+        HttpExceptionCode exceptionCode = HttpExceptionCode.REQUEST_NOT_FOUND;
+        AdviceLoggingUtils.exceptionLog(exceptionCode, exception);
+        return ApiResponse.badRequest(ErrorResponse.from(exceptionCode,
+                exceptionCode.getMessage()));
     }
 }

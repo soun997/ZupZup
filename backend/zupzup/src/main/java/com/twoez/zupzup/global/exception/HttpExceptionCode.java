@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 public enum HttpExceptionCode {
     UNEXPECTED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_GLOBAL_001", "예상치 못한 오류가 발생했습니다."),
     INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "ERR_GLOBAL_002", "올바르지 않은 값이 전달되었습니다."),
+    REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_GLOBAL_003", "요청을 찾을 수 없습니다."),
     INTERNAL_SERVER_EXCEPTION(
             HttpStatus.INTERNAL_SERVER_ERROR, "ERR_GLOBAL_999", "서버 내부에서 오류가 발생했습니다."),
 

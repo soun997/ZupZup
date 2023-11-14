@@ -7,6 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record PloggingLogListResponse(
+        Long ploggingLogId,
         LocalDateTime startDateTime,
         LocalDateTime endDateTime,
         Integer distance,
@@ -15,6 +16,7 @@ public record PloggingLogListResponse(
 
     public static PloggingLogListResponse from(PloggingLog ploggingLog) {
         return PloggingLogListResponse.builder()
+                .ploggingLogId(ploggingLog.getId())
                 .startDateTime(ploggingLog.getStartDateTime())
                 .endDateTime(ploggingLog.getEndDateTime())
                 .distance(ploggingLog.getDistance())

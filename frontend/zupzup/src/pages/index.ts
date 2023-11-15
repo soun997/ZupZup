@@ -11,6 +11,7 @@ export { default as Login } from './login/Login';
 export { default as LoginSuccess } from './login/LoginSuccess';
 export { default as RegistInfoPhysical } from './login/RegistInfoForPhysical';
 export { default as RegistInfoProfile } from './login/RegistInfoForProfile';
+export { default as OnBoardForPWA } from './login/OnBoardForPWA';
 
 export { default as MyPage } from './mypage/MyPage';
 export { default as MyPloggingReport } from './mypage/MyPloggingReport';

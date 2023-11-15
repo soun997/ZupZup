@@ -10,8 +10,11 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<pages.Login />} />
           <Route path={utils.URL.LOGIN.HOME} element={<pages.Login />} />
+          <Route
+            path={utils.URL.LOGIN.ONBOARD}
+            element={<pages.OnBoardForPWA />}
+          />
           <Route
             path={utils.URL.LOGIN.SUCCESS}
             element={<pages.LoginSuccess />}
@@ -31,6 +34,7 @@ const Router = () => {
           <Route path={utils.URL.LOADING} element={<pages.Loading />} />
 
           <Route element={<PrivateRoute />}>
+            <Route path="/" element={<pages.Login />} />
             <Route
               path={utils.URL.CALENDAR.CALENDAR}
               element={<pages.PloggingRecord />}

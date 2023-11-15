@@ -29,8 +29,6 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
             HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
             throws IOException {
         log.info("[AuthenticationEntryPoint] {} {}", request.getMethod(), request.getRequestURI());
-        arg2.printStackTrace();
-        log.info("stackTrace over");
 
         Assertions.with(request)
                 // 유효한 endpoint url 체크
@@ -48,6 +46,9 @@ public class DefaultAuthenticationEntryPoint extends Http403ForbiddenEntryPoint 
         if (response.isCommitted()) {
             return;
         }
+
+        log.info("additional stack trace in AuthenticationEntryPoint");
+        arg2.printStackTrace();
         super.commence(request, response, arg2);
     }
 

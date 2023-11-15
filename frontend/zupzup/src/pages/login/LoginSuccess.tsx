@@ -55,8 +55,8 @@ const LoginSuccess = () => {
           dispatch(setWeight(healthData.weight));
 
           if (localStorage.getItem(utils.LOCATIONS_KEY)) {
-            await PloggingApis.stopPlogging();
             localStorage.removeItem(utils.LOCATIONS_KEY);
+            await PloggingApis.stopPlogging();
           }
           navigate(utils.URL.PLOGGING.LOBBY);
         }

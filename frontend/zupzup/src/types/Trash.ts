@@ -53,3 +53,8 @@ export interface Trash {
   desc: string;
   coin: number;
 }
+
+export interface LocationInfo {
+  latitude: number;
+  longitude: number;
+}

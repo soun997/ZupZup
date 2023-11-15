@@ -33,7 +33,7 @@ public class MemberController {
             @RequestBody MemberHealthRegisterRequest memberHealthRegisterRequest) {
         Long requestedMemberId = memberHealthRegisterRequest.memberId();
 
-        memberService.validateNewMember(requestedMemberId);
+        memberService.validateSigningUpMember(requestedMemberId);
         memberService.modifyMemberHealth(memberHealthRegisterRequest);
         memberService.validateMember(requestedMemberId);
         AuthorizationToken authorizationToken =

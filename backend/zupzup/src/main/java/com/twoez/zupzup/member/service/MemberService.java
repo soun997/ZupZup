@@ -13,12 +13,12 @@ import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.domain.NewMember;
+import com.twoez.zupzup.member.domain.SigningUpMember;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
 import com.twoez.zupzup.member.repository.MemberSpringDataRepository;
-import com.twoez.zupzup.member.repository.redis.NewMemberRedisRepository;
 import com.twoez.zupzup.member.repository.redis.RefreshTokenRedisRepository;
+import com.twoez.zupzup.member.repository.redis.SigningUpMemberRedisRepository;
 import com.twoez.zupzup.pet.domain.Pet;
 import com.twoez.zupzup.pet.repository.PetRepository;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -43,7 +43,7 @@ public class MemberService {
     private final PetRepository petRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
     private final TotalTrashRepository totalTrashRepository;
-    private final NewMemberRedisRepository newMemberRedisRepository;
+    private final SigningUpMemberRedisRepository signingUpMemberRedisRepository;
 
     @Transactional
     public Member save(AuthUser authUser) {
@@ -155,16 +155,16 @@ public class MemberService {
         return findById(memberId);
     }
 
-    public void addNewMember(Long memberId) {
-        newMemberRedisRepository.save(NewMember.from(memberId));
+    public void addSigningUpMember(Long memberId) {
+        signingUpMemberRedisRepository.save(SigningUpMember.from(memberId));
     }
 
     private void deleteNewMemeber(Long memberId) {
-        newMemberRedisRepository.delete(NewMember.from(memberId));
+        signingUpMemberRedisRepository.delete(SigningUpMember.from(memberId));
     }
 
-    public void validateNewMember(Long requestedMemberId) {
-        newMemberRedisRepository
+    public void validateSigningUpMember(Long requestedMemberId) {
+        signingUpMemberRedisRepository
                 .findById(String.valueOf(requestedMemberId))
                 .orElseThrow(() -> new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
     }

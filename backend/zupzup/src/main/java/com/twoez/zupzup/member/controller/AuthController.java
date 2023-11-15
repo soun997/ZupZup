@@ -52,7 +52,7 @@ public class AuthController {
 
         } else {
             Member member = memberService.save(authUser);
-            memberService.addNewMember(member.getId());
+            memberService.addSigningUpMember(member.getId());
             authResponse = AuthResponse.unregisteredUser(member.getId(), member.getName());
         }
 

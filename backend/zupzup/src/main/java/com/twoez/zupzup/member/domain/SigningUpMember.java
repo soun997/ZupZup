@@ -10,11 +10,11 @@ import org.springframework.data.redis.core.RedisHash;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash(value = "newMember")
-public class NewMember {
+@RedisHash(value = "signingUpMember")
+public class SigningUpMember {
     @Id private String memberId;
 
-    public static NewMember from(Long memberId) {
-        return new NewMember(String.valueOf(memberId));
+    public static SigningUpMember from(Long memberId) {
+        return new SigningUpMember(String.valueOf(memberId));
     }
 }

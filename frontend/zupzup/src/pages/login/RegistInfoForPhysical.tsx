@@ -8,15 +8,50 @@ import {
   RegistInfoTitle,
   RegistInfoFrame,
 } from 'components';
+import { RegistInfo } from 'types/ProfileInfo';
+import {
+  setAccessToken,
+  setMemberName,
+  setRefreshToken,
+  useAppDispatch,
+  useAppSelector,
+} from 'hooks';
+import { MemberApi } from 'api';
 
 const RegistInfo = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const memberId = useAppSelector(state => state.auth.memberId);
   const inputRefForHeight = useRef<HTMLInputElement>(null);
   const inputRefForWeight = useRef<HTMLInputElement>(null);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
 
   const [heightValid, setHeightValid] = useState<boolean>(false);
   const [weightValid, setWeightValid] = useState<boolean>(false);
+
+  const handlePassSubmit = async () => {
+    try {
+      const postData: RegistInfo = {
+        height: null,
+        weight: null,
+        gender: null,
+        birthYear: null,
+        memberId: Number(memberId),
+      };
+      console.log(postData);
+      const res = await MemberApi.registInfo(postData);
+      const data = res.data.results;
+      console.log('postData ', res);
+      console.log(data);
+
+      dispatch(setAccessToken(data.accessToken));
+      dispatch(setRefreshToken(data.refreshToken));
+      dispatch(setMemberName(data.memberName));
+      navigate(utils.URL.RESULT.REGIST);
+    } catch (error) {
+      console.error('가입정보 전송 에러:', error);
+    }
+  };
 
   const inputCheck = (
     heightInput: string | undefined,
@@ -98,6 +133,12 @@ const RegistInfo = () => {
         >
           다음
         </RegistInfoFrame.NextButton>
+        <RegistInfoFrame.NextButton disabled={false} onClick={handlePassSubmit}>
+          나중에 입력할게요
+        </RegistInfoFrame.NextButton>
+        <RegistInfoFrame.info>
+          정보 미입력시 기본값으로 칼로리가 계산됩니다
+        </RegistInfoFrame.info>
       </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>
   );

@@ -32,10 +32,10 @@ export interface TotalPloggingInfo {
 }
 
 export interface RegistInfo {
-  height: number;
-  weight: number;
-  gender: string;
-  birthYear: number;
+  height: number | null;
+  weight: number | null;
+  gender: string | null;
+  birthYear: number | null;
   memberId: number;
 }
 

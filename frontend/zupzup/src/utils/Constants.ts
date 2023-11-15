@@ -6,6 +6,7 @@ export const URL = {
   },
   OPINION: '/opinion',
   LOGIN: {
+    ONBOARD: '/login-onboard',
     HOME: '/login',
     SUCCESS: '/login-success',
     REGIST_INFO: {

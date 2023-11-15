@@ -12,6 +12,7 @@ import { RegistInfo } from 'types/ProfileInfo';
 import { MemberApi } from 'api';
 import {
   setAccessToken,
+  setMemberName,
   setRefreshToken,
   useAppDispatch,
   useAppSelector,
@@ -33,6 +34,30 @@ const RegistInfo = () => {
   }, []);
 
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
+
+  const handlePassSubmit = async () => {
+    try {
+      const postData: RegistInfo = {
+        height: null,
+        weight: null,
+        gender: null,
+        birthYear: null,
+        memberId: Number(memberId),
+      };
+      console.log(postData);
+      const res = await MemberApi.registInfo(postData);
+      const data = res.data.results;
+      console.log('postData ', res);
+      console.log(data);
+
+      dispatch(setAccessToken(data.accessToken));
+      dispatch(setRefreshToken(data.refreshToken));
+      dispatch(setMemberName(data.memberName));
+      navigate(utils.URL.RESULT.REGIST);
+    } catch (error) {
+      console.error('가입정보 전송 에러:', error);
+    }
+  };
 
   const handleSelectChange = (value: string) => {
     setGender(value);
@@ -82,11 +107,11 @@ const RegistInfo = () => {
 
         dispatch(setAccessToken(data.accessToken));
         dispatch(setRefreshToken(data.refreshToken));
+        dispatch(setMemberName(data.memberName));
         navigate(utils.URL.RESULT.REGIST);
       } catch (error) {
         console.error('가입정보 전송 에러:', error);
       }
-      // navigate(utils.URL.RESULT.REGIST);
     }
   };
 
@@ -117,7 +142,10 @@ const RegistInfo = () => {
           disabled={isNextButtonDisabled}
           onClick={handleNextPage}
         >
-          가입 완료하기
+          가입 완료 하기
+        </RegistInfoFrame.NextButton>
+        <RegistInfoFrame.NextButton disabled={false} onClick={handlePassSubmit}>
+          나중에 입력할게요
         </RegistInfoFrame.NextButton>
       </RegistInfoFrame.BottomSection>
     </RegistInfoFrame.Wrap>

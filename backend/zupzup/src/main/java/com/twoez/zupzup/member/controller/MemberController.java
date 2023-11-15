@@ -2,16 +2,12 @@ package com.twoez.zupzup.member.controller;
 
 
 import com.twoez.zupzup.config.security.jwt.AuthorizationToken;
-import com.twoez.zupzup.global.exception.HttpExceptionCode;
-import com.twoez.zupzup.global.exception.member.HealthNotFoundException;
 import com.twoez.zupzup.global.response.ApiResponse;
-import com.twoez.zupzup.global.util.Assertion;
 import com.twoez.zupzup.member.controller.dto.*;
 import com.twoez.zupzup.member.controller.dto.MemberHealthCreateResponse;
 import com.twoez.zupzup.member.controller.dto.MemberHealthRegisterRequest;
 import com.twoez.zupzup.member.controller.dto.MemberProfileResponse;
 import com.twoez.zupzup.member.domain.LoginUser;
-import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +32,8 @@ public class MemberController {
     public ApiResponse<MemberHealthCreateResponse> register(
             @RequestBody MemberHealthRegisterRequest memberHealthRegisterRequest) {
         Long requestedMemberId = memberHealthRegisterRequest.memberId();
+
+        memberService.validateNewMember(requestedMemberId);
         memberService.modifyMemberHealth(memberHealthRegisterRequest);
         memberService.validateMember(requestedMemberId);
         AuthorizationToken authorizationToken =
@@ -51,11 +49,6 @@ public class MemberController {
     @GetMapping("/health")
     public ApiResponse<MemberHealthResponse> memberHealthDetails(
             @AuthenticationPrincipal LoginUser loginUser) {
-
-        Assertion.with(loginUser.getMember())
-                .setValidation(Member::hasHealthInfo)
-                .validateOrThrow(
-                        () -> new HealthNotFoundException(HttpExceptionCode.HEALTH_NOT_FOUND));
 
         return ApiResponse.ok(MemberHealthResponse.from(loginUser.getMember()));
     }

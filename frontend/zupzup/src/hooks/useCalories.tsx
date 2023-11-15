@@ -1,7 +1,9 @@
 import { store } from './store/useStore';
 
 const calculateCalories = (stopwatch: number, distance: number): number => {
-  const weightInKg = Number(store.getState().auth.weight);
+  const weightInKg = Number(
+    store.getState().auth.weight ? store.getState().auth.weight : 60,
+  );
 
   const time = stopwatch / 3600; // hour
   console.log('time', time, stopwatch);

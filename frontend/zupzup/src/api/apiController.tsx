@@ -11,12 +11,15 @@ const instance = axios.create({
   },
 });
 
+// const temp_access = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzAwMDI4MzIwfQ.wqT9Pl7KIsZYvjIkLPfe5qaVykk8GzfsxabhLvfeUDQil73z6DZPAq7cgwnSVr3ylaVQTjxThCqDuI6eWXohRw
+// `;
+
 // Request 🧑
 instance.interceptors.request.use(
   config => {
     const accessToken = store.getState().auth.accessToken;
     if (accessToken) {
-      config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`;
+      config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`; // temp_access; //
     }
     return config;
   },
@@ -39,9 +42,9 @@ instance.interceptors.response.use(
     // 401 에러면 refresh token 보내기
     if (
       error?.response?.data?.status === 401 &&
-      error?.response?.data?.error_code === 'ERR_AUTH_005'
+      error?.response?.data?.results.errorCode === 'ERR_AUTH_005'
     ) {
-      // console.log('access-token 만료됐어');
+      console.log('access-token 만료됐어', refreshToken, accessToken);
       try {
         const response = await reissueTokens(
           String(refreshToken),
@@ -78,7 +81,7 @@ instance.interceptors.response.use(
 
 async function reissueTokens(oldRefreshToken: string, oldAccessToken: string) {
   return await axios.post(
-    `${BASE_URL}/members/re-issue`,
+    `${BASE_URL}/auth/re-issue`,
     { refreshToken: oldRefreshToken },
     {
       headers: {

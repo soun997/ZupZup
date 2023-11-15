@@ -47,6 +47,14 @@ const RegistInfoFrame = {
     justify-content: center;
     margin-top: 60px;
   `,
+
+  info: styled.div`
+    margin-top: -10px;
+    font-weight: ${({ theme }) => theme.font.weight.body2};
+    font-family: ${({ theme }) => theme.font.family.body2};
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    color: ${({ theme }) => theme.color.main};
+  `,
 };
 
 export default RegistInfoFrame;

@@ -51,6 +51,10 @@ const S = {
   `,
   TitleFrame: styled.div`
     margin-top: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   `,
   MainTitle: styled.div`
     font-size: ${({ theme }) => theme.font.size.display1};

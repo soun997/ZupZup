@@ -102,23 +102,44 @@ const ProfileSettingPage = () => {
         <S.SubTitle>내 정보</S.SubTitle>
         <SettingComponent text={`${name} 님`} svg={<></>} />
         <SettingComponent
-          text={healthInfo.birthYear.toString()}
+          text={
+            healthInfo.birthYear
+              ? healthInfo.birthYear.toString()
+              : '정보가 입력되지 않았습니다'
+          }
           svg={<ModifSvg />}
-          onClick={() => openModal('출생연도', healthInfo.birthYear)}
+          onClick={() =>
+            openModal(
+              '출생연도',
+              healthInfo.birthYear ? healthInfo.birthYear : 0,
+            )
+          }
         />
       </S.SettingSection>
 
       <S.SettingSection>
         <S.SubTitle>신체 정보</S.SubTitle>
         <SettingComponent
-          text={`${healthInfo.height}cm`}
+          text={
+            healthInfo.height
+              ? `${healthInfo.height}cm`
+              : '정보가 입력되지 않았습니다'
+          }
           svg={<ModifSvg />}
-          onClick={() => openModal('키', healthInfo.height)}
+          onClick={() =>
+            openModal('키', healthInfo.height ? healthInfo.height : 0)
+          }
         />
         <SettingComponent
-          text={`${healthInfo.weight}kg`}
+          text={
+            healthInfo.weight
+              ? `${healthInfo.weight}kg`
+              : '정보가 입력되지 않았습니다'
+          }
           svg={<ModifSvg />}
-          onClick={() => openModal('몸무게', healthInfo.weight)}
+          onClick={() =>
+            openModal('몸무게', healthInfo.weight ? healthInfo.weight : 0)
+          }
         />
       </S.SettingSection>
       <Navigation currentPage="profileSettings" />

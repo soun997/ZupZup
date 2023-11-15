@@ -2,17 +2,12 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: ${MARIA_URL}
-    username: ${MARIA_USER}
-    password: ${MARIA_PASSWORD}
-#  h2:
-#    console:
-#      enabled: true
+  h2:
+    console:
+      enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     open-in-view: false
     properties:
       hibernate:
@@ -85,15 +80,13 @@ management:
         exclude: "*"
     web:
       exposure:
-        include: health, info, metrics, caches
+        include: health, info, metrics
   endpoint:
     health:
       enabled: true
     info:
       enabled: true
     metrics:
-      enabled: true
-    caches:
       enabled: true
   server:
     port: ${HEALTH_PORT}

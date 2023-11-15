@@ -12,6 +12,7 @@ import { RegistInfo } from 'types/ProfileInfo';
 import { MemberApi } from 'api';
 import {
   setAccessToken,
+  setMemberName,
   setRefreshToken,
   useAppDispatch,
   useAppSelector,
@@ -82,6 +83,7 @@ const RegistInfo = () => {
 
         dispatch(setAccessToken(data.accessToken));
         dispatch(setRefreshToken(data.refreshToken));
+        dispatch(setMemberName(data.memberName));
         navigate(utils.URL.RESULT.REGIST);
       } catch (error) {
         console.error('가입정보 전송 에러:', error);

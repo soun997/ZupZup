@@ -7,6 +7,7 @@ export { default as useStopWatch } from './useStopWatch';
 export { default as useDistance } from './useDistance';
 export { default as calculateCalories } from './useCalories';
 export { default as useHistory } from './useHistory';
+export { default as useLoginCheck } from './useLoginCheck';
 
 export * from './useCookie';
 export * from './store/useStore';

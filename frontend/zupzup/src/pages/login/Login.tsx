@@ -80,7 +80,7 @@ const S = {
     width: 100%;
     height: 100dvh;
 
-    background-image: url(${import.meta.env.VITE_S3_URL}/background-image.avif);
+    background-image: url(${import.meta.env.VITE_S3_URL}/background-image.webp);
     background-size: cover;
   `,
 

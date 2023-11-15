@@ -25,7 +25,6 @@ public class PloggingController {
     @DeleteMapping("/finish")
     public HttpResponse<PloggerResponse> ploggerRemove(
             @AuthenticationPrincipal LoginUser loginUser) {
-
         return HttpResponse.okBuild(
                 PloggerResponse.from(ploggingService.remove(loginUser.getMemberId())));
     }

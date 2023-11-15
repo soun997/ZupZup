@@ -9,7 +9,7 @@ import { deleteAllPlogging } from 'hooks/store/usePlogging';
 
 import SaveSvg from 'assets/icons/save.svg?react';
 import uploadFile from 'hooks/useUpload';
-import { PloggingApis, RecordApis } from 'api';
+import { PloggingApis, RecordApis, RouteApis } from 'api';
 import { PloggingLogRequest, TrashRequest } from 'types';
 
 interface Location {
@@ -174,8 +174,6 @@ const PloggingReport = () => {
         );
 
         // 업로드 성공 시 결과 전달
-        console.log('amazon link', uploadedFileUrl);
-
         const ploggingData: PloggingLogRequest = {
           calories: store.getState().plogging.calories,
           startDateTime: store.getState().plogging.startDateTime!,
@@ -188,13 +186,24 @@ const PloggingReport = () => {
         };
 
         const trashData: TrashRequest = store.getState().plogging.trashDetail;
-        console.log(ploggingData, trashData);
-        await RecordApis.postPloggingLog({
+        const recordResponse = await RecordApis.postPloggingLog({
           ploggingLogRequest: ploggingData,
           trashRequest: trashData,
         });
+        const routeResponse = await RouteApis.postRoutes(
+          recordResponse.data.results.id,
+          {
+            locations: [...locations].map((location: Location) => {
+              const data: { latitude: number; longitude: number } = {
+                latitude: location.lat,
+                longitude: location.lng,
+              };
+              return data;
+            }),
+          },
+        );
+        console.log(routeResponse);
         await PloggingApis.stopPlogging();
-        console.log('성공!!');
       } catch (error) {
         // 업로드 실패 시 오류 처리
         console.error('파일 업로드 오류:', error);

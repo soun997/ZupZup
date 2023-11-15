@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import ClockSvg from 'assets/icons/clock.svg?react';
@@ -11,7 +11,7 @@ import ArrowUpSvg from 'assets/icons/angle-up.svg?react';
 import { PloggingInfo, TrashDetail } from 'types';
 import { useFormatDateTime } from 'hooks';
 import { ReportModal } from 'components';
-import { RecordApis } from 'api';
+import { RecordApis, RouteApis } from 'api';
 
 interface Props {
   ploggingInfo: PloggingInfo;
@@ -20,6 +20,7 @@ interface Props {
 //! 수정해주세요
 
 const RecordBox = ({ ploggingInfo }: Props) => {
+  const mapRef = useRef(null);
   const [showImage, setShowImage] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [trashRecord, setTrashRecord] = useState<TrashDetail>();
@@ -27,6 +28,66 @@ const RecordBox = ({ ploggingInfo }: Props) => {
   useEffect(() => {
     fetchRecordTrash();
   }, []);
+
+  useEffect(() => {
+    const initMap = async () => {
+      const { Tmapv3 } = window;
+      try {
+        const response = await RouteApis.getRoutes(ploggingInfo.ploggingLogId);
+        const locations = response.data.results.locations;
+        console.log(locations);
+
+        let minLat = 90;
+        let maxLat = -90;
+        let minLng = 180;
+        let maxLng = -180;
+        for (let i = 0; i < locations.length; i++) {
+          minLat = Math.min(minLat, locations[i].latitude);
+          minLng = Math.min(minLng, locations[i].longitude);
+          maxLat = Math.max(maxLat, locations[i].latitude);
+          maxLng = Math.max(maxLng, locations[i].longitude);
+        }
+
+        const latlngBounds = new Tmapv3.LatLngBounds(
+          new Tmapv3.LatLng(minLat - 0.0001, minLng - 0.0001),
+        );
+        latlngBounds.extend(
+          new Tmapv3.LatLng(maxLat + 0.0001, maxLng + 0.0001),
+        );
+
+        if (!mapRef.current) {
+          return;
+        }
+
+        const map = new Tmapv3.Map(mapRef.current, {
+          width: '100%',
+          height: '200px',
+          bounds: latlngBounds,
+        });
+
+        map.on('ConfigLoad', () => {
+          const paths = [...locations].map(
+            (location: { latitude: number; longitude: number }) =>
+              new Tmapv3.LatLng(location.latitude, location.longitude),
+          );
+
+          new Tmapv3.Polyline({
+            path: paths,
+            strokeColor: '#00C4B8',
+            strokeWeight: 6,
+            direction: true,
+            map: map,
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (mapRef.current && showImage) {
+      initMap();
+    }
+  }, [ploggingInfo.ploggingLogId, showImage]);
 
   const fetchRecordTrash = async () => {
     const response = await RecordApis.getPloggingTrash(
@@ -75,7 +136,8 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       </S.PloggingRecords>
       {showImage ? (
         <>
-          <S.Image src={ploggingInfo.routeImageUrl}></S.Image>
+          <S.Map ref={mapRef}></S.Map>
+          {/* <S.Image src={ploggingInfo.routeImageUrl}></S.Image> */}
           <S.BottomBox $isOpen={showImage}>
             <ArrowUpSvg onClick={handleMoreInfo} />
           </S.BottomBox>
@@ -165,6 +227,12 @@ const S = {
       stroke: ${({ theme }) => theme.color.main};
       width: 22px;
     }
+  `,
+  Map: styled.div`
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    pointer-events: none;
   `,
 };
 

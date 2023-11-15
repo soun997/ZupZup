@@ -5,3 +5,4 @@ export { default as RecordApis } from './record/RecordApis';
 export { default as PloggingApis } from './plogging/PloggingApis';
 export { default as ItemApis } from './item/ItemApis';
 export { default as TrashApis } from './trash/TrashApis';
+export { default as RouteApis } from './route/RouteApis';

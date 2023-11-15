@@ -23,7 +23,7 @@ const Login = () => {
     const checkLogin = async () => {
       try {
         const response = await MemberApi.getProfileInfo();
-        if (response.data.results.memberId) {
+        if (response.data.results.memberId === utils.AUTH.MEMBER_ID) {
           navigate(utils.URL.PLOGGING.LOBBY);
           return;
         }
@@ -33,7 +33,9 @@ const Login = () => {
       }
     };
 
-    checkLogin();
+    if (localStorage.getItem(utils.AUTH.REFRESH_KEY)) {
+      checkLogin();
+    }
   }, []);
 
   return (

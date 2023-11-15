@@ -1,4 +1,3 @@
-import { TopNavigation } from 'components';
 import { useNavigate } from 'react-router-dom';
 import * as utils from 'utils';
 import styled from 'styled-components';
@@ -13,7 +12,6 @@ const CharacterInfo = () => {
   };
   return (
     <S.Wrap>
-      <TopNavigation />
       <S.Content>
         <S.Image
           src={`${import.meta.env.VITE_S3_URL}/character/penguin-message.png`}
@@ -47,9 +45,7 @@ const CharacterInfo = () => {
         </S.Section>
 
         <S.MoreButton>
-          <div className="info">
-            서비스를 웹 브라우저에서 이용하고싶으신가요?
-          </div>
+          <div className="info">웹 브라우저 환경에서 이용하고싶으신가요?</div>
           <div className="button" onClick={handleNavigate}>
             서비스 화면으로 이동
           </div>

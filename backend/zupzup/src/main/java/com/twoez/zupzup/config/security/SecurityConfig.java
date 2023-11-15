@@ -1,10 +1,12 @@
 package com.twoez.zupzup.config.security;
 
 
+import com.twoez.zupzup.config.security.filter.AuthorizationTokenCheckFilter;
 import com.twoez.zupzup.config.security.filter.ExceptionHandlerFilter;
 import com.twoez.zupzup.config.security.filter.JwtAuthenticationFilter;
 import com.twoez.zupzup.config.security.handler.DefaultAccessDeniedHandler;
 import com.twoez.zupzup.config.security.handler.DefaultAuthenticationEntryPoint;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -41,9 +44,13 @@ public class SecurityConfig {
     private final AuthenticationFailureHandler failureHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final AuthorizationTokenCheckFilter authorizationTokenCheckFilter;
 
     @Value("${client.url}")
     private String clientUrl;
+
+    @Value("${security.permit-urls}")
+    private String[] permitUrls;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -68,15 +75,7 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers(
-                                                new MvcRequestMatcher(introspector, "login/**"),
-                                                new MvcRequestMatcher(introspector, "error"),
-                                                new MvcRequestMatcher(introspector, "api/v1/auth"),
-                                                new MvcRequestMatcher(introspector, "actuator/**"),
-                                                new MvcRequestMatcher(
-                                                        introspector, "api/v1/members/register"),
-                                                new MvcRequestMatcher(
-                                                        introspector, "api/v1/docs/api"))
+                                request.requestMatchers(getPermittedRequestUrl(introspector))
                                         .permitAll()
                                         .requestMatchers(
                                                 new MvcRequestMatcher(introspector, "api/**"))
@@ -98,7 +97,8 @@ public class SecurityConfig {
                 .sessionManagement(
                         config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
-                .addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class)
+                .addFilterBefore(authorizationTokenCheckFilter, JwtAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, AuthorizationTokenCheckFilter.class)
                 .build();
     }
 
@@ -113,5 +113,11 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    private RequestMatcher[] getPermittedRequestUrl(HandlerMappingIntrospector introspector) {
+        return Arrays.stream(permitUrls)
+                .map(url -> new MvcRequestMatcher(introspector, url))
+                .toArray(RequestMatcher[]::new);
     }
 }

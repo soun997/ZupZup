@@ -27,6 +27,7 @@
 
                 <!-- 리스너가 감지할 이벤트 설정(EVICTED, EXPIRED, REMOVED, CREATED, UPDATED) -->
                 <events-to-fire-on>CREATED</events-to-fire-on>
+                <events-to-fire-on>UPDATED</events-to-fire-on>
                 <events-to-fire-on>EXPIRED</events-to-fire-on>
             </listener>
         </listeners>

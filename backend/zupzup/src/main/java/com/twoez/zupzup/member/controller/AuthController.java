@@ -39,24 +39,21 @@ public class AuthController {
         log.info("AuthUser by idToken : {}", authUser);
 
         // 만약 AuthUser로부터 얻어낸 사용자 정보가 이미 저장되어 있다면 accessToken과 RefreshToken을 발급한다.
-        // 새로운 회원이라면 isNewMember->false 로 응답한다.
+        // 새로운 회원이라면 isNewMember-> true 로 응답한다.
         Optional<Member> memberOptional = memberService.findMemberByOauth(authUser);
 
         // TODO : 코드리뷰 받은 대로 리펙토링
         AuthResponse authResponse;
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
-            if (memberOptional.get().hasHealthInfo()) {
-                AuthorizationToken authorizationToken =
-                        memberService.issueAuthorizationToken(member.getId());
-                authResponse = AuthResponse.from(authorizationToken, member);
-            } else {
-                log.info("User registered but he or she did not write his/her health info");
-                authResponse = AuthResponse.unregisteredUser(member.getId());
-            }
+            AuthorizationToken authorizationToken =
+                    memberService.issueAuthorizationToken(member.getId());
+            authResponse = AuthResponse.from(authorizationToken, member);
+
         } else {
             Member member = memberService.save(authUser);
-            authResponse = AuthResponse.unregisteredUser(member.getId());
+            memberService.addSigningUpMember(member.getId());
+            authResponse = AuthResponse.unregisteredUser(member.getId(), member.getName());
         }
 
         return ApiResponse.ok(authResponse);

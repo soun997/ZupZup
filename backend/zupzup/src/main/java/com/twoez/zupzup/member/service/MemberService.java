@@ -13,11 +13,12 @@ import com.twoez.zupzup.member.controller.dto.ReissueTokenRequest;
 import com.twoez.zupzup.member.domain.AuthUser;
 import com.twoez.zupzup.member.domain.Gender;
 import com.twoez.zupzup.member.domain.Member;
-import com.twoez.zupzup.member.exception.AlreadyRegisteredMemberException;
+import com.twoez.zupzup.member.domain.SigningUpMember;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberQueryRepository;
 import com.twoez.zupzup.member.repository.MemberSpringDataRepository;
 import com.twoez.zupzup.member.repository.redis.RefreshTokenRedisRepository;
+import com.twoez.zupzup.member.repository.redis.SigningUpMemberRedisRepository;
 import com.twoez.zupzup.pet.domain.Pet;
 import com.twoez.zupzup.pet.repository.PetRepository;
 import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
@@ -42,6 +43,7 @@ public class MemberService {
     private final PetRepository petRepository;
     private final TotalPloggingLogRepository totalPloggingLogRepository;
     private final TotalTrashRepository totalTrashRepository;
+    private final SigningUpMemberRedisRepository signingUpMemberRedisRepository;
 
     @Transactional
     public Member save(AuthUser authUser) {
@@ -116,10 +118,7 @@ public class MemberService {
         // TODO : DB에 2번 접근하는 문제 해결하기
         Member memberRequestRegister = findById(memberHealthRegisterRequest.memberId());
 
-        // 이전에 가입하며 최초 헬스정보를 입력한 멤버는 다시 이 요청을 보낼 수 없다.
-        Assertion.with(memberRequestRegister)
-                .setValidation(Member::isNewMember)
-                .validateOrThrow(AlreadyRegisteredMemberException::new);
+        deleteNewMemeber(memberRequestRegister.getId());
 
         modifyHealth(
                 memberHealthRegisterRequest.memberId(),
@@ -154,5 +153,19 @@ public class MemberService {
 
     public Member validateMember(Long memberId) {
         return findById(memberId);
+    }
+
+    public void addSigningUpMember(Long memberId) {
+        signingUpMemberRedisRepository.save(SigningUpMember.from(memberId));
+    }
+
+    private void deleteNewMemeber(Long memberId) {
+        signingUpMemberRedisRepository.delete(SigningUpMember.from(memberId));
+    }
+
+    public void validateSigningUpMember(Long requestedMemberId) {
+        signingUpMemberRedisRepository
+                .findById(String.valueOf(requestedMemberId))
+                .orElseThrow(() -> new MemberQueryException(HttpExceptionCode.MEMBER_NOT_FOUND));
     }
 }

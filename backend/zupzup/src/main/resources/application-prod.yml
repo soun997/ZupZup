@@ -90,3 +90,8 @@ management:
 
 security:
   permit-urls: ${SECURITY_PERMITTED_URLS}
+  datadog:
+    metrics:
+      export:
+        api-key: ${DATADOG_API_KEY}
+        application-key: ${DATADOG_APPLICATION_KEY}

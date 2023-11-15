@@ -7,11 +7,13 @@ import com.twoez.zupzup.global.querydsl.QuerydslRepositorySupport;
 import com.twoez.zupzup.trashcan.domain.Trashcan;
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = true)
+@Slf4j
 public class TrashcanQueryRepository extends QuerydslRepositorySupport {
 
     public TrashcanQueryRepository() {
@@ -19,6 +21,7 @@ public class TrashcanQueryRepository extends QuerydslRepositorySupport {
     }
 
     public List<Trashcan> findByLocation(BigDecimal latitude, BigDecimal longitude) {
+        log.info("레포지토리 호출");
         return selectFrom(trashcan)
                 .where(
                         (Expressions.numberTemplate(

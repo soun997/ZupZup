@@ -2,43 +2,30 @@ package com.twoez.zupzup.trashcan.service;
 
 
 import com.twoez.zupzup.trashcan.domain.Trashcan;
-import com.twoez.zupzup.trashcan.repository.TrashcanQueryRepository;
+import com.twoez.zupzup.trashcan.repository.TrashcanCacheRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class TrashcanQueryService {
 
-    private final TrashcanQueryRepository trashcanQueryRepository;
-
-    /**
-     * 위 경도에 따른 쓰레기통 조회 캐싱 사용자들 간의 거리가 1km 이내인 경우 cache hit
-     *
-     * @param latitude
-     * @param longitude
-     * @return
-     */
-    @Cacheable(
-            cacheNames = "trashcanList", // xml 파일에서 설정해준 alias
-            key =
-                    "#latitude.toString().substring(5) + '_' + #longitude.toString().substring(5)" // key : "위도_경도", 소수 점 둘쨰 자리 까지
-            )
-    public List<Trashcan> findByLocationWithCache(BigDecimal latitude, BigDecimal longitude) {
-        return trashcanQueryRepository.findByLocation(latitude, longitude);
-    }
+    private final TrashcanCacheRepository trashcanCacheRepository;
+    private static final int RANGE = 1;
 
     public List<Trashcan> findByLocation(BigDecimal latitude, BigDecimal longitude) {
-        return findByLocationWithCache(latitude, longitude).stream()
+        log.info("위치 조회 서비스 호출");
+        return trashcanCacheRepository.findByLocationWithCache(latitude, longitude).stream()
                 .filter(
                         target ->
-                                isPossible(
+                                isNearByTrashcanFromUser(
                                         latitude.doubleValue(),
                                         longitude.doubleValue(),
                                         target.getLatitude().doubleValue(),
@@ -46,13 +33,13 @@ public class TrashcanQueryService {
                 .collect(Collectors.toList());
     }
 
-    private static boolean isPossible(
+    private static boolean isNearByTrashcanFromUser(
             double sourceLatitude,
             double sourceLongitude,
             double targetLatitude,
             double targetLongitude) {
         return calculateDistance(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude)
-                <= 1;
+                <= RANGE;
     }
 
     private static double calculateDistance(

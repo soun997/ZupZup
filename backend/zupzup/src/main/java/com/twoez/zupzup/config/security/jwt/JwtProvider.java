@@ -11,10 +11,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 
 /** 인증 완료 후 유저에 대한 token을 발급해주는 Provider */
+@Slf4j
 @Component
 public class JwtProvider {
 
@@ -45,6 +47,7 @@ public class JwtProvider {
     }
 
     public AuthorizationToken createAuthorizationToken(Long memberId) {
+        log.info("expired token : {}", generateToken(memberId, 10));
         String accessToken = generateToken(memberId, accessExpiredSecond);
         String refreshToken = generateToken(memberId, refreshExpiredSecond);
         return new AuthorizationToken(accessToken, refreshToken, GRANT_TYPE);

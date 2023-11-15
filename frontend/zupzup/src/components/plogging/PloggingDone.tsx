@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { SuccessAnimation } from 'components';
+import { store } from 'hooks';
 
 const PloggingDone = () => {
   const [time, setTime] = useState(3);
@@ -24,7 +25,7 @@ const PloggingDone = () => {
     <S.Wrap>
       <S.TitleFrame>
         <S.MainTitle>
-          오늘도 줍줍님 덕분에
+          오늘도 {store.getState().auth.name}님 덕분에
           <br />
           길이 깨끗해졌어요!
         </S.MainTitle>

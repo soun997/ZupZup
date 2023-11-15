@@ -80,6 +80,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99;
   `,
   ModalWrapper: styled.div`
     background: ${({ theme }) => theme.color.background};

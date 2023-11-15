@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum HttpExceptionCode {
     UNEXPECTED_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ERR_GLOBAL_001", "예상치 못한 오류가 발생했습니다."),
+    INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "ERR_GLOBAL_002", "올바르지 않은 값이 전달되었습니다."),
+    REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_GLOBAL_003", "요청을 찾을 수 없습니다."),
     INTERNAL_SERVER_EXCEPTION(
             HttpStatus.INTERNAL_SERVER_ERROR, "ERR_GLOBAL_999", "서버 내부에서 오류가 발생했습니다."),
 
@@ -23,6 +25,7 @@ public enum HttpExceptionCode {
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_AUTH_006", "RefreshToken이 존재하지 않습니다."),
     INVALID_REFRESH_TOKEN(
             HttpStatus.BAD_REQUEST, "ERR_AUTH_007", "해당 Member에게 발급된 RefreshToken이 아닙니다."),
+    NOT_REQUIRED_AUTHENTICATION_REQUEST(HttpStatus.BAD_REQUEST, "ERR_AUTH_008", "올바르지 않은 인증요청입니다."),
 
     OAUTH_PROVIDER_NOT_FOUND(
             HttpStatus.BAD_REQUEST, "ERR_OAUTH_001", "Oauth Provider 가 존재하지 않습니다."),
@@ -50,6 +53,8 @@ public enum HttpExceptionCode {
 
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR_MEMBER_001", "요청된 멤버를 찾을 수 없습니다."),
     ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "ERR_MEMBER_002", "이미 가입된 멤버입니다. 새로 가입할 수 없습니다."),
+
+    PLOGGING_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_001", "진행 중인 플로깅이 아닙니다."),
 
     PLOGGING_LOG_NOT_FOUND(HttpStatus.NOT_FOUND, "ERR_PLOGGING_LOG_001", "플로깅 기록을 찾을 수 없습니다."),
 

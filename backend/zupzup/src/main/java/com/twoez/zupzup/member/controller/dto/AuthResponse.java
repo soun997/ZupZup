@@ -23,7 +23,11 @@ public record AuthResponse(
                 .build();
     }
 
-    public static AuthResponse unregisteredUser(Long memberId) {
-        return AuthResponse.builder().isNewMember(true).memberId(memberId).build();
+    public static AuthResponse unregisteredUser(Long memberId, String memberName) {
+        return AuthResponse.builder()
+                .isNewMember(true)
+                .memberId(memberId)
+                .memberName(memberName)
+                .build();
     }
 }

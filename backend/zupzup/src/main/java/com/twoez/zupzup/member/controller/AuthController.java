@@ -52,11 +52,11 @@ public class AuthController {
                 authResponse = AuthResponse.from(authorizationToken, member);
             } else {
                 log.info("User registered but he or she did not write his/her health info");
-                authResponse = AuthResponse.unregisteredUser(member.getId());
+                authResponse = AuthResponse.unregisteredUser(member.getId(), member.getName());
             }
         } else {
             Member member = memberService.save(authUser);
-            authResponse = AuthResponse.unregisteredUser(member.getId());
+            authResponse = AuthResponse.unregisteredUser(member.getId(), member.getName());
         }
 
         return ApiResponse.ok(authResponse);

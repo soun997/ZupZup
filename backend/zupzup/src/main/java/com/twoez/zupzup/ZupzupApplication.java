@@ -16,9 +16,4 @@ public class ZupzupApplication {
         SpringApplication.run(ZupzupApplication.class, args);
     }
 
-    @PostConstruct
-    public void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("Asia/Seoul")));
-    }
-
 }

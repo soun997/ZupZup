@@ -125,7 +125,6 @@ public class JwtValidator {
 
     private Jws<Claims> validateAuthorizationToken(String authorizationToken)
             throws ExpiredAuthorizationTokenException {
-        log.info("validateAuthorizationToken");
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey)

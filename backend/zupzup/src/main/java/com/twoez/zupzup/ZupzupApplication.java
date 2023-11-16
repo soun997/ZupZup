@@ -12,5 +12,4 @@ public class ZupzupApplication {
     public static void main(String[] args) {
         SpringApplication.run(ZupzupApplication.class, args);
     }
-
 }

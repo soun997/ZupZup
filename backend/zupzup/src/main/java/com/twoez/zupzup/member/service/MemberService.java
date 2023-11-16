@@ -63,10 +63,11 @@ public class MemberService {
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
         refreshTokenRedisRepository
                 .findRefreshTokenByMemberId(String.valueOf(memberId))
-                .ifPresent((token) -> {
-                    log.info("[MemberService] delete prior refresh token, id {}", memberId);
-                    refreshTokenRedisRepository.delete(token);
-                });
+                .ifPresent(
+                        (token) -> {
+                            log.info("[MemberService] delete prior refresh token, id {}", memberId);
+                            refreshTokenRedisRepository.delete(token);
+                        });
 
         AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(memberId);
         saveRefreshToken(memberId, authorizationToken);

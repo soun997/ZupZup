@@ -15,7 +15,7 @@ const MyPloggingReport = () => {
   const fetchMyReport = async () => {
     try {
       const response = await RecordApis.getMyPloggingInfo();
-      console.log(response);
+      //console.log(response);
       const data: TotalPloggingInfo = response.data.results;
       setPloggingInfo(data);
       setTrashInfo({

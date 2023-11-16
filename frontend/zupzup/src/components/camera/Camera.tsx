@@ -54,7 +54,7 @@ const Camera = ({ setCameraOn }: Props) => {
         }
         setAccessableCamera(true);
       } catch (error) {
-        console.log('camera access error : ', error);
+        //console.log('camera access error : ', error);
         setAccessableCamera(false);
       }
     };

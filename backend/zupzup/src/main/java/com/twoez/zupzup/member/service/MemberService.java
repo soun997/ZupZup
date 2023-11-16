@@ -25,6 +25,7 @@ import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalTrash;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalTrashRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,17 +60,33 @@ public class MemberService {
         return memberQueryRepository.findByOauth(authUser.getOauth());
     }
 
+    @Transactional
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
+        List<RefreshToken> priorRefreshTokens =
+                refreshTokenRedisRepository.findAllByMemberId(String.valueOf(memberId));
+        log.info(
+                "[MemberService] delete {} prior refresh token, id {}",
+                priorRefreshTokens.size(),
+                memberId);
+        refreshTokenRedisRepository.deleteAll(priorRefreshTokens);
+
         AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(memberId);
         saveRefreshToken(memberId, authorizationToken);
         return authorizationToken;
     }
 
     private void saveRefreshToken(Long memberId, AuthorizationToken authorizationToken) {
+
         refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
+        List<RefreshToken> refreshTokens =
+                refreshTokenRedisRepository.findAllByMemberId(String.valueOf(memberId));
+        if (refreshTokens.isEmpty()) {
+            log.info("[MemberService] Fail to save refreshToken to redis");
+        }
     }
 
     // TODO : Transaction 처리
+    @Transactional
     public AuthorizationToken reIssueAuthorizationToken(
             Long memberId, ReissueTokenRequest reissueTokenRequest) {
         RefreshToken refreshToken =

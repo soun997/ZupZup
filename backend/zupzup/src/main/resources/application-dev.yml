@@ -29,12 +29,12 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
-            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
             scope: email, profile, openid
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            redirect-uri: ${KAKAO_REDIRECT_URL}
             scope: profile_nickname, openid
             client-name: Kakao
             authorization-grant-type: authorization_code
@@ -63,8 +63,10 @@ client:
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   auth-token-expired_second: 60
-  access-expired-second: 7200
-  refresh_expired_second: 1209600
+#  access-expired-second: 7200
+#  refresh_expired_second: 1209600
+  access-expired-second: 10
+  refresh_expired_second: 15
 
 management:
   endpoints:

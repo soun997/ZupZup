@@ -10,16 +10,12 @@ const instance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-// const temp_access = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzAwMDI4MzIwfQ.wqT9Pl7KIsZYvjIkLPfe5qaVykk8GzfsxabhLvfeUDQil73z6DZPAq7cgwnSVr3ylaVQTjxThCqDuI6eWXohRw
-// `;
-
 // Request 🧑
 instance.interceptors.request.use(
   config => {
     const accessToken = store.getState().auth.accessToken;
     if (accessToken) {
-      config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`; // temp_access; //
+      config.headers[utils.AUTH.ACCESS_KEY] = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -44,7 +40,7 @@ instance.interceptors.response.use(
       error?.response?.data?.status === 401 &&
       error?.response?.data?.results.errorCode === 'ERR_AUTH_005'
     ) {
-      console.log('access-token 만료됐어', refreshToken, accessToken);
+      // //console.log('access-token 만료됐어', refreshToken, accessToken);
       try {
         const response = await reissueTokens(
           String(refreshToken),
@@ -54,8 +50,8 @@ instance.interceptors.response.use(
         // **응답 헤더에서 Access Token과 Refresh Token 추출
         const newAccessToken = response.data.results.accessToken;
         const newRefreshToken = response.data.results.refreshToken;
-        console.log('이후 access : ', newAccessToken);
-        console.log('이후 refresh : ', newRefreshToken);
+        // //console.log('이후 access : ', newAccessToken);
+        // //console.log('이후 refresh : ', newRefreshToken);
 
         // **access token 을 다시 setting 하고 origin request 를 재요청
         store.dispatch(setAccessToken(newAccessToken));
@@ -71,6 +67,7 @@ instance.interceptors.response.use(
       } catch (error) {
         // **만약 refreshToken 보내도 error 가 뜨면 login 화면으로 보내기 -> redirect
         //!login 이동
+        console.log(error);
         window.location.href = utils.URL.LOGIN.HOME; // 로그인화면으로 보내기
         store.dispatch(deleteAllAuth());
       }

@@ -1,7 +1,6 @@
 package com.twoez.zupzup.config.security.handler;
 
 
-import com.twoez.zupzup.config.security.HttpRequestEndpointChecker;
 import com.twoez.zupzup.config.security.filter.HttpRequestUtils;
 import com.twoez.zupzup.global.exception.HttpExceptionCode;
 import com.twoez.zupzup.global.response.ErrorResponse;

@@ -50,7 +50,9 @@ const TrashPage = ({
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
 
-  const [_, setAnaylzeInfo] = analyzeInfoState;
+  const [analyzeInfo, setAnaylzeInfo] = analyzeInfoState;
+
+  console.log(analyzeInfo);
 
   function loadImage() {
     const image = new Image();

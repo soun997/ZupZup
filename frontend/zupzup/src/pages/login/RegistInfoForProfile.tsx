@@ -30,7 +30,7 @@ const RegistInfo = () => {
   const [birthValid, setBirthValid] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(`init, ${memberId}`);
+    //console.log(`init, ${memberId}`);
   }, []);
 
   const [isNextButtonDisabled, setNextButtonDisabled] = useState<boolean>(true);
@@ -44,11 +44,11 @@ const RegistInfo = () => {
         birthYear: null,
         memberId: Number(memberId),
       };
-      console.log(postData);
+      //console.log(postData);
       const res = await MemberApi.registInfo(postData);
       const data = res.data.results;
-      console.log('postData ', res);
-      console.log(data);
+      //console.log('postData ', res);
+      //console.log(data);
 
       dispatch(setAccessToken(data.accessToken));
       dispatch(setRefreshToken(data.refreshToken));
@@ -98,12 +98,12 @@ const RegistInfo = () => {
           birthYear: Number(inputRefForBirthYear.current.value),
           memberId: Number(memberId),
         };
-        console.log(postData);
+        //console.log(postData);
         const res = await MemberApi.registInfo(postData);
-        console.log(res);
+        //console.log(res);
         const data = res.data.results;
-        console.log('postData ', postData);
-        console.log(data);
+        //console.log('postData ', postData);
+        //console.log(data);
 
         dispatch(setAccessToken(data.accessToken));
         dispatch(setRefreshToken(data.refreshToken));

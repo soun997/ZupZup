@@ -48,7 +48,7 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
         console.log(error);
       }
     } else {
-      console.log('not support share in this browser');
+      //console.log('not support share in this browser');
     }
   };
 

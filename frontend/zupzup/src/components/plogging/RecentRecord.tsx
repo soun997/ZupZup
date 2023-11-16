@@ -27,7 +27,7 @@ const RecentRecord = () => {
     try {
       const response = await RecordApis.getPloggingLogByRecent();
       const data = response.data.results;
-      console.log(data);
+      //console.log(data);
 
       if (!data) {
         setRecentRecord(null);

@@ -25,6 +25,7 @@ import com.twoez.zupzup.plogginglog.domain.TotalPloggingLog;
 import com.twoez.zupzup.plogginglog.domain.TotalTrash;
 import com.twoez.zupzup.plogginglog.repository.TotalPloggingLogRepository;
 import com.twoez.zupzup.plogginglog.repository.TotalTrashRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,13 +62,13 @@ public class MemberService {
 
     @Transactional
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
-        refreshTokenRedisRepository
-                .findRefreshTokenByMemberId(String.valueOf(memberId))
-                .ifPresent(
-                        (token) -> {
-                            log.info("[MemberService] delete prior refresh token, id {}", memberId);
-                            refreshTokenRedisRepository.delete(token);
-                        });
+        List<RefreshToken> priorRefreshTokens =
+                refreshTokenRedisRepository.findAllByMemberId(String.valueOf(memberId));
+        log.info(
+                "[MemberService] delete {} prior refresh token, id {}",
+                priorRefreshTokens.size(),
+                memberId);
+        refreshTokenRedisRepository.deleteAll(priorRefreshTokens);
 
         AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(memberId);
         saveRefreshToken(memberId, authorizationToken);

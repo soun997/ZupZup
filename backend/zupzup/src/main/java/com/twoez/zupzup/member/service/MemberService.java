@@ -59,13 +59,22 @@ public class MemberService {
         return memberQueryRepository.findByOauth(authUser.getOauth());
     }
 
+    @Transactional
     public AuthorizationToken issueAuthorizationToken(Long memberId) {
+        refreshTokenRedisRepository
+                .findRefreshTokenByMemberId(String.valueOf(memberId))
+                .ifPresent((token) -> {
+                    log.info("[MemberService] delete prior refresh token, id {}", memberId);
+                    refreshTokenRedisRepository.delete(token);
+                });
+
         AuthorizationToken authorizationToken = jwtProvider.createAuthorizationToken(memberId);
         saveRefreshToken(memberId, authorizationToken);
         return authorizationToken;
     }
 
     private void saveRefreshToken(Long memberId, AuthorizationToken authorizationToken) {
+
         refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
     }
 

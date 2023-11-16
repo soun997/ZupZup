@@ -6,7 +6,8 @@ TODO
 -->
 
 <!-- 대문 이미지 넣기  -->
-![대문사진](https://i.postimg.cc/Hs7WB7z8/image.png)
+![image](https://github.com/An0401na/ZupZup/assets/99172832/044efc72-06b4-428b-b998-981ae2406ea4)
+
 
 <br/>
 
@@ -145,7 +146,7 @@ TODO
     </tr>
     <tr height="140px">
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/79316245-e2be-4402-9b96-cc57aa437e68"/> </td>
-        <td align="center" ><img width="300px" src=""/> </td>
+        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/41961469-0403-45eb-b3f5-7374cb102d9d"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/d4b3b5a6-3a2b-4000-b1eb-b72e07eb7620"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/7e839a1d-dfae-4fe3-bbca-a0a8c0dd30bd"/> </td>
     <tr/>
@@ -156,7 +157,7 @@ TODO
        <td align="center">쓰레기 분석 화면</td>
     </tr>
     <tr height="140px">
-        <td align="center" ><img width="300px" src=""/> </td>
+        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/c70ebe94-8546-4792-9cc0-4c80c25bcac3"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/614ff7a3-450e-4ed6-86ea-68b658c65312"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/ff353668-78bf-44b5-a051-f80880c18ce8"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/bbeaa0b3-87e6-4cd1-a128-1a003f710d79"/> </td>
@@ -170,7 +171,7 @@ TODO
     <tr height="140px">
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/9242e5a6-07cf-487f-8cab-75d882827eef"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/e785bd4b-68af-44f5-8666-5f15f4d636e3"/> </td>
-        <td align="center" ><img width="300px" src=""/> </td>
+        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/ba45e4be-80a8-4ada-ae9f-e9a90ea4a4aa"/> </td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/6ec38e9c-cc56-45f2-b7cd-3d52122f7d42"/> </td>
     <tr/>
     <tr>

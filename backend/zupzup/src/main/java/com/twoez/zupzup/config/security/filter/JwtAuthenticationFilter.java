@@ -114,7 +114,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             memberIdInAccessToken = jwtValidator.getMemberIdFromAccessToken(token);
             return loginUserMapper.toLoginUser(memberService.findById(memberIdInAccessToken));
         } catch (ExpiredAuthorizationTokenException e) {
-            log.info("[JWT AUTH Filter] Expired JWT");
             if (requestUri.equals(RE_ISSUE_TOKEN_URI)) {
                 log.info("[JWT AUTH Filter] Expired JWT - re-issue");
                 memberIdInAccessToken = HttpRequestUtils.getRequestMemberIdFromHeader(request);

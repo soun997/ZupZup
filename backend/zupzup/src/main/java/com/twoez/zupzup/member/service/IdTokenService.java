@@ -18,8 +18,6 @@ public class IdTokenService {
     private final IdTokenValidator idTokenValidator;
 
     public AuthUser extractAuthUser(AuthRequest authRequest) {
-        log.info("IdTokenService - extractAuthUser");
-
         // authRequest의 jwt에서 idToken을 가져온다. -> jwtValidator
         String idToken = jwtValidator.getIdTokenFromAuthToken(authRequest.authToken());
 

@@ -1,0 +1,408 @@
+{
+  "1": {
+    "name": "Battery",
+    "class-eng": "battery",
+    "class-kor": "배터리",
+    "desc": "배터리",
+    "coin": 100
+  },
+  "2": {
+    "name": "Aluminium blister pack",
+    "class-eng": "metal",
+    "class-kor": "금속",
+    "desc": "캔이 아닌 금속 재질의 쓰레기",
+    "coin": 100
+  },
+  "3": {
+    "name": "Carded blister pack",
+    "class-eng": "mixed",
+    "class-kor": "혼합 재질",
+    "desc": "분리가능한 다양한 재질이 섞여 있습니다.",
+    "coin": 10
+  },
+  "4": {
+    "name": "Other plastic bottle",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "5": {
+    "name": "Clear plastic bottle",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "6": {
+    "name": "Glass bottle",
+    "class-eng": "glass",
+    "class-kor": "유리",
+    "desc": "유리 쓰레기",
+    "coin": 200
+  },
+  "7": {
+    "name": "Plastic bottle cap",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "8": {
+    "name": "Metal bottle cap",
+    "class-eng": "metal",
+    "class-kor": "금속",
+    "desc": "캔이 아닌 금속 재질의 쓰레기",
+    "coin": 100
+  },
+  "9": {
+    "name": "Broken glass",
+    "class-eng": "glass",
+    "class-kor": "유리",
+    "desc": "유리 쓰레기",
+    "coin": 200
+  },
+  "10": {
+    "name": "Food Can",
+    "class-eng": "can",
+    "class-kor": "캔",
+    "desc": "캔",
+    "coin": 50
+  },
+  "11": {
+    "name": "Aerosol",
+    "class-eng": "can",
+    "class-kor": "캔",
+    "desc": "캔",
+    "coin": 50
+  },
+  "12": {
+    "name": "Drink can",
+    "class-eng": "can",
+    "class-kor": "캔",
+    "desc": "캔",
+    "coin": 50
+  },
+  "13": {
+    "name": "Toilet tube",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "14": {
+    "name": "Other carton",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "15": {
+    "name": "Egg carton",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "16": {
+    "name": "Drink carton",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "17": {
+    "name": "Corrugated carton",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "18": {
+    "name": "Meal carton",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "19": {
+    "name": "Pizza box",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "20": {
+    "name": "Paper cup",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "21": {
+    "name": "Disposable plastic cup",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "22": {
+    "name": "Foam cup",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "23": {
+    "name": "Glass cup",
+    "class-eng": "glass",
+    "class-kor": "유리",
+    "desc": "유리 쓰레기",
+    "coin": 200
+  },
+  "24": {
+    "name": "Other plastic cup",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "25": {
+    "name": "Food waste",
+    "class-eng": "food",
+    "class-kor": "음식물 쓰레기",
+    "desc": "음식물 쓰레기",
+    "coin": 10
+  },
+  "26": {
+    "name": "Glass jar",
+    "class-eng": "glass",
+    "class-kor": "유리",
+    "desc": "유리 쓰레기",
+    "coin": 200
+  },
+  "27": {
+    "name": "Plastic lid",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "28": {
+    "name": "Metal lid",
+    "class-eng": "metal",
+    "class-kor": "금속",
+    "desc": "캔이 아닌 금속 재질의 쓰레기",
+    "coin": 100
+  },
+  "29": {
+    "name": "Other plastic",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "30": {
+    "name": "Magazine paper",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "31": {
+    "name": "Tissues",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "32": {
+    "name": "Wrapping paper",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "33": {
+    "name": "Normal paper",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "34": {
+    "name": "Paper bag",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "36": {
+    "name": "Plastic film",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "37": {
+    "name": "Six pack rings",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "38": {
+    "name": "Garbage bag",
+    "class-eng": "vinyl",
+    "class-kor": "비닐",
+    "desc": "비닐 쓰레기",
+    "coin": 40
+  },
+  "39": {
+    "name": "Other plastic wrapper",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "40": {
+    "name": "Single-use carrier bag",
+    "class-eng": "vinyl",
+    "class-kor": "비닐",
+    "desc": "비닐 쓰레기",
+    "coin": 40
+  },
+  "41": {
+    "name": "Polypropylene bag",
+    "class-eng": "vinyl",
+    "class-kor": "비닐",
+    "desc": "비닐 쓰레기",
+    "coin": 40
+  },
+  "42": {
+    "name": "Crisp packet",
+    "class-eng": "vinyl",
+    "class-kor": "비닐",
+    "desc": "비닐 쓰레기",
+    "coin": 40
+  },
+  "43": {
+    "name": "Spread tub",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "44": {
+    "name": "Tupperware",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "45": {
+    "name": "Disposable food container",
+    "class-eng": "etc",
+    "class-kor": "기타",
+    "desc": "분류가 필요합니다.",
+    "coin": 10
+  },
+  "46": {
+    "name": "Foam food container",
+    "class-eng": "styrofoam",
+    "class-kor": "스티로폼",
+    "desc": "스티로폼 쓰레기",
+    "coin": 50
+  },
+  "47": {
+    "name": "Other plastic container",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "48": {
+    "name": "Plastic glooves",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "49": {
+    "name": "Plastic utensils",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "50": {
+    "name": "Pop tab",
+    "class-eng": "metal",
+    "class-kor": "금속",
+    "desc": "캔이 아닌 금속 재질의 쓰레기",
+    "coin": 100
+  },
+  "51": {
+    "name": "Rope & strings",
+    "class-eng": "normal",
+    "class-kor": "일반 쓰레기",
+    "desc": "일반 쓰레기",
+    "coin": 10
+  },
+  "52": {
+    "name": "Scrap metal",
+    "class-eng": "metal",
+    "class-kor": "금속",
+    "desc": "캔이 아닌 금속 재질의 쓰레기",
+    "coin": 100
+  },
+  "53": {
+    "name": "Shoe",
+    "class-eng": "clothes",
+    "class-kor": "의복류",
+    "desc": "의복 및 신발",
+    "coin": 40
+  },
+  "54": {
+    "name": "Squeezable tube",
+    "class-eng": "normal",
+    "class-kor": "일반 쓰레기",
+    "desc": "일반 쓰레기",
+    "coin": 10
+  },
+  "55": {
+    "name": "Plastic straw",
+    "class-eng": "plastic",
+    "class-kor": "플라스틱",
+    "desc": "플라스틱 쓰레기",
+    "coin": 50
+  },
+  "56": {
+    "name": "Paper straw",
+    "class-eng": "paper",
+    "class-kor": "종이",
+    "desc": "종이 쓰레기",
+    "coin": 15
+  },
+  "57": {
+    "name": "Styrofoam piece",
+    "class-eng": "styrofoam",
+    "class-kor": "스티로폼",
+    "desc": "스티로폼 쓰레기",
+    "coin": 50
+  },
+  "58": {
+    "name": "Unlabeled litter",
+    "class-eng": "etc",
+    "class-kor": "기타",
+    "desc": "분류가 필요합니다.",
+    "coin": 10
+  },
+  "59": {
+    "name": "Cigarette",
+    "class-eng": "cigarette",
+    "class-kor": "담배꽁초",
+    "desc": "담배꽁초",
+    "coin": 20
+  }
+}

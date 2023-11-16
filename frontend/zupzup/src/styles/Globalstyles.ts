@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 
@@ -13,27 +13,31 @@ const GlobalStyles = createGlobalStyle`
         -ms-text-size-adjust: none; 
       
     }
+
     html,body {
         font-weight: 400;
         font-size: 12px;
         width: 100%;
         height: 100%;
-
     }
+
     a {
         cursor: pointer;
         text-decoration: none;
         color: black;
     }
+
     img {
         border: 0;
         vertical-align: middle;
         image-rendering: -webkit-optimize-contrast !important;
         backface-visibility:hidden !important;
     }
+
     ul,li {
         list-style: none;
     }
+
     button {
         border: none;
         cursor: pointer;
@@ -52,42 +56,48 @@ const GlobalStyles = createGlobalStyle`
     figure, figcaption, footer, header, hgroup, 
     menu, nav, output, ruby, section, summary,
     time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        font-family: 'AppleSDGothicNeo', 'AppleSDGothicNeoR', 'Pretendard', 'Noto Sans KR', sans-serif;
     }
+
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 
     footer, header, hgroup, menu, nav, section {
-    display: block;
+        display: block;
     }
+
     body {
-    line-height: 1;
+        line-height: 1;
     }
+
     ol, ul {
-    list-style: none;
+        list-style: none;
     }
+
     blockquote, q {
-    quotes: none;
+        quotes: none;
     }
+
     blockquote:before, blockquote:after,
     q:before, q:after {
-    content: '';
-    content: none;
+        content: '';
+        content: none;
     }
+
     table {
-    border-collapse: collapse;
-    border-spacing: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
+
     button {
         background-color: #fff;
     }
     //#endregion
-    
 `;
 
 export default GlobalStyles;

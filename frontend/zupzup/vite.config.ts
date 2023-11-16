@@ -1,29 +1,68 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import svgr from "vite-plugin-svgr";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import mkcert from 'vite-plugin-mkcert';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  plugins: [react(), svgr(), tsconfigPaths()],
-  base: process.env.NODE_ENV === "development" ? "/" : "./",
+  plugins: [
+    react(),
+    svgr({
+      include: '**/*.svg?react',
+    }),
+    tsconfigPaths(),
+    mkcert(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true,
+      },
+      manifest: {
+        icons: [
+          {
+            src: '/thumbnail.png',
+            type: 'image/png',
+            sizes: '192x192',
+          },
+        ],
+      },
+    }),
+  ],
+  base: process.env.NODE_ENV === 'development' ? '/' : './',
+
+  define: {
+    global: 'window',
+  },
+  resolve: {
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
+  },
+  optimizeDeps: {
+    exclude: ['axios', 'js-big-decimal'],
+  },
+
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: (assetInfo) => {
-          let extType = assetInfo.name.split(".").at(1);
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            extType = "img";
+        assetFileNames: assetInfo => {
+          let extType = assetInfo.name!.split('.').at(1) as string;
+          if (/png|jpe?g|gif|tiff|bmp/i.test(extType)) {
+            extType = 'images';
+          } else if (/svg|ico/i.test(extType)) {
+            extType = 'icons';
           }
           return `assets/${extType}/[name]-[hash][extname]`;
         },
-        chunkFileNames: "assets/js/[name]-[hash].js",
-        entryFileNames: "assets/js/[name]-[hash].js",
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
       },
     },
 
     commonjsOptions: {
       include: [/node_modules/],
-      extensions: [".js", ".cjs"],
+      extensions: ['.js', '.cjs'],
       strictRequires: true,
       transformMixedEsModules: true,
     },

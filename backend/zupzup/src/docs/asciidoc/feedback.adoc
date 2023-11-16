@@ -1,0 +1,35 @@
+= Feedback API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 사용자 피드백 저장
+
+=== Request
+
+include::{snippets}/feedback-add/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/feedback-add/http-response.adoc[]
+
+== 사용자 피드백 조회
+
+관리자 권한을 가진 사용자만 호출 가능합니다.
+
+=== Request
+
+include::{snippets}/feedback-list/http-request.adoc[]
+
+include::{snippets}/feedback-list/query-parameters.adoc[]
+
+=== Response
+
+include::{snippets}/feedback-list/http-response.adoc[]

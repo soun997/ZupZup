@@ -1,0 +1,21 @@
+= Pet API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 사용자 펫 조회
+
+=== Request
+
+include::{snippets}/pets-details/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/pets-details/http-response.adoc[]

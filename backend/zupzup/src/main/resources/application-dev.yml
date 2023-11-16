@@ -1,0 +1,91 @@
+spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${MARIA_URL}
+    username: ${MARIA_USER}
+    password: ${MARIA_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: ${MONGO_DATABASE}
+      username: ${MONGO_USERNAME}
+      password: ${MONGO_PASSWORD}
+      authentication-database: zupzup, admin
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
+            scope: email, profile, openid
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: ${KAKAO_REDIRECT_URL}
+            scope: profile_nickname, openid
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v1/oidc/userinfo
+            jwk-set-uri: https://kauth.kakao.com/.well-known/jwks.json
+  mvc:
+    throw-exception-if-no-handler-found: true
+oidc:
+  google:
+    iss: https://accounts.google.com
+    iss2: accounts.google.com
+  kakao:
+    iss: https://kapi.kakao.com
+    iss2: kapi.kakao.com
+
+client:
+  url: ${CLIENT_URL}
+  redirect:
+    login-success: ${CLIENT_REDIRECT_LOGIN_SUCCESS}
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  auth-token-expired_second: 60
+#  access-expired-second: 7200
+#  refresh_expired_second: 1209600
+  access-expired-second: 10
+  refresh_expired_second: 15
+
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+  server:
+    port: ${HEALTH_PORT}
+
+security:
+  permit-urls: ${SECURITY_PERMITTED_URLS}

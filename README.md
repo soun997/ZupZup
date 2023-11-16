@@ -134,7 +134,6 @@ TODO
 - 회원가입시 튜토리얼 지원
 - 사용자 의견 작성 페이지를 통해 사용자 의견 수렴 가능
 - 캐릭터 키우기 설명 페이지로 사용설명 제공
-
   <br>
 
 <br/>
@@ -142,7 +141,7 @@ TODO
 ## 🤳 화면 설명
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/8ee841b2-2ae5-41c4-9c34-c018ffb37fe4"/> </td>
+        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/8ee841b2-2ae5-41c4-9c34-c018ffb37fe4"/></td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/94aab44d-7555-4b5b-9d3f-20568781e164"/></td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/5b12b06b-55e3-4802-9206-0257d4a2bc8d"/></td>
         <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/76ec91e7-4734-46a3-af10-9456ae62a35b"/></td>

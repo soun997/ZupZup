@@ -67,7 +67,7 @@ instance.interceptors.response.use(
       } catch (error) {
         // **만약 refreshToken 보내도 error 가 뜨면 login 화면으로 보내기 -> redirect
         //!login 이동
-        //console.log(error);
+        console.log(error);
         window.location.href = utils.URL.LOGIN.HOME; // 로그인화면으로 보내기
         store.dispatch(deleteAllAuth());
       }

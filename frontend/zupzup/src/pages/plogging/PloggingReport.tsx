@@ -190,18 +190,15 @@ const PloggingReport = () => {
           ploggingLogRequest: ploggingData,
           trashRequest: trashData,
         });
-        const routeResponse = await RouteApis.postRoutes(
-          recordResponse.data.results.id,
-          {
-            locations: [...locations].map((location: Location) => {
-              const data: { latitude: number; longitude: number } = {
-                latitude: location.lat,
-                longitude: location.lng,
-              };
-              return data;
-            }),
-          },
-        );
+        await RouteApis.postRoutes(recordResponse.data.results.id, {
+          locations: [...locations].map((location: Location) => {
+            const data: { latitude: number; longitude: number } = {
+              latitude: location.lat,
+              longitude: location.lng,
+            };
+            return data;
+          }),
+        });
         //console.log(routeResponse);
         await PloggingApis.stopPlogging();
       } catch (error) {

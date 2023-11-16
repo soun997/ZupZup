@@ -58,7 +58,7 @@ const CONSOLE = {
 };
 
 function coloredMsg(style: string, ...msg: string[]) {
-  //console.log(`%c${msg}`, style);
+  console.log(`%c${msg}`, style);
 }
 
 export default CONSOLE;

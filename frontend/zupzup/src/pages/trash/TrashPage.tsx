@@ -50,7 +50,9 @@ const TrashPage = ({
   const [trashImg, setTrashImg] = useState<HTMLImageElement>(new Image());
   const [trashTypeTable, setTrashTypeTable] = useState<TrashTypeTable>();
 
-  const [_, setAnaylzeInfo] = analyzeInfoState;
+  const [analyzeInfo, setAnaylzeInfo] = analyzeInfoState;
+
+  console.log(analyzeInfo);
 
   function loadImage() {
     const image = new Image();
@@ -79,7 +81,7 @@ const TrashPage = ({
       const nameMap = await fetch(MODEL_NAME_MAP_URI)
         .then(response => response.json())
         .catch(error => {
-          //console.log(error);
+          console.log(error);
         });
       CONSOLE.ok('[ts load] 1. load name map complete');
       CONSOLE.info('[ts load] 2. load model');
@@ -98,7 +100,7 @@ const TrashPage = ({
       const trashTypeTableFromJson = await fetch(TRASH_TYPE_TABLE_URI)
         .then(response => response.json())
         .catch(error => {
-          //console.log(error);
+          console.log(error);
         });
       CONSOLE.ok('[ts load] 3. load trashTypeTable complete');
 

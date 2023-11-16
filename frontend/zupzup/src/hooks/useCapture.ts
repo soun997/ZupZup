@@ -6,7 +6,7 @@ const useCapture = () => {
 
   const handleCaptureClick = () => {
     const element = captureRef.current;
-    console.log(element);
+    //console.log(element);
     if (!element) return;
 
     html2canvas(element, { scale: 2 }).then(canvas => {

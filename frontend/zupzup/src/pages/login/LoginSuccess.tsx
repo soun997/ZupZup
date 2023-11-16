@@ -30,11 +30,11 @@ const LoginSuccess = () => {
       };
 
       try {
-        console.log('token >: ', token);
+        //console.log('token >: ', token);
 
         const res = await MemberApi.login(token.authToken!, token.provider!);
         const data = res.data.results;
-        console.log('login data >: ', data);
+        //console.log('login data >: ', data);
 
         dispatch(setMemberId(data.memberId));
         dispatch(setMemberName(data.memberName));

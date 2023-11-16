@@ -17,7 +17,7 @@ const PloggingRecord = () => {
         format(selectedDate!, 'yyyy-MM-dd'),
       );
       setPloggingInfos(response.data.results);
-      console.log(response);
+      //console.log(response);
     } catch (err) {
       console.error(err);
     }

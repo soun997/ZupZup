@@ -38,11 +38,11 @@ const RegistInfo = () => {
         birthYear: null,
         memberId: Number(memberId),
       };
-      console.log(postData);
+      //console.log(postData);
       const res = await MemberApi.registInfo(postData);
       const data = res.data.results;
-      console.log('postData ', res);
-      console.log(data);
+      //console.log('postData ', res);
+      //console.log(data);
 
       dispatch(setAccessToken(data.accessToken));
       dispatch(setRefreshToken(data.refreshToken));

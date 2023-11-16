@@ -167,7 +167,7 @@ const PloggingReport = () => {
             type: utils.IMAGE_MIME_TYPE,
           },
         );
-        console.log(file);
+        //console.log(file);
         const uploadedFileUrl = await uploadFile(
           file,
           file.name, // S3 내 파일 경로 및 이름
@@ -202,7 +202,7 @@ const PloggingReport = () => {
             }),
           },
         );
-        console.log(routeResponse);
+        //console.log(routeResponse);
         await PloggingApis.stopPlogging();
       } catch (error) {
         // 업로드 실패 시 오류 처리

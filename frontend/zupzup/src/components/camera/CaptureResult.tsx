@@ -45,10 +45,10 @@ const CaptureResult = ({ cameraRef, setCapture, captureFileState }: Props) => {
           files: [captureFile],
         });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     } else {
-      console.log('not support share in this browser');
+      //console.log('not support share in this browser');
     }
   };
 

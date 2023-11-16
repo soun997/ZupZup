@@ -7,7 +7,7 @@ import {
   OnBoardingSecond,
   OnBoardingThird,
   OnBoardingFourth,
-  OnBoardingFifth
+  OnBoardingFifth,
 } from 'components';
 import { URL } from 'utils';
 
@@ -21,7 +21,7 @@ const RegistSuccess = () => {
     <OnBoardingSecond />,
     <OnBoardingThird />,
     <OnBoardingFourth />,
-    <OnBoardingFifth />
+    <OnBoardingFifth />,
   ];
 
   const handleFinishTutorial = () => {
@@ -41,7 +41,11 @@ const RegistSuccess = () => {
     <S.Wrap>
       <S.Bar>
         {[...new Array(5)].map((_, i) => (
-          <S.BarSegment active={tab === i + 1} onClick={() => setTab(i + 1)} />
+          <S.BarSegment
+            $active={tab === i + 1}
+            onClick={() => setTab(i + 1)}
+            key={i}
+          />
         ))}
       </S.Bar>
       <S.TopFrame onClick={handleFinishTutorial}>
@@ -101,11 +105,11 @@ const S = {
     margin-top: 10px;
   `,
 
-  BarSegment: styled.div<{ active: boolean }>`
+  BarSegment: styled.div<{ $active: boolean }>`
     width: 33.3%;
     height: 5px;
     background-color: ${props =>
-      props.active ? props.theme.color.main : props.theme.color.gray4};
+      props.$active ? props.theme.color.main : props.theme.color.gray4};
     border-radius: 4px;
     cursor: pointer;
   `,

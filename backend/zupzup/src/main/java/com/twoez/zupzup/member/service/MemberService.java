@@ -78,8 +78,8 @@ public class MemberService {
     private void saveRefreshToken(Long memberId, AuthorizationToken authorizationToken) {
 
         refreshTokenRedisRepository.save(RefreshToken.from(memberId, authorizationToken));
-        List<RefreshToken> refreshTokens = refreshTokenRedisRepository.findAllByMemberId(
-                String.valueOf(memberId));
+        List<RefreshToken> refreshTokens =
+                refreshTokenRedisRepository.findAllByMemberId(String.valueOf(memberId));
         if (refreshTokens.isEmpty()) {
             log.info("[MemberService] Fail to save refreshToken to redis");
         }

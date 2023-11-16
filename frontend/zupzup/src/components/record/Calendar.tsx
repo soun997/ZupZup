@@ -153,7 +153,7 @@ const Calendar = (props: CalendarProps) => {
         });
         setPloggingStates(states);
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     };
 

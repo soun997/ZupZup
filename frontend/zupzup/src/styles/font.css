@@ -1,19 +1,27 @@
 @font-face {
   font-family: 'AppleSDGothicNeo';
-  src: url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
+  src:
+    local('AppleSDGothicNeoR'),
+    url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
 }
 @font-face {
   font-family: 'AppleSDGothicNeoR';
-  src: url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
+  src:
+    local('AppleSDGothicNeoR'),
+    url('../assets/fonts/AppleSDGothicNeoR.woff2') format('woff2');
 }
 @font-face {
   font-family: 'AppleSDGothicNeoB';
-  src: url('../assets/fonts/AppleSDGothicNeoB.woff2') format('woff2');
+  src:
+    local('AppleSDGothicNeoB'),
+    url('../assets/fonts/AppleSDGothicNeoB.woff2') format('woff2');
 }
 @font-face {
   font-family: 'yg-jalnan';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
-    format('woff');
+  src:
+    url('../assets/fonts/Jalnan.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
 }

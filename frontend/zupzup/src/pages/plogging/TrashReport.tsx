@@ -44,13 +44,13 @@ const TrashReport = ({ trashReport, setCameraOn }: Prop) => {
       const nameMap = await fetch(MODEL_NAME_MAP_URI)
         .then(response => response.json())
         .catch(error => {
-          console.log(error);
+          //console.log(error);
         });
 
       const trashTypeTableFromJson = await fetch(TRASH_TYPE_TABLE_URI)
         .then(response => response.json())
         .catch(error => {
-          console.log(error);
+          //console.log(error);
         });
 
       CONSOLE.info('[TrashReport load] read image');

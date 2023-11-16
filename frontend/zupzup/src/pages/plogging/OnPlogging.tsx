@@ -74,10 +74,10 @@ const OnPlogging = () => {
       try {
         const response = await TrashApis.getTrashCans(trashcanRequest);
         setTrashs(response.data.results);
-        console.log(response.data.results);
+        //console.log(response.data.results);
         setTrashOn(trashStatus);
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     } else {
       setTrashOn(trashStatus);

@@ -35,7 +35,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       try {
         const response = await RouteApis.getRoutes(ploggingInfo.ploggingLogId);
         const locations = response.data.results.locations;
-        console.log(locations);
+        //console.log(locations);
 
         let minLat = 90;
         let maxLat = -90;
@@ -80,7 +80,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
           });
         });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     };
 

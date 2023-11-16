@@ -24,7 +24,7 @@ const uploadFile = async (file: File, key: string) => {
 
   try {
     const data = await s3.upload(params).promise();
-    console.log('파일 업로드 완료:', data.Location);
+    //console.log('파일 업로드 완료:', data.Location);
     return data.Location; // 업로드된 파일의 URL 반환
   } catch (error) {
     console.error('파일 업로드 오류:', error);

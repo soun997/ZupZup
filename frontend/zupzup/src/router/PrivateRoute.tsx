@@ -15,16 +15,16 @@ export default function PrivateRoute() {
 
   useEffect(() => {
     if (!isLogin) {
-      console.log('login');
+      //console.log('login');
       if (
         window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true ||
         window.navigator.userAgent.includes('wv')
       ) {
-        console.log('This is running as PWA.');
+        //console.log('This is running as PWA.');
         navigate(URL.LOGIN.HOME);
       } else {
-        console.log('This is running in a browser tab.');
+        //console.log('This is running in a browser tab.');
         navigate(URL.LOGIN.ONBOARD);
       }
     }

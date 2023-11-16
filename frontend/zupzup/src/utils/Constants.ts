@@ -95,7 +95,7 @@ export const PLOGGING_COIN_INFO = [
     coin: 50,
     count: 0,
   },
-  { name: '담배', detail: 'Cigarette', decomposeTime: '1~5년', coin: 20 },
+  { name: '담배', detail: 'Cigarette', decomposeTime: '1 ~ 5년', coin: 20 },
   { name: '캔', detail: 'Can, Aerosol', decomposeTime: '50 년', coin: 50 },
   {
     name: '유리',
@@ -112,7 +112,7 @@ export const PLOGGING_COIN_INFO = [
   {
     name: '일반 쓰레기',
     detail: 'Unlabeled litter',
-    decomposeTime: '우리가 정해야할듯',
+    decomposeTime: '1 ~ 2개월',
     coin: 10,
   },
   {
@@ -138,7 +138,7 @@ export const PLOGGING_COIN_INFO = [
   {
     name: '혼합 쓰레기',
     detail: 'Carded blister pack',
-    decomposeTime: '',
+    decomposeTime: '1 ~ 2개월',
     coin: 10,
   },
   {
@@ -147,5 +147,5 @@ export const PLOGGING_COIN_INFO = [
     decomposeTime: '2 ~ 5개월',
     coin: 10,
   },
-  { name: '기타', detail: '', decomposeTime: '', coin: 10 },
+  { name: '기타', detail: '', decomposeTime: '1개월', coin: 10 },
 ];

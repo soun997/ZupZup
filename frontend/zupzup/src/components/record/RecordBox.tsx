@@ -24,6 +24,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
   const [showImage, setShowImage] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [trashRecord, setTrashRecord] = useState<TrashDetail>();
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
     fetchRecordTrash();
@@ -35,7 +36,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       try {
         const response = await RouteApis.getRoutes(ploggingInfo.ploggingLogId);
         const locations = response.data.results.locations;
-        //console.log(locations);
+        setLoadError(false);
 
         let minLat = 90;
         let maxLat = -90;
@@ -80,7 +81,7 @@ const RecordBox = ({ ploggingInfo }: Props) => {
           });
         });
       } catch (error) {
-        console.log(error);
+        setLoadError(true);
       }
     };
 
@@ -136,8 +137,11 @@ const RecordBox = ({ ploggingInfo }: Props) => {
       </S.PloggingRecords>
       {showImage ? (
         <>
-          <S.Map ref={mapRef}></S.Map>
-          {/* <S.Image src={ploggingInfo.routeImageUrl}></S.Image> */}
+          {loadError ? (
+            <S.Image src={ploggingInfo.routeImageUrl} />
+          ) : (
+            <S.Map ref={mapRef}></S.Map>
+          )}
           <S.BottomBox $isOpen={showImage}>
             <ArrowUpSvg onClick={handleMoreInfo} />
           </S.BottomBox>

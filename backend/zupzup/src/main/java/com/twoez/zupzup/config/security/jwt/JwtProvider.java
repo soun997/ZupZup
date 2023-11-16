@@ -47,7 +47,6 @@ public class JwtProvider {
     }
 
     public AuthorizationToken createAuthorizationToken(Long memberId) {
-        log.info("expired token : {}", generateToken(memberId, 10));
         String accessToken = generateToken(memberId, accessExpiredSecond);
         String refreshToken = generateToken(memberId, refreshExpiredSecond);
         return new AuthorizationToken(accessToken, refreshToken, GRANT_TYPE);

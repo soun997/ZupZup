@@ -48,7 +48,6 @@ public abstract class AbstractIdTokenValidator {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JwtHeader jwtHeader = objectMapper.readValue(header, JwtHeader.class);
-            log.info("kid : {}", jwtHeader.kid());
             return jwtHeader.kid();
         } catch (JsonProcessingException e) {
             throw new InvalidJwtException(HttpExceptionCode.JWT_UNSUPPORTED);

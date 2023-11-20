@@ -29,10 +29,11 @@ const CoinModal: React.FC<CoinModalProps> = ({ isOpen, onClose }) => {
           <button onClick={onClose}>닫기</button>
         </S.ModalHeader>
         <S.ModalContent>
+          👁‍🗨 코인은 쓰레기 분해에 걸리는 시간에 따라 산정되었습니다
           {trashCoin.map((eachTrash, idx) => (
             <S.EachFrame key={idx}>
               <div className="eachName">{eachTrash.name}</div>
-              <div className="eachVal">{eachTrash.coin} Coins</div>
+              <div className="eachVal">{eachTrash.decomposeTime}</div>
             </S.EachFrame>
           ))}
         </S.ModalContent>
@@ -87,7 +88,9 @@ const S = {
     gap: 1.3em;
     display: flex;
     flex-direction: column;
-    // 스타일을 추가하세요
+    line-height: 1.3;
+    font-size: ${({ theme }) => theme.font.size.focus2};
+    font-family: ${({ theme }) => theme.font.family.focus2};
   `,
 
   EachFrame: styled.div`

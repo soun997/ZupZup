@@ -20,15 +20,14 @@ TODO
 ## 🔗 배포 주소
 - [app.zupzup.shop](https://app.zupzup.shop/)
 <br>
-<br>
 
 ## ✈️ 프로젝트 결과
 
-### 🔗 [소개 UCC]()
-### 🔗 [시연 영상]()
+### 🔗 [소개 및 시연 영상](https://youtu.be/FI77MuO2xOo)
 ### 🔗 [ER Diagram](https://www.erdcloud.com/d/i2qYSu9dyHPPLoYjf)
 ### 🔗 [Figma](https://www.figma.com/file/u6TPBskjtMDknWenvkEdVs/Design?type=design&node-id=2%3A2&mode=design&t=Spsd4gU14uSrHMu0-1)
 ### 🔗 [API 명세서](https://insidious-maraca-cb4.notion.site/API-d613213651e745c68eecefd876a27803?pvs=4)
+### 🔗 [Presentation](./presentation/presentation.md)
 
 <br>
 
@@ -36,6 +35,8 @@ TODO
 2023년 10월 10일 ~ 2023년 11월 17일
 
 <br>
+
+
 
 ## 👩‍💻 멤버 구성
 <table>
@@ -88,7 +89,6 @@ TODO
 </table>
 
 <br>
-
 
 ## 📌 주요 기능
 **현재 위치를 활용한 플로깅**
@@ -341,5 +341,4 @@ TODO
     - `feature`: 단위 기능을 개발하는 브랜치로 기능 개발이 완료되면 develop 브랜치에 Merge
 
 
-[//]: # (https://github.com/Ileriayo/markdown-badges)
 

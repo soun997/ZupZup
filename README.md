@@ -201,10 +201,10 @@ TODO
 <br><br><br>
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/03468db8-4139-4510-8ae6-19e85d85f0bd"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/0530df39-3dd5-4897-ac56-f07f7ae48b7b"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/527aa938-6a92-47fd-ab1e-8928d0a4470a"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/5919b1a2-8ade-438d-ba6b-a3a46fc784e0"/> </td>
+        <td align="center" ><img width="300px" src="./img/상점.png"/> </td>
+        <td align="center" ><img width="300px" src="./img/아이템.png"/> </td>
+        <td align="center" ><img width="300px" src="./img/image 119.png"/> </td>
+        <td align="center" ><img width="300px" src="./img/설정화면.png"/> </td>
     <tr/>
     <tr>
        <td align="center">🔼 상점</td>

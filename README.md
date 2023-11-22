@@ -141,10 +141,10 @@ TODO
 ## 🤳 화면 설명
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/8ee841b2-2ae5-41c4-9c34-c018ffb37fe4"/></td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/94aab44d-7555-4b5b-9d3f-20568781e164"/></td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/5b12b06b-55e3-4802-9206-0257d4a2bc8d"/></td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/76ec91e7-4734-46a3-af10-9456ae62a35b"/></td>
+        <td align="center" ><img width="300px" src="img/로그인 페이지.png"/></td>
+        <td align="center" ><img width="300px" src="img/메인 화면.png"/></td>
+        <td align="center" ><img width="300px" src="img/키몸무게.png"/></td>
+        <td align="center" ><img width="300px" src="img/성별 출생년도.png"/></td>
     <tr/>
     <tr>
        <td align="center">🔼 소셜 로그인</td>
@@ -156,10 +156,10 @@ TODO
 <br><br><br>
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/79316245-e2be-4402-9b96-cc57aa437e68"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/41961469-0403-45eb-b3f5-7374cb102d9d"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/d4b3b5a6-3a2b-4000-b1eb-b72e07eb7620"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/7e839a1d-dfae-4fe3-bbca-a0a8c0dd30bd"/> </td>
+        <td align="center" ><img width="300px" src="img/플로깅 중 플로깅 정보 화면.png"/> </td>
+        <td align="center" ><img width="300px" src="img/플로깅중지도.png"/> </td>
+        <td align="center" ><img width="300px" src="img/쓰레기통 조회 화면.png"/> </td>
+        <td align="center" ><img width="300px" src="img/쓰레기 분석 화면.png"/> </td>
     <tr/>
     <tr>
        <td align="center">🔼 플로깅 시간, 거리, 칼로리 측정</td>
@@ -171,10 +171,10 @@ TODO
 <br><br><br>
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/c70ebe94-8546-4792-9cc0-4c80c25bcac3"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/614ff7a3-450e-4ed6-86ea-68b658c65312"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/ff353668-78bf-44b5-a051-f80880c18ce8"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/bbeaa0b3-87e6-4cd1-a128-1a003f710d79"/> </td>
+        <td align="center" ><img width="300px" src="img/플로깅 결과.png"/> </td>
+        <td align="center" ><img width="300px" src="img/플로깅 기록 캘린더.png"/> </td>
+        <td align="center" ><img width="300px" src="img/일별 기록 조회 페이지.png"/> </td>
+        <td align="center" ><img width="300px" src="img/일일레포트.png"/> </td>
     <tr/>
     <tr>
        <td align="center">🔼 플로깅 결과 화면</td>
@@ -186,10 +186,10 @@ TODO
 <br><br><br>
 <table>
     <tr height="140px">
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/9242e5a6-07cf-487f-8cab-75d882827eef"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/e785bd4b-68af-44f5-8666-5f15f4d636e3"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/ba45e4be-80a8-4ada-ae9f-e9a90ea4a4aa"/> </td>
-        <td align="center" ><img width="300px" src="https://github.com/An0401na/ZupZup/assets/99172832/6ec38e9c-cc56-45f2-b7cd-3d52122f7d42"/> </td>
+        <td align="center" ><img width="300px" src="img/마이페이지.png"/> </td>
+        <td align="center" ><img width="300px" src="img/다크.png"/> </td>
+        <td align="center" ><img width="300px" src="img/레벨업.png"/> </td>
+        <td align="center" ><img width="300px" src="img/누적레포트.png"/> </td>
     <tr/>
     <tr>
        <td align="center">🔼 마이페이지(라이트 모드)</td>

@@ -99,6 +99,10 @@ dependencies {
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'org.javassist:javassist:3.25.0-GA'
+
+
+    // Spring AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 tasks.named('test') {

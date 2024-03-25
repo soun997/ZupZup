@@ -13,7 +13,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,7 +26,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 6379:6379
+          - ${{ secrets.REDIS_PORT }}:${{ secrets.REDIS_PORT }}
       mongodb:
         # 왜 latest version은 실행이 되지 않는거지?
         image: mongo:4.4.6
@@ -36,7 +35,7 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           MONGO_INITDB_DATABASE: ${{ secrets.MONGO_DATABASE }}
         ports:
-          - 27017:27017
+          - ${{ secrets.MONGO_PORT }}:${{ secrets.MONGO_PORT }}
         options: >-
           --health-cmd mongo
           --health-interval 10s
@@ -58,11 +57,11 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ./backend/zupzup
+        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}
 
       - name: Check Directory Structure
         run: ls
-        working-directory: ./backend/zupzup
+        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}
 
       - name: Build with Gradle Wrapper
         env:
@@ -86,4 +85,4 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           SECURITY_PERMITTED_URLS: ${{ secrets.SECURITY_PERMITTED_URLS }}
         run: ./gradlew clean test spotlessCheck
-        working-directory: ./backend/zupzup
+        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}

@@ -32,10 +32,12 @@ jobs:
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./backend/zupzup/gradlew
+        run: chmod +x gradlew
+        working-directory: ./backend/zupzup
 
       - name: Check Directory Structure
-        run: ls ./backend/zupzup
+        run: ls
+        working-directory: ./backend/zupzup
 
       - name: Build with Gradle Wrapper
         env:
@@ -58,7 +60,8 @@ jobs:
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           SECURITY_PERMITTED_URLS: ${{ secrets.SECURITY_PERMITTED_URLS }}
-        run: ./backend/zupzup/gradlew clean test spotlessCheck
+        run: ./gradlew clean test spotlessCheck
+        working-directory: ./backend/zupzup
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.

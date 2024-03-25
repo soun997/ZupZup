@@ -29,7 +29,11 @@ jobs:
         ports:
           - 6379:6379
       mongodb:
-        image: mongo
+        image: mongo:4.4.6
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_HOST }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          MONGO_INITDB_DATABASE: ${{ secrets.MONGO_DATABASE }}
         ports:
           - 27017:27017
         options: >-

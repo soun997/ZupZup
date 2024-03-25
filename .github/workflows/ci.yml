@@ -34,6 +34,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./backend/zupzup/gradlew
 
+      - name: Check Directory Structure
+        run: ls ./backend/zupzup
+
       - name: Build with Gradle Wrapper
         env:
           CLIENT_REDIRECT_LOGIN_SUCCESS: ${{ secrets.CLIENT_REDIRECT_LOGIN_SUCCESS }}

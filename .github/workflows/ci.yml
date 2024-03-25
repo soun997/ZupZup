@@ -57,11 +57,11 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}
+        working-directory: ./backend/zupzup
 
       - name: Check Directory Structure
         run: ls
-        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}
+        working-directory: ./backend/zupzup
 
       - name: Build with Gradle Wrapper
         env:
@@ -85,4 +85,4 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           SECURITY_PERMITTED_URLS: ${{ secrets.SECURITY_PERMITTED_URLS }}
         run: ./gradlew clean test spotlessCheck
-        working-directory: ${{ BACKEND_WORKING_DIRECTORY }}
+        working-directory: ./backend/zupzup

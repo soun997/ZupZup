@@ -13,10 +13,34 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+      mongodb:
+        # 왜 latest version은 실행이 되지 않는거지?
+        image: mongo:4.4.6
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_HOST }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          MONGO_INITDB_DATABASE: ${{ secrets.MONGO_DATABASE }}
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +57,11 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+        working-directory: ./backend/zupzup
+
+      - name: Check Directory Structure
+        run: ls
+        working-directory: ./backend/zupzup
 
       - name: Build with Gradle Wrapper
         env:
@@ -56,33 +85,4 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           SECURITY_PERMITTED_URLS: ${{ secrets.SECURITY_PERMITTED_URLS }}
         run: ./gradlew clean test spotlessCheck
-
-    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
-    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-    #
-    # - name: Setup Gradle
-    #   uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-    #   with:
-    #     gradle-version: '8.5'
-    #
-    # - name: Build with Gradle 8.5
-    #   run: gradle build
-
-  dependency-submission:
-
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'corretto'
-
-      # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
-      # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-      - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+        working-directory: ./backend/zupzup

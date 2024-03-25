@@ -1,5 +1,6 @@
 package com.twoez.zupzup.item;
 
+
 import com.twoez.zupzup.item.controller.ItemController;
 import com.twoez.zupzup.item.domain.Item;
 import com.twoez.zupzup.item.repository.ItemRepository;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,14 +29,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ItemIntegrationTest {
 
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private PetRepository petRepository;
-    @Autowired
-    private ItemRepository itemRepository;
-    @Autowired
-    private ItemController itemController;
+    @Autowired private MemberRepository memberRepository;
+    @Autowired private PetRepository petRepository;
+    @Autowired private ItemRepository itemRepository;
+    @Autowired private ItemController itemController;
 
     private static Logger log = LoggerFactory.getLogger(ItemIntegrationTest.class);
 
@@ -66,21 +62,24 @@ public class ItemIntegrationTest {
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
 
         for (int i = 0; i < numberOfThreads; i++) {
-            executorService.execute(() -> {
-                try {
-                    itemController.itemBuy(item.getId(), loginUser);
-                } finally {
-                    latch.countDown();
-                }
-            });
+            executorService.execute(
+                    () -> {
+                        try {
+                            itemController.itemBuy(item.getId(), loginUser);
+                        } finally {
+                            latch.countDown();
+                        }
+                    });
         }
         latch.await();
 
         member = memberRepository.findById(member.getId()).get();
         pet = petRepository.findById(pet.getId()).get();
-        Assertions.assertThat(member.getCoin()).isEqualTo(10000 - numberOfThreads * item.getPrice());
+        Assertions.assertThat(member.getCoin())
+                .isEqualTo(10000 - numberOfThreads * item.getPrice());
         Assertions.assertThat(pet.getExp()).isEqualTo(numberOfThreads * item.getExp());
     }
+
     private Member createMember() {
 
         OauthProvider oauthProvider = OauthProvider.KAKAO;

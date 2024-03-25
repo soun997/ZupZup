@@ -9,7 +9,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PetQueryRepositoryImpl extends QuerydslRepositorySupport implements PetQueryRepository {
+public class PetQueryRepositoryImpl extends QuerydslRepositorySupport
+        implements PetQueryRepository {
 
     public PetQueryRepositoryImpl() {
         super(Pet.class);

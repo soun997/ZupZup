@@ -8,7 +8,7 @@ import com.twoez.zupzup.item.domain.Item;
 import com.twoez.zupzup.item.repository.ItemRepository;
 import com.twoez.zupzup.member.exception.MemberQueryException;
 import com.twoez.zupzup.member.repository.MemberRepository;
-import com.twoez.zupzup.pet.repository.PetQueryRepository;
+import com.twoez.zupzup.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
-    private final PetQueryRepository petQueryRepository;
+    private final PetRepository petRepository;
 
     public Long buy(Long itemId, Long memberId) {
         Item item = itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
@@ -36,7 +36,7 @@ public class ItemService {
     }
 
     private void updateExperience(Long memberId, Item item) {
-        petQueryRepository
+        petRepository
                 .findByMemberId(memberId)
                 .orElseThrow(PetNotFoundException::new)
                 .addExp(item.getExp());

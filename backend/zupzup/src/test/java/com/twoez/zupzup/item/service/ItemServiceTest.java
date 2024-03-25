@@ -15,7 +15,7 @@ import com.twoez.zupzup.item.repository.ItemRepository;
 import com.twoez.zupzup.member.domain.Member;
 import com.twoez.zupzup.member.repository.MemberRepository;
 import com.twoez.zupzup.pet.domain.Pet;
-import com.twoez.zupzup.pet.repository.PetQueryRepository;
+import com.twoez.zupzup.pet.repository.PetRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class ItemServiceTest {
     @Mock ItemRepository itemRepository;
     @Mock MemberRepository memberRepository;
-    @Mock PetQueryRepository petQueryRepository;
+    @Mock PetRepository petQueryRepository;
 
     @InjectMocks ItemService itemService;
 

@@ -2,9 +2,8 @@ package com.twoez.zupzup.config.web;
 
 
 import com.twoez.zupzup.config.security.jwt.AuthReqeustUserArgumentResolver;
-import java.util.List;
-
 import com.twoez.zupzup.global.aop.TimerTraceAop;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public TimerTraceAop timerTraceAop(){
+    public TimerTraceAop timerTraceAop() {
         return new TimerTraceAop();
     }
 }

@@ -3,7 +3,7 @@ package com.twoez.zupzup.pet.service;
 
 import com.twoez.zupzup.global.exception.pet.PetNotFoundException;
 import com.twoez.zupzup.pet.domain.Pet;
-import com.twoez.zupzup.pet.repository.PetQueryRepository;
+import com.twoez.zupzup.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PetQueryService {
 
-    private final PetQueryRepository petQueryRepository;
+    private final PetRepository petRepository;
 
     public Pet search(Long memberId) {
 
-        return petQueryRepository.findByMemberId(memberId).orElseThrow(PetNotFoundException::new);
+        return petRepository.findByMemberId(memberId).orElseThrow(PetNotFoundException::new);
     }
 }
